@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/splash/splash_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/style/color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +42,47 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          titleSpacing: 20.0,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: backGround,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          backgroundColor: backGround,
+          elevation: 0.0,
+          titleTextStyle: TextStyle(
+            fontFamily: 'cairo_semiBold',
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontFamily: 'cairo_semiBold',
+            fontSize: 18.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+          subtitle1: TextStyle(
+            fontFamily: 'cairo_semiBold',
+            fontSize: 14.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+            height: 1.3,
+          ),
+          caption: TextStyle(
+            fontFamily: 'cairo_semiBold',
+          ),
+        ),
+        fontFamily: 'cairo_semiBold',
+      ),
+      themeMode: ThemeMode.light,
       home: SplashScreen(startWidget: startWidget,),
     );
   }

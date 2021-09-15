@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:university_housing/shard/style/color.dart';
 
 class SplashScreen extends StatefulWidget {
   final Widget startWidget;
@@ -15,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3,),
+    Timer(Duration(seconds: 1,),
             ()=> Navigator.pushReplacement(context,
             MaterialPageRoute(
                 builder: (context) => widget.startWidget
@@ -26,6 +27,48 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: backGround,
+      body: Column(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: double.infinity,
+                      height: 150.0,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0,),
+                Text(
+                  'تطبيق الأسكان الجامعى',
+                  style: TextStyle(
+                    fontSize: 26.0,
+                    color: mainColors,
+                    fontFamily: 'cairo_semiBold',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              alignment: AlignmentDirectional.center,
+              child: Image.asset(
+                'assets/images/splash.gif',
+                width: double.infinity,
+                height: 250.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
