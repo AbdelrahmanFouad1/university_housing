@@ -16,7 +16,7 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
         builder: (context) => widget,
       ),
       (route) => false,
-    );
+);
 
 
 Widget defaultButton({
@@ -155,3 +155,32 @@ Widget smallButton({
     width:double.infinity,
   ),
 );
+Widget defaultButton2({
+  double? width ,
+  double? height,
+  bool isUpperCase = true,
+  double? radius = 8.0,
+  double? fontSize ,
+  required VoidCallback function,
+  required String text,
+}) =>
+    Container(
+      width: width,
+      height: height,
+      child: MaterialButton(
+        onPressed: function,
+        child: Text(
+          isUpperCase ? text.toUpperCase() : text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSize,
+          ),
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          radius!,
+        ),
+        color: mainColors,
+      ),
+    );
