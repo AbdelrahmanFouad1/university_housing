@@ -58,7 +58,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
       navigateAndFinish(
         context,
-        LoginScreen(),
+        const LoginScreen(),
       );
     });
   }
@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           children: [
             Expanded(
               child: PageView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 controller: boardController,
                 onPageChanged: (int index) {
                   if (index == boarding.length - 1) {
@@ -121,17 +121,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     spacing: 3.0,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 if(isLast == false)
                   FloatingActionButton(
                   backgroundColor: mainColors,
                   onPressed: () {
                       boardController.nextPage(
-                        duration: Duration(milliseconds: 750),
+                        duration: const Duration(milliseconds: 750),
                         curve: Curves.fastLinearToSlowEaseIn,
                       );
                   },
-                  child: Icon(
+                  child: const Icon(
                     IconBroken.Arrow___Right_2,
                   ),
                 )
@@ -142,7 +142,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         onPressed:() {
                           submit();
                         },
-                        child: Text(
+                        child: const Text(
                           'أبدء',
                           style: TextStyle(
                             color: Colors.white,
@@ -189,7 +189,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
               width: double.infinity,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10.0,
             ),
             Container(
