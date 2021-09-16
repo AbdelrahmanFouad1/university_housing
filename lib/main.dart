@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/splash/splash_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: backGround,
         appBarTheme: AppBarTheme(
           titleSpacing: 20.0,
           systemOverlayStyle: SystemUiOverlayStyle(
@@ -52,17 +53,17 @@ class MyApp extends StatelessWidget {
           ),
           backgroundColor: backGround,
           elevation: 0.0,
-          titleTextStyle: TextStyle(
+          titleTextStyle: const TextStyle(
             fontFamily: 'cairo_semiBold',
             color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.black,
           ),
         ),
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyText1: TextStyle(
             fontFamily: 'cairo_semiBold',
             fontSize: 18.0,
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home: SplashScreen(startWidget: startWidget,),
+      home: const HomeScreen(),
     );
   }
 }
