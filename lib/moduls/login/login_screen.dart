@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -14,7 +15,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: backGround,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -51,7 +52,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(28),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'رقم الطالب',
                   hintTextDirection: TextDirection.rtl,
@@ -66,7 +67,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'كلمه المرور',
                   hintTextDirection: TextDirection.rtl,
@@ -81,7 +82,9 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(28.0),
               child: defaultButton(
-                function:(){} ,
+                function:(){
+                  navigateTo(context, HomeScreen());
+                } ,
                 text: 'تسجيل دخول',
                 fontSize: 20 ,
                 isUpperCase: false ,
