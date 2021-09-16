@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home: const HomeScreen(),
+      home:  HomeScreen(),
     );
   }
 }
