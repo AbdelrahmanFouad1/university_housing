@@ -20,7 +20,7 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
   ),
       (route) => false,
 );
-);
+
 
 Widget defaultButton({
   double? width ,
@@ -159,10 +159,12 @@ Widget defaultTitleBox ({
 Widget defaultTiTleBoxColumn ({
   required String img,
   required String title,
+  double? width ,
+  double? height,
 })=>
     Container(
-      width: double.infinity,
-      height: 160,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         color: boxColor,
         borderRadius: BorderRadius.circular(8.0),
