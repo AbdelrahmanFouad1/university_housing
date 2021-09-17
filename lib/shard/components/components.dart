@@ -7,19 +7,20 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
 void navigateTo(context, widget) => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-    );
+  context,
+  MaterialPageRoute(
+    builder: (context) => widget,
+  ),
+);
 
 void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
+  context,
+  MaterialPageRoute(
+    builder: (context) => widget,
+  ),
       (route) => false,
 );
+
 
 Widget defaultButton({
   double? width ,
@@ -158,10 +159,12 @@ Widget defaultTitleBox ({
 Widget defaultTiTleBoxColumn ({
   required String img,
   required String title,
+  double? width ,
+  double? height,
 })=>
     Container(
-      width: double.infinity,
-      height: 160,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         color: boxColor,
         borderRadius: BorderRadius.circular(8.0),
