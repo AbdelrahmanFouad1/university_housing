@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/iconly_broken.dart';
 
 class MainModel {
   late String image;
@@ -45,51 +43,7 @@ class HomeScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          titleSpacing: 12.0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          actions: [
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              width: 30.0,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: SvgPicture.asset(
-                  'assets/icon/bus.svg',
-                  width: 18.0,
-                  height: 18.0,
-                ),
-                onPressed: () {},
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              width: 30.0,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(Icons.person_outline),
-                onPressed: () {},
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              width: 30.0,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(
-                  IconBroken.Notification,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
-          title: Text(
-              'أهلا , 42018122'
-          ),
-        ),
+        appBar: defaultAppBar(showBus: true),
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait() :buildLandScape() ,
         ),
@@ -241,14 +195,14 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Stack(
                     alignment: Alignment.bottomLeft,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 60.0, bottom: 10.0),
-                        child: defaultButton2(
+                        child: defaultButton(
                           function: () {},
                           text: 'عرض التفاصيل',
                           fontSize: 12.0,
@@ -319,7 +273,7 @@ class HomeScreen extends StatelessWidget {
             itemCount: requests.length,
           ),
         ),
-        SizedBox(width: 5.0,),
+        const SizedBox(width: 5.0,),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -357,14 +311,14 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Stack(
                       alignment: Alignment.bottomLeft,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 60.0, bottom: 10.0),
-                          child: defaultButton2(
+                          child: defaultButton(
                             function: () {},
                             text: 'عرض التفاصيل',
                             fontSize: 12.0,

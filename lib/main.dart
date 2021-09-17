@@ -10,6 +10,11 @@ import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
+import 'moduls/complaints/change_damaged_screen.dart';
+import 'moduls/complaints/change_lost_screen.dart';
+import 'moduls/complaints/complaints_screen.dart';
+import 'moduls/requests/chooseRequestsScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -21,9 +26,9 @@ void main() async {
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
 
   if (onBoarding != null) {
-      widget = LoginScreen();
+      widget = const LoginScreen();
   } else {
-    widget = OnBoardingScreen();
+    widget = const OnBoardingScreen();
   }
 
   runApp(MyApp(
@@ -35,7 +40,7 @@ class MyApp extends StatelessWidget {
 
   final Widget startWidget;
 
-  MyApp({
+   MyApp({
     required this.startWidget,
   });
 
@@ -46,45 +51,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: backGround,
         appBarTheme: AppBarTheme(
-          titleSpacing: 20.0,
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: backGround,
             statusBarIconBrightness: Brightness.dark,
           ),
-          backgroundColor: backGround,
-          elevation: 0.0,
-          titleTextStyle: const TextStyle(
-            fontFamily: 'cairo_semiBold',
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
-          ),
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
-        ),
-        textTheme: const TextTheme(
-          bodyText1: TextStyle(
-            fontFamily: 'cairo_semiBold',
-            fontSize: 18.0,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-          subtitle1: TextStyle(
-            fontFamily: 'cairo_semiBold',
-            fontSize: 14.0,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-            height: 1.3,
-          ),
-          caption: TextStyle(
-            fontFamily: 'cairo_semiBold',
-          ),
+
         ),
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  HomeScreen(),
+      home: SplashScreen(startWidget: startWidget,),
     );
   }
 }
