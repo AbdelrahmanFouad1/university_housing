@@ -93,7 +93,7 @@ AppBar defaultAppBar({
       width: 30.0,
       child: IconButton(
         padding: EdgeInsets.zero,
-        icon:  Stack(
+        icon: Stack(
           alignment: AlignmentDirectional.topEnd,
           children: [
             Icon(
@@ -155,6 +155,41 @@ Widget defaultTitleBox ({
   ),
 );
 
+Widget defaultTiTleBoxColumn ({
+  required String img,
+  required String title,
+})=>
+    Container(
+      width: double.infinity,
+      height: 160,
+      decoration: BoxDecoration(
+        color: boxColor,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+
+      child: Column(
+        children: [
+          const SizedBox(height: 20.0,),
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: SvgPicture.asset(
+              img,
+              width: 68.0,
+              height: 68.0,
+            ),
+          ),
+          const SizedBox(height: 5.0,),
+          Text(
+            title,
+            style: TextStyle(
+              color: finesColor,
+              fontSize: 20.0,
+            ),
+          ),
+        ],
+      ),
+    );
+
 
 
 Widget whiteBoard ()=>Container(
@@ -162,7 +197,7 @@ Widget whiteBoard ()=>Container(
   height: 250,
   decoration: BoxDecoration(
     color: Colors.white,
-    borderRadius: BorderRadius.circular(5.0),
+    borderRadius: BorderRadius.circular(8.0),
     boxShadow: [BoxShadow(
       color: Colors.grey.withOpacity(0.5),
       spreadRadius: 5,
