@@ -161,6 +161,10 @@ Widget defaultTiTleBoxColumn ({
   required String title,
   double? width ,
   double? height,
+  double widthImage = 68.0,
+  double heightImage = 68.0,
+  double fontSize = 20.0,
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
 })=>
     Container(
       width: width,
@@ -171,14 +175,15 @@ Widget defaultTiTleBoxColumn ({
       ),
 
       child: Column(
+        mainAxisAlignment:mainAxisAlignment,
         children: [
           const SizedBox(height: 20.0,),
           Align(
             alignment: AlignmentDirectional.center,
             child: SvgPicture.asset(
               img,
-              width: 68.0,
-              height: 68.0,
+              width: widthImage,
+              height: heightImage,
             ),
           ),
           const SizedBox(height: 5.0,),
@@ -186,13 +191,12 @@ Widget defaultTiTleBoxColumn ({
             title,
             style: TextStyle(
               color: finesColor,
-              fontSize: 20.0,
+              fontSize: fontSize,
             ),
           ),
         ],
       ),
     );
-
 
 
 Widget whiteBoard ()=>Container(

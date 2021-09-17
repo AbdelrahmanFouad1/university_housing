@@ -17,6 +17,7 @@ class MainModel {
 
 class HomeScreen extends StatelessWidget {
 
+  bool isRegister = true;
   List<MainModel> requests = [
     MainModel(
       image: 'assets/images/request.svg',
@@ -139,96 +140,113 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Container(
-              height: 120.0,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    buildRequestsList(requests[index]),
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 12,
-                ),
-                itemCount: requests.length,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Text(
-                'غرامات الطالب',
-                style: TextStyle(
-                  color: mainColors,
-                  fontSize: 20.0,
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 87.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  8.0,
-                ),
-                color: finesColor,
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 6.0),
-                    child: Column(
+                Builder(builder: (context) {
+
+                  if (isRegister) {
+                    return Column(
                       children: [
-                        Text(
-                          'لديك غرامة بقيمة',
-                          style: TextStyle(
-                            color: mainColors,
-                            fontSize: 16.0,
+                        Container(
+                          height: 120.0,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) =>
+                                buildRequestsList(requests[index]),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              width: 12,
+                            ),
+                            itemCount: requests.length,
                           ),
                         ),
-                        Text(
-                          '120 جنيه مصرى',
-                          style: TextStyle(
+                        Container(
+                          width: double.infinity,
+                          child: Text(
+                            'غرامات الطالب',
+                            style: TextStyle(
                               color: mainColors,
                               fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 87.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              8.0,
+                            ),
+                            color: finesColor,
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 6.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'لديك غرامة بقيمة',
+                                      style: TextStyle(
+                                        color: mainColors,
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      '120 جنيه مصرى',
+                                      style: TextStyle(
+                                          color: mainColors,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              Stack(
+                                alignment: Alignment.bottomLeft,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 60.0, bottom: 10.0),
+                                    child: defaultButton(
+                                      function: () {},
+                                      text: 'عرض التفاصيل',
+                                      fontSize: 12.0,
+                                      height: 30.0,
+                                    ),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/images/hand.svg',
+                                    semanticsLabel: 'fine',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Stack(
-                    alignment: Alignment.bottomLeft,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 60.0, bottom: 10.0),
-                        child: defaultButton(
-                          function: () {},
-                          text: 'عرض التفاصيل',
-                          fontSize: 12.0,
-                          height: 30.0,
-                        ),
-                      ),
-                      SvgPicture.asset(
-                        'assets/images/hand.svg',
-                        semanticsLabel: 'fine',
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            Container(
-              width: double.infinity,
-              child: Text(
-                'اخبار عن السكن',
-                style: TextStyle(
-                  color: mainColors,
-                  fontSize: 20.0,
+                    );
+                  } else {
+                    return defaultTiTleBoxColumn(
+                        img: 'assets/images/request.svg',
+                        title: 'طلب الالتحاق بالسكن',
+                        height: 122.0,
+                        widthImage: 50.0,
+                        heightImage: 50.0);
+                  }
+                }),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    'اخبار عن السكن',
+                    style: TextStyle(
+                      color: mainColors,
+                      fontSize: 20.0,
                 ),
               ),
             ),
@@ -256,112 +274,165 @@ class HomeScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildLandScape() =>  Padding(
-    padding: const EdgeInsets.all(12.0),
-    child: Row(
-      children: [
-        Container(
-          width: 140.0,
-          height: double.infinity,
-          child: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
-                buildRequestsList(requests[index]),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12.0,
-            ),
-            itemCount: requests.length,
-          ),
-        ),
-        const SizedBox(width: 5.0,),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+  Widget buildLandScape() =>  Builder(
+    builder: (context) {
+      if (isRegister) {
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
             children: [
               Container(
-                width: double.infinity,
-                height: 87.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    8.0,
+                width: 140.0,
+                height: double.infinity,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      buildRequestsList(requests[index]),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 12.0,
                   ),
-                  color: finesColor,
+                  itemCount: requests.length,
                 ),
-                child: Row(
+              ),
+              const SizedBox(width: 5.0,),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 6.0),
-                      child: Column(
+                    Container(
+                      width: double.infinity,
+                      height: 87.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          8.0,
+                        ),
+                        color: finesColor,
+                      ),
+                      child: Row(
                         children: [
-                          Text(
-                            'لديك غرامة بقيمة',
-                            style: TextStyle(
-                              color: mainColors,
-                              fontSize: 16.0,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 6.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'لديك غرامة بقيمة',
+                                  style: TextStyle(
+                                    color: mainColors,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                Text(
+                                  '120 جنيه مصرى',
+                                  style: TextStyle(
+                                      color: mainColors,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            '120 جنيه مصرى',
-                            style: TextStyle(
-                                color: mainColors,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
+                          const Spacer(),
+                          Stack(
+                            alignment: Alignment.bottomLeft,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 60.0, bottom: 10.0),
+                                child: defaultButton(
+                                  function: () {},
+                                  text: 'عرض التفاصيل',
+                                  fontSize: 12.0,
+                                  height: 30.0,
+                                ),
+                              ),
+                              SvgPicture.asset(
+                                'assets/images/hand.svg',
+                                semanticsLabel: 'fine',
+                                fit: BoxFit.cover,
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    const Spacer(),
-                    Stack(
-                      alignment: Alignment.bottomLeft,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 60.0, bottom: 10.0),
-                          child: defaultButton(
-                            function: () {},
-                            text: 'عرض التفاصيل',
-                            fontSize: 12.0,
-                            height: 30.0,
-                          ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        'اخبار عن السكن',
+                        style: TextStyle(
+                          color: mainColors,
+                          fontSize: 20.0,
                         ),
-                        SvgPicture.asset(
-                          'assets/images/hand.svg',
-                          semanticsLabel: 'fine',
-                          fit: BoxFit.cover,
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => buildNewsItem(),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 16,
                         ),
-                      ],
+                        itemCount: 8,
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10.0,
+            ],
+          ),
+        );
+      }else{
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              defaultTiTleBoxColumn(
+                img: 'assets/images/request.svg',
+                title: 'طلب الالتحاق بالسكن',
+                width: 120.0,
+                widthImage: 50.0,
+                heightImage: 50.0,
+                fontSize: 12.0,
+                mainAxisAlignment: MainAxisAlignment.center,
               ),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  'اخبار عن السكن',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
-                  ),
-                ),
+              const SizedBox(
+                width: 12.0,
               ),
               Expanded(
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => buildNewsItem(),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 16,
-                  ),
-                  itemCount: 8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        'اخبار عن السكن',
+                        style: TextStyle(
+                          color: mainColors,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => buildNewsItem(),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 16,
+                        ),
+                        itemCount: 8,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-      ],
-    ),
+        );
+      }
+    }
   );
 }
