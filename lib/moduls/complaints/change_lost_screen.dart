@@ -14,17 +14,17 @@ class ChangeLostScreen extends StatelessWidget {
         appBar: defaultAppBar(),
         backgroundColor: backGround,
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 25, 15.0, 0),
+            padding: const EdgeInsets.all(18),
             child: Column(
               children: [
                 defaultTitleBox(
                   img: 'assets/images/locate.svg',
                   title: 'بلاغ عن شئ مفقود',
                 ),
-                SizedBox(
-                  height: 15,
+                const SizedBox(
+                  height: 15.0,
                 ),
                 Container(
                   width: double.infinity,
@@ -33,19 +33,26 @@ class ChangeLostScreen extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: mainColors,
-                      fontSize: 20,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 15,
+                const SizedBox(
+                  height: 2,
                 ),
                 whiteBoard(),
-                SizedBox(
-                  height: 15,
+                const SizedBox(
+                  height: 88,
                 ),
-                smallButton(
-                  title: 'تقديم الطلب'
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: defaultButton(
+                      function: (){},
+                      text: 'تقديم الطلب',
+                      radius: 8.0,
+                      height: 47,
+                      width: double.infinity
+                  ),
                 ),
               ],
             ),

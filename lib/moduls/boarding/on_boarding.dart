@@ -196,7 +196,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: Text(
                 '${model.body}',
                 textDirection: TextDirection.rtl,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'cairo_semiBold',

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
@@ -18,45 +21,58 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       (route) => false,
 );
 
-
 Widget defaultButton({
-  double width = double.infinity,
-  bool isUpperCase = true,
-  double radius = 3.0,
-  double fontSize = 20,
+  double? width ,
+  double? height,
+  double? radius = 8.0,
+  double? fontSize ,
   required VoidCallback function,
   required String text,
-}) =>
-    Container(
-      width: width,
-      height: 50.0,
-      child: MaterialButton(
-        onPressed: function,
-        child: Text(
-          isUpperCase ? text.toUpperCase() : text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: fontSize,
-          ),
-        ),
+}) => Container(
+  width: width,
+  height: height,
+  child: MaterialButton(
+    onPressed: function,
+    child: Text(
+      text,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: fontSize,
       ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          radius,
-        ),
-        color: mainColors,
-      ),
-    );
+    ),
+  ),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(
+      radius!,
+    ),
+    color: mainColors,
+  ),
+);
 
 
-AppBar defaultAppBar()=>AppBar(
+AppBar defaultAppBar({
+  double? titleSpacing = 12.0,
+  bool? showBus = false,
+})=> AppBar(
+  systemOverlayStyle: SystemUiOverlayStyle(
+    statusBarColor: backGround,
+    statusBarIconBrightness: Brightness.dark,
+  ),
+    backgroundColor: backGround,
+    elevation: 0.0,
+    titleSpacing: titleSpacing,
   actions: [
-    Container(
+    if(showBus == true)
+      Container(
       padding: const EdgeInsets.all(0.0),
       width: 30.0,
       child: IconButton(
         padding: EdgeInsets.zero,
-        icon: const Icon(Icons.person_outline),
+        icon: SvgPicture.asset(
+          'assets/icon/bus.svg',
+          width: 18.0,
+          height: 18.0,
+        ),
         onPressed: () {},
       ),
     ),
@@ -65,15 +81,37 @@ AppBar defaultAppBar()=>AppBar(
       width: 30.0,
       child: IconButton(
         padding: EdgeInsets.zero,
-        icon: const Icon(
-          IconBroken.Notification,
+        icon:  Icon(
+            Icons.person_outline,
+          color: mainColors,
+        ),
+        onPressed: () {},
+      ),
+    ),
+    Container(
+      padding: const EdgeInsets.all(0.0),
+      width: 30.0,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        icon:  Stack(
+          alignment: AlignmentDirectional.topEnd,
+          children: [
+            Icon(
+              IconBroken.Notification,
+              color: mainColors,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0,left: 4.0),
+              child: SvgPicture.asset('assets/icon/dot.svg'),
+            ),
+          ],
         ),
         onPressed: () {},
       ),
     ),
   ],
   title: Text(
-      'أهلا , 42018141',
+      'أهلا , 42018122',
     style: TextStyle(
       color: mainColors,
       fontWeight: FontWeight.bold,
@@ -90,25 +128,27 @@ Widget defaultTitleBox ({
   width: double.infinity,
   decoration: BoxDecoration(
     color: boxColor,
-    borderRadius: BorderRadius.circular(5.0),
+    borderRadius: BorderRadius.circular(8.0),
   ),
-  height: 100,
+  height: 88.0,
   child: Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      SizedBox(width: 20,),
+      const SizedBox(width: 20,),
       Align(
         alignment: AlignmentDirectional.center,
         child: SvgPicture.asset(
-            img
+            img,
+          width: 68.0,
+          height: 68.0,
         ),
       ),
-      SizedBox(width: 20,),
+      const SizedBox(width: 20.0,),
       Text(
         title,
         style: TextStyle(
             color: finesColor,
-            fontSize: 20
+            fontSize: 20.0,
         ),
       ),
     ],
@@ -142,45 +182,3 @@ Widget whiteBoard ()=>Container(
   ),
 );
 
-Widget smallButton({
-  required String title,
-})=>Padding(
-  padding: const EdgeInsets.all(28.0),
-  child: defaultButton(
-    function:(){} ,
-    text: title,
-    fontSize: 20 ,
-    isUpperCase: false ,
-    radius: 5,
-    width:double.infinity,
-  ),
-);
-Widget defaultButton2({
-  double? width ,
-  double? height,
-  bool isUpperCase = true,
-  double? radius = 8.0,
-  double? fontSize ,
-  required VoidCallback function,
-  required String text,
-}) =>
-    Container(
-      width: width,
-      height: height,
-      child: MaterialButton(
-        onPressed: function,
-        child: Text(
-          isUpperCase ? text.toUpperCase() : text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: fontSize,
-          ),
-        ),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          radius!,
-        ),
-        color: mainColors,
-      ),
-    );
