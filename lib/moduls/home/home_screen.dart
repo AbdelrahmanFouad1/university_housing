@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
+import 'package:university_housing/moduls/news_details/news_details_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -97,7 +98,7 @@ class HomeScreen extends StatelessWidget {
         ),
   );
 
-  Widget buildNewsItem() => Row(
+  Widget buildNewsItem(context) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
@@ -133,13 +134,18 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  child: Text(
-                    'عرض المزيد',
-                    textDirection: TextDirection.ltr,
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 12.0,
-                        color: mainColors),
+                  child: InkWell(
+                    child: Text(
+                      'عرض المزيد',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 12.0,
+                          color: mainColors),
+                    ),
+                    onTap: () {
+                      navigateTo(context, NewsDetailsScreen());
+                    },
                   ),
                 ),
               ],
@@ -217,7 +223,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => buildNewsItem(),
+                itemBuilder: (context, index) => buildNewsItem(context),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
@@ -277,7 +283,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(),
+                        itemBuilder: (context, index) => buildNewsItem(context),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 16,
                         ),
@@ -324,7 +330,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(),
+                        itemBuilder: (context, index) => buildNewsItem(context),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 16,
                         ),
