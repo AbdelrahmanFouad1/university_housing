@@ -52,8 +52,11 @@ Widget defaultButton({
 
 
 AppBar defaultAppBar({
+  required BuildContext context,
   double? titleSpacing = 12.0,
   bool? showBus = false,
+  bool? pop = true,
+  Widget? popToScreen,
 })=> AppBar(
   systemOverlayStyle: SystemUiOverlayStyle(
     statusBarColor: backGround,
@@ -62,6 +65,7 @@ AppBar defaultAppBar({
     backgroundColor: backGround,
     elevation: 0.0,
     titleSpacing: titleSpacing,
+    automaticallyImplyLeading: false,
   actions: [
     if(showBus == true)
       Container(
@@ -110,6 +114,22 @@ AppBar defaultAppBar({
         onPressed: () {},
       ),
     ),
+    if(pop == true)
+      Container(
+      padding: const EdgeInsets.all(0.0),
+      width: 30.0,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        icon:  Icon(
+          IconBroken.Arrow___Left_2,
+          color: mainColors,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    ),
+    SizedBox(width: 6.0,),
   ],
   title: Text(
       'أهلا , 42018122',
@@ -221,6 +241,64 @@ Widget whiteBoard ()=>Container(
         border: InputBorder.none,
       ),
     ),
+  ),
+);
+
+Widget buildFinesBox ()=> Container(
+  width: double.infinity,
+  height: 87.0,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(
+      8.0,
+    ),
+    color: finesColor,
+  ),
+  child: Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: 10.0, horizontal: 6.0),
+        child: Column(
+          children: [
+            Text(
+              'لديك غرامة بقيمة',
+              style: TextStyle(
+                color: mainColors,
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              '120 جنيه مصرى',
+              style: TextStyle(
+                  color: mainColors,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+      const Spacer(),
+      Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 60.0, bottom: 10.0),
+            child: defaultButton(
+              function: () {},
+              text: 'عرض التفاصيل',
+              fontSize: 12.0,
+              height: 30.0,
+            ),
+          ),
+          SvgPicture.asset(
+            'assets/images/hand.svg',
+            semanticsLabel: 'fine',
+            fit: BoxFit.cover,
+          ),
+        ],
+      ),
+    ],
   ),
 );
 

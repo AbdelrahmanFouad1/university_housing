@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  WaitingScreen(),
+      home:  SplashScreen(startWidget: startWidget),
     );
   }
 }
