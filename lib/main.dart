@@ -18,6 +18,7 @@ import 'package:university_housing/shard/style/color.dart';
 import 'moduls/complaints/change_damaged_screen.dart';
 import 'moduls/complaints/change_lost_screen.dart';
 import 'moduls/complaints/complaints_screen.dart';
+import 'moduls/hostingRequests/hosting_requests_screen.dart';
 
 
 void main() async {
