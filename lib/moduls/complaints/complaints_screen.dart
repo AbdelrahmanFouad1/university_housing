@@ -11,7 +11,7 @@ class ComplaintsScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: defaultAppBar(),
+        appBar: defaultAppBar(context: context),
         backgroundColor: backGround,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

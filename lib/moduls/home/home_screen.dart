@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
+import 'package:university_housing/moduls/news_details/news_details_screen.dart';
+import 'package:university_housing/moduls/queries/queries_screen.dart';
+import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -44,7 +48,7 @@ class HomeScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: defaultAppBar(showBus: true),
+        appBar: defaultAppBar(context: context, showBus: true, pop: false),
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait() :buildLandScape() ,
         ),
@@ -52,35 +56,49 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildRequestsList(MainModel model) => Container(
-    width: 120.0,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              model.image,
-              semanticsLabel: 'request',
-              width: 45.0,
-              height: 45.0,
-            ),
-            Text(
-              model.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
+  Widget buildRequestsList(MainModel model, context, index) => InkWell(
+    onTap: () {
+      if(index == 0){
+        navigateTo(context, ChooseRequestScreen());
+      }
+      else if(index == 1){
+        navigateTo(context, ChooseComplaintsScreen());
+      }
+      else if(index == 2){}
+      else {
+        navigateTo(context, QueriesScreen());
+      }
+    },
+    child: Container(
+      width: 120.0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                model.image,
+                semanticsLabel: 'request',
+                width: 45.0,
+                height: 45.0,
               ),
-            )
-          ],
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            8.0,
+              Text(
+                model.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                ),
+              )
+            ],
           ),
-          color: boxColor,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              8.0,
+            ),
+            color: boxColor,
+          ),
         ),
-      );
+  );
 
-  Widget buildNewsItem() => Row(
+  Widget buildNewsItem(context) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
@@ -116,13 +134,18 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Container(
                   width: double.infinity,
-                  child: Text(
-                    'عرض المزيد',
-                    textDirection: TextDirection.ltr,
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 12.0,
-                        color: mainColors),
+                  child: InkWell(
+                    child: Text(
+                      'عرض المزيد',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 12.0,
+                          color: mainColors),
+                    ),
+                    onTap: () {
+                      navigateTo(context, NewsDetailsScreen());
+                    },
                   ),
                 ),
               ],
@@ -151,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) =>
-                                buildRequestsList(requests[index]),
+                                buildRequestsList(requests[index], context, index),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                               width: 12,
@@ -169,63 +192,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: 87.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              8.0,
-                            ),
-                            color: finesColor,
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 6.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'لديك غرامة بقيمة',
-                                      style: TextStyle(
-                                        color: mainColors,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      '120 جنيه مصرى',
-                                      style: TextStyle(
-                                          color: mainColors,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              Stack(
-                                alignment: Alignment.bottomLeft,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 60.0, bottom: 10.0),
-                                    child: defaultButton(
-                                      function: () {},
-                                      text: 'عرض التفاصيل',
-                                      fontSize: 12.0,
-                                      height: 30.0,
-                                    ),
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/images/hand.svg',
-                                    semanticsLabel: 'fine',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                        buildFinesBox(),
                       ],
                     );
                   } else {
@@ -256,7 +223,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => buildNewsItem(),
+                itemBuilder: (context, index) => buildNewsItem(context),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
@@ -287,7 +254,7 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) =>
-                      buildRequestsList(requests[index]),
+                      buildRequestsList(requests[index], context, index),
                   separatorBuilder: (context, index) => const SizedBox(
                     height: 12.0,
                   ),
@@ -299,63 +266,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 87.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          8.0,
-                        ),
-                        color: finesColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 6.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'لديك غرامة بقيمة',
-                                  style: TextStyle(
-                                    color: mainColors,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                                Text(
-                                  '120 جنيه مصرى',
-                                  style: TextStyle(
-                                      color: mainColors,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          Stack(
-                            alignment: Alignment.bottomLeft,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 60.0, bottom: 10.0),
-                                child: defaultButton(
-                                  function: () {},
-                                  text: 'عرض التفاصيل',
-                                  fontSize: 12.0,
-                                  height: 30.0,
-                                ),
-                              ),
-                              SvgPicture.asset(
-                                'assets/images/hand.svg',
-                                semanticsLabel: 'fine',
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    buildFinesBox(),
                     const SizedBox(
                       height: 10.0,
                     ),
@@ -372,7 +283,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(),
+                        itemBuilder: (context, index) => buildNewsItem(context),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 16,
                         ),
@@ -419,7 +330,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(),
+                        itemBuilder: (context, index) => buildNewsItem(context),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 16,
                         ),
