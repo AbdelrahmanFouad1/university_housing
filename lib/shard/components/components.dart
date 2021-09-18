@@ -27,11 +27,13 @@ Widget defaultButton({
   double? height,
   double? radius = 8.0,
   double? fontSize ,
+  EdgeInsets? marginSize ,
   required VoidCallback function,
   required String text,
 }) => Container(
   width: width,
   height: height,
+  margin: marginSize,
   child: MaterialButton(
     onPressed: function,
     child: Text(
