@@ -15,9 +15,11 @@ import 'package:university_housing/moduls/success&waiting/waiting_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'moduls/bus/bus_screen.dart';
 import 'moduls/complaints/change_damaged_screen.dart';
 import 'moduls/complaints/change_lost_screen.dart';
 import 'moduls/complaints/complaints_screen.dart';
+import 'moduls/fines/fines_screen.dart';
 import 'moduls/hostingRequests/hosting_requests_screen.dart';
 
 
@@ -66,7 +68,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  HostingRequestsScreen(),
+      home:  FinesScreen(),
     );
   }
 }
