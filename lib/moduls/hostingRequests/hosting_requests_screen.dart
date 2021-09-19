@@ -43,7 +43,7 @@ class _HostingRequestsScreenState extends State<HostingRequestsScreen> {
       textDirection:  ui.TextDirection.rtl,
       child: Scaffold(
         backgroundColor: backGround,
-        appBar: defaultAppBar(),
+        appBar: defaultAppBar(context: context),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 13.0),

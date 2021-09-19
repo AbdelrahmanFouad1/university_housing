@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  SplashScreen(startWidget: startWidget),
+      home:  HostingRequestsScreen(),
     );
   }
 }
