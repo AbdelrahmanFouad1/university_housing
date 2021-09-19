@@ -52,24 +52,30 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height:33.0,),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'رقم الطالب',
-                        hintStyle: TextStyle(
-                          fontSize: 15.0,
-                          color: Colors.grey,
+                    Container(
+                      height: 48.0,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'رقم الطالب',
+                          hintStyle: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16.0,),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'كلمه المرور',
-                        hintStyle: TextStyle(
-                          fontSize: 15.0,
-                          color: Colors.grey,
+                    Container(
+                      height: 48.0,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'كلمه المرور',
+                          hintStyle: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),

@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  FinesScreen(),
+      home:  SplashScreen(startWidget: startWidget),
     );
   }
 }

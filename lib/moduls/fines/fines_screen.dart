@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -15,7 +16,7 @@ class FinesScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Container(
               width:double.infinity,
               child: Column(
@@ -28,7 +29,7 @@ class FinesScreen extends StatelessWidget {
                         width: 50.0,
                         height: 50.0,
                       ),
-                      SizedBox(width: 15.0,),
+                      const SizedBox(width: 15.0,),
                       Text(
                         'تفاصيل الغرامات',
                         style: TextStyle(
@@ -38,7 +39,7 @@ class FinesScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height:15.0),
+                  const SizedBox(height:15.0),
                   Text(
                     '* يجب مراعاه اضافه الغرامات للمصاريف الدراسيه للترم التالي',
                     style: TextStyle(
@@ -46,13 +47,13 @@ class FinesScreen extends StatelessWidget {
                       color: mainColors,
                     ),
                   ),
-                  SizedBox(height:5.0),
+                  const SizedBox(height:5.0),
                   Container(
                     width: double.infinity,
                     height:1.0,
                     color: separator,
                   ),
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
                   Row(
                     children: [
                       Text(
@@ -62,7 +63,7 @@ class FinesScreen extends StatelessWidget {
                           color: mainColors,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         '50 جنيه',
                         style: TextStyle(
@@ -72,7 +73,7 @@ class FinesScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
                   Row(
                     children: [
                       Text(
@@ -82,7 +83,7 @@ class FinesScreen extends StatelessWidget {
                           color: mainColors,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         '150 جنيه',
                         style: TextStyle(
@@ -92,7 +93,7 @@ class FinesScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
                   Row(
                     children: [
                       Text(
@@ -102,7 +103,7 @@ class FinesScreen extends StatelessWidget {
                           color: mainColors,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         '50 جنيه',
                         style: TextStyle(
@@ -112,7 +113,7 @@ class FinesScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
                   Row(
                     children: [
                       Text(
@@ -122,7 +123,7 @@ class FinesScreen extends StatelessWidget {
                           color: mainColors,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         '20 جنيه',
                         style: TextStyle(
@@ -133,7 +134,7 @@ class FinesScreen extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 150,
                   ),
 
@@ -142,7 +143,7 @@ class FinesScreen extends StatelessWidget {
                     height:1.0,
                     color: separator,
                   ),
-                  SizedBox(height: 10.0,),
+                  const SizedBox(height: 10.0,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -153,8 +154,8 @@ class FinesScreen extends StatelessWidget {
                           color: mainColors,
                         ),
                       ),
-                      Spacer(),
-                      Text(
+                      const Spacer(),
+                      const Text(
                         '320 جنيه',
                         style: TextStyle(
                           fontSize: 16.0,
@@ -164,10 +165,12 @@ class FinesScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30.0,),
+                  const SizedBox(height: 30.0,),
                   defaultButton(
                     text: 'العوده الي الرئيسيه',
-                    function: () {  },
+                    function: () {
+                      navigateTo(context, HomeScreen());
+                    },
                     width: double.infinity,
                   ),
 

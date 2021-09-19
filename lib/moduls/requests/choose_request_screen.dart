@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -16,14 +17,14 @@ class ChooseRequestScreen extends StatelessWidget {
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) =>
               orientation == Orientation.portrait
-                  ? buildPortrait()
-                  : buildLandScape(),
+                  ? buildPortrait(context)
+                  : buildLandScape(context),
         ),
       ),
     );
   }
 
-  Widget buildPortrait() => Stack(
+  Widget buildPortrait(context) => Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           Padding(
@@ -50,11 +51,16 @@ class ChooseRequestScreen extends StatelessWidget {
                 const SizedBox(
                   height: 32.0,
                 ),
-                defaultTiTleBoxColumn(
-                  img: 'assets/images/ticket.svg',
-                  title: 'استعلام عن الغرامات',
-                  height: 160.0,
-                  width: double.infinity,
+                InkWell(
+                  child: defaultTiTleBoxColumn(
+                    img: 'assets/images/ticket.svg',
+                    title: 'استعلام عن الغرامات',
+                    height: 160.0,
+                    width: double.infinity,
+                  ),
+                  onTap: (){
+                    navigateTo(context, FinesScreen());
+                  },
                 ),
               ],
             ),
@@ -67,7 +73,7 @@ class ChooseRequestScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildLandScape() => Padding(
+  Widget buildLandScape(context) => Padding(
     padding: const EdgeInsets.all(19.0),
     child: Center(
       child: Row(
@@ -92,10 +98,15 @@ class ChooseRequestScreen extends StatelessWidget {
           const SizedBox(width:  32.0,),
           Flexible(
             flex: 1,
-            child: defaultTiTleBoxColumn(
-              img: 'assets/images/ticket.svg',
-              title: 'استعلام عن الغرامات',
-              height: 160.0,
+            child: InkWell(
+              child: defaultTiTleBoxColumn(
+                img: 'assets/images/ticket.svg',
+                title: 'استعلام عن الغرامات',
+                height: 160.0,
+              ),
+              onTap: (){
+                navigateTo(context, FinesScreen());
+              },
             ),
           ),
 

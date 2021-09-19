@@ -32,7 +32,10 @@ class BusScreen extends StatelessWidget {
               icon:  SvgPicture.asset(
                 'assets/images/back_arrow.svg',
 
-              ), onPressed: () {  },
+              ),
+              onPressed: () {
+              Navigator.pop(context);
+            },
             ),
           ],
         ),

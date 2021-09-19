@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:university_housing/moduls/bus/bus_screen.dart';
+import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
@@ -80,7 +82,9 @@ AppBar defaultAppBar({
           width: 18.0,
           height: 18.0,
         ),
-        onPressed: () {},
+        onPressed: () {
+          navigateTo(context, BusScreen());
+        },
       ),
     ),
     Container(
@@ -246,7 +250,7 @@ Widget whiteBoard ()=>Container(
   ),
 );
 
-Widget buildFinesBox ()=> Container(
+Widget buildFinesBox (context)=> Container(
   width: double.infinity,
   height: 87.0,
   decoration: BoxDecoration(
@@ -287,7 +291,9 @@ Widget buildFinesBox ()=> Container(
             padding: const EdgeInsets.only(
                 left: 60.0, bottom: 10.0),
             child: defaultButton(
-              function: () {},
+              function: () {
+                navigateTo(context, FinesScreen());
+              },
               text: 'عرض التفاصيل',
               fontSize: 12.0,
               height: 30.0,
