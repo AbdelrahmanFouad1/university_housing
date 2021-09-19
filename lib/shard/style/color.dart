@@ -9,4 +9,6 @@ Color boxColor = HexColor('#39424D');
 
 Color finesColor = HexColor('#E3EBF3');
 
+Color separator = HexColor('#707070');
+
 
