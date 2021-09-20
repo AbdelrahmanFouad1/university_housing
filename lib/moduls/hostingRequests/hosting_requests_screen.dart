@@ -240,7 +240,7 @@ class HostingRequestsScreen extends StatelessWidget {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 3.0),
                                       child: IconButton(
                                         onPressed: () {
                                           cubit.removePikePostImage();
@@ -292,6 +292,7 @@ class HostingRequestsScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 47.0,
                           marginSize: EdgeInsets.symmetric(horizontal: 14.0),
+                          //
                         ),
                       ],
                     ),
