@@ -47,4 +47,9 @@ class AppCubit extends Cubit<AppStates>{
       emit(ImagePickedErrorState());
     }
   }
+
+  Future<void> removePikePostImage() async {
+    idImage = null;
+    emit(RemovePikeIdImageState());
+  }
 }
