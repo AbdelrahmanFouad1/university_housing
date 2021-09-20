@@ -34,7 +34,7 @@ void main() async {
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
 
   if (onBoarding != null) {
-      widget = const LoginScreen();
+      widget =  LoginScreen();
   } else {
     widget = const OnBoardingScreen();
   }
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
 
   final Widget startWidget;
 
-   MyApp({
+    MyApp({
     required this.startWidget,
   });
 
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             statusBarColor: backGround,
             statusBarIconBrightness: Brightness.dark,
           ),
-
+          backgroundColor: backGround,
         ),
         fontFamily: 'cairo_semiBold',
       ),

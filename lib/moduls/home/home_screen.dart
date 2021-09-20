@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
@@ -7,6 +8,8 @@ import 'package:university_housing/moduls/news_details/news_details_screen.dart'
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/cubit/cubit.dart';
+import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class MainModel {
@@ -21,6 +24,7 @@ class MainModel {
 
 class HomeScreen extends StatelessWidget {
 
+  DateTime timeBackPressed = DateTime.now();
   bool isRegister = true;
   List<MainModel> requests = [
     MainModel(
@@ -41,17 +45,39 @@ class HomeScreen extends StatelessWidget {
     ),
   ];
 
-  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: defaultAppBar(context: context, showBus: true, pop: false),
-        body: OrientationBuilder(
-          builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait() :buildLandScape() ,
-        ),
+    return BlocProvider(
+      create: (BuildContext context)  => AppCubit(),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (BuildContext context, state) {  },
+        builder: (BuildContext context, Object? state) {
+          var cubit = AppCubit.get(context);
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: Scaffold(
+              appBar: defaultAppBar(context: context, showBus: true, pop: false),
+              body: WillPopScope(
+                onWillPop:  () async {
+                  final difference = DateTime.now().difference(timeBackPressed);
+                  final isExitWarning = difference >= const Duration(seconds: 2);
+                  timeBackPressed = DateTime.now();
+                  if(isExitWarning){
+                    showToast(message: 'اضغط مرة أخرى للخروج من البرنامج', state: ToastStates.WARNING);
+                    return false;
+                  }else{
+                    return true;
+                  }
+                },
+                child: OrientationBuilder(
+                  builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait() :buildLandScape() ,
+                ),
+              ),
+            ),
+          );
+        },
+
       ),
     );
   }
@@ -346,4 +372,5 @@ class HomeScreen extends StatelessWidget {
       }
     }
   );
+
 }

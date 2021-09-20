@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
@@ -135,7 +136,7 @@ AppBar defaultAppBar({
         },
       ),
     ),
-    SizedBox(width: 6.0,),
+    const SizedBox(width: 6.0,),
   ],
   title: Text(
       'أهلا , 42018122',
@@ -243,7 +244,7 @@ Widget whiteBoard ()=>Container(
     child: TextFormField(
       cursorColor: mainColors,
       maxLines: 10,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         border: InputBorder.none,
       ),
     ),
@@ -309,4 +310,40 @@ Widget buildFinesBox (context)=> Container(
     ],
   ),
 );
+
+// Toast in all app
+void showToast({
+  required String message,
+  required ToastStates state,
+}) => Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 14.0,
+);
+
+// enum
+enum ToastStates { SUCCESS, ERROR, WARNING }
+
+Color chooseToastColor(ToastStates state) {
+  Color color;
+
+  switch (state) {
+    case ToastStates.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastStates.ERROR:
+      color = Colors.red;
+      break;
+    case ToastStates.WARNING:
+      color = Colors.amber;
+      break;
+  }
+
+  return color;
+}
+
 
