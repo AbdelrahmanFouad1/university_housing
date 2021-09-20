@@ -292,6 +292,7 @@ class HostingRequestsScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 47.0,
                           marginSize: EdgeInsets.symmetric(horizontal: 14.0),
+                          //
                         ),
                       ],
                     ),
