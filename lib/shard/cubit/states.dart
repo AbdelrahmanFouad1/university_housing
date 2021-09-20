@@ -6,6 +6,8 @@ class ChangePasswordVisibilityState extends AppStates {}
 
 class ImagePickedSuccessState extends AppStates {}
 
+class RemovePikeIdImageState extends AppStates {}
+
 class ImagePickedErrorState extends AppStates {}
 
 class ChangeStudentState extends AppStates {}

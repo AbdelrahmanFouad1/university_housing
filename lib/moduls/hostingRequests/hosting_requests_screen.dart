@@ -16,7 +16,6 @@ import 'dart:ui' as ui;
 class HostingRequestsScreen extends StatelessWidget {
 
   var dateController = TextEditingController();
-  String? img_path = '8986093647738392104.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +31,7 @@ class HostingRequestsScreen extends StatelessWidget {
               backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 13.0),
                   child: Container(
@@ -203,51 +203,89 @@ class HostingRequestsScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 14.0,),
-                        Container(
-                          width: cubit.isStudent? 0.0 : double.infinity,
-                          child: Stack(
-                            alignment: AlignmentDirectional.centerEnd,
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                height: 40.0,
-                                margin: const EdgeInsets.symmetric(horizontal: 14.0),
-                                child: TextFormField(
-                                  onTap: (){
-                                    cubit.pikeIdImage();
-                                  },
-                                  initialValue: img_path ?? '',
-                                  textDirection: ui.TextDirection.ltr,
-                                  textAlign: TextAlign.end,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding:EdgeInsets.symmetric(horizontal:14.0),
+                        Builder(
+                          builder: (context) {
+                            if(cubit.idImage != null){
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 42.0),
+                                child: Stack(
+                                  alignment: AlignmentDirectional.topEnd,
+                                  children: [
+                                    Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 180.0,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8.0,),
+                                              image: DecorationImage(
+                                                image:FileImage(cubit.idImage!),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          height: 188.0,
+                                          margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            border: Border.all(color: Colors.grey, width: 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          cubit.removePikePostImage();
+                                        },
+                                        icon: const CircleAvatar(
+                                          radius: 20.0,
+                                          child: Icon(
+                                            Icons.close,
+                                            size: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }else{
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 72.0),
+                                child: Container(
+                                  width: cubit.isStudent? 0.0 : double.infinity,
+                                  height:cubit.isStudent? 0.0 : 40.0,
+                                  margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                                  child: TextFormField(
+                                    onTap: (){
+                                      cubit.pikeIdImage();
+                                    },
+                                    decoration:  InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: (){},
+                                        icon: SvgPicture.asset(
+                                          'assets/images/upload.svg',
+                                          alignment: Alignment.center,
+                                        ),
+                                      ),
+                                      hintText: 'صورة بطاقه الضيف',
+                                      border: const OutlineInputBorder(),
+                                      contentPadding:const EdgeInsets.symmetric(horizontal:14.0),
+                                    ),
                                   ),
                                 ),
-                              ),
-
-                              Container(
-                                padding:const EdgeInsets.symmetric(horizontal: 28.0),
-                                height: 40.0,
-                                child: SvgPicture.asset(
-                                  'assets/images/upload.svg',
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                            ],
-                          ),
+                              );
+                            }
+                          }
                         ),
-
-                        Container(
-                          alignment: Alignment.center,
-                          width: cubit.isStudent? 0.0 : 220.0,
-                          height: cubit.isStudent? 0.0 : 220.0,
-                          child: cubit.idImage == null ? const Text(''): Image(
-                            image: FileImage(cubit.idImage!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(height: 72.0,),
                         defaultButton(
                           function: (){},
                           text: 'تقديم الطلب',
