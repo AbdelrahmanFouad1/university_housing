@@ -51,6 +51,7 @@ class ChangeDamagedScreen extends StatelessWidget {
                       text: 'تقديم الطلب',
                       radius: 8.0,
                       height: 47,
+                      btnColor: mainColors,
                     width: double.infinity
                   ),
                 ),

@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/style/color.dart';
 
 class AppCubit extends Cubit<AppStates>{
 
@@ -52,4 +52,33 @@ class AppCubit extends Cubit<AppStates>{
     idImage = null;
     emit(RemovePikeIdImageState());
   }
+
+
+
+
+  // edit profile screen
+  bool isDark = false ;
+  void getTheme(){
+    isDark =!isDark;
+    emit(ChangeThemeSuccessState());
+  }
+
+  File? profileImage;
+  var profilePicker = ImagePicker();
+
+
+  Future<void> pikeProfileIdImage() async {
+    final pickedFile = await profilePicker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(ImagePickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(ImagePickedErrorState());
+    }
+  }
+
 }

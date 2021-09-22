@@ -291,6 +291,7 @@ class HostingRequestsScreen extends StatelessWidget {
                           text: 'تقديم الطلب',
                           width: double.infinity,
                           height: 47.0,
+                          btnColor: mainColors,
                           marginSize: EdgeInsets.symmetric(horizontal: 14.0),
                           //
                         ),
