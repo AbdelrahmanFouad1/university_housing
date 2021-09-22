@@ -352,4 +352,86 @@ Color chooseToastColor(ToastStates state) {
   return color;
 }
 
+Widget buildEnquiry(context, {
+  required double height,
+  required StatusStates state,
+  required Widget body,
+}) => Container(
+  height: height,
+  width: double.infinity,
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(8.0),
+  ),
+  child: Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Container(
+          height: double.infinity,
+          width: 12.0,
+          decoration:  BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(22.0),
+              bottomLeft: Radius.circular(22.0),
+            ),
+            color: chooseStatusColor(state),
+          ),
+        ),
+      ),
+      body,
+      // Expanded(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Container(
+      //       height: 122.0,
+      //       child: Column(
+      //         mainAxisAlignment: MainAxisAlignment.start,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           const Text(
+      //             'سؤال ؟',
+      //             style: TextStyle(
+      //               fontSize: 16.0,
+      //               fontWeight: FontWeight.w800,
+      //             ),
+      //           ),
+      //           const SizedBox(height: 6.0,),
+      //           Text(
+      //             'هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص.',
+      //             maxLines: 3,
+      //             overflow: TextOverflow.ellipsis,
+      //             style: Theme.of(context).textTheme.caption!.copyWith(
+      //               height: 1.4,
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+    ],
+  ),
+);
+
+enum StatusStates {ACCEPT, REJECT, WAITING }
+
+Color chooseStatusColor(StatusStates state) {
+  Color color;
+
+  switch (state) {
+    case StatusStates.ACCEPT:
+      color = Colors.green;
+      break;
+    case StatusStates.REJECT:
+      color = Colors.red;
+      break;
+    case StatusStates.WAITING:
+      color = Colors.amber;
+      break;
+  }
+
+  return color;
+}
+
 
