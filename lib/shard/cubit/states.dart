@@ -14,4 +14,9 @@ class ChangeStudentState extends AppStates {}
 
 class DoubleClickState extends AppStates {}
 
+class ChangeThemeSuccessState extends AppStates {}
+
+class ImageRemoveSuccessState extends AppStates {}
+
+
 

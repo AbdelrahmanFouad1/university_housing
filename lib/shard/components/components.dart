@@ -33,6 +33,7 @@ Widget defaultButton({
   EdgeInsets? marginSize ,
   required VoidCallback function,
   required String text,
+  required Color btnColor,
 }) => Container(
   width: width,
   height: height,
@@ -51,7 +52,7 @@ Widget defaultButton({
     borderRadius: BorderRadius.circular(
       radius!,
     ),
-    color: mainColors,
+    color: btnColor,
   ),
 );
 
@@ -251,7 +252,10 @@ Widget whiteBoard ()=>Container(
   ),
 );
 
-Widget buildFinesBox (context)=> Container(
+Widget buildFinesBox (context,{
+  double fontsize1 = 16.0,
+  double fontsize2 = 20.0,
+})=> Container(
   width: double.infinity,
   height: 87.0,
   decoration: BoxDecoration(
@@ -266,19 +270,20 @@ Widget buildFinesBox (context)=> Container(
         padding: const EdgeInsets.symmetric(
             vertical: 10.0, horizontal: 6.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'لديك غرامة بقيمة',
               style: TextStyle(
                 color: mainColors,
-                fontSize: 16.0,
+                fontSize: fontsize1,
               ),
             ),
             Text(
               '120 جنيه مصرى',
               style: TextStyle(
                   color: mainColors,
-                  fontSize: 20.0,
+                  fontSize: fontsize2,
                   fontWeight: FontWeight.bold),
             ),
           ],
@@ -298,6 +303,7 @@ Widget buildFinesBox (context)=> Container(
               text: 'عرض التفاصيل',
               fontSize: 12.0,
               height: 30.0,
+              btnColor: mainColors,
             ),
           ),
           SvgPicture.asset(

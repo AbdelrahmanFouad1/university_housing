@@ -172,6 +172,7 @@ class FinesScreen extends StatelessWidget {
                       navigateTo(context, HomeScreen());
                     },
                     width: double.infinity,
+                    btnColor: mainColors,
                   ),
 
                 ],

@@ -120,6 +120,7 @@ class LoginScreen extends StatelessWidget {
                               fontSize: 20.0 ,
                               height: 50.0,
                               radius: 5.0,
+                              btnColor: mainColors,
                               width:double.infinity,
                             ),
                           ],

@@ -21,6 +21,8 @@ import 'moduls/complaints/change_lost_screen.dart';
 import 'moduls/complaints/complaints_screen.dart';
 import 'moduls/fines/fines_screen.dart';
 import 'moduls/hostingRequests/hosting_requests_screen.dart';
+import 'moduls/profile/edit_profile_screen.dart';
+import 'moduls/profile/profile_screen.dart';
 
 
 void main() async {
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  HostingRequestsScreen(),
+      home:  ProfileScreen(),
     );
   }
 }
