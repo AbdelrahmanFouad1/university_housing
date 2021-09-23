@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
+import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
@@ -98,7 +99,9 @@ AppBar defaultAppBar({
             Icons.person_outline,
           color: mainColors,
         ),
-        onPressed: () {},
+        onPressed: () {
+          navigateTo(context, ProfileScreen());
+        },
       ),
     ),
     Container(

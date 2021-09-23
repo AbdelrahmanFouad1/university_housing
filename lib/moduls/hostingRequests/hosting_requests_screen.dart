@@ -133,21 +133,44 @@ class HostingRequestsScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 14.0,),
-                        Container(
-                          width: double.infinity,
-                          height: 40.0,
-                          margin: const EdgeInsets.symmetric(horizontal: 14.0),
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'رقم الطالب',
-                              contentPadding:EdgeInsets.symmetric(horizontal:14.0),
-                              hintStyle: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
+                        Builder(
+                          builder: (context) {
+                           if(cubit.isStudent){
+                             return Container(
+                               width: double.infinity,
+                               height: 40.0,
+                               margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                               child: TextFormField(
+                                 decoration: const InputDecoration(
+                                   border: OutlineInputBorder(),
+                                   hintText: 'رقم الطالب',
+                                   contentPadding:EdgeInsets.symmetric(horizontal:14.0),
+                                   hintStyle: TextStyle(
+                                     fontSize: 15.0,
+                                     color: Colors.grey,
+                                   ),
+                                 ),
+                               ),
+                             );
+                           }
+                             return Container(
+                               width: double.infinity,
+                               height: 40.0,
+                               margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                               child: TextFormField(
+                                 decoration: const InputDecoration(
+                                   border: OutlineInputBorder(),
+                                   hintText: 'صله القرابه',
+                                   contentPadding:EdgeInsets.symmetric(horizontal:14.0),
+                                   hintStyle: TextStyle(
+                                     fontSize: 15.0,
+                                     color: Colors.grey,
+                                   ),
+                                 ),
+                               ),
+                             );
+
+                          }
                         ),
                         const SizedBox(height: 14.0,),
                         Row(
@@ -270,7 +293,9 @@ class HostingRequestsScreen extends StatelessWidget {
                                     },
                                     decoration:  InputDecoration(
                                       suffixIcon: IconButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          cubit.pikeIdImage();
+                                        },
                                         icon: SvgPicture.asset(
                                           'assets/images/upload.svg',
                                           alignment: Alignment.center,
