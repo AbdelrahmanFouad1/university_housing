@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/profile/about_app_screen.dart';
+import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
+import 'package:university_housing/moduls/profile/student_evaluation/student_evaluation_screen.dart';
+import 'package:university_housing/moduls/profile/technical_support_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
@@ -68,27 +72,9 @@ class EditProfileScreen extends StatelessWidget {
                             Builder(
                               builder: (context){
                                 if(cubit.profileImage == null){
-                                  return const CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: NetworkImage(
-                                        'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
-                                  );
+                                  return cubit.img;
                                 }else{
-                                  return CircleAvatar(
-                                    radius: 60,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          150.0,
-                                        ),
-                                        image: DecorationImage(
-                                          image:
-                                          FileImage(cubit.profileImage!),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                  return cubit.img;
                                 }
                               },
                             ),
@@ -99,9 +85,13 @@ class EditProfileScreen extends StatelessWidget {
                                     alignment: Alignment.center,
                                     padding: EdgeInsets.all(0.0),
                                     iconSize: 20.0,
-                                    icon: Icon( Icons.edit, color: mainColors,),
+                                    icon: cubit.icon,
                                     onPressed: () {
-                                      cubit.pikeProfileIdImage();
+                                      if(cubit.profileImage != null){
+                                        cubit.deleteImg();
+                                      }else{
+                                        cubit.pikeProfileIdImage();
+                                      }
                                     },
                                   ),
                                   backgroundColor: Colors.white,
@@ -117,7 +107,9 @@ class EditProfileScreen extends StatelessWidget {
                         Column(
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                navigateTo(context, FollowRequestsScreen(),);
+                              },
                               child: Row(
                                 children: [
                                   Text(
@@ -134,7 +126,9 @@ class EditProfileScreen extends StatelessWidget {
                                       IconBroken.Arrow___Left_2,
                                       color: mainColors,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigateTo(context, FollowRequestsScreen());
+                                      },
                                   ),
                                 ],
                               ),
@@ -149,7 +143,9 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                navigateTo(context,StudentEvaluationScreen(),);
+                              },
                               child: Row(
                                 children: [
                                   Text(
@@ -166,7 +162,9 @@ class EditProfileScreen extends StatelessWidget {
                                       IconBroken.Arrow___Left_2,
                                       color: mainColors,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigateTo(context,StudentEvaluationScreen(),);
+                                    },
                                   ),
                                 ],
                               ),
@@ -181,11 +179,13 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                navigateTo(context, AboutAppScreen());
+                              },
                               child: Row(
                                 children: [
                                   Text(
-                                    'عن التطبيق',
+                                    'خدماتنا',
                                     style: TextStyle(
                                       color: mainColors,
                                       fontSize: 16.0,
@@ -198,7 +198,9 @@ class EditProfileScreen extends StatelessWidget {
                                       IconBroken.Arrow___Left_2,
                                       color: mainColors,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigateTo(context, AboutAppScreen());
+                                    },
                                   ),
                                 ],
                               ),
@@ -213,11 +215,13 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                navigateTo(context, TechnicalSupportScreen());
+                              },
                               child: Row(
                                 children: [
                                   Text(
-                                    'للدعم الفني',
+                                    'الدعم الفني',
                                     style: TextStyle(
                                       color: mainColors,
                                       fontSize: 16.0,
@@ -230,7 +234,9 @@ class EditProfileScreen extends StatelessWidget {
                                       IconBroken.Arrow___Left_2,
                                       color: mainColors,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigateTo(context, TechnicalSupportScreen());
+                                    },
                                   ),
                                 ],
                               ),

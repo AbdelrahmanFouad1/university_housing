@@ -11,4 +11,6 @@ Color finesColor = HexColor('#E3EBF3');
 
 Color separator = HexColor('#707070');
 
+Color evaluation = HexColor('#BFC5CC');
+
 

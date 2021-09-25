@@ -23,7 +23,9 @@ import 'moduls/complaints/complaints_screen.dart';
 import 'moduls/fines/fines_screen.dart';
 import 'moduls/hostingRequests/hosting_requests_screen.dart';
 import 'moduls/profile/edit_profile_screen.dart';
+import 'moduls/profile/follow_requests/follow_requests_screen.dart';
 import 'moduls/profile/profile_screen.dart';
+import 'moduls/profile/student_evaluation/student_evaluation_screen.dart';
 
 
 void main() async {
