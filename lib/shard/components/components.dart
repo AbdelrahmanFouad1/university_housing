@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
+import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
@@ -23,7 +24,6 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (route) => false,
     );
-
 Widget defaultButton({
   double? width,
   double? height,
@@ -109,93 +109,94 @@ AppBar defaultAppBar({
   bool? showBus = false,
   bool? pop = true,
   Widget? popToScreen,
-}) =>
-    AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: backGround,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        backgroundColor: backGround,
-        elevation: 0.0,
-        titleSpacing: titleSpacing,
-        automaticallyImplyLeading: false,
-        actions: [
-          if (showBus == true)
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              width: 30.0,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: SvgPicture.asset(
-                  'assets/icon/bus.svg',
-                  width: 18.0,
-                  height: 18.0,
-                ),
-                onPressed: () {
-                  navigateTo(context, BusScreen());
-                },
-              ),
+})=> AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: backGround,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+    backgroundColor: backGround,
+    elevation: 0.0,
+    titleSpacing: titleSpacing,
+    automaticallyImplyLeading: false,
+    actions: [
+      if(showBus == true)
+        Container(
+          padding: const EdgeInsets.all(0.0),
+          width: 30.0,
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            icon: SvgPicture.asset(
+              'assets/icon/bus.svg',
+              width: 18.0,
+              height: 18.0,
             ),
-          Container(
-            padding: const EdgeInsets.all(0.0),
-            width: 30.0,
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(
-                Icons.person_outline,
+            onPressed: () {
+              navigateTo(context, BusScreen());
+            },
+          ),
+        ),
+      Container(
+        padding: const EdgeInsets.all(0.0),
+        width: 30.0,
+        child: IconButton(
+          padding: EdgeInsets.zero,
+          icon:  Icon(
+            Icons.person_outline,
+            color: mainColors,
+          ),
+          onPressed: () {
+            navigateTo(context, ProfileScreen());
+          },
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(0.0),
+        width: 30.0,
+        child: IconButton(
+          padding: EdgeInsets.zero,
+          icon: Stack(
+            alignment: AlignmentDirectional.topEnd,
+            children: [
+              Icon(
+                IconBroken.Notification,
                 color: mainColors,
               ),
-              onPressed: () {},
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(0.0),
-            width: 30.0,
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: Stack(
-                alignment: AlignmentDirectional.topEnd,
-                children: [
-                  Icon(
-                    IconBroken.Notification,
-                    color: mainColors,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0, left: 4.0),
-                    child: SvgPicture.asset('assets/icon/dot.svg'),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 2.0,left: 4.0),
+                child: SvgPicture.asset('assets/icon/dot.svg'),
               ),
-              onPressed: () {},
+            ],
+          ),
+          onPressed: () {},
+        ),
+      ),
+      if(pop == true)
+        Container(
+          padding: const EdgeInsets.all(0.0),
+          width: 30.0,
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            icon:  Icon(
+              IconBroken.Arrow___Left_2,
+              color: mainColors,
             ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          if (pop == true)
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              width: 30.0,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(
-                  IconBroken.Arrow___Left_2,
-                  color: mainColors,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          const SizedBox(
-            width: 6.0,
-          ),
-        ],
-        title: Text(
-          'أهلا , 42018122',
-          style: TextStyle(
-            color: mainColors,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
-          ),
-        ));
+        ),
+      const SizedBox(width: 6.0,),
+    ],
+    title: Text(
+      'أهلا , 42018122',
+      style: TextStyle(
+        color: mainColors,
+        fontWeight: FontWeight.bold,
+        fontSize: 20.0,
+      ),
+    )
+);
+
 
 Widget defaultTitleBox({
   required String img,
@@ -253,12 +254,11 @@ Widget defaultTiTleBoxColumn({
         color: boxColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
+
       child: Column(
-        mainAxisAlignment: mainAxisAlignment,
+        mainAxisAlignment:mainAxisAlignment,
         children: [
-          const SizedBox(
-            height: 20.0,
-          ),
+          const SizedBox(height: 20.0,),
           Align(
             alignment: AlignmentDirectional.center,
             child: SvgPicture.asset(
@@ -267,9 +267,7 @@ Widget defaultTiTleBoxColumn({
               height: heightImage,
             ),
           ),
-          const SizedBox(
-            height: 5.0,
-          ),
+          const SizedBox(height: 5.0,),
           Text(
             title,
             style: TextStyle(
@@ -383,16 +381,15 @@ Widget buildFinesBox(
 void showToast({
   required String message,
   required ToastStates state,
-}) =>
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 5,
-      backgroundColor: chooseToastColor(state),
-      textColor: Colors.white,
-      fontSize: 14.0,
-    );
+}) => Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 14.0,
+);
 
 // enum
 enum ToastStates { SUCCESS, ERROR, WARNING }
@@ -415,69 +412,67 @@ Color chooseToastColor(ToastStates state) {
   return color;
 }
 
-Widget buildEnquiry(
-  context, {
+Widget buildEnquiry(context, {
   required double height,
   required StatusStates state,
   required Widget body,
-}) =>
-    Container(
-      height: height,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Container(
-              height: double.infinity,
-              width: 10.0,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(22.0),
-                  bottomLeft: Radius.circular(22.0),
-                ),
-                color: chooseStatusColor(state),
-              ),
+}) => Container(
+  height: height,
+  width: double.infinity,
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(8.0),
+  ),
+  child: Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Container(
+          height: double.infinity,
+          width: 10.0,
+          decoration:  BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(22.0),
+              bottomLeft: Radius.circular(22.0),
             ),
+            color: chooseStatusColor(state),
           ),
-          body,
-          // Expanded(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(8.0),
-          //     child: Container(
-          //       height: 122.0,
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.start,
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           const Text(
-          //             'سؤال ؟',
-          //             style: TextStyle(
-          //               fontSize: 16.0,
-          //               fontWeight: FontWeight.w800,
-          //             ),
-          //           ),
-          //           const SizedBox(height: 6.0,),
-          //           Text(
-          //             'هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص.',
-          //             maxLines: 3,
-          //             overflow: TextOverflow.ellipsis,
-          //             style: Theme.of(context).textTheme.caption!.copyWith(
-          //               height: 1.4,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
+        ),
       ),
-    );
+      body,
+      // Expanded(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Container(
+      //       height: 122.0,
+      //       child: Column(
+      //         mainAxisAlignment: MainAxisAlignment.start,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           const Text(
+      //             'سؤال ؟',
+      //             style: TextStyle(
+      //               fontSize: 16.0,
+      //               fontWeight: FontWeight.w800,
+      //             ),
+      //           ),
+      //           const SizedBox(height: 6.0,),
+      //           Text(
+      //             'هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص.',
+      //             maxLines: 3,
+      //             overflow: TextOverflow.ellipsis,
+      //             style: Theme.of(context).textTheme.caption!.copyWith(
+      //               height: 1.4,
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+    ],
+  ),
+);
 
 enum StatusStates { ACCEPT, REJECT, WAITING }
 
@@ -498,3 +493,5 @@ Color chooseStatusColor(StatusStates state) {
 
   return color;
 }
+
+

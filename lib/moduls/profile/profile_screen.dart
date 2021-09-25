@@ -55,7 +55,9 @@ class ProfileScreen extends StatelessWidget {
                       width: 34.0,
                       child: IconButton(
                         padding:EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: SvgPicture.asset(
                           'assets/images/back_arrow.svg',
                           width: 18.0,

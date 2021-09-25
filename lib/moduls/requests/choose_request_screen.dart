@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
+import 'package:university_housing/moduls/hostingRequests/hosting_requests_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -42,11 +43,16 @@ class ChooseRequestScreen extends StatelessWidget {
                 const SizedBox(
                   height: 32.0,
                 ),
-                defaultTiTleBoxColumn(
-                  img: 'assets/images/follow.svg',
-                  title: 'طلبات الاستضافه',
-                  height: 160.0,
-                  width: double.infinity,
+                InkWell(
+                  child: defaultTiTleBoxColumn(
+                    img: 'assets/images/follow.svg',
+                    title: 'طلبات الاستضافه',
+                    height: 160.0,
+                    width: double.infinity,
+                  ),
+                  onTap: (){
+                    navigateTo(context, HostingRequestsScreen());
+                  },
                 ),
                 const SizedBox(
                   height: 32.0,
@@ -89,10 +95,15 @@ class ChooseRequestScreen extends StatelessWidget {
           const SizedBox(width:  32.0,),
           Flexible(
             flex: 1,
-            child: defaultTiTleBoxColumn(
-              img: 'assets/images/follow.svg',
-              title: 'طلبات الاستضافه',
-              height: 160.0,
+            child: InkWell(
+              child: defaultTiTleBoxColumn(
+                img: 'assets/images/follow.svg',
+                title: 'طلبات الاستضافه',
+                height: 160.0,
+              ),
+              onTap: (){
+                navigateTo(context, HostingRequestsScreen());
+              },
             ),
           ),
           const SizedBox(width:  32.0,),

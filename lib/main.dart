@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  EditProfileScreen(),
+      home:  SplashScreen(startWidget: startWidget),
     );
   }
 }

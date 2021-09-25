@@ -44,7 +44,9 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: SvgPicture.asset(
                       'assets/images/back_arrow.svg',
                       width: 18.0,
@@ -54,7 +56,7 @@ class EditProfileScreen extends StatelessWidget {
                 ],
               ),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Container(
                   width: double.infinity,
                   child: Padding(
