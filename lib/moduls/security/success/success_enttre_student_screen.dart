@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/security/main/main_security_screen.dart';
+import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/iconly_broken.dart';
 
-class SuccessScreen2 extends StatelessWidget {
-  const SuccessScreen2({Key? key}) : super(key: key);
+class SuccessEnterStudentScreen extends StatelessWidget {
+  const SuccessEnterStudentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,23 @@ class SuccessScreen2 extends StatelessWidget {
           ),
           backgroundColor: backGround,
           elevation: 0.0,
+          actions: [
+            Container(
+              padding: const EdgeInsets.all(0.0),
+              width: 30.0,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon:  Icon(
+                  IconBroken.Arrow___Left_2,
+                  color: mainColors,
+                ),
+                onPressed: () {
+                  navigateTo(context, MainSecurityScreen());
+                },
+              ),
+            ),
+            const SizedBox(width: 6.0,),
+          ],
         ),
         backgroundColor: backGround,
         body: OrientationBuilder(
@@ -39,7 +59,7 @@ class SuccessScreen2 extends StatelessWidget {
               Container(
                 alignment: AlignmentDirectional.center,
                 child: Text(
-                  'طلب الالتحاق بالسكن',
+                  'تسجيل خروج الطالب من السكن',
                   style: TextStyle(
                     color: mainColors,
                     fontSize: 20.0,
@@ -47,34 +67,23 @@ class SuccessScreen2 extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 90.0,
+                height: 130.0,
               ),
               SvgPicture.asset(
                 'assets/images/phone.svg',
-
               ),
               const SizedBox(
                 height: 22.0,
               ),
-              Column(
-                children: [
-                  Text(
-                    'تم تأكيد طلبك',
-                    style: TextStyle(
-                      color: mainColors,
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold
-                    ),
+              Container(
+                alignment: AlignmentDirectional.center,
+                child: Text(
+                  'تم تأكيد موعد الخروج',
+                  style: TextStyle(
+                    color: mainColors,
+                    fontSize: 20.0,
                   ),
-                  Text(
-                    'انتظارك موافقه مشرف السكن',
-                    style: TextStyle(
-                        color: mainColors,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
@@ -94,7 +103,7 @@ class SuccessScreen2 extends StatelessWidget {
         Container(
           alignment: AlignmentDirectional.center,
           child: Text(
-            'طلب الالتحاق بالسكن',
+            'تسجيل خروج الطالب من السكن',
             style: TextStyle(
               color: mainColors,
               fontSize: 20.0,
@@ -106,30 +115,19 @@ class SuccessScreen2 extends StatelessWidget {
         ),
         SvgPicture.asset(
           'assets/images/phone.svg',
-          // height: 200.0,
         ),
         const SizedBox(
           height: 6.0,
         ),
-        Column(
-          children: [
-            Text(
-              'تم تأكيد طلبك',
-              style: TextStyle(
-                  color: mainColors,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold
-              ),
+        Container(
+          alignment: AlignmentDirectional.center,
+          child: Text(
+            'تم تأكيد موعد الخروج',
+            style: TextStyle(
+              color: mainColors,
+              fontSize: 20.0,
             ),
-            Text(
-              'انتظارك موافقه مشرف السكن',
-              style: TextStyle(
-                  color: mainColors,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold
-              ),
-            ),
-          ],
+          ),
         ),
       ],
     ),

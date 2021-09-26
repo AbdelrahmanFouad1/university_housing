@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
@@ -8,9 +9,11 @@ import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
+import 'package:university_housing/moduls/security/follow/follow_student_screen.dart';
+import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/moduls/splash/splash_screen.dart';
+import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
 import 'package:university_housing/moduls/success&waiting/success_screen.dart';
-import 'package:university_housing/moduls/success&waiting/success_screen2.dart';
 import 'package:university_housing/moduls/success&waiting/waiting_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
@@ -61,11 +64,12 @@ class MyApp extends StatelessWidget {
             statusBarIconBrightness: Brightness.dark,
           ),
           backgroundColor: backGround,
+          elevation: 0.0,
         ),
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  ParentsAcknowledgmentScreen(),
+      home: SplashScreen(startWidget: startWidget),
     );
   }
 }

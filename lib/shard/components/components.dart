@@ -102,6 +102,37 @@ Widget defaultFormField({
     );
 
 
+Widget defaultButton2({
+  double? width ,
+  double? height,
+  double? fontSize ,
+  EdgeInsets? marginSize ,
+  required VoidCallback function,
+  required String text,
+  required Color btnColor,
+}) => Container(
+  width: width,
+  height: height,
+  margin: marginSize,
+  child: MaterialButton(
+    onPressed: function,
+    child: Text(
+      text,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: fontSize,
+      ),
+    ),
+  ),
+  decoration: BoxDecoration(
+    borderRadius: const BorderRadius.only(
+      bottomLeft:  Radius.circular(8.0),
+      bottomRight: Radius.circular(8.0),
+    ),
+    color: btnColor,
+  ),
+);
+
 
 AppBar defaultAppBar({
   required BuildContext context,
