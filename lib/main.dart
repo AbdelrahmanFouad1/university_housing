@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
@@ -16,16 +15,9 @@ import 'package:university_housing/moduls/success&waiting/waiting_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'moduls/bus/bus_screen.dart';
-import 'moduls/complaints/change_damaged_screen.dart';
-import 'moduls/complaints/change_lost_screen.dart';
-import 'moduls/complaints/complaints_screen.dart';
-import 'moduls/fines/fines_screen.dart';
-import 'moduls/hostingRequests/hosting_requests_screen.dart';
-import 'moduls/profile/edit_profile_screen.dart';
-import 'moduls/profile/follow_requests/follow_requests_screen.dart';
-import 'moduls/profile/profile_screen.dart';
-import 'moduls/profile/student_evaluation/student_evaluation_screen.dart';
+
+import 'moduls/parents_acknowledgment/parents_acknowledgment_screen.dart';
+
 
 
 void main() async {
@@ -73,7 +65,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home:  SplashScreen(startWidget: startWidget),
+      home:  ParentsAcknowledgmentScreen(),
     );
   }
 }
