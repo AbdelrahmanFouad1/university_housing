@@ -53,6 +53,30 @@ class AppCubit extends Cubit<AppStates>{
     emit(RemovePikeIdImageState());
   }
 
+  // family Report
+  File? familyImage;
+  var familyPicker = ImagePicker();
+
+  Future<void> pikeFamilyImage() async {
+    final pickedFile = await familyPicker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      familyImage = File(pickedFile.path);
+      print(pickedFile.path);
+      emit(ImagePickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(ImagePickedErrorState());
+    }
+  }
+
+  Future<void> removePikeImage() async {
+    familyImage = null;
+    emit(ImageRemoveSuccessState());
+  }
+
 
 
 
