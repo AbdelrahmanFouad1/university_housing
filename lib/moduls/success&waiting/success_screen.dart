@@ -39,7 +39,7 @@ class SuccessScreen extends StatelessWidget {
               Container(
                 alignment: AlignmentDirectional.center,
                 child: Text(
-                  'تسجيل خروج الطالب من السكن',
+                  'طلب الالتحاق بالسكن',
                   style: TextStyle(
                     color: mainColors,
                     fontSize: 20.0,
@@ -47,23 +47,34 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 130.0,
+                height: 90.0,
               ),
               SvgPicture.asset(
                 'assets/images/phone.svg',
+
               ),
               const SizedBox(
                 height: 22.0,
               ),
-              Container(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  'تم تأكيد موعد الخروج',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
+              Column(
+                children: [
+                  Text(
+                    'تم تأكيد طلبك',
+                    style: TextStyle(
+                      color: mainColors,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
-                ),
+                  Text(
+                    'انتظارك موافقه مشرف السكن',
+                    style: TextStyle(
+                        color: mainColors,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -83,7 +94,7 @@ class SuccessScreen extends StatelessWidget {
         Container(
           alignment: AlignmentDirectional.center,
           child: Text(
-            'تسجيل خروج الطالب من السكن',
+            'طلب الالتحاق بالسكن',
             style: TextStyle(
               color: mainColors,
               fontSize: 20.0,
@@ -95,19 +106,30 @@ class SuccessScreen extends StatelessWidget {
         ),
         SvgPicture.asset(
           'assets/images/phone.svg',
+          // height: 200.0,
         ),
         const SizedBox(
           height: 6.0,
         ),
-        Container(
-          alignment: AlignmentDirectional.center,
-          child: Text(
-            'تم تأكيد موعد الخروج',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
+        Column(
+          children: [
+            Text(
+              'تم تأكيد طلبك',
+              style: TextStyle(
+                  color: mainColors,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold
+              ),
             ),
-          ),
+            Text(
+              'انتظارك موافقه مشرف السكن',
+              style: TextStyle(
+                  color: mainColors,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+          ],
         ),
       ],
     ),
