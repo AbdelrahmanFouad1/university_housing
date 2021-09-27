@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
-import 'package:university_housing/moduls/hostingRequests/hosting_requests_screen.dart';
+import 'package:university_housing/moduls/requests/hosting_requests_screen.dart';
+import 'package:university_housing/moduls/requests/total_cost_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -60,12 +61,12 @@ class ChooseRequestScreen extends StatelessWidget {
                 InkWell(
                   child: defaultTiTleBoxColumn(
                     img: 'assets/images/ticket.svg',
-                    title: 'استعلام عن الغرامات',
+                    title: 'مصاريفي السكنيه',
                     height: 160.0,
                     width: double.infinity,
                   ),
                   onTap: (){
-                    navigateTo(context, FinesScreen());
+                    navigateTo(context, TotalCostScreen());
                   },
                 ),
               ],
@@ -112,11 +113,11 @@ class ChooseRequestScreen extends StatelessWidget {
             child: InkWell(
               child: defaultTiTleBoxColumn(
                 img: 'assets/images/ticket.svg',
-                title: 'استعلام عن الغرامات',
+                title: 'مصاريفي السكنيه',
                 height: 160.0,
               ),
               onTap: (){
-                navigateTo(context, FinesScreen());
+                navigateTo(context, TotalCostScreen());
               },
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:link_text/link_text.dart';
-import 'package:university_housing/moduls/web_view.dart';
+import 'package:university_housing/shard/web_view.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -180,7 +180,7 @@ class TechnicalSupportScreen extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: LinkText(
-                    'https://www.google.com/?hl=ar',
+                    'http://www.hti.edu.eg/ar/page.aspx?id=1013',
                     onLinkTap: (url){
                       navigateTo(context, WebViewScreen(url));
                     },

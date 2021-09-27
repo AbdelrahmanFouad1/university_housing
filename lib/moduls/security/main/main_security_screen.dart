@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
-import 'package:university_housing/moduls/hostingRequests/hosting_requests_screen.dart';
+import 'package:university_housing/moduls/requests/hosting_requests_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/security/follow/follow_student_screen.dart';
 import 'package:university_housing/moduls/security/logout/enter_student_screen.dart';

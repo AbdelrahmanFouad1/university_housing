@@ -8,7 +8,7 @@ import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
-class StudentEvaluationDetailsScreen extends StatelessWidget {
+class StudentRateDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
