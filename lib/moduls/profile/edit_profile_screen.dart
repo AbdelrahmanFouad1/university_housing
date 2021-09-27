@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/profile/about_app_screen.dart';
 import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
-import 'package:university_housing/moduls/profile/student_evaluation/student_evaluation_screen.dart';
+import 'package:university_housing/moduls/profile/student_rate/student_rate_screen.dart';
 import 'package:university_housing/moduls/profile/technical_support_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
@@ -144,7 +144,7 @@ class EditProfileScreen extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                navigateTo(context,StudentEvaluationScreen(),);
+                                navigateTo(context,StudentRateScreen(),);
                               },
                               child: Row(
                                 children: [
@@ -163,7 +163,7 @@ class EditProfileScreen extends StatelessWidget {
                                       color: mainColors,
                                     ),
                                     onPressed: () {
-                                      navigateTo(context,StudentEvaluationScreen(),);
+                                      navigateTo(context,StudentRateScreen(),);
                                     },
                                   ),
                                 ],
