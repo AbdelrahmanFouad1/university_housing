@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
+import 'package:university_housing/moduls/family_report/family_report_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
-import 'package:university_housing/moduls/parents_acknowledgment/parents_acknowledgment_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
         navigateTo(context, ChooseComplaintsScreen());
       }
       else if(index == 2){
-        navigateTo(context, ParentsAcknowledgmentScreen());
+        navigateTo(context, FamilyReportScreen());
       }
       else {
         navigateTo(context, QueriesScreen());
