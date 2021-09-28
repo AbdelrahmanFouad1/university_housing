@@ -7,7 +7,7 @@ import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
-class ParentsAcknowledgmentScreen extends StatelessWidget {
+class FamilyReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (create)=>AppCubit(),

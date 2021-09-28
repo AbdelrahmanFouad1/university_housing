@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/profile/student_evaluation/student_evaluation_details_screen.dart';
+import 'package:university_housing/moduls/profile/student_rate/student_rate_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
-class StudentEvaluationScreen extends StatelessWidget {
+class StudentRateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (context)=> AppCubit(),
@@ -205,7 +205,7 @@ Widget buildEvaluationItem(var cubit,context)=>Stack(
           SizedBox(height: 10,),
           InkWell(
             onTap: (){
-              navigateTo(context, StudentEvaluationDetailsScreen());
+              navigateTo(context, StudentRateDetailsScreen());
             },
             child: Container(
               width: 280.0,
