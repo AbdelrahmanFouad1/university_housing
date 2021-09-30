@@ -23,59 +23,49 @@ class ChooseComplaintsScreen extends StatelessWidget {
         ),
     );
   }
-  Widget buildPortrait(context) => Stack(
-    alignment: AlignmentDirectional.bottomCenter,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(19.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            InkWell(
-              child: defaultTiTleBoxColumn(
-                img: 'assets/images/broken-plate.svg',
-                title: 'تغيير شئ تالف',
-                height: 160.0,
-                width: double.infinity,
-              ),
-              onTap: () {
-                navigateTo(context, ChangeDamagedScreen());
-              },
-            ),
-            const SizedBox(height: 32.0,),
-            InkWell(
-              child: defaultTiTleBoxColumn(
-                img: 'assets/images/locate.svg',
-                title: 'بلاغ عن مفقودات',
-                height: 160.0,
-                width: double.infinity,
-              ),
-              onTap: () {
-                navigateTo(context, ChangeLostScreen());
-              },
-            ),
-            const SizedBox(height: 32.0,),
-            InkWell(
-              child: defaultTiTleBoxColumn(
-                img: 'assets/images/review.svg',
-                title: 'شكوى عامه',
-                height: 160.0,
-                width: double.infinity,
-              ),
-              onTap: () {
-                navigateTo(context, ComplaintsScreen());
-              },
-            ),
-          ],
+  Widget buildPortrait(context) => Padding(
+    padding: const EdgeInsets.all(19.0),
+    child: Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InkWell(
+          child: defaultTiTleBoxColumn(
+            img: 'assets/images/broken-plate.svg',
+            title: 'تغيير شئ تالف',
+            height: 160.0,
+            width: double.infinity,
+          ),
+          onTap: () {
+            navigateTo(context, ChangeDamagedScreen());
+          },
         ),
-      ),
-      SvgPicture.asset(
-        'assets/images/layer2.svg',
-        semanticsLabel: 'layer',
-        fit: BoxFit.cover,
-      ),
-    ],
+        const SizedBox(height: 32.0,),
+        InkWell(
+          child: defaultTiTleBoxColumn(
+            img: 'assets/images/locate.svg',
+            title: 'بلاغ عن مفقودات',
+            height: 160.0,
+            width: double.infinity,
+          ),
+          onTap: () {
+            navigateTo(context, ChangeLostScreen());
+          },
+        ),
+        const SizedBox(height: 32.0,),
+        InkWell(
+          child: defaultTiTleBoxColumn(
+            img: 'assets/images/review.svg',
+            title: 'شكوى عامه',
+            height: 160.0,
+            width: double.infinity,
+          ),
+          onTap: () {
+            navigateTo(context, ComplaintsScreen());
+          },
+        ),
+      ],
+    ),
   );
 
   Widget buildLandScape(context) => Padding(
