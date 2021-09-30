@@ -11,6 +11,8 @@ import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Padding(
@@ -79,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                           Builder(
                             builder: (context){
                               if(cubit.profileImage == null){
-                                return CircleAvatar(
+                                return const CircleAvatar(
                                   radius: 60,
                                   backgroundImage: NetworkImage(
                                       'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -103,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                               }
                             },
                           ),
-                          SizedBox(width: 12.0,),
+                          const SizedBox(width: 12.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -115,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height:2.0,),
+                              const SizedBox(height:2.0,),
                               Text(
                                 '42018122',
                                 style: TextStyle(
@@ -129,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.0,),
+                    const SizedBox(height: 20.0,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Column(
@@ -157,7 +159,7 @@ class ProfileScreen extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
+                                        children: const [
                                           SizedBox(height: 6.0,),
                                           Text(
                                             'انت الان مقيم في ',
@@ -194,19 +196,19 @@ class ProfileScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     SvgPicture.asset(
                                       'assets/images/layer22.svg',
                                       width: 100.0,
                                       height: 92.0,
                                     ),
-                                    SizedBox(width: 22.0,),
+                                    const SizedBox(width: 22.0,),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.0,),
+                          const SizedBox(height: 20.0,),
                           Container(
                             width: double.infinity,
                             child: Text(

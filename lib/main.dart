@@ -10,6 +10,7 @@ import 'package:university_housing/moduls/news_details/news_details_screen.dart'
 import 'package:university_housing/moduls/profile/leaving_room_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
+import 'package:university_housing/moduls/requests/change_room_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/moduls/security/follow/follow_student_screen.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
@@ -68,8 +69,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      // home: SplashScreen(startWidget: startWidget),
-      home: LeavingRoomScreen(),
+      home: SplashScreen(startWidget: startWidget),
     );
   }
 }
