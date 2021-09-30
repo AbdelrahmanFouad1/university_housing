@@ -4,11 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
-import 'package:university_housing/moduls/profile/success_leaving_screen.dart';
+import 'package:university_housing/moduls/requests/success_leaving_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/color.dart';
+
+
 
 class LeavingRoomScreen extends StatelessWidget {
 
@@ -59,13 +62,13 @@ class LeavingRoomScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                       child: Row(
                         children: [
                           Builder(
                             builder: (context){
                               if(cubit.profileImage == null){
-                                return CircleAvatar(
+                                return const CircleAvatar(
                                   radius: 40,
                                   backgroundImage: NetworkImage(
                                       'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -89,7 +92,7 @@ class LeavingRoomScreen extends StatelessWidget {
                               }
                             },
                           ),
-                          SizedBox(width: 12.0,),
+                          const SizedBox(width: 12.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -101,7 +104,7 @@ class LeavingRoomScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height:2.0,),
+                              const SizedBox(height:2.0,),
                               Text(
                                 '42018122',
                                 style: TextStyle(
@@ -115,7 +118,7 @@ class LeavingRoomScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 26.0,),
+                    const SizedBox(height: 30.0,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Column(
@@ -143,7 +146,7 @@ class LeavingRoomScreen extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
+                                        children: const [
                                           SizedBox(height: 6.0,),
                                           Text(
                                             'انت الان مقيم في ',
@@ -180,23 +183,23 @@ class LeavingRoomScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     SvgPicture.asset(
                                       'assets/images/layer22.svg',
                                       width: 100.0,
                                       height: 92.0,
                                     ),
-                                    SizedBox(width: 22.0,),
+                                    const SizedBox(width: 22.0,),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.0,),
+                          const SizedBox(height: 10.0,),
                         ],
                       ),
                     ),
-                    SizedBox(height: 18.0,),
+                    const SizedBox(height: 30.0,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Row(
@@ -206,7 +209,7 @@ class LeavingRoomScreen extends StatelessWidget {
                             width: 20.0,
                             height: 20.0,
                           ),
-                          SizedBox(width: 5.0,),
+                          const SizedBox(width: 5.0,),
                           Text(
                             'تحذير',
                             style: TextStyle(
@@ -227,7 +230,7 @@ class LeavingRoomScreen extends StatelessWidget {
                         color: warning,
                       ),
                     ),
-                    SizedBox(height: 20.0,),
+                    const SizedBox(height: 20.0,),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 26.0),
                       child: Row(
@@ -241,10 +244,10 @@ class LeavingRoomScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                           ),
-                          SizedBox(width: 6.0,),
+                          const SizedBox(width: 6.0,),
                           Expanded(
                             child: Text(
-                              'يجب مراعاه ان في حاله أخلاء السكن والرغبه في العوده اليه مره أخرى , فعليك اتمام جميع الأجرائات السكنيه من جديد',
+                              'يجب مراعاه ان في حاله إخلاء السكن والرغبه في العوده اليه مره أخرى , فعليك اتمام جميع الأجرائات السكنيه من جديد',
                               style: TextStyle(
                                 color: mainColors,
                                 fontSize: 16.0,
@@ -272,7 +275,7 @@ class LeavingRoomScreen extends StatelessWidget {
                                   height: 14.0,
                                 ),
                               ),
-                              SizedBox(width: 6.0,),
+                              const SizedBox(width: 6.0,),
                               Expanded(
                                 child: Text(
                                   'في حاله وجود غرامات ماليه , يتم خصمها من التأمين ',
@@ -305,7 +308,7 @@ class LeavingRoomScreen extends StatelessWidget {
                         ]
                       ),
                     ),
-                    SizedBox(height: 50.0,),
+                    const SizedBox(height: 50.0,),
                     Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: defaultButton(

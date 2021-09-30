@@ -7,7 +7,7 @@ import 'package:university_housing/moduls/complaints/choose_complaints_screen.da
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
-import 'package:university_housing/moduls/profile/leaving_room_screen.dart';
+import 'package:university_housing/moduls/requests/leaving_room_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/change_room_screen.dart';
