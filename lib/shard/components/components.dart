@@ -526,3 +526,46 @@ Color chooseStatusColor(StatusStates state) {
 }
 
 
+Widget buildDialog({
+  required context,
+  required String title,
+  required Widget child,
+}) => AlertDialog(
+  title: Text(
+    title,
+    textDirection: TextDirection.rtl,
+    style: TextStyle(color: mainColors),
+  ),
+  contentPadding: EdgeInsets.zero,
+  content: SingleChildScrollView(
+    physics: const BouncingScrollPhysics(),
+    child: Directionality(
+      textDirection: TextDirection.rtl,
+      child: child,
+    ),
+  ),
+  actions: [
+    TextButton(
+      onPressed: () => Navigator.pop(context),
+      child: Text(
+        'الغاء',
+        textDirection: TextDirection.rtl,
+        style: TextStyle(
+          color: mainColors,
+        ),
+      ),
+    ),
+    TextButton(
+      onPressed: () => Navigator.pop(context),
+      child: Text(
+        'اختيار',
+        textDirection: TextDirection.rtl,
+        style: TextStyle(
+          color: mainColors,
+        ),
+      ),
+    ),
+  ],
+);
+
+

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
-import 'package:university_housing/moduls/requests/change_room_screen.dart';
+import 'package:university_housing/moduls/requests/change_room/change_room_screen.dart';
 import 'package:university_housing/moduls/requests/hosting_requests_screen.dart';
 import 'package:university_housing/moduls/requests/leaving_room_screen.dart';
 import 'package:university_housing/moduls/requests/total_cost_screen.dart';
@@ -44,7 +44,7 @@ class ChooseRequestScreen extends StatelessWidget {
               width: double.infinity,
             ),
             onTap: (){
-              navigateTo(context, const ChangeRoomScreen());
+              navigateTo(context,  ChangeRoomScreen());
             },
           ),
           const SizedBox(

@@ -18,6 +18,10 @@ class ChangeThemeSuccessState extends AppStates {}
 
 class ImageRemoveSuccessState extends AppStates {}
 
+class ChangeFloorState extends AppStates {}
+
+class ChangeRoomState extends AppStates {}
+
 
 
 
