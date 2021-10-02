@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.university_housing">
    <application
-        android:label="university_housing"
+        android:label="الأسكان الجامعى"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
