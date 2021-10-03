@@ -30,6 +30,10 @@ class IsDoubleSuccessState extends AppStates {}
 
 class IsAgreeSuccessState extends AppStates {}
 
+class ChangeFloorState extends AppStates {}
+
+class ChangeRoomState extends AppStates {}
+
 
 
 

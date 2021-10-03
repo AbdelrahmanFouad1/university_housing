@@ -526,7 +526,6 @@ Color chooseStatusColor(StatusStates state) {
 }
 
 
-
 Widget buildDialog({
   required context,
   required String title,
@@ -568,3 +567,5 @@ Widget buildDialog({
     ),
   ],
 );
+
+

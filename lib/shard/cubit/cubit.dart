@@ -22,6 +22,7 @@ class AppCubit extends Cubit<AppStates>{
     emit(ChangePasswordVisibilityState());
   }
 
+
   // Hosting Requests Screen
   bool isStudent = true;
 
@@ -53,6 +54,7 @@ class AppCubit extends Cubit<AppStates>{
     emit(RemovePikeIdImageState());
   }
 
+
   // family Report
   File? familyImage;
   var familyPicker = ImagePicker();
@@ -76,8 +78,6 @@ class AppCubit extends Cubit<AppStates>{
     familyImage = null;
     emit(ImageRemoveSuccessState());
   }
-
-
 
 
   // edit profile screen
@@ -129,6 +129,26 @@ class AppCubit extends Cubit<AppStates>{
     img = CircleAvatar(radius: 60, backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),);
     emit(ImageRemoveSuccessState());
     showToast(state: ToastStates.SUCCESS,message: 'تم حذف الصوره بنجاح');
+  }
+
+  //Change Room Screen
+
+  int currVal = 0;
+  String currText = '';
+
+  void changeFloor(int currentNum, String currentFloor) {
+    currVal = currentNum;
+    currText = currentFloor;
+    emit(ChangeFloorState());
+  }
+
+  int currRoomVal = 0;
+  String currRoomText = '';
+
+  void changeRoom(int currentNum, String currentFloor) {
+    currRoomVal = currentNum;
+    currRoomText = currentFloor;
+    emit(ChangeRoomState());
   }
 
 
