@@ -131,4 +131,76 @@ class AppCubit extends Cubit<AppStates>{
     showToast(state: ToastStates.SUCCESS,message: 'تم حذف الصوره بنجاح');
   }
 
+
+//  Booking Room
+
+  int selectedHouse = -1;
+  bool? showDetails = false;
+  bool? showAll = false;
+  bool? isDouble= false;
+  bool? agree= false;
+ void changeHouseColor (int Selected){
+   selectedHouse = Selected;
+   showDetails = true;
+   emit(SelectHouseSuccessState());
+ }
+
+  void ShowAllDetails (bool ShowAll){
+    showAll = ShowAll;
+    emit(ShowAllDetailsSuccessState());
+  }
+
+  void IsDouble (bool IsDouble){
+    isDouble = IsDouble;
+    emit(IsDoubleSuccessState());
+  }
+
+
+  void IsAgree(bool Is_agree){
+    agree = Is_agree;
+    emit(IsAgreeSuccessState());
+  }
+
+  int currentVal = 0;
+  String currentText = '';
+
+  void selectFloor(int currentNum, String currentFloor) {
+    currentVal = currentNum;
+    currentText = currentFloor;
+    emit(SelectFloorState());
+  }
+
+  int currentRoomVal = 0;
+  String currentRoomText = '';
+
+  void selectRoom(int currentNum, String currentFloor) {
+    currentRoomVal = currentNum;
+    currentRoomText = currentFloor;
+    emit(SelectRoomState());
+  }
+
+//  receipt screen
+  File? receiptImage;
+  var receiptPicker = ImagePicker();
+
+  Future<void> pikeReceiptImage() async {
+    final pickedFile = await receiptPicker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      receiptImage = File(pickedFile.path);
+      print(pickedFile.path);
+      emit(ImagePickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(ImagePickedErrorState());
+    }
+  }
+
+  Future<void> removeReceiptImage() async {
+    receiptImage = null;
+    emit(ImageRemoveSuccessState());
+  }
+
 }
