@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/fines/fines_screen.dart';
-import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/requests/change_room/change_room_screen.dart';
 import 'package:university_housing/moduls/requests/hosting_requests_screen.dart';
 import 'package:university_housing/moduls/requests/leaving_room_screen.dart';
@@ -10,6 +7,8 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class ChooseRequestScreen extends StatelessWidget {
+  const ChooseRequestScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +100,15 @@ class ChooseRequestScreen extends StatelessWidget {
         children: [
           Flexible(
             flex: 1,
-            child: defaultTiTleBoxColumn(
-              img: 'assets/images/talk.svg',
-              title: 'طلب تغيير الغرفه',
-              height: 160.0,
+            child: InkWell(
+              child: defaultTiTleBoxColumn(
+                img: 'assets/images/talk.svg',
+                title: 'طلب تغيير الغرفه',
+                height: 160.0,
+              ),
+              onTap: (){
+                navigateTo(context,  ChangeRoomScreen());
+              },
             ),
           ),
           const SizedBox(width:  32.0,),

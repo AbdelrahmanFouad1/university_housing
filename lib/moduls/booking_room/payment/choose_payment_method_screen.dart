@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/moduls/booking_room/payment/e_payment_screen.dart';
 import 'package:university_housing/moduls/booking_room/payment/receipt_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
@@ -8,6 +9,8 @@ import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class ChoosePaymentMethodScreen extends StatelessWidget {
+  const ChoosePaymentMethodScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,14 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
       child: BlocConsumer<AppCubit,AppStates>(
         listener: (context,state){},
         builder: (context,state){
-          var cubit = AppCubit.get(context);
+          // var cubit = AppCubit.get(context);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
               backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -59,7 +62,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                               color: mainColors,
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               '. . .',
@@ -82,7 +85,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.0,),
+                      const SizedBox(height: 10.0,),
                       Center(
                         child: Text(
                           'أختر وسيله الدفع',
@@ -92,7 +95,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 22.0,),
+                      const SizedBox(height: 22.0,),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -111,7 +114,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                                     color: mainColors,
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'رفع الإيصال',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -122,11 +125,13 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10.0,),
+                            const SizedBox(width: 10.0,),
                             Expanded(
                               flex: 1,
                               child: InkWell(
-                                onTap: (){},
+                                onTap: (){
+                                  navigateTo(context, E_PaymentScreen());
+                                },
                                 child: Container(
                                   alignment: AlignmentDirectional.center,
                                   height: 70.0,
@@ -134,7 +139,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                                     color: mainColors,
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'الدفع الكترونيا',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
