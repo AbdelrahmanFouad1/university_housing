@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class BookingDoneScreen extends StatelessWidget {
+  const BookingDoneScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: backGround,
-        appBar: defaultAppBar(context: context),
+        appBar: defaultAppBar(context: context, bookingDone: true, pop: false),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
@@ -74,7 +77,7 @@ class BookingDoneScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 22.0,),
+                const SizedBox(height: 22.0,),
                 Center(
                   child: Text(
                     ' تم رفع طلبكم بنجاح',
@@ -84,11 +87,11 @@ class BookingDoneScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 22.0,),
+                const SizedBox(height: 22.0,),
                 SvgPicture.asset(
                   'assets/images/phone.svg',
                 ),
-                SizedBox(height: 22.0,),
+                const SizedBox(height: 22.0,),
                 Container(
                   alignment: AlignmentDirectional.center,
                   child: Text(
@@ -131,7 +134,7 @@ class BookingDoneScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16.0,),
+                const SizedBox(height: 16.0,),
               ],
             ),
           ),

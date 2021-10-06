@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
@@ -139,6 +140,7 @@ AppBar defaultAppBar({
   double? titleSpacing = 12.0,
   bool? showBus = false,
   bool? pop = true,
+  bool? bookingDone = false,
   Widget? popToScreen,
 })=> AppBar(
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -215,6 +217,22 @@ AppBar defaultAppBar({
               Navigator.pop(context);
             },
           ),
+        ),
+      if(bookingDone == true)
+        InkWell(
+          onTap: (){
+            navigateTo(context, HomeScreen());
+          },
+          child: Stack(
+          alignment: Alignment.center,
+          children: [
+            CircleAvatar(
+              radius: 14.0,
+              backgroundColor: backGround,
+            ),
+            SvgPicture.asset('assets/images/back_arrow.svg'),
+          ],
+      ),
         ),
       const SizedBox(width: 6.0,),
     ],

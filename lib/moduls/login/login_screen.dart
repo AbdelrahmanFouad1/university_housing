@@ -131,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              //TODO: دي هتتشال بس مش دلوقتي وبلاش غباء هاا
+              //TODO: is removed when done
               floatingActionButton: FloatingActionButton(
                   onPressed: (){
                     navigateTo(context, MainSecurityScreen());

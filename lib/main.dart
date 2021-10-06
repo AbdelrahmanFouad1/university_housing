@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
+import 'package:university_housing/moduls/booking_room/booking_done_screen.dart';
 import 'package:university_housing/moduls/booking_room/booking_room_screen.dart';
 import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
+import 'package:university_housing/moduls/booking_room/payment/e_payment_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
 
   final Widget startWidget;
 
-    MyApp({
+     MyApp({
     required this.startWidget,
   });
 
@@ -71,7 +73,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'cairo_semiBold',
       ),
       themeMode: ThemeMode.light,
-      home: SplashScreen(startWidget: startWidget),
+      // home: SplashScreen(startWidget: startWidget),
+      home:const BookingDoneScreen(),
     );
   }
 }

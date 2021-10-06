@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/states.dart';
@@ -22,6 +23,15 @@ class AppCubit extends Cubit<AppStates>{
     emit(ChangePasswordVisibilityState());
   }
 
+
+  // Home Screen
+  bool isRegister = true;
+  IconData register = Icons.app_registration;
+  void changeRegisterStudent() {
+    isRegister = !isRegister;
+    register = isRegister ? Icons.app_registration : Icons.backspace_outlined;
+    emit(ChangeRegisterStudentState());
+  }
 
   // Hosting Requests Screen
   bool isStudent = true;
@@ -222,5 +232,23 @@ class AppCubit extends Cubit<AppStates>{
     receiptImage = null;
     emit(ImageRemoveSuccessState());
   }
+
+  // E-payment Screen
+
+  String cardNumber = '';
+  String expiryDate= '';
+  String cardHolderName = '';
+  String cvvCode= '';
+  bool isCvvFocused = false;
+
+void changeCreditCardModel(CreditCardModel creditCardModel){
+  cardNumber = creditCardModel.cardNumber;
+  expiryDate = creditCardModel.expiryDate;
+  cardHolderName = creditCardModel.cardHolderName;
+  cvvCode = creditCardModel.cvvCode;
+  isCvvFocused = creditCardModel.isCvvFocused;
+
+  emit(ChangeCreditCardModelState());
+}
 
 }
