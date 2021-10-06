@@ -13,6 +13,8 @@ class ReceiptScreen extends StatelessWidget {
   var idController = TextEditingController();
   var typeController = TextEditingController();
 
+  ReceiptScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (create)=> AppCubit(),
@@ -26,7 +28,7 @@ class ReceiptScreen extends StatelessWidget {
               backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -63,7 +65,7 @@ class ReceiptScreen extends StatelessWidget {
                               color: mainColors,
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               '. . .',
@@ -86,7 +88,7 @@ class ReceiptScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 22.0,),
+                      const SizedBox(height: 22.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Text(
@@ -99,7 +101,7 @@ class ReceiptScreen extends StatelessWidget {
                       ),
 
 
-                      SizedBox(height: 22.0,),
+                      const SizedBox(height: 22.0,),
                       Container(
                         width: double.infinity,
                         height: 45.0 ,
@@ -123,7 +125,7 @@ class ReceiptScreen extends StatelessWidget {
                       ),
 
 
-                      SizedBox(height: 16.0,),
+                      const SizedBox(height: 16.0,),
                       Container(
                         width: double.infinity,
                         height: 45.0 ,
@@ -145,7 +147,7 @@ class ReceiptScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.0,),
+                      const SizedBox(height: 16.0,),
                       Container(
                         width: double.infinity,
                         height: 45.0 ,
@@ -167,7 +169,7 @@ class ReceiptScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.0,),
+                      const SizedBox(height: 16.0,),
                       Builder(
                           builder: (context) {
                             if(cubit.receiptImage != null){
@@ -248,30 +250,30 @@ class ReceiptScreen extends StatelessWidget {
                                     ),
                                     hintText: 'صورة ايصال الدفع',
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       color: Colors.black38,
                                     ),
-                                    contentPadding:EdgeInsetsDirectional.all(8.0),
+                                    contentPadding:const EdgeInsetsDirectional.all(8.0),
                                   ),
                                 ),
                               );
                             }
                           }
                       ),
-                      SizedBox(height: 16.0,),
+                      const SizedBox(height: 16.0,),
                       defaultButton(
                         function: (){
                           if(cubit.receiptImage==null || nameController.text.isEmpty || idController.text.isEmpty || typeController.text.isEmpty){
-                            showToast(message: 'ادخل باقي البيانات اولا', state: ToastStates.WARNING);
+                            showToast(message: 'ادخل باقى البيانات اولا', state: ToastStates.WARNING);
                           }else{
-                            navigateTo(context, BookingDoneScreen());
+                            navigateTo(context, const BookingDoneScreen());
                           }
                         },
                         text: 'تقديم الطلب',
                         width: double.infinity,
                         height: 47.0,
                         btnColor: mainColors,
-                        marginSize: EdgeInsets.symmetric(horizontal: 10.0),
+                        marginSize: const EdgeInsets.symmetric(horizontal: 10.0),
 
                       ),
 

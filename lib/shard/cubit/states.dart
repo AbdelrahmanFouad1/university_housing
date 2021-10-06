@@ -4,6 +4,8 @@ class AppInitialState extends AppStates {}
 
 class ChangePasswordVisibilityState extends AppStates {}
 
+class ChangeRegisterStudentState extends AppStates {}
+
 class ImagePickedSuccessState extends AppStates {}
 
 class RemovePikeIdImageState extends AppStates {}
@@ -33,6 +35,8 @@ class IsAgreeSuccessState extends AppStates {}
 class ChangeFloorState extends AppStates {}
 
 class ChangeRoomState extends AppStates {}
+
+class ChangeCreditCardModelState extends AppStates {}
 
 
 

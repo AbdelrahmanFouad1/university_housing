@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/moduls/booking_room/booking_room_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/family_report/family_report_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
@@ -26,7 +27,7 @@ class MainModel {
 class HomeScreen extends StatelessWidget {
 
   DateTime timeBackPressed = DateTime.now();
-  bool isRegister = true;
+
   List<MainModel> requests = [
     MainModel(
       image: 'assets/images/request.svg',
@@ -45,6 +46,8 @@ class HomeScreen extends StatelessWidget {
       title: 'استعلامات',
     ),
   ];
+
+  HomeScreen({Key? key}) : super(key: key);
 
 
   @override
@@ -65,14 +68,28 @@ class HomeScreen extends StatelessWidget {
                   final isExitWarning = difference >= const Duration(seconds: 2);
                   timeBackPressed = DateTime.now();
                   if(isExitWarning){
-                    showToast(message: 'اضغط مرة أخرى للخروج من البرنامج', state: ToastStates.WARNING);
+                    showToast(
+                        message: 'اضغط مرة أخرى للخروج من البرنامج',
+                        state: ToastStates.WARNING);
                     return false;
-                  }else{
+                  } else {
                     return true;
                   }
                 },
                 child: OrientationBuilder(
-                  builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait() :buildLandScape() ,
+                  builder: (BuildContext context, Orientation orientation) =>
+                      orientation == Orientation.portrait
+                          ? buildPortrait()
+                          : buildLandScape(),
+                ),
+              ),
+              //TODO: is removed when done
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  cubit.changeRegisterStudent();
+                },
+                child: Icon(
+                  cubit.register,
                 ),
               ),
             ),
@@ -86,7 +103,7 @@ class HomeScreen extends StatelessWidget {
   Widget buildRequestsList(MainModel model, context, index) => InkWell(
     onTap: () {
       if(index == 0){
-        navigateTo(context, ChooseRequestScreen());
+        navigateTo(context, const ChooseRequestScreen());
       }
       else if(index == 1){
         navigateTo(context, ChooseComplaintsScreen());
@@ -194,7 +211,7 @@ class HomeScreen extends StatelessWidget {
           children: [
                 Builder(builder: (context) {
 
-                  if (isRegister) {
+                  if (AppCubit.get(context).isRegister) {
                     return Column(
                       children: [
                         Container(
@@ -225,12 +242,17 @@ class HomeScreen extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return defaultTiTleBoxColumn(
-                        img: 'assets/images/request.svg',
-                        title: 'طلب الالتحاق بالسكن',
-                        height: 122.0,
-                        widthImage: 50.0,
-                        heightImage: 50.0);
+                    return InkWell(
+                      onTap: () {
+                        navigateTo(context, BookingRoomScreen());
+                      },
+                      child: defaultTiTleBoxColumn(
+                          img: 'assets/images/request.svg',
+                          title: 'طلب الالتحاق بالسكن',
+                          height: 122.0,
+                          widthImage: 50.0,
+                          heightImage: 50.0),
+                    );
                   }
                 }),
                 const SizedBox(
@@ -272,7 +294,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget buildLandScape() =>  Builder(
     builder: (context) {
-      if (isRegister) {
+      if (AppCubit.get(context).isRegister) {
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
@@ -330,25 +352,30 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              defaultTiTleBoxColumn(
-                img: 'assets/images/request.svg',
-                title: 'طلب الالتحاق بالسكن',
-                width: 120.0,
-                widthImage: 50.0,
-                heightImage: 50.0,
-                fontSize: 12.0,
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              const SizedBox(
-                width: 12.0,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Text(
+                InkWell(
+                  onTap: () {
+                    navigateTo(context, BookingRoomScreen());
+                  },
+                  child: defaultTiTleBoxColumn(
+                    img: 'assets/images/request.svg',
+                    title: 'طلب الالتحاق بالسكن',
+                    width: 120.0,
+                    widthImage: 50.0,
+                    heightImage: 50.0,
+                    fontSize: 12.0,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                ),
+                const SizedBox(
+                  width: 12.0,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Text(
                         'اخبار عن السكن',
                         style: TextStyle(
                           color: mainColors,

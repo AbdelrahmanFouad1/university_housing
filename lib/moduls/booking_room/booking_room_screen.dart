@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/booking_room/booking_done_screen.dart';
 import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -89,6 +88,8 @@ class BookingRoomScreen extends StatelessWidget {
     ),
   ];
 
+  BookingRoomScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (create)=> AppCubit(),
@@ -102,7 +103,7 @@ class BookingRoomScreen extends StatelessWidget {
             backgroundColor: backGround,
             appBar: defaultAppBar(context: context),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
@@ -119,7 +120,7 @@ class BookingRoomScreen extends StatelessWidget {
                             color: mainColors,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 1,
                           child: Text(
                             '. . .',
@@ -139,7 +140,7 @@ class BookingRoomScreen extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 1,
                           child: Text(
                             '. . .',
@@ -162,7 +163,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0,),
+                    const SizedBox(height: 10.0,),
                     Center(
                       child: Text(
                         'أختر غرفتك',
@@ -172,7 +173,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0,),
+                    const SizedBox(height: 16.0,),
 
 
 
@@ -325,7 +326,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 26.0,),
+                    const SizedBox(height: 26.0,),
 
 
 
@@ -381,7 +382,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0,),
+                    const SizedBox(height: 16.0,),
 
 
 
@@ -442,7 +443,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0,),
+                    const SizedBox(height: 16.0,),
 
 
 
@@ -490,7 +491,7 @@ class BookingRoomScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 16.0,),
+                                const SizedBox(height: 16.0,),
                                 Container(
                                   width: double.infinity,
                                   height:1.0,
@@ -498,7 +499,7 @@ class BookingRoomScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 16.0,),
+                            const SizedBox(height: 16.0,),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(
@@ -525,13 +526,13 @@ class BookingRoomScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16.0,),
+                            const SizedBox(height: 16.0,),
                             Container(
                               width: double.infinity,
                               height:1.0,
                               color: separator,
                             ),
-                            SizedBox(height: 16.0,),
+                            const SizedBox(height: 16.0,),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(
@@ -558,13 +559,13 @@ class BookingRoomScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16.0,),
+                            const SizedBox(height: 16.0,),
                             Container(
                               width: double.infinity,
                               height:1.0,
                               color: separator,
                             ),
-                            SizedBox(height: 16.0,),
+                            const SizedBox(height: 16.0,),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(
@@ -595,7 +596,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0,),
+                    const SizedBox(height: 16.0,),
 
                     //check box
                     Container(
@@ -619,7 +620,7 @@ class BookingRoomScreen extends StatelessWidget {
                               fontSize: 14.0,
                             ),
                           ),
-                          SizedBox(width: 4.0,),
+                          const SizedBox(width: 4.0,),
                           InkWell(
                             onTap: (){
                               navigateTo(context, TermsAndConditionsScreen());
@@ -636,7 +637,7 @@ class BookingRoomScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 16.0,),
+                    const SizedBox(height: 16.0,),
 
 
 
@@ -644,11 +645,11 @@ class BookingRoomScreen extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: cubit.showAll == true ? 70.0: 0.0,
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: defaultButton(
                           function: (){
                             if(cubit.agree==true){
-                              navigateTo(context, ChoosePaymentMethodScreen());
+                              navigateTo(context, const ChoosePaymentMethodScreen());
                             }else{
                               showToast(message: 'برجاء الموافقه علي الشروط', state: ToastStates.WARNING);
                             }
