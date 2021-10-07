@@ -6,24 +6,35 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/security/security_cubit.dart';
+import 'package:university_housing/shard/cubit/security/security_states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
 class EnterStudentLoginScreen extends StatelessWidget {
   var dateController = TextEditingController();
   var timeController = TextEditingController();
+  var nameController = TextEditingController();
+  var idController = TextEditingController();
+  var notesController = TextEditingController();
+  bool show_warning = false ;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {},
+      create: (BuildContext context) => SecurityCubit(),
+      child: BlocConsumer<SecurityCubit, SecurityStates>(
+        listener: (BuildContext context, state) {
+          if( state is SecurityShowWarningState){
+            show_warning = true;
+          }else{
+            show_warning = false;
+          }
+        },
         builder: (BuildContext context, Object? state) {
-          var cubit = AppCubit.get(context);
+          var cubit = SecurityCubit.get(context);
           return Directionality(
             textDirection: ui.TextDirection.rtl,
             child: Scaffold(
@@ -55,7 +66,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                   const SizedBox(width: 6.0,),
                 ],
                   title: Text(
-                    'تسجيل دخول الطالب من السكن',
+                    'تسجيل دخول الطالب الى السكن',
                     style: TextStyle(
                       color: mainColors,
                       fontWeight: FontWeight.bold,
@@ -74,20 +85,45 @@ class EnterStudentLoginScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          if(show_warning == true)
+                          Container(
+                            width: double.infinity,
+                            height: 40.0,
+                            alignment: AlignmentDirectional.center,
+                            decoration: BoxDecoration(
+                              color: warning,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                            child: Text(
+                              'لقد تعدى الوقت المصرح له للدخول !!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 18.0,
+                          ),
+
                           Container(
                             width: double.infinity,
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: nameController,
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                ),
                                 hintText: 'اسم الطالب',
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 14.0),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 14.0),
                                 hintStyle: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.grey,
                                 ),
+                                errorBorder: InputBorder.none,
                               ),
                             ),
                           ),
@@ -99,6 +135,8 @@ class EnterStudentLoginScreen extends StatelessWidget {
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: idController,
+                              keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'رقم الطالب',
@@ -126,6 +164,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                   child: TextFormField(
                                     keyboardType: TextInputType.datetime,
                                     controller: dateController,
+                                    readOnly: true,
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       hintText: 'تاريخ الدخول',
@@ -141,11 +180,13 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                               context: context,
                                               initialDate: DateTime.now(),
                                               firstDate: DateTime.now(),
-                                              lastDate:
-                                                  DateTime.parse('2030-12-12'))
-                                          .then((value) {
-                                        dateController.text =
-                                            DateFormat.yMMMd().format(value!);
+                                              lastDate: DateTime.parse('2030-12-12')
+                                      ).then((value) {
+                                        if(value == null){
+                                          showToast(message: 'برجاء تحديد التاريخ', state: ToastStates.WARNING);
+                                        }else{
+                                          dateController.text = DateFormat.yMMMd().format(value);
+                                        }
                                       });
                                     },
                                   ),
@@ -166,6 +207,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                     textAlign: TextAlign.end,
                                     controller: timeController,
                                     keyboardType: TextInputType.number,
+                                    readOnly: true,
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       hintText: 'وقت الدخول',
@@ -181,7 +223,14 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                       showTimePicker(
                                         context: context,
                                         initialTime: TimeOfDay.now(),
-                                      ).then((value) => timeController.text = value!.format(context).toString());
+                                      ).then((value) {
+                                        if(value == null){
+                                          showToast(message: 'برجاء تحديد الوقت', state: ToastStates.WARNING);
+                                        }else{
+                                          checkTime(value.hour.toString(),cubit);
+                                          timeController.text = value.format(context).toString();
+                                        }
+                                      });
                                     },
                                   ),
                                 ),
@@ -196,6 +245,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: notesController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'ملاحظات',
@@ -212,7 +262,13 @@ class EnterStudentLoginScreen extends StatelessWidget {
                             height: 54.0,
                           ),
                           defaultButton(
-                            function: () {},
+                            function: () {
+                              if (nameController.text == '' ||idController.text == ''||dateController.text == ''||timeController.text == '') {
+                                showToast(message: 'برجاء أدخال جميع البيانات', state: ToastStates.ERROR);
+                              }else{
+                                navigateTo(context, SuccessEnterStudentScreen());
+                              }
+                            },
                             text: 'تأكيد',
                             width: double.infinity,
                             height: 47.0,
@@ -235,4 +291,19 @@ class EnterStudentLoginScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void checkTime (h,cubit){
+  for(int i=18;i<25;i++){
+    if(h==i.toString()){
+      cubit.showStudentWarning(true);
+    }
+  }
+  for(int i=1;i<18;i++){
+    if(h==i.toString()){
+      cubit.showStudentWarning(false);
+    }
+  }
+
 }

@@ -6,8 +6,8 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
-class SuccessEnterStudentScreen extends StatelessWidget {
-  const SuccessEnterStudentScreen({Key? key}) : super(key: key);
+class SuccessExitStudentScreen extends StatelessWidget {
+  const SuccessExitStudentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class SuccessEnterStudentScreen extends StatelessWidget {
               Container(
                 alignment: AlignmentDirectional.center,
                 child: Text(
-                  'تسجيل دخول الطالب الي السكن',
+                  'تسجيل خروج الطالب من السكن',
                   style: TextStyle(
                     color: mainColors,
                     fontSize: 20.0,
@@ -79,7 +79,7 @@ class SuccessEnterStudentScreen extends StatelessWidget {
               Container(
                 alignment: AlignmentDirectional.center,
                 child: Text(
-                  'تم تأكيد موعد الدخول',
+                  'تم تأكيد موعد الخروج',
                   style: TextStyle(
                     color: mainColors,
                     fontSize: 20.0,
@@ -99,7 +99,7 @@ class SuccessEnterStudentScreen extends StatelessWidget {
         Container(
           alignment: AlignmentDirectional.center,
           child: Text(
-            'تسجيل دخول الطالب الي السكن',
+            'تسجيل خروج الطالب من السكن',
             style: TextStyle(
               color: mainColors,
               fontSize: 20.0,
@@ -118,7 +118,7 @@ class SuccessEnterStudentScreen extends StatelessWidget {
         Container(
           alignment: AlignmentDirectional.center,
           child: Text(
-            'تم تأكيد موعد الدخول',
+            'تم تأكيد موعد الخروج',
             style: TextStyle(
               color: mainColors,
               fontSize: 20.0,
