@@ -23,6 +23,9 @@ import 'package:university_housing/moduls/security/success/success_enttre_studen
 import 'package:university_housing/moduls/success&waiting/success_screen.dart';
 import 'package:university_housing/moduls/success&waiting/waiting_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -58,23 +61,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: backGround,
-        appBarTheme: AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          backgroundColor: backGround,
-          elevation: 0.0,
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context)=> AppCubit()),
+          BlocProvider(create: (context)=> SecurityCubit()),
+        ],
+        child: BlocConsumer<AppCubit,AppStates>(
+          listener: (context,state){},
+          builder: (context,state){
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                scaffoldBackgroundColor: backGround,
+                appBarTheme: AppBarTheme(
+                  systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: backGround,
+                    statusBarIconBrightness: Brightness.dark,
+                  ),
+                  backgroundColor: backGround,
+                  elevation: 0.0,
+                ),
+                fontFamily: 'cairo_semiBold',
+              ),
+              themeMode: ThemeMode.light,
+              home: SplashScreen(startWidget: startWidget),
+            );
+          },
         ),
-        fontFamily: 'cairo_semiBold',
-      ),
-      themeMode: ThemeMode.light,
-      // home: SplashScreen(startWidget: startWidget),
-      home:const BookingDoneScreen(),
     );
   }
 }

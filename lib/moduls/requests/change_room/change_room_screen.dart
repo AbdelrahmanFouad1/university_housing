@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/requests/change_room/success_change_room_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class ChangeRoomScreen extends StatelessWidget {

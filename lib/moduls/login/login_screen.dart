@@ -7,8 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class LoginScreen extends StatelessWidget {
