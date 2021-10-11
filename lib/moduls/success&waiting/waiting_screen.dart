@@ -86,7 +86,7 @@ class WaitingScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             Text(
-              'لحين وجود أماكن متاحه',
+              'لحين وجود أماكن متاحة',
               style: Theme.of(context).textTheme.headline6,
             ),
           ],

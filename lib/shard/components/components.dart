@@ -327,6 +327,7 @@ Widget defaultTiTleBoxColumn({
       ),
     );
 
+
 Widget whiteBoard(context,{
   double? height = 250.0,
   int? maxLine = 10,
