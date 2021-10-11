@@ -1,15 +1,14 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
-import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   DateTime timeBackPressed = DateTime.now();
@@ -27,7 +26,6 @@ class LoginScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               body: WillPopScope(
                 onWillPop: () async {
                   final difference = DateTime.now().difference(timeBackPressed);
@@ -48,8 +46,12 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 16.0,top: 28),
                         child: Align(
                           alignment: AlignmentDirectional.topStart,
-                          child: Image.asset(
-                            'assets/images/small_logo.png',
+                          child: ThemeCubit.get(context).darkTheme ? Image.asset(
+                            'assets/images/logo_dark.png',
+                            width: 71.0,
+                            height: 71.0,
+                          ) : Image.asset(
+                            'assets/images/logo.png',
                             width: 71.0,
                             height: 71.0,
                           ),
@@ -68,22 +70,24 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Text(
                               'اهلا بك في تطبيق الاسكان الجامعي',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: mainColors,
-                                fontFamily: 'cairo_semiBold',
-                              ),
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                             const SizedBox(height:33.0,),
                             Container(
                               height: 48.0,
                               child: TextFormField(
+                                style: Theme.of(context).textTheme.bodyText1,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: 'رقم الطالب',
                                   hintStyle: TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.grey,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -94,8 +98,10 @@ class LoginScreen extends StatelessWidget {
                               child: TextFormField(
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: cubit.isPassword,
+                                style: Theme.of(context).textTheme.bodyText1,
                                 decoration:  InputDecoration(
                                   suffixIcon: IconButton(
+                                    color: Colors.grey,
                                     onPressed: (){
                                       cubit.changePasswordVisibility();
                                     },
@@ -108,6 +114,11 @@ class LoginScreen extends StatelessWidget {
                                   hintStyle: const TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.grey,
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -134,7 +145,8 @@ class LoginScreen extends StatelessWidget {
               //TODO: is removed when done
               floatingActionButton: FloatingActionButton(
                   onPressed: (){
-                    navigateTo(context, MainSecurityScreen());
+                    // navigateTo(context, MainSecurityScreen());
+                    ThemeCubit.get(context).changeTheme();
                   },
                 child: const Icon(
                   Icons.security

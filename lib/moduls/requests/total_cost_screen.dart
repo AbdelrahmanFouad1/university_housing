@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class TotalCostScreen extends StatelessWidget {
+  const TotalCostScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: defaultAppBar(context: context,),
-        backgroundColor: backGround,
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
@@ -31,19 +32,15 @@ class TotalCostScreen extends StatelessWidget {
                       const SizedBox(width: 15.0,),
                       Text(
                         'تفاصيل المصاريف السكنيه',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),
                   const SizedBox(height:10.0),
                   Text(
                     '* يجب مراعاه دفع المصاريف السكنيه لأتمام تسجيلك في السكن الجامعي',
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       fontSize: 10.0,
-                      color: mainColors,
                     ),
                   ),
                   const SizedBox(height:5.0),
@@ -55,18 +52,15 @@ class TotalCostScreen extends StatelessWidget {
                   const SizedBox(height: 10.0,),
                   Text(
                     'تكلفه الغرفه',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: mainColors
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Row(
                       children: [
-                        Text(
+                         Text(
                           'غرفه سكن مميز',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
@@ -84,10 +78,7 @@ class TotalCostScreen extends StatelessWidget {
                   const SizedBox(height: 35.0,),
                   Text(
                     'الغرامات',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: mainColors
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -95,7 +86,7 @@ class TotalCostScreen extends StatelessWidget {
                       children: [
                         Text(
                           'اجمالي الغرامات',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
@@ -113,10 +104,7 @@ class TotalCostScreen extends StatelessWidget {
                   const SizedBox(height: 35.0,),
                   Text(
                     'مصاريف اضافية',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: mainColors
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -124,7 +112,7 @@ class TotalCostScreen extends StatelessWidget {
                       children: [
                         Text(
                           'أستضافة',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14.0,
                           ),
                         ),
@@ -143,7 +131,7 @@ class TotalCostScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(height: 60.0,),
+                  const SizedBox(height: 60.0,),
                   Container(
                     width: double.infinity,
                     height:1.0,
@@ -155,17 +143,13 @@ class TotalCostScreen extends StatelessWidget {
                     children: [
                       Text(
                         'اجمالي المبلغ المستحق',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.subtitle1,
                       ),
                       const Spacer(),
-                      const Text(
+                       Text(
                         '500 جنيه',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color:ThemeCubit.get(context).darkTheme? Colors.white : Colors.black,
                           fontWeight: FontWeight.w900,
                         ),
                       ),

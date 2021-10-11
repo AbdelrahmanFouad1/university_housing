@@ -8,8 +8,11 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class StudentRateScreen extends StatelessWidget {
+  const StudentRateScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (context)=> AppCubit(),
@@ -21,20 +24,11 @@ class StudentRateScreen extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: Scaffold(
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 title: Text(
                   'تقييم الطلاب',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: mainColors,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 actions: [
                   Padding(
@@ -51,6 +45,7 @@ class StudentRateScreen extends StatelessWidget {
                           'assets/images/back_arrow.svg',
                           width: 18.0,
                           height: 18.0,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                       ),
                     ),
@@ -58,7 +53,7 @@ class StudentRateScreen extends StatelessWidget {
                 ],
               ),
               body:SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -68,17 +63,15 @@ class StudentRateScreen extends StatelessWidget {
                         width: double.infinity,
                         child: Text(
                           'اضف تقييمك',
-                          style: TextStyle(
-                            color: mainColors,
-                            fontSize: 20.0,
-                          ),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      SizedBox(height: 10.0,),
+                      const SizedBox(height: 10.0,),
                       Stack(
                         alignment: Alignment.bottomLeft,
                         children: [
                           whiteBoard(
+                            context,
                             height: 130.0,
                             maxLine: 2,
                           ),
@@ -95,15 +88,14 @@ class StudentRateScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 50.0,),
+                      const SizedBox(height: 50.0,),
                       Container(
                         height: 200.0,
-                        color: backGround,
-                        child: ListView.separated(
-                          physics: BouncingScrollPhysics(),
+                         child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemBuilder:(context,index)=>buildEvaluationItem(cubit,context),
-                          separatorBuilder:(context,index)=>SizedBox(width: 8.0,),
+                          separatorBuilder:(context,index)=>const SizedBox(width: 8.0,),
                           itemCount: 10 ,
                         ),
                       ),
@@ -142,7 +134,7 @@ Widget buildEvaluationItem(var cubit,context)=>Stack(
                 Builder(
                   builder: (context){
                     if(cubit.profileImage == null){
-                      return CircleAvatar(
+                      return const CircleAvatar(
                         radius: 25.0,
                         backgroundImage: NetworkImage(
                             'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -166,7 +158,7 @@ Widget buildEvaluationItem(var cubit,context)=>Stack(
                     }
                   },
                 ),
-                SizedBox(width: 10.0,),
+                const SizedBox(width: 10.0,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -202,7 +194,7 @@ Widget buildEvaluationItem(var cubit,context)=>Stack(
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           InkWell(
             onTap: (){
               navigateTo(context, StudentRateDetailsScreen());

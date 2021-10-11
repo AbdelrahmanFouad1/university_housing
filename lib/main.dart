@@ -23,11 +23,16 @@ import 'package:university_housing/moduls/security/success/success_enttre_studen
 import 'package:university_housing/moduls/success&waiting/success_screen.dart';
 import 'package:university_housing/moduls/success&waiting/waiting_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
+import 'package:university_housing/shard/cubit/cubit.dart';
+import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+import 'package:university_housing/shard/style/theme/cubit/states.dart';
+import 'package:university_housing/shard/style/theme/theme.dart';
 
 
 void main() async {
@@ -46,17 +51,20 @@ void main() async {
     widget = const OnBoardingScreen();
   }
 
-  runApp(MyApp(
-    startWidget: widget,
-  ));
+  bool? isDark = CacheHelper.getData(key: 'isDark');
+
+  print('from main ${isDark}');
+  runApp(MyApp(startWidget: widget, isDark: isDark,));
 }
 
 class MyApp extends StatelessWidget {
 
+   bool? isDark;
   final Widget startWidget;
 
      MyApp({
-    required this.startWidget,
+       required this.startWidget,
+        this.isDark
   });
 
   @override
@@ -88,7 +96,28 @@ class MyApp extends StatelessWidget {
             );
           },
         ),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (BuildContext context)  => ThemeCubit()..changeTheme(fromShared: isDark),),
+          BlocProvider(
+            create: (BuildContext context)  => AppCubit()),
+        ],
+      child: BlocConsumer<ThemeCubit, ThemeStates>(
+        listener: (BuildContext context, state) {  },
+        builder: (BuildContext context, Object? state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeCubit.get(context).darkTheme?  ThemeMode.dark : ThemeMode.light ,
+            home: SplashScreen(startWidget: startWidget),
+          );
+        },
+      ),
     );
+
+
   }
 }
 

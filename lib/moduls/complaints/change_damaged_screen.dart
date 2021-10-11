@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/iconly_broken.dart';
 
 class ChangeDamagedScreen extends StatelessWidget {
+  const ChangeDamagedScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: defaultAppBar(context: context),
-        backgroundColor: backGround,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
@@ -31,16 +30,13 @@ class ChangeDamagedScreen extends StatelessWidget {
                   child: Text(
                     'اكتب تفاصيل عن الشئ التالف',
                     textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: mainColors,
-                      fontSize: 20.0,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 const SizedBox(
                   height: 2,
                 ),
-                whiteBoard(),
+                whiteBoard(context),
                 const SizedBox(
                   height: 88,
                 ),
