@@ -73,7 +73,7 @@ class FollowStudentScreen extends StatelessWidget {
                     },
                     onSubmit: (String text) {},
                     hint: 'بحث ...',
-                    prefix: IconBroken.Search,
+                    prefix: IconBroken.Search, context: context,
                   ),
                 ),
                 const SizedBox(height:16.0),
