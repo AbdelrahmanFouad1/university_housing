@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
