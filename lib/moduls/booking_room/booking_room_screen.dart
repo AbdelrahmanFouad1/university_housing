@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class BookingRoomScreen extends StatelessWidget {

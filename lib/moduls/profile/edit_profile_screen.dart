@@ -9,8 +9,8 @@ import 'package:university_housing/moduls/profile/student_rate/student_rate_scre
 import 'package:university_housing/moduls/profile/technical_support_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';

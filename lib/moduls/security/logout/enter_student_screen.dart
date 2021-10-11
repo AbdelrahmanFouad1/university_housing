@@ -6,17 +6,20 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
-import 'package:university_housing/moduls/success&waiting/success_screen.dart';
+import 'package:university_housing/moduls/security/success/success_exit_student_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/cubit.dart';
-import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 
 class EnterStudentScreen extends StatelessWidget {
   var dateController = TextEditingController();
   var timeController = TextEditingController();
+  var nameController = TextEditingController();
+  var idController = TextEditingController();
+  var notesController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +79,15 @@ class EnterStudentScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          const SizedBox(
+                            height: 18.0,
+                          ),
                           Container(
                             width: double.infinity,
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: nameController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'اسم الطالب',
@@ -101,6 +108,8 @@ class EnterStudentScreen extends StatelessWidget {
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: idController,
+                              keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'رقم الطالب',
@@ -126,6 +135,7 @@ class EnterStudentScreen extends StatelessWidget {
                                     start: 14.0,
                                   ),
                                   child: TextFormField(
+                                    readOnly: true,
                                     keyboardType: TextInputType.datetime,
                                     controller: dateController,
                                     decoration: const InputDecoration(
@@ -146,8 +156,11 @@ class EnterStudentScreen extends StatelessWidget {
                                               lastDate:
                                                   DateTime.parse('2030-12-12'))
                                           .then((value) {
-                                        dateController.text =
-                                            DateFormat.yMMMd().format(value!);
+                                            if(value == null){
+                                              showToast(message: 'برجاء تحديد التاريخ', state: ToastStates.WARNING);
+                                            }else{
+                                              dateController.text = DateFormat.yMMMd().format(value);
+                                            }
                                       });
                                     },
                                   ),
@@ -164,6 +177,7 @@ class EnterStudentScreen extends StatelessWidget {
                                     end: 14.0,
                                   ),
                                   child: TextFormField(
+                                    readOnly: true,
                                     textDirection: ui.TextDirection.ltr,
                                     textAlign: TextAlign.end,
                                     controller: timeController,
@@ -183,7 +197,13 @@ class EnterStudentScreen extends StatelessWidget {
                                       showTimePicker(
                                         context: context,
                                         initialTime: TimeOfDay.now(),
-                                      ).then((value) => timeController.text = value!.format(context).toString());
+                                      ).then((value) {
+                                        if(value == null){
+                                          showToast(message: 'برجاء تحديد الوقت', state: ToastStates.WARNING);
+                                        }else{
+                                          timeController.text = value.format(context).toString();
+                                        }
+                                      });
                                     },
                                   ),
                                 ),
@@ -198,6 +218,7 @@ class EnterStudentScreen extends StatelessWidget {
                             height: 40.0,
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
                             child: TextFormField(
+                              controller: notesController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'ملاحظات',
@@ -215,7 +236,11 @@ class EnterStudentScreen extends StatelessWidget {
                           ),
                           defaultButton(
                             function: () {
-                              navigateTo(context, SuccessEnterStudentScreen());
+                              if (nameController.text == '' ||idController.text == ''||dateController.text == ''||timeController.text == '') {
+                                showToast(message: 'برجاء أدخال جميع البيانات', state: ToastStates.ERROR);
+                              }else{
+                                navigateTo(context, SuccessExitStudentScreen());
+                              }
                             },
                             text: 'تأكيد',
                             width: double.infinity,
