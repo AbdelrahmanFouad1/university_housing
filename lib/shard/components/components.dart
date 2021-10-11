@@ -10,6 +10,7 @@ import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 void navigateTo(context, widget) => Navigator.push(
       context,
@@ -70,6 +71,7 @@ Widget defaultFormField({
   required IconData prefix,
   Function? suffixPressed,
   bool isClickable = true,
+  required context
 }) =>
     TextFormField(
       controller: controller,
@@ -91,14 +93,21 @@ Widget defaultFormField({
       cursorColor: mainColors,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(
-          fontSize: 14.0
-        ),
+        hintStyle: Theme.of(context).textTheme.bodyText1,
         labelText: label,
+        labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+          color: Colors.grey
+        ),
         prefixIcon: Icon(
           prefix,
+          color: Colors.grey,
         ),
-        border:OutlineInputBorder(),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.grey,
+          ),
+        ),
+        border:const OutlineInputBorder(),
       ),
     );
 
@@ -143,12 +152,6 @@ AppBar defaultAppBar({
   bool? bookingDone = false,
   Widget? popToScreen,
 })=> AppBar(
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: backGround,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-    backgroundColor: backGround,
-    elevation: 0.0,
     titleSpacing: titleSpacing,
     automaticallyImplyLeading: false,
     actions: [
@@ -175,7 +178,7 @@ AppBar defaultAppBar({
           padding: EdgeInsets.zero,
           icon:  Icon(
             Icons.person_outline,
-            color: mainColors,
+            color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
           ),
           onPressed: () {
             navigateTo(context, ProfileScreen());
@@ -192,7 +195,7 @@ AppBar defaultAppBar({
             children: [
               Icon(
                 IconBroken.Notification,
-                color: mainColors,
+                color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 2.0,left: 4.0),
@@ -211,7 +214,7 @@ AppBar defaultAppBar({
             padding: EdgeInsets.zero,
             icon:  Icon(
               IconBroken.Arrow___Left_2,
-              color: mainColors,
+              color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -238,11 +241,7 @@ AppBar defaultAppBar({
     ],
     title: Text(
       'أهلا , 42018122',
-      style: TextStyle(
-        color: mainColors,
-        fontWeight: FontWeight.bold,
-        fontSize: 20.0,
-      ),
+      style: Theme.of(context).textTheme.headline6,
     )
 );
 
@@ -328,7 +327,7 @@ Widget defaultTiTleBoxColumn({
       ),
     );
 
-Widget whiteBoard({
+Widget whiteBoard(context,{
   double? height = 250.0,
   int? maxLine = 10,
 }) =>
@@ -336,22 +335,22 @@ Widget whiteBoard({
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: ThemeCubit.get(context).darkTheme? Colors.indigo.withOpacity(0.2): Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(5, 5), // changes position of shadow
+            offset: const Offset(5, 5), // changes position of shadow
           ),
         ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
-          scrollPhysics: BouncingScrollPhysics(),
-          cursorColor: mainColors,
+          scrollPhysics: const BouncingScrollPhysics(),
+          cursorColor:ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
           maxLines: maxLine,
           decoration: const InputDecoration(
             border: InputBorder.none,
@@ -372,7 +371,7 @@ Widget buildFinesBox(
         borderRadius: BorderRadius.circular(
           8.0,
         ),
-        color: finesColor,
+        color:ThemeCubit.get(context).darkTheme? finesColorDark : finesColor,
       ),
       child: Row(
         children: [
@@ -384,17 +383,16 @@ Widget buildFinesBox(
               children: [
                 Text(
                   'لديك غرامة بقيمة',
-                  style: TextStyle(
-                    color: mainColors,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: fontsize1,
                   ),
                 ),
                 Text(
                   '120 جنيه مصرى',
-                  style: TextStyle(
-                      color: mainColors,
-                      fontSize: fontsize2,
-                      fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontSize: fontsize2,
+                      fontWeight: FontWeight.bold
+                  ),
                 ),
               ],
             ),
@@ -469,7 +467,7 @@ Widget buildEnquiry(context, {
   height: height,
   width: double.infinity,
   decoration: BoxDecoration(
-    color: Colors.white,
+    color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
     borderRadius: BorderRadius.circular(8.0),
   ),
   child: Row(

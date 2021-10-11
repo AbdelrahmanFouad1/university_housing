@@ -5,6 +5,8 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class FinesScreen extends StatelessWidget {
+  const FinesScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,6 @@ class FinesScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: defaultAppBar(context: context,),
-        backgroundColor: backGround,
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
@@ -32,20 +33,14 @@ class FinesScreen extends StatelessWidget {
                       const SizedBox(width: 15.0,),
                       Text(
                         'تفاصيل الغرامات',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),
                   const SizedBox(height:15.0),
                   Text(
                     '* يجب مراعاه اضافه الغرامات للمصاريف الدراسيه للترم التالي',
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: mainColors,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                   const SizedBox(height:5.0),
                   Container(
@@ -58,10 +53,7 @@ class FinesScreen extends StatelessWidget {
                     children: [
                       Text(
                         'صيانه',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
                       Text(
@@ -78,10 +70,7 @@ class FinesScreen extends StatelessWidget {
                     children: [
                       Text(
                         'غرامه تقسيط',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
                       Text(
@@ -98,10 +87,7 @@ class FinesScreen extends StatelessWidget {
                     children: [
                       Text(
                         'دخول متأخر',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
                       Text(
@@ -118,10 +104,7 @@ class FinesScreen extends StatelessWidget {
                     children: [
                       Text(
                         ' غياب بدون أذن',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const Spacer(),
                       Text(
@@ -149,17 +132,12 @@ class FinesScreen extends StatelessWidget {
                     children: [
                       Text(
                         'اجمالي الغرامات',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: mainColors,
-                        ),
+                          style: Theme.of(context).textTheme.headline6,
                       ),
                       const Spacer(),
-                      const Text(
+                       Text(
                         '320 جنيه',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black,
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
                       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
@@ -9,11 +8,13 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 
 
 class LeavingRoomScreen extends StatelessWidget {
+  const LeavingRoomScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +27,8 @@ class LeavingRoomScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 actions: [
                   Padding(
@@ -51,6 +45,7 @@ class LeavingRoomScreen extends StatelessWidget {
                           'assets/images/back_arrow.svg',
                           width: 18.0,
                           height: 18.0,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                       ),
                     ),
@@ -58,7 +53,7 @@ class LeavingRoomScreen extends StatelessWidget {
                 ],
               ),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Padding(
@@ -98,19 +93,16 @@ class LeavingRoomScreen extends StatelessWidget {
                             children: [
                               Text(
                                 'عبدالرحمن محمد فؤاد',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: mainColors,
+                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height:2.0,),
                               Text(
                                 '42018122',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: mainColors,
+                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 14.0,
                                 ),
                               ),
                             ],
@@ -248,9 +240,7 @@ class LeavingRoomScreen extends StatelessWidget {
                           Expanded(
                             child: Text(
                               'يجب مراعاه ان في حاله إخلاء السكن والرغبه في العوده اليه مره أخرى , فعليك اتمام جميع الأجرائات السكنيه من جديد',
-                              style: TextStyle(
-                                color: mainColors,
-                                fontSize: 16.0,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 height: 1.5,
                               ),
                             ),
@@ -279,10 +269,8 @@ class LeavingRoomScreen extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   'في حاله وجود غرامات ماليه , يتم خصمها من التأمين ',
-                                  style: TextStyle(
-                                    color: mainColors,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     height: 1.5,
-                                    fontSize: 16.0,
                                   ),
                                 ),
                               ),
@@ -292,14 +280,12 @@ class LeavingRoomScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 18.0),
                             child: InkWell(
                               onTap: (){
-                                navigateTo(context, FinesScreen());
+                                navigateTo(context, const FinesScreen());
                               },
                               child: Text(
                                 'تفاصيل الغرامات',
-                                style: TextStyle(
-                                  color: mainColors,
+                                style: Theme.of(context).textTheme.bodyText2!.copyWith(
                                   height: 1.5,
-                                  fontSize: 12.0,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),

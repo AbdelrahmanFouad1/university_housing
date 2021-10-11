@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,6 +8,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/cubit.dart';
 import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -25,15 +25,8 @@ class ProfileScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 actions: [
                   Container(
@@ -42,11 +35,11 @@ class ProfileScreen extends StatelessWidget {
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: (){
-                        navigateTo(context, EditProfileScreen());
+                        navigateTo(context, const EditProfileScreen());
                       },
                       icon: Icon(
                         Icons.settings,
-                        color: mainColors,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                       ),
                     ),
                   ),
@@ -64,6 +57,7 @@ class ProfileScreen extends StatelessWidget {
                           'assets/images/back_arrow.svg',
                           width: 18.0,
                           height: 18.0,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                       ),
                     ),
@@ -111,19 +105,16 @@ class ProfileScreen extends StatelessWidget {
                             children: [
                               Text(
                                 'عبدالرحمن محمد فؤاد',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: mainColors,
-                                  fontWeight: FontWeight.bold,
+                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                  fontWeight: FontWeight.bold
                                 ),
                               ),
                               const SizedBox(height:2.0,),
                               Text(
                                 '42018122',
-                                style: TextStyle(
+                                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontWeight: FontWeight.bold,
                                   fontSize: 14.0,
-                                  color: mainColors,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -213,10 +204,7 @@ class ProfileScreen extends StatelessWidget {
                             width: double.infinity,
                             child: Text(
                               'الغرامات',
-                              style: TextStyle(
-                                color: mainColors,
-                                fontSize: 20.0,
-                              ),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                           ),
                           buildFinesBox(context,fontsize1: 14.0, fontsize2: 18.0),

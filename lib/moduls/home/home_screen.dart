@@ -79,8 +79,8 @@ class HomeScreen extends StatelessWidget {
                 child: OrientationBuilder(
                   builder: (BuildContext context, Orientation orientation) =>
                       orientation == Orientation.portrait
-                          ? buildPortrait()
-                          : buildLandScape(),
+                          ? buildPortrait(context)
+                          : buildLandScape(context),
                 ),
               ),
               //TODO: is removed when done
@@ -173,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                   'وفرت إدارة المعهد مجموعـة من العمارات السكـنية بالإضافـة الى مبنى للإسكـا ',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 12.0, color: mainColors),
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
                 const SizedBox(
                   height: 4,
@@ -184,10 +184,9 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       'عرض المزيد',
                       textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontSize: 12.0,
-                          color: mainColors),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                     onTap: () {
                       navigateTo(context, NewsDetailsScreen());
@@ -202,97 +201,80 @@ class HomeScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildPortrait() => Stack(
-    alignment: AlignmentDirectional.bottomCenter,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-                Builder(builder: (context) {
-
-                  if (AppCubit.get(context).isRegister) {
-                    return Column(
-                      children: [
-                        Container(
-                          height: 120.0,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) =>
-                                buildRequestsList(requests[index], context, index),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              width: 12,
-                            ),
-                            itemCount: requests.length,
-                          ),
+  Widget buildPortrait(context) => Padding(
+    padding: const EdgeInsets.all(12.0),
+    child: Column(
+      children: [
+            Builder(builder: (context) {
+              if (AppCubit.get(context).isRegister) {
+                return Column(
+                  children: [
+                    Container(
+                      height: 120.0,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            buildRequestsList(requests[index], context, index),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(
+                          width: 12,
                         ),
-                        Container(
-                          width: double.infinity,
-                          child: Text(
-                            'غرامات الطالب',
-                            style: TextStyle(
-                              color: mainColors,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ),
-                        buildFinesBox(context),
-                      ],
-                    );
-                  } else {
-                    return InkWell(
-                      onTap: () {
-                        navigateTo(context, BookingRoomScreen());
-                      },
-                      child: defaultTiTleBoxColumn(
-                          img: 'assets/images/request.svg',
-                          title: 'طلب الالتحاق بالسكن',
-                          height: 122.0,
-                          widthImage: 50.0,
-                          heightImage: 50.0),
-                    );
-                  }
-                }),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Text(
-                    'اخبار عن السكن',
-                    style: TextStyle(
-                      color: mainColors,
-                      fontSize: 20.0,
-                ),
-              ),
-            ),
+                        itemCount: requests.length,
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        'غرامات الطالب',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    buildFinesBox(context),
+                  ],
+                );
+              } else {
+                return InkWell(
+                  onTap: () {
+                    navigateTo(context, BookingRoomScreen());
+                  },
+                  child: defaultTiTleBoxColumn(
+                      img: 'assets/images/request.svg',
+                      title: 'طلب الالتحاق بالسكن',
+                      height: 122.0,
+                      widthImage: 50.0,
+                      heightImage: 50.0),
+                );
+              }
+            }),
             const SizedBox(
-              height: 8.0,
+              height: 16.0,
             ),
-            Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => buildNewsItem(context),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
-                ),
-                itemCount: 8,
-              ),
-            ),
-          ],
+            Container(
+              width: double.infinity,
+              child: Text(
+                'اخبار عن السكن',
+                style: Theme.of(context).textTheme.headline6,
+          ),
         ),
-      ),
-      SvgPicture.asset(
-        'assets/images/layer2.svg',
-        semanticsLabel: 'layer',
-        fit: BoxFit.cover,
-      ),
-    ],
+        const SizedBox(
+          height: 8.0,
+        ),
+        Expanded(
+          child: ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => buildNewsItem(context),
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 16,
+            ),
+            itemCount: 8,
+          ),
+        ),
+      ],
+    ),
   );
 
-  Widget buildLandScape() =>  Builder(
+  Widget buildLandScape(context) =>  Builder(
     builder: (context) {
       if (AppCubit.get(context).isRegister) {
         return Padding(
@@ -325,10 +307,7 @@ class HomeScreen extends StatelessWidget {
                       width: double.infinity,
                       child: Text(
                         'اخبار عن السكن',
-                        style: TextStyle(
-                          color: mainColors,
-                          fontSize: 20.0,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     Expanded(

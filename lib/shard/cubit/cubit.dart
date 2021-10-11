@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/states.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class AppCubit extends Cubit<AppStates>{
@@ -89,18 +91,24 @@ class AppCubit extends Cubit<AppStates>{
     emit(ImageRemoveSuccessState());
   }
 
-
   // edit profile screen
   bool isDark = false ;
-  void getTheme(){
+  void toggleButton(){
     isDark =!isDark;
     emit(ChangeThemeSuccessState());
   }
 
   File? profileImage;
   var profilePicker = ImagePicker();
-  Icon icon = Icon( Icons.edit, color: mainColors,);
-  CircleAvatar img = CircleAvatar(radius: 60, backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),);
+  Icon icon = Icon(
+    Icons.edit,
+    color: mainColors,
+  );
+  CircleAvatar img = CircleAvatar(
+    radius: 60,
+    backgroundImage:
+        NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+  );
 
   Future<void> pikeProfileIdImage() async {
     final pickedFile = await profilePicker.getImage(

@@ -8,6 +8,8 @@ import 'package:university_housing/shard/cubit/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class FamilyReportScreen extends StatelessWidget {
+  const FamilyReportScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(create: (create)=>AppCubit(),
@@ -18,10 +20,9 @@ class FamilyReportScreen extends StatelessWidget {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            backgroundColor: backGround,
             appBar: defaultAppBar(context: context),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
@@ -35,9 +36,19 @@ class FamilyReportScreen extends StatelessWidget {
                         height: 40.0,
                         margin: const EdgeInsets.symmetric(horizontal: 14.0),
                         child: TextFormField(
+                          style: Theme.of(context).textTheme.bodyText1,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'سبب الأقرار',
+                            hintStyle: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
                             contentPadding:EdgeInsets.symmetric(horizontal:14.0),
                           ),
                         ),
@@ -116,10 +127,20 @@ class FamilyReportScreen extends StatelessWidget {
                                         icon: SvgPicture.asset(
                                           'assets/images/upload.svg',
                                           alignment: Alignment.center,
+                                          color: Colors.grey,
                                         ),
                                       ),
                                       hintText: 'صورة الأقرار',
                                       border: const OutlineInputBorder(),
+                                      hintStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.grey,
+                                      ),
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                       contentPadding:const EdgeInsets.symmetric(horizontal:14.0),
                                     ),
                                   ),
@@ -128,14 +149,14 @@ class FamilyReportScreen extends StatelessWidget {
                             }
                           }
                       ),
-                      Spacer(),
+                      const Spacer(),
                       defaultButton(
                         function: (){},
                         text: 'تقديم الطلب',
                         width: double.infinity,
                         height: 47.0,
                         btnColor: mainColors,
-                        marginSize: EdgeInsets.symmetric(horizontal: 14.0),
+                        marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
                         //
                       ),
                     ],
