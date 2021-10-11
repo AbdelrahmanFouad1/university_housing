@@ -43,15 +43,12 @@ class MyApp extends StatelessWidget {
        required this.startWidget,
         this.isDark
   });
-
+//Round 2
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-        BlocProvider(
-          create: (BuildContext context) =>
-              ThemeCubit()..changeTheme(fromShared: isDark),
-        ),
+        BlocProvider(create: (BuildContext context) => ThemeCubit()..changeTheme(fromShared: isDark),),
         BlocProvider(create: (BuildContext context) => AppCubit()),
         BlocProvider(create: (context) => SecurityCubit()),
       ],
