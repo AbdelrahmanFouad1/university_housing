@@ -104,78 +104,7 @@ class ChangeRoomScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 140.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: mainColors,
-                        ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 140.0,
-                              child: SvgPicture.asset(
-                                'assets/images/layer1.svg',
-                                alignment: AlignmentDirectional.centerEnd,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: const [
-                                      SizedBox(height: 6.0,),
-                                      Text(
-                                        'انت الان مقيم في ',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-
-                                        ),
-                                      ),
-                                      Text(
-                                        'غرفه  B',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      Text(
-                                        'الدور  الخامس',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      Text(
-                                        'عماره  الزهراء',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Spacer(),
-                                SvgPicture.asset(
-                                  'assets/images/layer22.svg',
-                                  width: 100.0,
-                                  height: 92.0,
-                                ),
-                                const SizedBox(width: 22.0,),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      roomBox(),
                       const SizedBox(height: 12.0,),
                       Text(
                         'طلب تغيير الغرفة',
