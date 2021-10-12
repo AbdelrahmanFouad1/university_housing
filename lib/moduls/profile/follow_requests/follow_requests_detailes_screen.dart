@@ -1,35 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/profile/technical_support_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class FollowRequestsDetailsScreen extends StatelessWidget {
+  const FollowRequestsDetailsScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: backGround,
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
           automaticallyImplyLeading: false,
-          backgroundColor: backGround,
-          elevation: 0.0,
           titleSpacing: 12.0,
           title: Text(
             'التفاصيل',
-            style: TextStyle(
-              fontSize: 20.0,
-              color: mainColors,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
           actions: [
             Padding(
@@ -46,6 +38,7 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                     'assets/images/back_arrow.svg',
                     width: 18.0,
                     height: 18.0,
+                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                   ),
                 ),
               ),
@@ -53,9 +46,9 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
           ],
         ),
         body:SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Container(
-            padding: EdgeInsetsDirectional.all(16.0),
+            padding: const EdgeInsetsDirectional.all(16.0),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,24 +58,21 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                   children: [
                     Text(
                       '* في حاله وجود خطأ في التفاصيل يرجى المتابعه من خلال ',
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 10.0,
-                        color: mainColors,
                       ),
                     ),
-                    SizedBox(width: 10.0,),
+                    const SizedBox(width: 10.0,),
                     InkWell(
                       onTap: (){
-                        navigateTo(context,TechnicalSupportScreen());
+                        navigateTo(context,const TechnicalSupportScreen());
                       },
                       child: Text(
                         'الدعم الفني',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: mainColors,
-                          fontWeight: FontWeight.w900,
-                          decoration: TextDecoration.underline,
-                        ),
+                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                           fontWeight: FontWeight.w900,
+                           decoration: TextDecoration.underline,
+                         ),
                       ),
                     ),
                   ],
@@ -93,7 +83,7 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                   height:1.0,
                   color: separator,
                 ),
-                SizedBox(height: 30.0,),
+                const SizedBox(height: 30.0,),
                 Container(
                   height: 50.0,
                   width: double.infinity,
@@ -102,7 +92,7 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadiusDirectional.circular(8.0),
                   ),
                   alignment: AlignmentDirectional.center,
-                  child: Text(
+                  child: const Text(
                     'تمت الموافقه عليه',
                     style: TextStyle(
                         fontSize: 18.0,
@@ -111,17 +101,14 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 30.0,),
+                const SizedBox(height: 30.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'رقم الطلب : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -129,25 +116,19 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         '200325',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 10.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'تاريخ رفع الطلب : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -155,25 +136,19 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         '9/2/2021',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 10.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'تاريخ الرد علي الطلب : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -181,25 +156,19 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         '11/2/2021',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 10.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'غرض الطلب : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -207,25 +176,19 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         'استضافه',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 10.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'تحت اشراف : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -233,25 +196,19 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         ' أ/ ادهم الشرقاوي',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 10.0,),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Text(
                         'ملاحظات : ',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                     Expanded(
@@ -259,10 +216,7 @@ class FollowRequestsDetailsScreen extends StatelessWidget {
                       child: Text(
                         'لا يوجد',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                   ],

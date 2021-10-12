@@ -8,9 +8,11 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class FollowRequestsScreen extends StatelessWidget {
+  const FollowRequestsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var formKey = GlobalKey<FormState>();
@@ -24,22 +26,12 @@ class FollowRequestsScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 title: Text(
                   'متابعه طلباتي',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: mainColors,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 actions: [
                   Padding(
@@ -56,6 +48,7 @@ class FollowRequestsScreen extends StatelessWidget {
                           'assets/images/back_arrow.svg',
                           width: 18.0,
                           height: 18.0,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                       ),
                     ),
@@ -67,12 +60,11 @@ class FollowRequestsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10.0,),
+                    const SizedBox(height: 10.0,),
                     Text(
                       '* يجب مراعاه الارشادات التاليه',
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: 14.0,
-                        color: mainColors,
                       ),
                     ),
                     const SizedBox(height:10.0),
@@ -86,15 +78,14 @@ class FollowRequestsScreen extends StatelessWidget {
                             color: Colors.green,
                           ),
                         ),
-                        SizedBox(width: 5.0,),
+                        const SizedBox(width: 5.0,),
                         Text(
                           'تمت الموافقه علي طلبكم',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             fontSize: 10.0,
-                            color: mainColors,
                           ),
                         ),
-                        SizedBox(width: 14.0,),
+                        const SizedBox(width: 14.0,),
                         Container(
                           width: 10.0,
                           height: 10.0,
@@ -103,15 +94,14 @@ class FollowRequestsScreen extends StatelessWidget {
                             color: Colors.amber,
                           ),
                         ),
-                        SizedBox(width: 5.0,),
+                        const SizedBox(width: 5.0,),
                         Text(
                           'جاري الرد علي طلبكم',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             fontSize: 10.0,
-                            color: mainColors,
                           ),
                         ),
-                        SizedBox(width: 14.0,),
+                        const SizedBox(width: 14.0,),
                         Container(
                           width: 10.0,
                           height: 10.0,
@@ -120,12 +110,11 @@ class FollowRequestsScreen extends StatelessWidget {
                             color: Colors.red,
                           ),
                         ),
-                        SizedBox(width: 5.0,),
+                        const SizedBox(width: 5.0,),
                         Text(
                           'تم رفض طلبكم',
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             fontSize: 10.0,
-                            color: mainColors,
                           ),
                         ),
                       ],
@@ -156,6 +145,7 @@ class FollowRequestsScreen extends StatelessWidget {
                               onSubmit: (String text) {},
                               hint: 'بحث ...',
                               prefix: Icons.search,
+                              context: context,
                             ),
                           ),
                         ],
@@ -164,15 +154,12 @@ class FollowRequestsScreen extends StatelessWidget {
                     const SizedBox(height:15.0),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        color: backGround,
-                        child: ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder:(context,index)=>buildRequestItem(cubit,context),
-                          separatorBuilder:(context,index)=>SizedBox(height: 8.0,),
-                          itemCount: 10 ,
-                        ),
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder:(context,index)=>buildRequestItem(cubit,context),
+                        separatorBuilder:(context,index)=>const SizedBox(height: 8.0,),
+                        itemCount: 10 ,
                       ),
                     ),
                     const SizedBox(height:10.0),
@@ -206,19 +193,12 @@ Widget buildRequestItem(AppCubit cubit ,context)=> Padding(
                     width: double.infinity,
                     child: Text(
                       'طلب الاستضافه',
-                      style: TextStyle(
-                          color: mainColors,
-                          fontSize: 16.0
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   Text(
                     'التاريخ : 2021-23-9',
-                    style: TextStyle(
-                        color: mainColors,
-                        fontSize: 12.0
-                    ),
-
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],
               ),
@@ -231,11 +211,10 @@ Widget buildRequestItem(AppCubit cubit ,context)=> Padding(
                 },
                 child: Text(
                   'عرض التفاصيل',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 12.0,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     decoration:TextDecoration.underline,
                   ),
+
                 ),
               ),
             ],

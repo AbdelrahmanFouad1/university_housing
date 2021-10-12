@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class BusScreen extends StatelessWidget {
+  const BusScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,26 +13,17 @@ class BusScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          backgroundColor: backGround,
-          elevation: 0.0,
           titleSpacing: 20.0,
           automaticallyImplyLeading: false,
           title: Text(
             'مواعيد اتوبيسات السكن',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
           actions: [
             IconButton(
               icon:  SvgPicture.asset(
                 'assets/images/back_arrow.svg',
-
+                color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
               ),
               onPressed: () {
               Navigator.pop(context);
@@ -39,12 +31,11 @@ class BusScreen extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: backGround,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(height:12.0),
+              const SizedBox(height:12.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -52,30 +43,21 @@ class BusScreen extends StatelessWidget {
                     SvgPicture.asset(
                         'assets/images/bus.svg',
                     ),
-                    SizedBox(width: 12.0,),
+                    const SizedBox(width: 12.0,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'موعد الخروج',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني S',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني M',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
@@ -86,24 +68,15 @@ class BusScreen extends StatelessWidget {
                         children: [
                           Text(
                             '8:45',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:00',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:30',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -111,13 +84,13 @@ class BusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:15.0),
+              const SizedBox(height:16.0),
               Container(
                 width: double.infinity,
                 height:1.0,
                 color: separator,
               ),
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 16.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -125,30 +98,21 @@ class BusScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/bus.svg',
                     ),
-                    SizedBox(width: 12.0,),
+                    const SizedBox(width: 12.0,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'موعد الخروج',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني S',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني M',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
@@ -159,24 +123,15 @@ class BusScreen extends StatelessWidget {
                         children: [
                           Text(
                             '8:45',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:00',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:30',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -184,13 +139,13 @@ class BusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:15.0),
+              const SizedBox(height:16.0),
               Container(
                 width: double.infinity,
                 height:1.0,
                 color: separator,
               ),
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 16.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -198,30 +153,21 @@ class BusScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/bus.svg',
                     ),
-                    SizedBox(width: 12.0,),
+                    const SizedBox(width: 12.0,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'موعد الخروج',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني S',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني M',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
@@ -232,24 +178,15 @@ class BusScreen extends StatelessWidget {
                         children: [
                           Text(
                             '8:45',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:00',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:30',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -257,13 +194,13 @@ class BusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:15.0),
+              const SizedBox(height:16.0),
               Container(
                 width: double.infinity,
                 height:1.0,
                 color: separator,
               ),
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 16.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -271,30 +208,21 @@ class BusScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/bus.svg',
                     ),
-                    SizedBox(width: 12.0,),
+                    const SizedBox(width: 12.0,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'موعد الخروج',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني S',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني M',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
@@ -305,24 +233,15 @@ class BusScreen extends StatelessWidget {
                         children: [
                           Text(
                             '8:45',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:00',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:30',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -330,13 +249,13 @@ class BusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:15.0),
+              const SizedBox(height:16.0),
               Container(
                 width: double.infinity,
                 height:1.0,
                 color: separator,
               ),
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 16.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -344,30 +263,21 @@ class BusScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/bus.svg',
                     ),
-                    SizedBox(width: 12.0,),
+                    const SizedBox(width: 12.0,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'موعد الخروج',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني S',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         Text(
                           'موعد الوصول الي مبني M',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
@@ -378,24 +288,15 @@ class BusScreen extends StatelessWidget {
                         children: [
                           Text(
                             '8:45',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:00',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
                             '9:30',
-                            style: TextStyle(
-                              fontSize: 13.0,
-                              color: mainColors,
-                            ),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -403,7 +304,7 @@ class BusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:15.0),
+              const SizedBox(height:16.0),
               Container(
                 width: double.infinity,
                 height:1.0,

@@ -1,14 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class QueriesDetailsScreen extends StatelessWidget {
+  const QueriesDetailsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -20,22 +20,12 @@ class QueriesDetailsScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 title: Text(
                   'المزيد',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: mainColors,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 actions: [
                   Padding(
@@ -52,6 +42,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                           'assets/images/back_arrow.svg',
                           width: 18.0,
                           height: 18.0,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                       ),
                     ),
@@ -59,7 +50,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                 ],
               ),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Padding(
@@ -67,15 +58,15 @@ class QueriesDetailsScreen extends StatelessWidget {
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                             borderRadius: BorderRadius.circular(8.0),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
+                                color:ThemeCubit.get(context).darkTheme? Colors.indigo.withOpacity(0.2) : Colors.grey.withOpacity(0.5),
                                 spreadRadius: 2,
                                 blurRadius: 2,
                                 offset:
-                                    Offset(3, 3), // changes position of shadow
+                                    const Offset(3, 3), // changes position of shadow
                               ),
                             ]),
                         child: Padding(
@@ -90,7 +81,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                     Builder(
                                       builder: (context) {
                                         if (cubit.profileImage == null) {
-                                          return CircleAvatar(
+                                          return const CircleAvatar(
                                             radius: 30.0,
                                             backgroundImage: NetworkImage(
                                                 'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -115,7 +106,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                         }
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10.0,
                                     ),
                                     Column(
@@ -124,17 +115,16 @@ class QueriesDetailsScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           'عبدالرحمن محمد فؤاد',
-                                          style: TextStyle(
+                                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                             fontSize: 14.0,
-                                            color: mainColors,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           '42018122',
-                                          style: TextStyle(
+                                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                             fontSize: 14.0,
-                                            color: mainColors,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
@@ -147,18 +137,17 @@ class QueriesDetailsScreen extends StatelessWidget {
                                 child: Container(
                                   width: double.infinity,
                                   child: SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
+                                    physics: const BouncingScrollPhysics(),
                                     child: Text(
                                       '«إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو  »',
-                                      style: TextStyle(
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: 14.0,
-                                        color: mainColors,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],
@@ -184,15 +173,15 @@ class QueriesDetailsScreen extends StatelessWidget {
                             const EdgeInsets.only(top: 16.0,left: 16.0,bottom: 16.0,right: 5.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                                   borderRadius: BorderRadius.circular(8.0),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
+                                      color:ThemeCubit.get(context).darkTheme? Colors.indigo.withOpacity(0.2) : Colors.grey.withOpacity(0.5),
                                       spreadRadius: 2,
                                       blurRadius: 2,
                                       offset:
-                                      Offset(3, 3), // changes position of shadow
+                                      const Offset(3, 3), // changes position of shadow
                                     ),
                                   ]),
                               child: Padding(
@@ -204,18 +193,17 @@ class QueriesDetailsScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
                                         child: SingleChildScrollView(
-                                          physics: BouncingScrollPhysics(),
+                                          physics: const BouncingScrollPhysics(),
                                           child: Text(
                                             '«إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو  »',
-                                            style: TextStyle(
+                                            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                               fontSize: 14.0,
-                                              color: mainColors,
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                   ],

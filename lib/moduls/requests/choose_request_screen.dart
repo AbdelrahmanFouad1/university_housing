@@ -16,7 +16,6 @@ class ChooseRequestScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: defaultAppBar(context: context),
-        backgroundColor: backGround,
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) =>
               orientation == Orientation.portrait

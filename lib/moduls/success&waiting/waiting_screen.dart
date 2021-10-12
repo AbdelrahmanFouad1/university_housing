@@ -12,80 +12,53 @@ class WaitingScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          backgroundColor: backGround,
-          elevation: 0.0,
+          automaticallyImplyLeading: false,
         ),
-        backgroundColor: backGround,
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) =>
               orientation == Orientation.portrait
-                  ? buildPortrait()
-                  : buildLandScape(),
+                  ? buildPortrait(context)
+                  : buildLandScape(context),
         ),
       ),
     );
   }
 
-  Widget buildPortrait() => Stack(
-        alignment: AlignmentDirectional.bottomCenter,
+  Widget buildPortrait(context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Container(
+        alignment: AlignmentDirectional.center,
+        child: Text(
+          'طلب الالتحاق بالسكن',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
+      const SizedBox(
+        height: 90.0,
+      ),
+      SvgPicture.asset(
+        'assets/images/waiting.svg',
+      ),
+      const SizedBox(
+        height: 30.0,
+      ),
+      Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  'طلب الالتحاق بالسكن',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 90.0,
-              ),
-              SvgPicture.asset(
-                'assets/images/waiting.svg',
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              Column(
-                children: [
-                  Text(
-                    'تم وضعك في قائمه الانتظار',
-                    style: TextStyle(
-                        color: mainColors,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  Text(
-                    'لحين وجود أماكن متاحه',
-                    style: TextStyle(
-                        color: mainColors,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          Text(
+            'تم وضعك في قائمه الانتظار',
+            style: Theme.of(context).textTheme.headline6,
           ),
-          SvgPicture.asset(
-            'assets/images/layer2.svg',
-            semanticsLabel: 'layer',
-            fit: BoxFit.cover,
+          Text(
+            'لحين وجود أماكن متاحه',
+            style: Theme.of(context).textTheme.headline6,
           ),
         ],
-      );
+      ),
+    ],
+  );
 
-  Widget buildLandScape() => SingleChildScrollView(
+  Widget buildLandScape(context) => SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,10 +67,7 @@ class WaitingScreen extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           child: Text(
             'طلب الالتحاق بالسكن',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         const SizedBox(
@@ -113,19 +83,11 @@ class WaitingScreen extends StatelessWidget {
           children: [
             Text(
               'تم وضعك في قائمه الانتظار',
-              style: TextStyle(
-                  color: mainColors,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
-              ),
+              style: Theme.of(context).textTheme.headline6,
             ),
             Text(
-              'لحين وجود أماكن متاحه',
-              style: TextStyle(
-                  color: mainColors,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
-              ),
+              'لحين وجود أماكن متاحة',
+              style: Theme.of(context).textTheme.headline6,
             ),
           ],
         ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/security/main/main_security_screen.dart';
-import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class SuccessLeavingScreen extends StatelessWidget {
+  const SuccessLeavingScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,7 @@ class SuccessLeavingScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: backGround,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          backgroundColor: backGround,
-          elevation: 0.0,
+          automaticallyImplyLeading: false,
           actions: [
             Container(
               padding: const EdgeInsets.all(0.0),
@@ -28,7 +23,7 @@ class SuccessLeavingScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 icon:  Icon(
                   IconBroken.Arrow___Left_2,
-                  color: mainColors,
+                  color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -38,18 +33,17 @@ class SuccessLeavingScreen extends StatelessWidget {
             const SizedBox(width: 6.0,),
           ],
         ),
-        backgroundColor: backGround,
         body: OrientationBuilder(
           builder: (BuildContext context, Orientation orientation) =>
               orientation == Orientation.portrait
-                  ? buildPortrait()
-                  : buildLandScape(),
+                  ? buildPortrait(context)
+                  : buildLandScape(context),
         ),
       ),
     );
   }
 
-  Widget buildPortrait() => Stack(
+  Widget buildPortrait(context) => Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           Column(
@@ -59,10 +53,7 @@ class SuccessLeavingScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 child: Text(
                   'طلب أخلاءالسكن',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               const SizedBox(
@@ -78,10 +69,7 @@ class SuccessLeavingScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 child: Text(
                   'تم تأكيد طلبكم',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               const SizedBox(
@@ -91,10 +79,7 @@ class SuccessLeavingScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 child: Text(
                   'أنتظر رد المشرف لأستكمال الأجرائات',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 20.0,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ],
@@ -103,7 +88,7 @@ class SuccessLeavingScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildLandScape() => SingleChildScrollView(
+  Widget buildLandScape(context) => SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -112,10 +97,7 @@ class SuccessLeavingScreen extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           child: Text(
             'طلب أخلاءالسكن',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         const SizedBox(
@@ -131,10 +113,7 @@ class SuccessLeavingScreen extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           child: Text(
             'تم تأكيد طلبكم',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
         const SizedBox(
@@ -144,10 +123,7 @@ class SuccessLeavingScreen extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           child: Text(
             'أنتظر رد المشرف لأستكمال الأجرائات',
-            style: TextStyle(
-              color: mainColors,
-              fontSize: 20.0,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
       ],

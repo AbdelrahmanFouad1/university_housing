@@ -7,13 +7,19 @@ import 'package:university_housing/moduls/profile/about_app_screen.dart';
 import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
 import 'package:university_housing/moduls/profile/student_rate/student_rate_screen.dart';
 import 'package:university_housing/moduls/profile/technical_support_screen.dart';
+import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class EditProfileScreen extends StatelessWidget {
+  const EditProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,22 +31,12 @@ class EditProfileScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
                 automaticallyImplyLeading: false,
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 12.0,
                 title: Text(
                   'الأعدادات',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 25.0,
-                  ),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 actions: [
                   IconButton(
@@ -51,6 +47,7 @@ class EditProfileScreen extends StatelessWidget {
                       'assets/images/back_arrow.svg',
                       width: 18.0,
                       height: 18.0,
+                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                     ),
                   ),
                 ],
@@ -83,7 +80,7 @@ class EditProfileScreen extends StatelessWidget {
                                 child: CircleAvatar(
                                   child: IconButton(
                                     alignment: Alignment.center,
-                                    padding: EdgeInsets.all(0.0),
+                                    padding: const EdgeInsets.all(0.0),
                                     iconSize: 20.0,
                                     icon: cubit.icon,
                                     onPressed: () {
@@ -101,7 +98,7 @@ class EditProfileScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         Column(
@@ -113,18 +110,15 @@ class EditProfileScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    'متابعه طلباتي',
-                                    style: TextStyle(
-                                      color: mainColors,
-                                      fontSize: 16.0,
-                                    ),
+                                    'متابعه طلباتى',
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     icon: Icon(
                                       IconBroken.Arrow___Left_2,
-                                      color: mainColors,
+                                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                     ),
                                     onPressed: () {
                                       navigateTo(context, FollowRequestsScreen());
@@ -139,7 +133,7 @@ class EditProfileScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 height: 1.0,
-                                color: mainColors,
+                                color: separator,
                               ),
                             ),
                             InkWell(
@@ -150,17 +144,14 @@ class EditProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'تقييم الطلاب',
-                                    style: TextStyle(
-                                      color: mainColors,
-                                      fontSize: 16.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     icon: Icon(
                                       IconBroken.Arrow___Left_2,
-                                      color: mainColors,
+                                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                     ),
                                     onPressed: () {
                                       navigateTo(context,StudentRateScreen(),);
@@ -175,7 +166,7 @@ class EditProfileScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 height: 1.0,
-                                color: mainColors,
+                                color: separator,
                               ),
                             ),
                             InkWell(
@@ -186,17 +177,14 @@ class EditProfileScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'خدماتنا',
-                                    style: TextStyle(
-                                      color: mainColors,
-                                      fontSize: 16.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     icon: Icon(
                                       IconBroken.Arrow___Left_2,
-                                      color: mainColors,
+                                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                     ),
                                     onPressed: () {
                                       navigateTo(context, AboutAppScreen());
@@ -211,7 +199,40 @@ class EditProfileScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 height: 1.0,
-                                color: mainColors,
+                                color: separator,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                navigateTo(context, TermsAndConditionsScreen());
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'الشروط والأحكام',
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(
+                                      IconBroken.Arrow___Left_2,
+                                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    ),
+                                    onPressed: () {
+                                      navigateTo(context, TechnicalSupportScreen());
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 1.0,
+                                color: separator,
                               ),
                             ),
                             InkWell(
@@ -221,18 +242,15 @@ class EditProfileScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    'الدعم الفني',
-                                    style: TextStyle(
-                                      color: mainColors,
-                                      fontSize: 16.0,
-                                    ),
+                                    'الدعم الفنى',
+                                    style: Theme.of(context).textTheme.bodyText1,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     icon: Icon(
                                       IconBroken.Arrow___Left_2,
-                                      color: mainColors,
+                                      color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                     ),
                                     onPressed: () {
                                       navigateTo(context, TechnicalSupportScreen());
@@ -247,51 +265,47 @@ class EditProfileScreen extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 height: 1.0,
-                                color: mainColors,
+                                color: separator,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               children: [
                                 Text(
-                                  'الوضع الليلي',
-                                  style: TextStyle(
-                                    color: mainColors,
-                                    fontSize: 16.0,
-                                  ),
+                                  'الوضع الليلى',
+                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 AnimatedContainer(
-                                  duration: Duration(milliseconds: 1000),
+                                  duration: const Duration(milliseconds: 1000),
                                   height: 30.0,
                                   width: 70.0,
                                   child: Stack(
                                     children: [
                                       AnimatedPositioned(
-                                        duration: Duration(milliseconds: 1000),
+                                        duration: const Duration(milliseconds: 1000),
                                         child: InkWell(
                                           onTap: () {
-                                            cubit.getTheme();
+                                            cubit.toggleButton();
+                                            ThemeCubit.get(context).changeTheme();
                                           },
                                           child: AnimatedSwitcher(
                                             duration:
-                                                Duration(milliseconds: 1000),
+                                                const Duration(milliseconds: 1000),
                                             transitionBuilder: (Widget child,
                                                 Animation<double> animation) {
                                               return RotationTransition(
                                                   child: child,
                                                   turns: animation);
                                             },
-                                            child: cubit.isDark
-                                                ? Icon(
+                                            child: ThemeCubit.get(context).darkTheme ? Icon(
                                                     Icons.nightlight_round,
                                                     color: Colors.white,
                                                     size: 20.0,
                                                     key: UniqueKey(),
-                                                  )
-                                                : Icon(
+                                                  ) : Icon(
                                                     Icons.wb_sunny_sharp,
                                                     color: Colors.amberAccent,
                                                     size: 20.0,
@@ -301,21 +315,21 @@ class EditProfileScreen extends StatelessWidget {
                                         ),
                                         curve: Curves.easeIn,
                                         top: 5.0,
-                                        right: cubit.isDark ? 40.0 : 0.0,
-                                        left: cubit.isDark ? 0.0 : 40.0,
+                                        right: ThemeCubit.get(context).darkTheme ? 40.0 : 0.0,
+                                        left: ThemeCubit.get(context).darkTheme ? 0.0 : 40.0,
                                       ),
                                     ],
                                   ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    color: cubit.isDark == true
+                                    color: ThemeCubit.get(context).darkTheme == true
                                         ? mainColors
                                         : Colors.white,
                                   ),
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50.0,
                             ),
                             defaultButton(
