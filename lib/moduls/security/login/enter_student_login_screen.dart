@@ -274,7 +274,6 @@ class EnterStudentLoginScreen extends StatelessWidget {
                             height: 47.0,
                             btnColor: mainColors,
                             marginSize: EdgeInsets.symmetric(horizontal: 14.0),
-                            //
                           ),
                           const SizedBox(
                             height: 180.0,

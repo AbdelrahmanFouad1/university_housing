@@ -251,4 +251,7 @@ void changeCreditCardModel(CreditCardModel creditCardModel){
   emit(ChangeCreditCardModelState());
 }
 
+// notifications
+bool isBus = false;
+
 }
