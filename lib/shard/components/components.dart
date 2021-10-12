@@ -551,10 +551,11 @@ Widget buildDialog({
   required String title,
   required Widget child,
 }) => AlertDialog(
+  backgroundColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
   title: Text(
     title,
     textDirection: TextDirection.rtl,
-    style: TextStyle(color: mainColors),
+    style: Theme.of(context).textTheme.subtitle1,
   ),
   contentPadding: EdgeInsets.zero,
   content: SingleChildScrollView(
@@ -570,9 +571,7 @@ Widget buildDialog({
       child: Text(
         'الغاء',
         textDirection: TextDirection.rtl,
-        style: TextStyle(
-          color: mainColors,
-        ),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     ),
     TextButton(
@@ -580,9 +579,7 @@ Widget buildDialog({
       child: Text(
         'اختيار',
         textDirection: TextDirection.rtl,
-        style: TextStyle(
-          color: mainColors,
-        ),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     ),
   ],

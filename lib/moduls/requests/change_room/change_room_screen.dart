@@ -1,4 +1,3 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +6,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class ChangeRoomScreen extends StatelessWidget {
 
@@ -83,6 +83,8 @@ class ChangeRoomScreen extends StatelessWidget {
       index: 11,
     ),
   ];
+
+  ChangeRoomScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,10 +179,8 @@ class ChangeRoomScreen extends StatelessWidget {
                       const SizedBox(height: 12.0,),
                       Text(
                         'طلب تغيير الغرفة',
-                        style: TextStyle(
-                            color: mainColors,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16.0
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(height: 24.0,),
@@ -189,7 +189,7 @@ class ChangeRoomScreen extends StatelessWidget {
                         height:45.0,
                         margin: const EdgeInsets.symmetric(horizontal: 14.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                           borderRadius: BorderRadius.circular(
                             8.0,
                           ),
@@ -200,6 +200,7 @@ class ChangeRoomScreen extends StatelessWidget {
                           readOnly: true,
                           onTap: () {
                             showDialog<void>(
+                              barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                                 context: context,
                                 builder: (context) => buildDialog(
                                     context: context,
@@ -207,8 +208,11 @@ class ChangeRoomScreen extends StatelessWidget {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: _group.map((e) => RadioListTile(
+                                        activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
+                                        tileColor: backGroundDark,
                                         title: Text(
-                                            e.text
+                                            e.text,
+                                          style: Theme.of(context).textTheme.bodyText1!,
                                         ),
                                         groupValue: cubit.currVal,
                                         value: e.index,
@@ -222,17 +226,15 @@ class ChangeRoomScreen extends StatelessWidget {
                                 ),
                             );
                           },
-                          decoration:  const InputDecoration(
+                          decoration:   InputDecoration(
                             border: InputBorder.none,
                             suffixIcon: Icon(
                               Icons.keyboard_arrow_down,
-                              color: Colors.black38,
+                              color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
                             ),
                             hintText: 'اختر رقم الدور',
-                            hintStyle: TextStyle(
-                              color: Colors.black38,
-                            ),
-                            contentPadding:EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
+                            hintStyle: Theme.of(context).textTheme.subtitle1,
+                            contentPadding:const EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
                           ),
                         ),
                       ),
@@ -242,7 +244,7 @@ class ChangeRoomScreen extends StatelessWidget {
                         height:45.0,
                         margin: const EdgeInsets.symmetric(horizontal: 14.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                           borderRadius: BorderRadius.circular(
                             8.0,
                           ),
@@ -253,6 +255,7 @@ class ChangeRoomScreen extends StatelessWidget {
                           onTap: (){
                             showDialog<void>(
                               context: context,
+                              barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                               builder: (context) => buildDialog(
                                 context: context,
                                 title: 'اختر رقم الدور',
@@ -260,7 +263,8 @@ class ChangeRoomScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: _groupRoom.map((e) => RadioListTile(
                                     title: Text(
-                                        e.text
+                                        e.text,
+                                      style: Theme.of(context).textTheme.bodyText1!,
                                     ),
                                     groupValue: cubit.currRoomVal,
                                     value: e.index,
@@ -274,24 +278,22 @@ class ChangeRoomScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          decoration:  const InputDecoration(
+                          decoration:   InputDecoration(
                             border: InputBorder.none,
-                            suffixIcon: Icon(
+                            suffixIcon:  Icon(
                               Icons.keyboard_arrow_down,
-                              color: Colors.black38,
+                              color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
                             ),
                             hintText: 'اختر رقم الغرفة',
-                            hintStyle: TextStyle(
-                              color: Colors.black38,
-                            ),
-                            contentPadding:EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
+                            hintStyle: Theme.of(context).textTheme.subtitle1,
+                            contentPadding:const EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
                           ),
                         ),
                       ),
                       const SizedBox(height: 160.0,),
                       defaultButton(
                         function: (){
-                          navigateTo(context, SuccessChangeRoomScreen());
+                          navigateTo(context, const SuccessChangeRoomScreen());
                         },
                         text: 'تقديم الطلب',
                         width: double.infinity,
