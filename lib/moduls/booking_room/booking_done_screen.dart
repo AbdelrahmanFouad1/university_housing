@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class BookingDoneScreen extends StatelessWidget {
   const BookingDoneScreen({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class BookingDoneScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: backGround,
         appBar: defaultAppBar(context: context, bookingDone: true, pop: false),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -31,7 +31,7 @@ class BookingDoneScreen extends StatelessWidget {
                         'assets/icon/maps.svg',
                         height: 25.0,
                         width: 25.0,
-                        color: mainColors,
+                        color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                       ),
                     ),
                     Expanded(
@@ -39,7 +39,7 @@ class BookingDoneScreen extends StatelessWidget {
                       child: Text(
                         '. . .',
                         style: TextStyle(
-                          color: mainColors,
+                          color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                           fontSize: 25.0,
                         ),
                         textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class BookingDoneScreen extends StatelessWidget {
                         'assets/icon/credit_card.svg',
                         height: 25.0,
                         width: 25.0,
-                        color: mainColors,
+                        color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                       ),
                     ),
                     Expanded(
@@ -60,7 +60,7 @@ class BookingDoneScreen extends StatelessWidget {
                         '. . .',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: mainColors,
+                            color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                             fontSize: 25.0
                         ),
                       ),
@@ -72,7 +72,7 @@ class BookingDoneScreen extends StatelessWidget {
                         height: 25.0,
                         width: 25.0,
                         alignment: AlignmentDirectional.center,
-                        color: mainColors,
+                        color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                       ),
                     ),
                   ],
@@ -81,10 +81,7 @@ class BookingDoneScreen extends StatelessWidget {
                 Center(
                   child: Text(
                     ' تم رفع طلبكم بنجاح',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: mainColors,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 const SizedBox(height: 22.0,),
@@ -96,8 +93,7 @@ class BookingDoneScreen extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   child: Text(
                     'انتظر موافقة مشرف السكن',
-                    style: TextStyle(
-                      color: mainColors,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontSize: 14.0,
                     ),
                   ),
@@ -109,23 +105,21 @@ class BookingDoneScreen extends StatelessWidget {
                       alignment: AlignmentDirectional.center,
                       child: Text(
                         'ويمكنك متابعه طلبك من',
-                        style: TextStyle(
-                          color: mainColors,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 14.0,
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: (){
-                        navigateTo(context, FollowRequestsScreen());
+                        navigateTo(context, const FollowRequestsScreen());
                       },
                       child: Container(
                         width: 100.0,
                         alignment: AlignmentDirectional.center,
                         child: Text(
                           'متابعة طلباتى ',
-                          style: TextStyle(
-                            color: mainColors,
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14.0,
                             decoration: TextDecoration.underline,
                           ),

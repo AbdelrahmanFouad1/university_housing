@@ -8,6 +8,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class BookingRoomScreen extends StatelessWidget {
   var floorController = TextEditingController();
@@ -100,7 +101,6 @@ class BookingRoomScreen extends StatelessWidget {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            backgroundColor: backGround,
             appBar: defaultAppBar(context: context),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -117,7 +117,7 @@ class BookingRoomScreen extends StatelessWidget {
                             'assets/icon/maps.svg',
                             height: 25.0,
                             width: 25.0,
-                            color: mainColors,
+                            color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                           ),
                         ),
                         const Expanded(
@@ -167,10 +167,7 @@ class BookingRoomScreen extends StatelessWidget {
                     Center(
                       child: Text(
                         'أختر غرفتك',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: mainColors,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     const SizedBox(height: 16.0,),
@@ -197,7 +194,7 @@ class BookingRoomScreen extends StatelessWidget {
                                   width: 100.0,
                                   height: 150.0,
                                   decoration: BoxDecoration(
-                                    color: cubit.selectedHouse == 1? mainColors : Colors.white,
+                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainTextColor : backGroundDark) : (cubit.selectedHouse == 1? mainColors : Colors.white),
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.grey, width: 1),
                                   ),
@@ -212,14 +209,14 @@ class BookingRoomScreen extends StatelessWidget {
                                       Text(
                                         'دار الضيافه',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 1? Colors.white : mainColors ,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainColors : mainTextColor) : (cubit.selectedHouse == 1? Colors.white : mainColors) ,
                                           fontSize: 12.0,
                                         ),
                                       ),
                                       Text(
                                         '(زوجي)',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 1? Colors.white : mainColors,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainColors : mainTextColor) : ( cubit.selectedHouse == 1? Colors.white : mainColors),
                                           fontSize: 12.0,
                                         ),
                                       ),
@@ -244,7 +241,7 @@ class BookingRoomScreen extends StatelessWidget {
                                   width: 100.0,
                                   height: 150.0,
                                   decoration: BoxDecoration(
-                                    color: cubit.selectedHouse == 2? mainColors :Colors.white,
+                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainTextColor : backGroundDark) : (cubit.selectedHouse == 2? mainColors : Colors.white),
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.grey, width: 1),
                                   ),
@@ -259,14 +256,14 @@ class BookingRoomScreen extends StatelessWidget {
                                       Text(
                                         'أسكان مميز (أ)',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 2? Colors.white : mainColors,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainColors : mainTextColor) : (cubit.selectedHouse == 2? Colors.white : mainColors) ,
                                           fontSize: 12.0,
                                         ),
                                       ),
                                       Text(
                                         '(فردي)',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 2? Colors.white : mainColors,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainColors : mainTextColor) : (cubit.selectedHouse == 2? Colors.white : mainColors) ,
                                           fontSize: 12.0,
                                         ),
                                       ),
@@ -291,7 +288,7 @@ class BookingRoomScreen extends StatelessWidget {
                                   width: 100.0,
                                   height: 150.0,
                                   decoration: BoxDecoration(
-                                    color: cubit.selectedHouse == 3? mainColors :Colors.white ,
+                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainTextColor : backGroundDark) : (cubit.selectedHouse == 3? mainColors : Colors.white),
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.grey, width: 1),
                                   ),
@@ -306,14 +303,14 @@ class BookingRoomScreen extends StatelessWidget {
                                       Text(
                                         'أسكان مميز (ب)',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 3? Colors.white : mainColors,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainColors : mainTextColor) : (cubit.selectedHouse == 3? Colors.white : mainColors) ,
                                           fontSize: 12.0,
                                         ),
                                       ),
                                       Text(
                                         '(فردي)',
                                         style: TextStyle(
-                                          color: cubit.selectedHouse == 3? Colors.white : mainColors,
+                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainColors : mainTextColor) : (cubit.selectedHouse == 3? Colors.white : mainColors) ,
                                           fontSize: 12.0,
                                         ),
                                       ),
@@ -336,7 +333,7 @@ class BookingRoomScreen extends StatelessWidget {
                       height: cubit.showDetails== true ? 45.0 : 0.0,
                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                         borderRadius: BorderRadius.circular(8.0,),
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
@@ -345,6 +342,7 @@ class BookingRoomScreen extends StatelessWidget {
                         readOnly: true,
                         onTap: (){
                           showDialog<void>(
+                            barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                             context: context,
                             builder: (context) => buildDialog(
                               context: context,
@@ -353,7 +351,8 @@ class BookingRoomScreen extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: _group.map((e) => RadioListTile(
                                   title: Text(
-                                      e.text
+                                      e.text,
+                                    style: Theme.of(context).textTheme.bodyText1!,
                                   ),
                                   groupValue: cubit.currentVal,
                                   value: e.index,
@@ -367,18 +366,15 @@ class BookingRoomScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           border: InputBorder.none,
-                          // suffixIcon: cubit.showDetails == true ? Icon(
+                          // suffixIcon: Icon(
                           //   Icons.keyboard_arrow_down,
-                          //   color: Colors.black38,):Icon(
-                          //   Icons.keyboard_arrow_down,
-                          //   color: Colors.black38,),
+                          //   color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
+                          // ),
                           hintText: 'اختر رقم الدور',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          contentPadding:EdgeInsetsDirectional.all(8.0),
+                          hintStyle: Theme.of(context).textTheme.bodyText1,
+                          contentPadding:const EdgeInsetsDirectional.all(8.0),
                         ),
                       ),
                     ),
@@ -392,7 +388,7 @@ class BookingRoomScreen extends StatelessWidget {
                       height:cubit.showDetails== true ? 45.0 : 0.0,
                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                         borderRadius: BorderRadius.circular(8.0,),
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
@@ -404,6 +400,7 @@ class BookingRoomScreen extends StatelessWidget {
                             showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
                           }else{
                             showDialog<void>(
+                              barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                               context: context,
                               builder: (context) => buildDialog(
                                 context: context,
@@ -412,7 +409,8 @@ class BookingRoomScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: _groupRoom.map((e) => RadioListTile(
                                     title: Text(
-                                        e.text
+                                        e.text,
+                                      style: Theme.of(context).textTheme.bodyText1!,
                                     ),
                                     groupValue: cubit.currentRoomVal,
                                     value: e.index,
@@ -429,17 +427,15 @@ class BookingRoomScreen extends StatelessWidget {
                           }
                         },
 
-                        decoration:  const InputDecoration(
+                        decoration:   InputDecoration(
                           border: InputBorder.none,
                           // suffixIcon: Icon(
-                          //   Icons.keyboard_arrow_down,
-                          //   color: Colors.black38,
+                          // Icons.keyboard_arrow_down,
+                          // color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
                           // ),
                           hintText: 'اختر رقم الغرفه',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          contentPadding:EdgeInsetsDirectional.all(8.0),
+                          hintStyle: Theme.of(context).textTheme.bodyText1,
+                          contentPadding:const EdgeInsetsDirectional.all(8.0),
                         ),
                       ),
                     ),
@@ -452,7 +448,7 @@ class BookingRoomScreen extends StatelessWidget {
                       height: cubit.showAll == true ? 320.0: 0.0,
                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                         borderRadius: BorderRadius.circular(
                           8.0,
                         ),
@@ -472,19 +468,17 @@ class BookingRoomScreen extends StatelessWidget {
                                       Expanded(
                                         child: Text(
                                           'الساكن الحالي بالغرفه : ',
-                                          style: TextStyle(
+                                            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                               fontSize: 14.0,
-                                              color: mainColors
-                                          ),
+                                            ),
                                         ),
                                       ),
                                       Expanded(
                                         child: Text(
                                           ' لا يوجد ',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 14.0,
-                                              color: mainColors
+                                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                            fontSize: 14.0,
                                           ),
                                         ),
                                       ),
@@ -507,9 +501,8 @@ class BookingRoomScreen extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       'سعر الغرفه : ',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -517,9 +510,8 @@ class BookingRoomScreen extends StatelessWidget {
                                     child: Text(
                                       ' 2997 ',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -540,9 +532,8 @@ class BookingRoomScreen extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       'ملاحظات : ',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -550,9 +541,8 @@ class BookingRoomScreen extends StatelessWidget {
                                     child: Text(
                                       ' يضاف 500 جنيه تأمينات ويتم أستردادها في حاله أخلاء السكن وعدم وجود أي غرامات ماليه ',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -573,9 +563,8 @@ class BookingRoomScreen extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       'الأجمالي : ',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -583,9 +572,8 @@ class BookingRoomScreen extends StatelessWidget {
                                     child: Text(
                                       '3497',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: mainColors
+                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ),
@@ -615,20 +603,18 @@ class BookingRoomScreen extends StatelessWidget {
                           ),
                           Text(
                               'اوافق علي جميع ',
-                            style: TextStyle(
-                              color: mainColors,
+                            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               fontSize: 14.0,
                             ),
                           ),
                           const SizedBox(width: 4.0,),
                           InkWell(
                             onTap: (){
-                              navigateTo(context, TermsAndConditionsScreen());
+                              navigateTo(context, const TermsAndConditionsScreen());
                             },
                             child: Text(
                                 'الشروط والأحكام ',
-                              style: TextStyle(
-                                color: mainColors,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 fontSize: 14.0,
                                 decoration: TextDecoration.underline,
                               ),

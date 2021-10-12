@@ -7,6 +7,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class ReceiptScreen extends StatelessWidget {
   var nameController = TextEditingController();
@@ -25,7 +26,6 @@ class ReceiptScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -42,7 +42,7 @@ class ReceiptScreen extends StatelessWidget {
                               'assets/icon/maps.svg',
                               height: 25.0,
                               width: 25.0,
-                              color: mainColors,
+                              color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                             ),
                           ),
                           Expanded(
@@ -50,7 +50,7 @@ class ReceiptScreen extends StatelessWidget {
                             child: Text(
                               '. . .',
                               style: TextStyle(
-                                color: mainColors,
+                                color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                                 fontSize: 25.0,
                               ),
                               textAlign: TextAlign.center,
@@ -62,7 +62,7 @@ class ReceiptScreen extends StatelessWidget {
                               'assets/icon/credit_card.svg',
                               height: 25.0,
                               width: 25.0,
-                              color: mainColors,
+                              color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                             ),
                           ),
                           const Expanded(
@@ -93,10 +93,7 @@ class ReceiptScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Text(
                           '* يجب ادخال جميع البيانات التاليه',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText1
                         ),
                       ),
 
@@ -107,19 +104,19 @@ class ReceiptScreen extends StatelessWidget {
                         height: 45.0 ,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                           borderRadius: BorderRadius.circular(8.0,),
                           border: Border.all(color: Colors.grey, width: 1),
                         ),
                         child: TextFormField(
                           controller: nameController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'اسم الطالب',
                             hintStyle: TextStyle(
-                              color: Colors.black38,
+                              color: ThemeCubit.get(context).darkTheme? Colors.grey : Colors.black38,
                             ),
-                            contentPadding:EdgeInsetsDirectional.all(8.0),
+                            contentPadding:const EdgeInsetsDirectional.all(8.0),
                           ),
                         ),
                       ),
@@ -131,19 +128,19 @@ class ReceiptScreen extends StatelessWidget {
                         height: 45.0 ,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                           borderRadius: BorderRadius.circular(8.0,),
                           border: Border.all(color: Colors.grey, width: 1),
                         ),
                         child: TextFormField(
                           controller: idController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'رقم الطالب',
                             hintStyle: TextStyle(
-                              color: Colors.black38,
+                              color: ThemeCubit.get(context).darkTheme? Colors.grey : Colors.black38,
                             ),
-                            contentPadding:EdgeInsetsDirectional.all(8.0),
+                            contentPadding:const EdgeInsetsDirectional.all(8.0),
                           ),
                         ),
                       ),
@@ -153,19 +150,19 @@ class ReceiptScreen extends StatelessWidget {
                         height: 45.0 ,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                           borderRadius: BorderRadius.circular(8.0,),
                           border: Border.all(color: Colors.grey, width: 1),
                         ),
                         child: TextFormField(
                           controller: typeController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'القسم',
                             hintStyle: TextStyle(
-                              color: Colors.black38,
+                              color: ThemeCubit.get(context).darkTheme? Colors.grey : Colors.black38,
                             ),
-                            contentPadding:EdgeInsetsDirectional.all(8.0),
+                            contentPadding: const EdgeInsetsDirectional.all(8.0),
                           ),
                         ),
                       ),
@@ -230,7 +227,7 @@ class ReceiptScreen extends StatelessWidget {
                                 height: 45.0,
                                 margin: const EdgeInsets.symmetric(horizontal: 10.0),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
                                   borderRadius: BorderRadius.circular(8.0,),
                                   border: Border.all(color: Colors.grey, width: 1),
                                 ),
@@ -246,12 +243,13 @@ class ReceiptScreen extends StatelessWidget {
                                       icon: SvgPicture.asset(
                                         'assets/images/upload.svg',
                                         alignment: Alignment.center,
+                                        color: ThemeCubit.get(context).darkTheme? Colors.grey : Colors.black38,
                                       ),
                                     ),
                                     hintText: 'صورة ايصال الدفع',
                                     border: InputBorder.none,
-                                    hintStyle: const TextStyle(
-                                      color: Colors.black38,
+                                    hintStyle: TextStyle(
+                                      color: ThemeCubit.get(context).darkTheme? Colors.grey : Colors.black38,
                                     ),
                                     contentPadding:const EdgeInsetsDirectional.all(8.0),
                                   ),
