@@ -44,6 +44,8 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
+  unselectedWidgetColor: mainTextColor,
+  disabledColor: mainTextColor,
   scaffoldBackgroundColor: backGroundDark,
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(

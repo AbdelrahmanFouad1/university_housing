@@ -1,21 +1,22 @@
-import 'dart:ffi';
-import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'dart:ui' as ui;
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+
 
 class HostingRequestsScreen extends StatelessWidget {
 
   var dateController = TextEditingController();
+
+  HostingRequestsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,6 @@ class HostingRequestsScreen extends StatelessWidget {
           return Directionality(
             textDirection:  ui.TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -41,24 +41,17 @@ class HostingRequestsScreen extends StatelessWidget {
                       children: [
                         Text(
                           'تقديم طلب الاستضافه',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                         const SizedBox(height: 42.0,),
                         Text(
                           'تعليمات الاستضافه',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Text(
                           'يمكن للطالب استضافه صديق له او قريب ليوم او اكثر ويدفع رسوم بمقدار 4% من ايجار الغرفه علي كل يوم استضافه ',
-                          style: TextStyle(
-                            fontSize: 11.0,
-                            color: mainColors,
+                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontSize: 10.0,
                           ),
                         ),
                         const SizedBox(height: 35.0,),
@@ -66,10 +59,7 @@ class HostingRequestsScreen extends StatelessWidget {
                           children: [
                             Text(
                               'صله الضيف بالطالب',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: mainColors,
-                              ),
+                                style: Theme.of(context).textTheme.bodyText2,
                             ),
                             const SizedBox(width: 10.0,),
                             SizedBox(
@@ -78,7 +68,8 @@ class HostingRequestsScreen extends StatelessWidget {
                               child: Radio(
                                 value: true,
                                 groupValue: cubit.isStudent,
-                                activeColor: mainColors,
+                                activeColor: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                focusColor: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                 onChanged: (value) {
                                   cubit.changeIsStudent(true);
                                 },
@@ -87,10 +78,7 @@ class HostingRequestsScreen extends StatelessWidget {
                             const SizedBox(width: 8.0,),
                             Text(
                               'طالب',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: mainColors,
-                              ),
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                             const SizedBox(width: 30.0,),
                             SizedBox(
@@ -99,7 +87,9 @@ class HostingRequestsScreen extends StatelessWidget {
                               child: Radio(
                                 value: false,
                                 groupValue: cubit.isStudent,
-                                activeColor: mainColors,
+                                activeColor: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                focusColor: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                hoverColor: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                                 onChanged: (value) {
                                   cubit.changeIsStudent(false);
                                 },
@@ -108,10 +98,7 @@ class HostingRequestsScreen extends StatelessWidget {
                             const SizedBox(width: 8.0,),
                             Text(
                               'قريب',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: mainColors,
-                              ),
+                              style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ],
                         ),
@@ -128,6 +115,11 @@ class HostingRequestsScreen extends StatelessWidget {
                               hintStyle: TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.grey,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                           ),
@@ -149,6 +141,11 @@ class HostingRequestsScreen extends StatelessWidget {
                                      fontSize: 15.0,
                                      color: Colors.grey,
                                    ),
+                                   enabledBorder: OutlineInputBorder(
+                                     borderSide: BorderSide(
+                                       color: Colors.grey,
+                                     ),
+                                   ),
                                  ),
                                ),
                              );
@@ -165,6 +162,11 @@ class HostingRequestsScreen extends StatelessWidget {
                                    hintStyle: TextStyle(
                                      fontSize: 15.0,
                                      color: Colors.grey,
+                                   ),
+                                   enabledBorder: OutlineInputBorder(
+                                     borderSide: BorderSide(
+                                       color: Colors.grey,
+                                     ),
                                    ),
                                  ),
                                ),
@@ -190,6 +192,11 @@ class HostingRequestsScreen extends StatelessWidget {
                                     hintStyle: TextStyle(
                                       fontSize: 15.0,
                                       color: Colors.grey,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                   onTap:(){
@@ -218,6 +225,11 @@ class HostingRequestsScreen extends StatelessWidget {
                                     hintStyle: TextStyle(
                                       fontSize: 15.0,
                                       color: Colors.grey,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -299,11 +311,20 @@ class HostingRequestsScreen extends StatelessWidget {
                                         icon: SvgPicture.asset(
                                           'assets/images/upload.svg',
                                           alignment: Alignment.center,
+                                          color: Colors.grey,
                                         ),
                                       ),
                                       hintText: 'صورة بطاقه الضيف',
+                                      hintStyle: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                       border: const OutlineInputBorder(),
                                       contentPadding:const EdgeInsets.symmetric(horizontal:14.0),
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -317,7 +338,7 @@ class HostingRequestsScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 47.0,
                           btnColor: mainColors,
-                          marginSize: EdgeInsets.symmetric(horizontal: 14.0),
+                          marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
                           //
                         ),
                       ],
