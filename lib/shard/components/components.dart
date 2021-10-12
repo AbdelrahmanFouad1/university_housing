@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
@@ -168,7 +167,7 @@ AppBar defaultAppBar({
               height: 18.0,
             ),
             onPressed: () {
-              navigateTo(context, BusScreen());
+              navigateTo(context, const BusScreen());
             },
           ),
         ),
@@ -182,7 +181,7 @@ AppBar defaultAppBar({
             color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
           ),
           onPressed: () {
-            navigateTo(context, ProfileScreen());
+            navigateTo(context, const ProfileScreen());
           },
         ),
       ),
@@ -205,7 +204,7 @@ AppBar defaultAppBar({
             ],
           ),
           onPressed: () {
-            navigateTo(context, NotificationsScreen());
+            navigateTo(context, const NotificationsScreen());
           },
         ),
       ),
@@ -229,16 +228,14 @@ AppBar defaultAppBar({
           onTap: (){
             navigateTo(context, HomeScreen());
           },
-          child: Stack(
-          alignment: Alignment.center,
-          children: [
-            CircleAvatar(
-              radius: 14.0,
-              backgroundColor: backGround,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: SvgPicture.asset(
+                'assets/images/back_arrow.svg',
+              color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+
             ),
-            SvgPicture.asset('assets/images/back_arrow.svg'),
-          ],
-      ),
+          ),
         ),
       const SizedBox(width: 6.0,),
     ],
@@ -409,7 +406,7 @@ Widget buildFinesBox(
                 padding: const EdgeInsets.only(left: 60.0, bottom: 10.0),
                 child: defaultButton(
                   function: () {
-                    navigateTo(context, FinesScreen());
+                    navigateTo(context, const FinesScreen());
                   },
                   text: 'عرض التفاصيل',
                   fontSize: 12.0,
@@ -491,36 +488,6 @@ Widget buildEnquiry(context, {
         ),
       ),
       body,
-      // Expanded(
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: Container(
-      //       height: 122.0,
-      //       child: Column(
-      //         mainAxisAlignment: MainAxisAlignment.start,
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           const Text(
-      //             'سؤال ؟',
-      //             style: TextStyle(
-      //               fontSize: 16.0,
-      //               fontWeight: FontWeight.w800,
-      //             ),
-      //           ),
-      //           const SizedBox(height: 6.0,),
-      //           Text(
-      //             'هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص.',
-      //             maxLines: 3,
-      //             overflow: TextOverflow.ellipsis,
-      //             style: Theme.of(context).textTheme.caption!.copyWith(
-      //               height: 1.4,
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
     ],
   ),
 );

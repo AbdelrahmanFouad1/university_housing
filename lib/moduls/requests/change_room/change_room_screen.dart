@@ -184,15 +184,16 @@ class ChangeRoomScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24.0,),
+
+                      // change floor
                       Container(
                         width: double.infinity,
                         height:45.0,
                         margin: const EdgeInsets.symmetric(horizontal: 14.0),
                         decoration: BoxDecoration(
                           color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
-                          borderRadius: BorderRadius.circular(
-                            8.0,
-                          ),
+                          borderRadius: BorderRadius.circular(8.0,),
+                          border: Border.all(color: Colors.grey, width: 1),
                         ),
                         child: TextFormField(
                           controller: floorController,
@@ -234,49 +235,56 @@ class ChangeRoomScreen extends StatelessWidget {
                             ),
                             hintText: 'اختر رقم الدور',
                             hintStyle: Theme.of(context).textTheme.subtitle1,
-                            contentPadding:const EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
+                            contentPadding:const EdgeInsetsDirectional.all(8.0),
                           ),
                         ),
                       ),
+
                       const SizedBox(height: 16.0,),
+
+                      // change room
                       Container(
                         width: double.infinity,
                         height:45.0,
                         margin: const EdgeInsets.symmetric(horizontal: 14.0),
                         decoration: BoxDecoration(
                           color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
-                          borderRadius: BorderRadius.circular(
-                            8.0,
-                          ),
+                          borderRadius: BorderRadius.circular(8.0,),
+                          border: Border.all(color: Colors.grey, width: 1),
                         ),
                         child: TextFormField(
                           controller: roomController,
                           readOnly: true,
                           onTap: (){
-                            showDialog<void>(
-                              context: context,
-                              barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
-                              builder: (context) => buildDialog(
+                            if(floorController.text.isEmpty){
+                              showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
+                            }else{
+                              showDialog<void>(
+                                barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                                 context: context,
-                                title: 'اختر رقم الدور',
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: _groupRoom.map((e) => RadioListTile(
-                                    title: Text(
+                                builder: (context) => buildDialog(
+                                  context: context,
+                                  title: 'اختر رقم الغرفه',
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: _groupRoom.map((e) => RadioListTile(
+                                      title: Text(
                                         e.text,
-                                      style: Theme.of(context).textTheme.bodyText1!,
-                                    ),
-                                    groupValue: cubit.currRoomVal,
-                                    value: e.index,
-                                    onChanged: (int? val) {
-                                      cubit.changeRoom(val!, e.text);
-                                      roomController.text = cubit.currRoomText;
-                                      Navigator.pop(context);
-                                    },
-                                  )).toList(),
+                                        style: Theme.of(context).textTheme.bodyText1!,
+                                      ),
+                                      groupValue: cubit.currentRoomVal,
+                                      value: e.index,
+                                      onChanged: (int? val) {
+                                        cubit.selectRoom(val!, e.text);
+                                        roomController.text = cubit.currentRoomText;
+                                        cubit.ShowAllDetails(true);
+                                        Navigator.pop(context);
+                                      },
+                                    )).toList(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           decoration:   InputDecoration(
                             border: InputBorder.none,
@@ -286,11 +294,13 @@ class ChangeRoomScreen extends StatelessWidget {
                             ),
                             hintText: 'اختر رقم الغرفة',
                             hintStyle: Theme.of(context).textTheme.subtitle1,
-                            contentPadding:const EdgeInsetsDirectional.only(start: 8.0, top: 4.0),
+                            contentPadding:const EdgeInsetsDirectional.all(8.0),
                           ),
                         ),
                       ),
                       const SizedBox(height: 160.0,),
+
+
                       defaultButton(
                         function: (){
                           navigateTo(context, const SuccessChangeRoomScreen());

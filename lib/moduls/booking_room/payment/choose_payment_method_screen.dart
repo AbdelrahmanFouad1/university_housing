@@ -7,6 +7,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class ChoosePaymentMethodScreen extends StatelessWidget {
   const ChoosePaymentMethodScreen({Key? key}) : super(key: key);
@@ -22,7 +23,6 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: defaultAppBar(context: context),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -39,7 +39,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                               'assets/icon/maps.svg',
                               height: 25.0,
                               width: 25.0,
-                              color: mainColors,
+                              color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                             ),
                           ),
                           Expanded(
@@ -47,7 +47,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                             child: Text(
                               '. . .',
                               style: TextStyle(
-                                color: mainColors,
+                                color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                                 fontSize: 25.0,
                               ),
                               textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                               'assets/icon/credit_card.svg',
                               height: 25.0,
                               width: 25.0,
-                              color: mainColors,
+                              color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                             ),
                           ),
                           const Expanded(
@@ -89,10 +89,7 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                       Center(
                         child: Text(
                           'أختر وسيله الدفع',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: mainColors,
-                          ),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                       const SizedBox(height: 22.0,),

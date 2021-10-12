@@ -7,14 +7,17 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 import '../booking_done_screen.dart';
 
 class E_PaymentScreen extends StatelessWidget {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  FocusNode myFocusNode = FocusNode();
 
-   E_PaymentScreen({Key? key}) : super(key: key);
+
+  E_PaymentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class E_PaymentScreen extends StatelessWidget {
                                     'assets/icon/maps.svg',
                                     height: 25.0,
                                     width: 25.0,
-                                    color: mainColors,
+                                    color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                                   ),
                                 ),
                                 Expanded(
@@ -53,7 +56,7 @@ class E_PaymentScreen extends StatelessWidget {
                                   child: Text(
                                     '. . .',
                                     style: TextStyle(
-                                      color: mainColors,
+                                      color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                                       fontSize: 25.0,
                                     ),
                                     textAlign: TextAlign.center,
@@ -65,7 +68,7 @@ class E_PaymentScreen extends StatelessWidget {
                                     'assets/icon/credit_card.svg',
                                     height: 25.0,
                                     width: 25.0,
-                                    color: mainColors,
+                                    color:ThemeCubit.get(context).darkTheme? Colors.white : mainColors,
                                   ),
                                 ),
                                 const Expanded(
@@ -112,33 +115,59 @@ class E_PaymentScreen extends StatelessWidget {
                             cvvCode: cubit.cvvCode,
                             onCreditCardModelChange: cubit.changeCreditCardModel,
                             themeColor: Colors.blue,
-                            formKey: formKey,
+                            formKey: formKey,textColor:
+                            Colors.white,
                             cardNumberDecoration:  const InputDecoration(
-                                border: OutlineInputBorder(),
+                              border:OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                                hintText: 'xxxx xxxx xxxx xxxx',
-                              labelText: 'Number',
-                              labelStyle: TextStyle(
-
+                                hintText: 'Number',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Colors.grey
                               ),
                             ),
-                            expiryDateDecoration: const InputDecoration(
+                            expiryDateDecoration:  const InputDecoration(
                                 border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                              labelText: 'Expired Date',
-                                hintText: 'xx/xx',
+                                hintText: 'Expired Date',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Colors.grey
+                              ),
                             ),
-                            cvvCodeDecoration: const InputDecoration(
+                            cvvCodeDecoration:  const InputDecoration(
                                 border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                              labelText: 'CVV',
-                                hintText: 'xxx',
+                                hintText: 'CVV',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Colors.grey
+                              ),
                             ),
-                            cardHolderDecoration: const InputDecoration(
+                            cardHolderDecoration:  const InputDecoration(
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                                hintText: 'Ex: Nana',
-                              labelText: 'Card Holder',
+                                hintText: 'Card Holder',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.grey
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20.0,),
