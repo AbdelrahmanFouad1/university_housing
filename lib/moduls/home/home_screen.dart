@@ -83,15 +83,6 @@ class HomeScreen extends StatelessWidget {
                           : buildLandScape(context),
                 ),
               ),
-              //TODO: is removed when done
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  cubit.changeRegisterStudent();
-                },
-                child: Icon(
-                  cubit.register,
-                ),
-              ),
             ),
           );
         },
