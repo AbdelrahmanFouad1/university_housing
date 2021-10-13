@@ -4,9 +4,12 @@ import 'package:university_housing/moduls/security/login/enter_student_login_scr
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class FollowStudentScreen extends StatelessWidget {
   var searchController = TextEditingController();
+
+  FollowStudentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +23,14 @@ class FollowStudentScreen extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 10.0),
+                  margin: const EdgeInsets.only(top: 10.0),
                   child: Row(
                     children: [
                       Text(
                         'اهلا , أ/ محمد حسني',
-                        style: TextStyle(color: mainColors, fontSize: 20.0),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         padding: const EdgeInsets.all(0.0),
                         width: 30.0,
@@ -35,7 +38,7 @@ class FollowStudentScreen extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           icon: Icon(
                             IconBroken.Arrow___Left_2,
-                            color: mainColors,
+                            color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -56,7 +59,7 @@ class FollowStudentScreen extends StatelessWidget {
                   btnColor: mainColors,
                   width: double.infinity,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Container(

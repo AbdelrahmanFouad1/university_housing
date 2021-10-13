@@ -1,5 +1,4 @@
 import 'dart:ui' as ui;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,6 +11,7 @@ import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class EnterStudentLoginScreen extends StatelessWidget {
   var dateController = TextEditingController();
@@ -20,6 +20,8 @@ class EnterStudentLoginScreen extends StatelessWidget {
   var idController = TextEditingController();
   var notesController = TextEditingController();
   bool show_warning = false ;
+
+  EnterStudentLoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
           return Directionality(
             textDirection: ui.TextDirection.rtl,
             child: Scaffold(
-              backgroundColor: backGround,
               appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: backGround,
-                  statusBarIconBrightness: Brightness.dark,
-                ),
-                backgroundColor: backGround,
-                elevation: 0.0,
                 titleSpacing: 20.0,
                 automaticallyImplyLeading: false,
                 actions: [
@@ -56,7 +51,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         icon:  Icon(
                           IconBroken.Arrow___Left_2,
-                          color: mainColors,
+                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -67,11 +62,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                 ],
                   title: Text(
                     'تسجيل دخول الطالب الى السكن',
-                    style: TextStyle(
-                      color: mainColors,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
               ),
               body: Center(
@@ -95,7 +86,7 @@ class EnterStudentLoginScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             margin: const EdgeInsets.symmetric(horizontal: 14.0),
-                            child: Text(
+                            child: const Text(
                               'لقد تعدى الوقت المصرح له للدخول !!',
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -123,6 +114,11 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                   fontSize: 15.0,
                                   color: Colors.grey,
                                 ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
                                 errorBorder: InputBorder.none,
                               ),
                             ),
@@ -145,6 +141,11 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                 hintStyle: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.grey,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
                             ),
@@ -173,6 +174,11 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                       hintStyle: TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.grey,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
                                       ),
                                     ),
                                     onTap: () {
@@ -218,6 +224,11 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                         fontSize: 15.0,
                                         color: Colors.grey,
                                       ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                     ),
                                     onTap: (){
                                       showTimePicker(
@@ -255,6 +266,11 @@ class EnterStudentLoginScreen extends StatelessWidget {
                                   fontSize: 15.0,
                                   color: Colors.grey,
                                 ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -266,14 +282,14 @@ class EnterStudentLoginScreen extends StatelessWidget {
                               if (nameController.text == '' ||idController.text == ''||dateController.text == ''||timeController.text == '') {
                                 showToast(message: 'برجاء أدخال جميع البيانات', state: ToastStates.ERROR);
                               }else{
-                                navigateTo(context, SuccessEnterStudentScreen());
+                                navigateTo(context, const SuccessEnterStudentScreen());
                               }
                             },
                             text: 'تأكيد',
                             width: double.infinity,
                             height: 47.0,
                             btnColor: mainColors,
-                            marginSize: EdgeInsets.symmetric(horizontal: 14.0),
+                            marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
                           ),
                           const SizedBox(
                             height: 180.0,
