@@ -83,6 +83,14 @@ class HomeScreen extends StatelessWidget {
                           : buildLandScape(context),
                 ),
               ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  cubit.changeRegisterStudent();
+                },
+                child: Icon(
+                  cubit.register
+                ),
+              ),
             ),
           );
         },

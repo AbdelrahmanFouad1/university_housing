@@ -142,16 +142,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              //TODO: is removed when done
-              floatingActionButton: FloatingActionButton(
-                  onPressed: (){
-                    // navigateTo(context, MainSecurityScreen());
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                child: const Icon(
-                  Icons.security
-                ),
-              ),
             ),
           );
         },
