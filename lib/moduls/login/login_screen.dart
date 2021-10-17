@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
+import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
@@ -140,6 +141,14 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  navigateAndFinish(context, MainSecurityScreen());
+                },
+                child: const Icon(
+                  Icons.security
                 ),
               ),
             ),
