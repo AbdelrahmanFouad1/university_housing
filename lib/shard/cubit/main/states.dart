@@ -36,7 +36,17 @@ class ChangeFloorState extends AppStates {}
 
 class ChangeRoomState extends AppStates {}
 
+class ChangeStudent_jobState extends AppStates {}
+
+class ChangeKindState extends AppStates {}
+
 class ChangeCreditCardModelState extends AppStates {}
+
+class NationalIdImageSuccessState extends AppStates {}
+
+class NationalIdImageErrorState extends AppStates {}
+
+class RemoveNationalIdImageState extends AppStates {}
 
 
 

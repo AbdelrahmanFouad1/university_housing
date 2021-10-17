@@ -45,7 +45,6 @@ class AppCubit extends Cubit<AppStates>{
 
   File? idImage;
   var picker = ImagePicker();
-
   Future<void> pikeIdImage() async {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery,
@@ -64,6 +63,27 @@ class AppCubit extends Cubit<AppStates>{
   Future<void> removePikePostImage() async {
     idImage = null;
     emit(RemovePikeIdImageState());
+  }
+
+
+  File? nationalIdImage;
+  Future<void> pikeNationalIdImage() async {
+    final pickedFile = await picker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      nationalIdImage = File(pickedFile.path);
+      emit(NationalIdImageSuccessState());
+    } else {
+      print('No image selected.');
+      emit(NationalIdImageErrorState());
+    }
+  }
+
+  Future<void> removeNationalIdImage() async {
+    nationalIdImage = null;
+    emit(RemoveNationalIdImageState());
   }
 
 
@@ -177,6 +197,18 @@ class AppCubit extends Cubit<AppStates>{
   bool? showAll = false;
   bool? isDouble= false;
   bool? agree= false;
+  bool isStudent_job = true;
+  bool isBoy = true;
+
+  void changeIsStudent_job(bool student) {
+    isStudent_job = student;
+    emit(ChangeStudent_jobState());
+  }
+  void changeIsBoy(bool kind) {
+    isBoy = kind;
+    emit(ChangeKindState());
+  }
+
  void changeHouseColor (int Selected){
    selectedHouse = Selected;
    showDetails = true;
@@ -216,6 +248,15 @@ class AppCubit extends Cubit<AppStates>{
     currentRoomText = currentFloor;
     emit(SelectRoomState());
   }
+
+
+
+
+
+
+
+
+
 
 //  receipt screen
   File? receiptImage;

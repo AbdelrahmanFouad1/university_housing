@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:university_housing/moduls/booking_room/booking_room_screen.dart';
+import 'package:university_housing/moduls/booking_room/booking_room1_screen.dart';
+import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/family_report/family_report_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
@@ -235,7 +236,7 @@ class HomeScreen extends StatelessWidget {
               } else {
                 return InkWell(
                   onTap: () {
-                    navigateTo(context, BookingRoomScreen());
+                    navigateTo(context, BookingRoom1Screen());
                   },
                   child: defaultTiTleBoxColumn(
                       img: 'assets/images/request.svg',
@@ -332,7 +333,7 @@ class HomeScreen extends StatelessWidget {
             children: [
                 InkWell(
                   onTap: () {
-                    navigateTo(context, BookingRoomScreen());
+                    navigateTo(context, BookingRoom1Screen());
                   },
                   child: defaultTiTleBoxColumn(
                     img: 'assets/images/request.svg',
