@@ -10,7 +10,7 @@ import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
-class BookingRoomScreen extends StatelessWidget {
+class BookingRoom2Screen extends StatelessWidget {
   var floorController = TextEditingController();
   var roomController = TextEditingController();
 
@@ -89,7 +89,7 @@ class BookingRoomScreen extends StatelessWidget {
     ),
   ];
 
-  BookingRoomScreen({Key? key}) : super(key: key);
+  BookingRoom2Screen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
