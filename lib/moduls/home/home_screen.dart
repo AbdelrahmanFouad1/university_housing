@@ -11,6 +11,7 @@ import 'package:university_housing/moduls/news_details/news_details_screen.dart'
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -28,6 +29,7 @@ class MainModel {
 class HomeScreen extends StatelessWidget {
 
   DateTime timeBackPressed = DateTime.now();
+  final bool? isRegister;
 
   List<MainModel> requests = [
     MainModel(
@@ -48,7 +50,7 @@ class HomeScreen extends StatelessWidget {
     ),
   ];
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, this.isRegister}) : super(key: key);
 
 
   @override
@@ -80,16 +82,8 @@ class HomeScreen extends StatelessWidget {
                 child: OrientationBuilder(
                   builder: (BuildContext context, Orientation orientation) =>
                       orientation == Orientation.portrait
-                          ? buildPortrait(context)
-                          : buildLandScape(context),
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  cubit.changeRegisterStudent();
-                },
-                child: Icon(
-                  cubit.register
+                          ? buildPortrait(context, isRegister)
+                          : buildLandScape(context, isRegister),
                 ),
               ),
             ),
@@ -103,16 +97,18 @@ class HomeScreen extends StatelessWidget {
   Widget buildRequestsList(MainModel model, context, index) => InkWell(
     onTap: () {
       if(index == 0){
-        navigateTo(context, const ChooseRequestScreen());
+        // navigateTo(context, const ChooseRequestScreen());
+        AppCubit.get(context).getProfileData();
+        print('Bearer $token');
       }
       else if(index == 1){
         navigateTo(context, ChooseComplaintsScreen());
       }
       else if(index == 2){
-        navigateTo(context, FamilyReportScreen());
+        navigateTo(context, const FamilyReportScreen());
       }
       else {
-        navigateTo(context, QueriesScreen());
+        navigateTo(context, const QueriesScreen());
       }
     },
     child: Container(
@@ -189,7 +185,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      navigateTo(context, NewsDetailsScreen());
+                      navigateTo(context, const NewsDetailsScreen());
                     },
                   ),
                 ),
@@ -201,12 +197,12 @@ class HomeScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildPortrait(context) => Padding(
+  Widget buildPortrait(context, isRegister) => Padding(
     padding: const EdgeInsets.all(12.0),
     child: Column(
       children: [
             Builder(builder: (context) {
-              if (AppCubit.get(context).isRegister) {
+              if (isRegister) {
                 return Column(
                   children: [
                     Container(
@@ -274,9 +270,9 @@ class HomeScreen extends StatelessWidget {
     ),
   );
 
-  Widget buildLandScape(context) =>  Builder(
+  Widget buildLandScape(context, isRegister) =>  Builder(
     builder: (context) {
-      if (AppCubit.get(context).isRegister) {
+      if (isRegister) {
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(

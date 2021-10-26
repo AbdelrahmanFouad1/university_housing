@@ -2,8 +2,6 @@ abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
 
-class ChangePasswordVisibilityState extends AppStates {}
-
 class ChangeRegisterStudentState extends AppStates {}
 
 class ImagePickedSuccessState extends AppStates {}
@@ -47,6 +45,14 @@ class NationalIdImageSuccessState extends AppStates {}
 class NationalIdImageErrorState extends AppStates {}
 
 class RemoveNationalIdImageState extends AppStates {}
+
+class GetProfileSuccessStates extends AppStates {}
+
+class GetProfileErrorStates extends AppStates {
+  final String error;
+
+  GetProfileErrorStates(this.error);
+}
 
 
 

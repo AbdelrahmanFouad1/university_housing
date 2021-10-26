@@ -8,6 +8,7 @@ import 'package:university_housing/shard/bloc_observer.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 import 'package:university_housing/shard/style/theme/cubit/states.dart';
 import 'package:university_housing/shard/style/theme/theme.dart';
@@ -17,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = MyBlocObserver();
-
+  DioHelper.init();
   await CacheHelper.init();
 
   Widget widget;
