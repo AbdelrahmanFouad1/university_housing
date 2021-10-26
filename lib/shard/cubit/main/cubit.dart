@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/network/end_point.dart';
+import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class AppCubit extends Cubit<AppStates>{
@@ -14,26 +17,31 @@ class AppCubit extends Cubit<AppStates>{
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  // Login Screen
-  IconData suffix = Icons.visibility_outlined;
-  bool isPassword = true;
-
-  void changePasswordVisibility() {
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-
-    emit(ChangePasswordVisibilityState());
-  }
-
-
   // Home Screen
-  bool isRegister = true;
-  IconData register = Icons.app_registration;
-  void changeRegisterStudent() {
-    isRegister = !isRegister;
-    register = isRegister ? Icons.app_registration : Icons.backspace_outlined;
-    emit(ChangeRegisterStudentState());
+  late ProfileModel profileModel;
+
+  void getProfileData(){
+
+    DioHelper.getData(
+      url: USERS_PROFILE,
+      token: token,
+    ).then((value) {
+      print(value!.data);
+      profileModel = ProfileModel.fromJson(value.data);
+      emit(GetProfileSuccessStates());
+    }).catchError((error){
+      print(error.toString());
+      emit(GetProfileErrorStates(error.toString()));
+    });
   }
+  // late LoginModel loginModel;
+  // bool isRegister = true;
+  // IconData register = Icons.app_registration;
+  // void changeRegisterStudent() {
+  //   isRegister = !isRegister;
+  //   register = isRegister ? Icons.app_registration : Icons.backspace_outlined;
+  //   emit(ChangeRegisterStudentState());
+  // }
 
   // Hosting Requests Screen
   bool isStudent = true;

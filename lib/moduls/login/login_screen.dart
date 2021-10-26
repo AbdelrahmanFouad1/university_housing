@@ -1,39 +1,76 @@
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:university_housing/model/login_model.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
+import 'package:university_housing/moduls/login/cubit/cubit.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/cubit/main/cubit.dart';
-import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/components/constants.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
+import 'cubit/states.dart';
+
 class LoginScreen extends StatelessWidget {
+  late LoginModel loginModel;
   DateTime timeBackPressed = DateTime.now();
+  var fromKey = GlobalKey<FormState>();
+  var idController = TextEditingController();
+  var passwordController = TextEditingController();
+
   LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
-      create: (BuildContext context) => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {  },
+      create: (BuildContext context) => LoginCubit(),
+      child: BlocConsumer<LoginCubit, LoginStates>(
+        listener: (BuildContext context, state) async {
+          if (state is LoginSuccessStates) {
+            LoginCubit.get(context).buttonController.stop();
+            if (state.loginModel.isStudent) {
+              // print(state.loginModel.token);
+              // print(state.loginModel.idDB);
+              CacheHelper.saveData(key: 'token', value: state.loginModel.token)
+                  .then((value) {
+                token = state.loginModel.token;
+                idDB = state.loginModel.idDB!;
+                navigateAndFinish(context,
+                    HomeScreen(isRegister: state.loginModel.isresident));
+              });
+            }
+            if (state.loginModel.isSecurity) {
+              CacheHelper.saveData(key: 'token', value: state.loginModel.token)
+                  .then((value) {
+                token = state.loginModel.token;
+                idDB = state.loginModel.idDB!;
+                navigateAndFinish(context, MainSecurityScreen());
+              });
+            }
+          }
+        },
         builder: (BuildContext context, Object? state) {
-          var cubit = AppCubit.get(context);
+          var cubit = LoginCubit.get(context);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
               body: WillPopScope(
                 onWillPop: () async {
                   final difference = DateTime.now().difference(timeBackPressed);
-                  final isExitWarning = difference >= const Duration(seconds: 2);
+                  final isExitWarning =
+                      difference >= const Duration(seconds: 2);
                   timeBackPressed = DateTime.now();
-                  if(isExitWarning){
-                    showToast(message: 'اضغط مرة أخرى للخروج من البرنامج', state: ToastStates.WARNING);
+                  if (isExitWarning) {
+                    showToast(
+                        message: 'اضغط مرة أخرى للخروج من البرنامج',
+                        state: ToastStates.WARNING);
                     return false;
                   }else{
                     return true;
@@ -77,6 +114,7 @@ class LoginScreen extends StatelessWidget {
                             Container(
                               height: 48.0,
                               child: TextFormField(
+                                controller: idController,
                                 style: Theme.of(context).textTheme.bodyText1,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
@@ -97,13 +135,14 @@ class LoginScreen extends StatelessWidget {
                             Container(
                               height: 48.0,
                               child: TextFormField(
+                                controller: passwordController,
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: cubit.isPassword,
                                 style: Theme.of(context).textTheme.bodyText1,
-                                decoration:  InputDecoration(
+                                decoration: InputDecoration(
                                   suffixIcon: IconButton(
                                     color: Colors.grey,
-                                    onPressed: (){
+                                    onPressed: () {
                                       cubit.changePasswordVisibility();
                                     },
                                     icon: Icon(
@@ -124,31 +163,52 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 36.0,),
-                            defaultButton(
-                              function:(){
-                                navigateAndFinish(context, HomeScreen());
-                              } ,
-                              text: 'تسجيل دخول',
-                              fontSize: 20.0 ,
-                              height: 50.0,
-                              radius: 5.0,
-                              btnColor: mainColors,
-                              width:double.infinity,
+                            const SizedBox(
+                              height: 36.0,
                             ),
+
+                            Container(
+                              width:double.infinity,
+                              height: 50.0,
+                              child: RoundedLoadingButton(
+                                color: mainColors,
+                                controller: cubit.buttonController,
+                                borderRadius: 5.0,
+                                onPressed: () {
+                                  cubit.rotationPeriod();
+                                  cubit.userLogin(
+                                    id: idController.text,
+                                    password: passwordController.text,
+                                  );
+                                },
+                                child: const Text(
+                                  'تسجيل دخول',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // defaultButton(
+                            //   function:(){
+                            //     // navigateAndFinish(context, HomeScreen());
+                            //     cubit.userLogin(
+                            //         id: idController.text,
+                            //         password: passwordController.text,
+                            //     );
+                            //   } ,
+                            //   text: 'تسجيل دخول',
+                            //   fontSize: 20.0 ,
+                            //   height: 50.0,
+                            //   radius: 5.0,
+                            //   btnColor: mainColors,
+                            //   width:double.infinity,
+                            // ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  navigateAndFinish(context, MainSecurityScreen());
-                },
-                child: const Icon(
-                  Icons.security
                 ),
               ),
             ),
