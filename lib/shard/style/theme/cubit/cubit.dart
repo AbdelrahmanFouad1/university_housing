@@ -8,7 +8,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
 
   static ThemeCubit get(context) => BlocProvider.of(context);
 
-  bool darkTheme = false;
+  bool darkTheme = true;
 
   void changeTheme({fromShared}) {
     if (fromShared != null) {

@@ -23,8 +23,9 @@ class ProfileModel{
   late int roomnumber;
   late int floor;
   late bool isFine;
-  late List<AttendancesModel> attendances;
-  late List<ExitandEntersModel> ExitandEnters;
+   List<AttendancesModel> attendances = [];
+   List<ExitandEntersModel> ExitandEnters = [];
+   List<FinesModel> fines = [];
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
     idDB = json['_id'];
@@ -50,19 +51,25 @@ class ProfileModel{
     buildingType = json['buildingType'];
     roomnumber = json['roomnumber'];
     floor = json['floor'];
-    isFine = json['isFine'];
 
-    if (json['attendances'] != null) {
+    if (json['isFine'] != null) {
+      isFine = json['isFine'];
+    }
+
+
       json['attendances'].forEach((element) {
         attendances.add(AttendancesModel.fromJson(element));
       });
-    }
 
-    if (json['ExitandEnters'] != null) {
+
       json['ExitandEnters'].forEach((element) {
         ExitandEnters.add(ExitandEntersModel.fromJson(element));
       });
-    }
+
+    json['fines'].forEach((element) {
+      fines.add(FinesModel.fromJson(element));
+    });
+
 
   }
 }
@@ -73,19 +80,19 @@ class ExitandEntersModel {
   late String enterDate;
   late String exitDate;
   late String idDB;
-  late String notes;
+  late String Notes;
   late String createdAt;
   late String updatedAt;
 
-  ExitandEntersModel(
-      {required this.enterAt,
-        required this.exitAt,
-        required  this.enterDate,
-        required this.exitDate,
-        required this.idDB,
-        required this.notes,
-        required this.createdAt,
-        required this.updatedAt});
+  // ExitandEntersModel(
+  //     {required this.enterAt,
+  //       required this.exitAt,
+  //       required  this.enterDate,
+  //       required this.exitDate,
+  //       required this.idDB,
+  //       required this.Notes,
+  //       required this.createdAt,
+  //       required this.updatedAt});
 
   ExitandEntersModel.fromJson(Map<String, dynamic> json) {
     enterAt = json['enterAt'];
@@ -93,23 +100,24 @@ class ExitandEntersModel {
     enterDate = json['enterDate'];
     exitDate = json['exitDate'];
     idDB = json['_id'];
-    notes = json['Notes'];
+    Notes = json['Notes'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['enterAt'] = this.enterAt;
-    data['exitAt'] = this.exitAt;
-    data['enterDate'] = this.enterDate;
-    data['exitDate'] = this.exitDate;
-    data['_id'] = this.idDB;
-    data['Notes'] = this.notes;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['enterAt'] = enterAt;
+  //   data['exitAt'] = exitAt;
+  //   data['enterDate'] = enterDate;
+  //   data['exitDate'] = exitDate;
+  //   data['_id'] = idDB;
+  //   data['Notes'] = Notes;
+  //   data['createdAt'] = createdAt;
+  //   data['updatedAt'] = updatedAt;
+  //   return data;
+  // }
+
 }
 
 class AttendancesModel {
@@ -119,9 +127,25 @@ class AttendancesModel {
   late String updatedAt;
 
   AttendancesModel.fromJson(Map<String, dynamic> json) {
-    idDB = json['enterAt'];
-    attendancedate = json['exitAt'];
-    createdAt = json['enterDate'];
-    updatedAt = json['exitDate'];
+    idDB = json['_id'];
+    attendancedate = json['attendancedate'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+}
+
+class FinesModel {
+  late int fineValue;
+  late String idDB;
+  late String fineReason;
+  late String createdAt;
+  late String updatedAt;
+
+  FinesModel.fromJson(Map<String, dynamic> json) {
+    fineValue = json['fineValue'];
+    idDB = json['_id'];
+    fineReason = json['fineReason'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 }

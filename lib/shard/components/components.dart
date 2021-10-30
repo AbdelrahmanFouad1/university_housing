@@ -8,6 +8,7 @@ import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/notifications/notifications_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -204,7 +205,7 @@ AppBar defaultAppBar({
             ],
           ),
           onPressed: () {
-            navigateTo(context, NotificationsScreen());
+            navigateTo(context, const NotificationsScreen());
           },
         ),
       ),
@@ -389,7 +390,7 @@ Widget buildFinesBox(
                   ),
                 ),
                 Text(
-                  '120 جنيه مصرى',
+                  '${AppCubit.get(context).sum} جنية مصرى',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: fontsize2,
                       fontWeight: FontWeight.bold
@@ -554,7 +555,11 @@ Widget buildDialog({
 
 
 
-Widget roomBox() => Container(
+Widget roomBox({
+  String? buildingName,
+  int? roomNumber,
+  int? floor,
+}) => Container(
   width: double.infinity,
   height: 140.0,
   decoration: BoxDecoration(
@@ -577,7 +582,7 @@ Widget roomBox() => Container(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children:  [
                 SizedBox(height: 6.0,),
                 Text(
                   'انت الان مقيم في ',
@@ -588,7 +593,7 @@ Widget roomBox() => Container(
                   ),
                 ),
                 Text(
-                  'غرفه  B',
+                  'غرفة:  ${roomNumber??''}',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -596,7 +601,7 @@ Widget roomBox() => Container(
                   ),
                 ),
                 Text(
-                  'الدور  الخامس',
+                  'الدور:  ${floor??''}',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -604,7 +609,7 @@ Widget roomBox() => Container(
                   ),
                 ),
                 Text(
-                  'عماره  الزهراء',
+                  'المبنى:  ${buildingName ?? ''}',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

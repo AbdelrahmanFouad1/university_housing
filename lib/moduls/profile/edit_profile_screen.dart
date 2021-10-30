@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/profile/about_app_screen.dart';
 import 'package:university_housing/moduls/profile/follow_requests/follow_requests_screen.dart';
 import 'package:university_housing/moduls/profile/student_rate/student_rate_screen.dart';
@@ -11,11 +11,11 @@ import 'package:university_housing/moduls/profile/terms_and_conditions_screen.da
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
-import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
-import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -334,7 +334,15 @@ class EditProfileScreen extends StatelessWidget {
                             ),
                             defaultButton(
                               text: 'تسجيل خروج',
-                              function: (){},
+                              function: (){
+                                CacheHelper.removeData(key: 'token');
+                                CacheHelper.removeData(key: 'isStudent');
+                                CacheHelper.removeData(key: 'isSecurity');
+                                CacheHelper.removeData(key: 'isHousingManager');
+                                CacheHelper.removeData(key: 'isStudentAffairs');
+                                CacheHelper.removeData(key: 'isresident');
+                                navigateAndFinish(context, LoginScreen());
+                              },
                               btnColor: Colors.red,
                               fontSize: 20,
                               height: 40.0,
