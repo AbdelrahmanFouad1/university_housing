@@ -9,6 +9,7 @@ import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/network/end_point.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
@@ -18,30 +19,36 @@ class AppCubit extends Cubit<AppStates>{
   static AppCubit get(context) => BlocProvider.of(context);
 
   // Home Screen
-  late ProfileModel profileModel;
+  ProfileModel? profileModel;
+  String? tokeen = CacheHelper.getData(key: 'token');
+
+  int sum = 0;
 
   void getProfileData(){
 
+    emit(GetProfileLoadingStates());
+
     DioHelper.getData(
       url: USERS_PROFILE,
-      token: token,
+      token: tokeen??'',
     ).then((value) {
-      print(value!.data);
-      profileModel = ProfileModel.fromJson(value.data);
-      emit(GetProfileSuccessStates());
+      if(value != null){
+        // printFullText(value.data.toString());
+        profileModel = ProfileModel.fromJson(value.data);
+        for (var element in profileModel!.fines) {
+          sum += element.fineValue;
+        }
+        // print('LOLLLLLL'+sum.toString());
+        emit(GetProfileSuccessStates());
+      }
     }).catchError((error){
       print(error.toString());
       emit(GetProfileErrorStates(error.toString()));
     });
   }
-  // late LoginModel loginModel;
-  // bool isRegister = true;
-  // IconData register = Icons.app_registration;
-  // void changeRegisterStudent() {
-  //   isRegister = !isRegister;
-  //   register = isRegister ? Icons.app_registration : Icons.backspace_outlined;
-  //   emit(ChangeRegisterStudentState());
-  // }
+
+  // Fine Screen
+
 
   // Hosting Requests Screen
   bool isStudent = true;

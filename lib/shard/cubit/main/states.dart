@@ -46,7 +46,11 @@ class NationalIdImageErrorState extends AppStates {}
 
 class RemoveNationalIdImageState extends AppStates {}
 
+class GetProfileLoadingStates extends AppStates {}
+
 class GetProfileSuccessStates extends AppStates {}
+
+class GetTotalFineSuccessStates extends AppStates {}
 
 class GetProfileErrorStates extends AppStates {
   final String error;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/moduls/splash/splash_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
@@ -23,9 +25,27 @@ void main() async {
 
   Widget widget;
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+  String? tokeen = CacheHelper.getData(key: 'token');
+  bool? isStudent = CacheHelper.getData(key: 'isStudent');
+  bool? isSecurity = CacheHelper.getData(key: 'isSecurity');
+  bool? isHousingManager = CacheHelper.getData(key: 'isHousingManager');
+  bool? isStudentAffairs = CacheHelper.getData(key: 'isStudentAffairs');
+  //TODO: When register user rewrite isresident in CacheHelper
+  bool? isresident = CacheHelper.getData(key: 'isresident');
 
   if (onBoarding != null) {
+    if(tokeen != null){
+      if(isStudent == true){
+        widget =  HomeScreen(isRegister: isresident,);
+      }else if(isSecurity == true){
+        widget =  MainSecurityScreen();
+      }else {
+        widget =  LoginScreen();
+      }
+    }else{
       widget =  LoginScreen();
+    }
+
   } else {
     widget = const OnBoardingScreen();
   }
@@ -51,7 +71,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
         BlocProvider(create: (BuildContext context) => ThemeCubit()..changeTheme(fromShared: isDark),),
-        BlocProvider(create: (BuildContext context) => AppCubit()),
+        BlocProvider(create: (BuildContext context) => AppCubit()..getProfileData()),
         BlocProvider(create: (context) => SecurityCubit()),
       ],
       child: BlocConsumer<ThemeCubit, ThemeStates>(

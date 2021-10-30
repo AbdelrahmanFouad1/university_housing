@@ -19,6 +19,10 @@ Color evaluation = HexColor('#BFC5CC');
 
 Color warning = HexColor('#FD003A');
 
+var baseColor =  Colors.black45;
+
+var highlightColor = Colors.grey;
+
 // Dark Theme
 
 Color backGroundDark = HexColor('#010816');

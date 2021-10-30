@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,10 +11,8 @@ import 'package:university_housing/moduls/security/main/main_security_screen.dar
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
-import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
-
 import 'cubit/states.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -42,6 +39,11 @@ class LoginScreen extends StatelessWidget {
                   .then((value) {
                 token = state.loginModel.token;
                 idDB = state.loginModel.idDB!;
+                CacheHelper.saveData(key: 'isStudent', value: state.loginModel.isStudent);
+                CacheHelper.saveData(key: 'isSecurity', value: state.loginModel.isSecurity);
+                CacheHelper.saveData(key: 'isHousingManager', value: state.loginModel.isHousingManager);
+                CacheHelper.saveData(key: 'isStudentAffairs', value: state.loginModel.isStudentAffairs);
+                CacheHelper.saveData(key: 'isresident', value: state.loginModel.isresident);
                 navigateAndFinish(context,
                     HomeScreen(isRegister: state.loginModel.isresident));
               });
@@ -49,6 +51,10 @@ class LoginScreen extends StatelessWidget {
             if (state.loginModel.isSecurity) {
               CacheHelper.saveData(key: 'token', value: state.loginModel.token)
                   .then((value) {
+                CacheHelper.saveData(key: 'isStudent', value: state.loginModel.isStudent);
+                CacheHelper.saveData(key: 'isSecurity', value: state.loginModel.isSecurity);
+                CacheHelper.saveData(key: 'isHousingManager', value: state.loginModel.isHousingManager);
+                CacheHelper.saveData(key: 'isStudentAffairs', value: state.loginModel.isStudentAffairs);
                 token = state.loginModel.token;
                 idDB = state.loginModel.idDB!;
                 navigateAndFinish(context, MainSecurityScreen());
@@ -189,21 +195,6 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            // defaultButton(
-                            //   function:(){
-                            //     // navigateAndFinish(context, HomeScreen());
-                            //     cubit.userLogin(
-                            //         id: idController.text,
-                            //         password: passwordController.text,
-                            //     );
-                            //   } ,
-                            //   text: 'تسجيل دخول',
-                            //   fontSize: 20.0 ,
-                            //   height: 50.0,
-                            //   radius: 5.0,
-                            //   btnColor: mainColors,
-                            //   width:double.infinity,
-                            // ),
                           ],
                         ),
                       ),
