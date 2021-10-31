@@ -35,6 +35,7 @@ void main() async {
 
   if (onBoarding != null) {
     if(tokeen != null){
+      print(tokeen);
       if(isStudent == true){
         widget =  HomeScreen(isRegister: isresident,);
       }else if(isSecurity == true){

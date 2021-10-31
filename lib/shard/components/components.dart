@@ -9,6 +9,7 @@ import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/notifications/notifications_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -152,6 +153,7 @@ AppBar defaultAppBar({
   bool? pop = true,
   bool? bookingDone = false,
   Widget? popToScreen,
+  Object? state,
 })=> AppBar(
     titleSpacing: titleSpacing,
     automaticallyImplyLeading: false,
@@ -241,7 +243,7 @@ AppBar defaultAppBar({
       const SizedBox(width: 6.0,),
     ],
     title: Text(
-      'أهلا , 42018122',
+      'أهلا , ${state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.id : 'xxxxxxxx'}',
       style: Theme.of(context).textTheme.headline6,
     )
 );
@@ -332,6 +334,7 @@ Widget defaultTiTleBoxColumn({
 Widget whiteBoard(context,{
   double? height = 250.0,
   int? maxLine = 10,
+  TextEditingController? controller,
 }) =>
     Container(
       width: double.infinity,
@@ -351,6 +354,7 @@ Widget whiteBoard(context,{
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
+          controller: controller,
           scrollPhysics: const BouncingScrollPhysics(),
           cursorColor:ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
           maxLines: maxLine,

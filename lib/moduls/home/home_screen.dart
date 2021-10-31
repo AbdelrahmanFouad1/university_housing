@@ -56,42 +56,39 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context)  => AppCubit()..getProfileData(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          var cubit = AppCubit.get(context);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: defaultAppBar(context: context, showBus: true, pop: false),
-              body: WillPopScope(
-                onWillPop:  () async {
-                  final difference = DateTime.now().difference(timeBackPressed);
-                  final isExitWarning = difference >= const Duration(seconds: 2);
-                  timeBackPressed = DateTime.now();
-                  if(isExitWarning){
-                    showToast(
-                        message: 'اضغط مرة أخرى للخروج من البرنامج',
-                        state: ToastStates.WARNING);
-                    return false;
-                  } else {
-                    return true;
-                  }
-                },
-                child: OrientationBuilder(
-                  builder: (BuildContext context, Orientation orientation) =>
-                      orientation == Orientation.portrait
-                          ? buildPortrait(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null)
-                          : buildLandScape(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null),
-                ),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {  },
+      builder: (BuildContext context, Object? state) {
+        var cubit = AppCubit.get(context);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context, showBus: true, pop: false, state: state),
+            body: WillPopScope(
+              onWillPop:  () async {
+                final difference = DateTime.now().difference(timeBackPressed);
+                final isExitWarning = difference >= const Duration(seconds: 2);
+                timeBackPressed = DateTime.now();
+                if(isExitWarning){
+                  showToast(
+                      message: 'اضغط مرة أخرى للخروج من البرنامج',
+                      state: ToastStates.WARNING);
+                  return false;
+                } else {
+                  return true;
+                }
+              },
+              child: OrientationBuilder(
+                builder: (BuildContext context, Orientation orientation) =>
+                    orientation == Orientation.portrait
+                        ? buildPortrait(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null)
+                        : buildLandScape(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null),
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
 
-      ),
     );
   }
 

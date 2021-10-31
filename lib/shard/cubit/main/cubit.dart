@@ -47,7 +47,68 @@ class AppCubit extends Cubit<AppStates>{
     });
   }
 
-  // Fine Screen
+  // Change Damaged Screen
+  void postDamaged({
+    required String complaints,
+  }) {
+    emit(PostDamagedLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_DAMAGED,
+      token: tokeen??'',
+      data: {
+        'damagedthing': complaints,
+      },
+    ).then((value) {
+      emit(PostDamagedSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostDamagedErrorStates(error));
+    });
+  }
+
+  // Change lost Screen
+  void postLost({
+    required String complaints,
+  }) {
+    emit(PostLostLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_MISSING,
+      token: tokeen??'',
+      data: {
+        'missingthing': complaints,
+      },
+    ).then((value) {
+      emit(PostLostSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostLostErrorStates(error));
+    });
+  }
+
+  // Complaints Screen
+  void postComplaints({
+    required String complaints,
+  }) {
+    emit(PostComplaintsLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_COMPLAINTS,
+      token: tokeen??'',
+      data: {
+        'complaint': complaints,
+      },
+    ).then((value) {
+      emit(PostComplaintsSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostComplaintsErrorStates(error));
+    });
+  }
 
 
   // Hosting Requests Screen
@@ -217,7 +278,7 @@ class AppCubit extends Cubit<AppStates>{
 
   void changeIsStudent_job(bool student) {
     isStudent_job = student;
-    emit(ChangeStudent_jobState());
+    emit(ChangeStudentJobState());
   }
   void changeIsBoy(bool kind) {
     isBoy = kind;
