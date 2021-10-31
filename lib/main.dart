@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
+import 'package:university_housing/moduls/dash_board/dash_home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
 import 'package:university_housing/moduls/splash/splash_screen.dart';
 import 'package:university_housing/shard/bloc_observer.dart';
+import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
+import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => ThemeCubit()..changeTheme(fromShared: isDark),),
         BlocProvider(create: (BuildContext context) => AppCubit()),
         BlocProvider(create: (context) => SecurityCubit()),
+        BlocProvider(create: (context) => DashBoardCubit()),
       ],
       child: BlocConsumer<ThemeCubit, ThemeStates>(
         listener: (BuildContext context, state) {
@@ -63,7 +67,8 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeCubit.get(context).darkTheme?  ThemeMode.dark : ThemeMode.light ,
-            home: SplashScreen(startWidget: startWidget),
+            // home: SplashScreen(startWidget: startWidget),
+            home: DashHomeScreen(),
           );
         },
       ),

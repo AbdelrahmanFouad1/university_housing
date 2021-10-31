@@ -130,7 +130,6 @@ class ChangeRoomScreen extends StatelessWidget {
                           readOnly: true,
                           onTap: () {
                             showDialog<void>(
-                              barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                                 context: context,
                                 builder: (context) => buildDialog(
                                     context: context,
@@ -189,7 +188,6 @@ class ChangeRoomScreen extends StatelessWidget {
                               showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
                             }else{
                               showDialog<void>(
-                                barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
                                 context: context,
                                 builder: (context) => buildDialog(
                                   context: context,
