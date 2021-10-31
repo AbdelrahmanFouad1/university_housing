@@ -338,7 +338,6 @@ Widget whiteBoard(
   double? height = 250.0,
   int? maxLine = 10,
   String? hint ,
-  var controller,
   TextEditingController? controller,
 }) =>
     Container(
