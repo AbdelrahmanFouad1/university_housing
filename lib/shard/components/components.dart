@@ -60,36 +60,35 @@ Widget defaultButton({
       ),
     );
 
-Widget defaultFormField({
-  required TextEditingController controller,
-  required TextInputType type,
-  Function? onSubmit,
-  Function? onChange,
-  Function? onTap,
-  bool isPassword = false,
-  required Function validate,
-  String? label,
-  String? hint,
-  required IconData prefix,
-  Function? suffixPressed,
-  bool isClickable = true,
-  required context
-}) =>
+Widget defaultFormField(
+        {required TextEditingController controller,
+        required TextInputType type,
+        Function? onSubmit,
+        Function? onChange,
+        Function? onTap,
+        bool isPassword = false,
+        required Function validate,
+        String? label,
+        String? hint,
+        required IconData prefix,
+        Function? suffixPressed,
+        bool isClickable = true,
+        required context}) =>
     TextFormField(
       controller: controller,
       keyboardType: type,
       obscureText: isPassword,
       enabled: isClickable,
-      onFieldSubmitted: (s){
+      onFieldSubmitted: (s) {
         onSubmit;
       },
-      onChanged: (s){
+      onChanged: (s) {
         onChange;
       },
-      onTap: (){
+      onTap: () {
         onTap;
       },
-      validator: (s){
+      validator: (s) {
         validate;
       },
       cursorColor: mainColors,
@@ -97,9 +96,8 @@ Widget defaultFormField({
         hintText: hint,
         hintStyle: Theme.of(context).textTheme.bodyText1,
         labelText: label,
-        labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-          color: Colors.grey
-        ),
+        labelStyle:
+            Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.grey),
         prefixIcon: Icon(
           prefix,
           color: Colors.grey,
@@ -109,41 +107,42 @@ Widget defaultFormField({
             color: Colors.grey,
           ),
         ),
-        border:const OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
 
 
 Widget defaultButton2({
-  double? width ,
+  double? width,
   double? height,
-  double? fontSize ,
-  EdgeInsets? marginSize ,
+  double? fontSize,
+  EdgeInsets? marginSize,
   required VoidCallback function,
   required String text,
   required Color btnColor,
-}) => Container(
-  width: width,
-  height: height,
-  margin: marginSize,
-  child: MaterialButton(
-    onPressed: function,
-    child: Text(
-      text,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: fontSize,
+}) =>
+    Container(
+      width: width,
+      height: height,
+      margin: marginSize,
+      child: MaterialButton(
+        onPressed: function,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSize,
+          ),
+        ),
       ),
-    ),
-  ),
-  decoration: BoxDecoration(
-    borderRadius: const BorderRadius.only(
-      bottomLeft:  Radius.circular(8.0),
-      bottomRight: Radius.circular(8.0),
-    ),
-    color: btnColor,
-  ),
-);
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(8.0),
+          bottomRight: Radius.circular(8.0),
+        ),
+        color: btnColor,
+      ),
+    );
 
 
 AppBar defaultAppBar({
@@ -307,9 +306,11 @@ Widget defaultTiTleBoxColumn({
       ),
 
       child: Column(
-        mainAxisAlignment:mainAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
         children: [
-          const SizedBox(height: 20.0,),
+          const SizedBox(
+            height: 20.0,
+          ),
           Align(
             alignment: AlignmentDirectional.center,
             child: SvgPicture.asset(
@@ -318,7 +319,9 @@ Widget defaultTiTleBoxColumn({
               height: heightImage,
             ),
           ),
-          const SizedBox(height: 5.0,),
+          const SizedBox(
+            height: 5.0,
+          ),
           Text(
             title,
             style: TextStyle(
@@ -330,21 +333,27 @@ Widget defaultTiTleBoxColumn({
       ),
     );
 
-
-Widget whiteBoard(context,{
+Widget whiteBoard(
+  context, {
   double? height = 250.0,
   int? maxLine = 10,
+  String? hint ,
+  var controller,
   TextEditingController? controller,
 }) =>
     Container(
       width: double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
+        color:
+            ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
         borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.grey, width: 1),
         boxShadow: [
           BoxShadow(
-            color: ThemeCubit.get(context).darkTheme? Colors.indigo.withOpacity(0.2): Colors.grey.withOpacity(0.5),
+            color: ThemeCubit.get(context).darkTheme
+                ? Colors.indigo.withOpacity(0.2)
+                : Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(5, 5), // changes position of shadow
@@ -360,6 +369,9 @@ Widget whiteBoard(context,{
           maxLines: maxLine,
           decoration: const InputDecoration(
             border: InputBorder.none,
+            hintText: hint,
+            hintStyle: Theme.of(context).textTheme.bodyText1,
+            contentPadding: const EdgeInsetsDirectional.all(10.0),
           ),
         ),
       ),
@@ -377,7 +389,7 @@ Widget buildFinesBox(
         borderRadius: BorderRadius.circular(
           8.0,
         ),
-        color:ThemeCubit.get(context).darkTheme? finesColorDark : finesColor,
+        color: ThemeCubit.get(context).darkTheme ? finesColorDark : finesColor,
       ),
       child: Row(
         children: [
@@ -390,15 +402,13 @@ Widget buildFinesBox(
                 Text(
                   'لديك غرامة بقيمة',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: fontsize1,
-                  ),
+                        fontSize: fontsize1,
+                      ),
                 ),
                 Text(
                   '${AppCubit.get(context).sum} جنية مصرى',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: fontsize2,
-                      fontWeight: FontWeight.bold
-                  ),
+                      fontSize: fontsize2, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -434,15 +444,16 @@ Widget buildFinesBox(
 void showToast({
   required String message,
   required ToastStates state,
-}) => Fluttertoast.showToast(
-    msg: message,
-    toastLength: Toast.LENGTH_LONG,
-    gravity: ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 5,
-    backgroundColor: chooseToastColor(state),
-    textColor: Colors.white,
-    fontSize: 14.0,
-);
+}) =>
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: chooseToastColor(state),
+      textColor: Colors.white,
+      fontSize: 14.0,
+    );
 
 // enum
 enum ToastStates { SUCCESS, ERROR, WARNING }
@@ -465,7 +476,8 @@ Color chooseToastColor(ToastStates state) {
   return color;
 }
 
-Widget buildEnquiry(context, {
+Widget buildEnquiry(
+  context, {
   required double height,
   required StatusStates state,
   required Widget body,
@@ -522,40 +534,37 @@ Widget buildDialog({
   required context,
   required String title,
   required Widget child,
-}) => AlertDialog(
-  backgroundColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
-  title: Text(
-    title,
-    textDirection: TextDirection.rtl,
-    style: Theme.of(context).textTheme.subtitle1,
-  ),
-  contentPadding: EdgeInsets.zero,
-  content: SingleChildScrollView(
-    physics: const BouncingScrollPhysics(),
-    child: Directionality(
-      textDirection: TextDirection.rtl,
-      child: child,
-    ),
-  ),
-  actions: [
-    TextButton(
-      onPressed: () => Navigator.pop(context),
-      child: Text(
-        'الغاء',
+}) =>
+    AlertDialog(
+      backgroundColor:
+          ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+      title: Text(
+        title,
         textDirection: TextDirection.rtl,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
-    ),
-    TextButton(
-      onPressed: () => Navigator.pop(context),
-      child: Text(
-        'اختيار',
-        textDirection: TextDirection.rtl,
-        style: Theme.of(context).textTheme.bodyText1,
+      contentPadding: EdgeInsets.zero,
+      content: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+              color: ThemeCubit.get(context).darkTheme? mainColors: Colors.white,
+              child: child
+          ),
+        ),
       ),
-    ),
-  ],
-);
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            'الغاء',
+            textDirection: TextDirection.rtl,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+      ],
+    );
 
 
 
