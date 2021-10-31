@@ -30,9 +30,6 @@ class DioHelper{
   })async
   {
 
-    // dio.options.headers = {
-    //   'Content-Type': 'application/json',
-    // };
 
     try{
       return await dio.post(
@@ -40,7 +37,10 @@ class DioHelper{
         data: data,
         queryParameters: query,
         options: Options(
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ${token??''}'
+          },
         ),
       );
     }on DioError catch(e){

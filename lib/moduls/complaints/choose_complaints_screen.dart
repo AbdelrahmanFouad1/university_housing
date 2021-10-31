@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/complaints/change_damaged_screen.dart';
 import 'package:university_housing/moduls/complaints/complaints_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 import 'change_lost_screen.dart';
@@ -11,15 +14,20 @@ class ChooseComplaintsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          appBar: defaultAppBar(context: context),
-          body: OrientationBuilder(
-            builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait(context) :buildLandScape(context) ,
-          ),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {  },
+      builder: (BuildContext context, Object? state) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context, state: state),
+            body: OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait ? buildPortrait(context) :buildLandScape(context) ,
+            ),
 
-        ),
+          ),
+        );
+      },
     );
   }
   Widget buildPortrait(context) => Padding(

@@ -4,3 +4,9 @@ const USERS_LOGIN = 'users/login';
 
 const USERS_PROFILE = 'users/profile';
 
+const ORDERS_COMPLAINTS = 'orders/complaints';
+
+const ORDERS_MISSING = 'orders/missingthings';
+
+const ORDERS_DAMAGED = 'orders/damagedthings';
+
