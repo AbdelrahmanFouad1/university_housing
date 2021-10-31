@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
         navigateTo(context, ChooseComplaintsScreen());
       }
       else if(index == 2){
-        navigateTo(context, const FamilyReportScreen());
+        navigateTo(context,  FamilyReportScreen());
       }
       else {
         navigateTo(context, const QueriesScreen());

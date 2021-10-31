@@ -86,6 +86,15 @@ class PostLostErrorStates extends AppStates {
   PostLostErrorStates(this.error);
 }
 
+class PostReportLoadingStates extends AppStates {}
+
+class PostReportSuccessStates extends AppStates {}
+
+class PostReportErrorStates extends AppStates {
+  final String error;
+
+  PostReportErrorStates(this.error);
+}
 
 
 

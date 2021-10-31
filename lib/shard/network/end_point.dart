@@ -10,3 +10,5 @@ const ORDERS_MISSING = 'orders/missingthings';
 
 const ORDERS_DAMAGED = 'orders/damagedthings';
 
+const ORDERS_REPORT = 'orders/endorsement';
+
