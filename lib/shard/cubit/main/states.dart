@@ -2,8 +2,6 @@ abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
 
-class ChangePasswordVisibilityState extends AppStates {}
-
 class ChangeRegisterStudentState extends AppStates {}
 
 class ImagePickedSuccessState extends AppStates {}
@@ -36,7 +34,7 @@ class ChangeFloorState extends AppStates {}
 
 class ChangeRoomState extends AppStates {}
 
-class ChangeStudent_jobState extends AppStates {}
+class ChangeStudentJobState extends AppStates {}
 
 class ChangeKindState extends AppStates {}
 
@@ -47,6 +45,56 @@ class NationalIdImageSuccessState extends AppStates {}
 class NationalIdImageErrorState extends AppStates {}
 
 class RemoveNationalIdImageState extends AppStates {}
+
+class GetProfileLoadingStates extends AppStates {}
+
+class GetProfileSuccessStates extends AppStates {}
+
+class GetProfileErrorStates extends AppStates {
+  final String error;
+
+  GetProfileErrorStates(this.error);
+}
+
+class PostComplaintsLoadingStates extends AppStates {}
+
+class PostComplaintsSuccessStates extends AppStates {}
+
+class PostComplaintsErrorStates extends AppStates {
+  final String error;
+
+  PostComplaintsErrorStates(this.error);
+}
+
+class PostDamagedLoadingStates extends AppStates {}
+
+class PostDamagedSuccessStates extends AppStates {}
+
+class PostDamagedErrorStates extends AppStates {
+  final String error;
+
+  PostDamagedErrorStates(this.error);
+}
+
+class PostLostLoadingStates extends AppStates {}
+
+class PostLostSuccessStates extends AppStates {}
+
+class PostLostErrorStates extends AppStates {
+  final String error;
+
+  PostLostErrorStates(this.error);
+}
+
+class PostReportLoadingStates extends AppStates {}
+
+class PostReportSuccessStates extends AppStates {}
+
+class PostReportErrorStates extends AppStates {
+  final String error;
+
+  PostReportErrorStates(this.error);
+}
 
 
 

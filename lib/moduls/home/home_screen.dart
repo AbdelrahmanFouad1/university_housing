@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:university_housing/moduls/booking_room/booking_room1_screen.dart';
-import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/family_report/family_report_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class MainModel {
@@ -28,6 +30,7 @@ class MainModel {
 class HomeScreen extends StatelessWidget {
 
   DateTime timeBackPressed = DateTime.now();
+  final bool? isRegister;
 
   List<MainModel> requests = [
     MainModel(
@@ -48,55 +51,44 @@ class HomeScreen extends StatelessWidget {
     ),
   ];
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, this.isRegister}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context)  => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          var cubit = AppCubit.get(context);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: defaultAppBar(context: context, showBus: true, pop: false),
-              body: WillPopScope(
-                onWillPop:  () async {
-                  final difference = DateTime.now().difference(timeBackPressed);
-                  final isExitWarning = difference >= const Duration(seconds: 2);
-                  timeBackPressed = DateTime.now();
-                  if(isExitWarning){
-                    showToast(
-                        message: 'اضغط مرة أخرى للخروج من البرنامج',
-                        state: ToastStates.WARNING);
-                    return false;
-                  } else {
-                    return true;
-                  }
-                },
-                child: OrientationBuilder(
-                  builder: (BuildContext context, Orientation orientation) =>
-                      orientation == Orientation.portrait
-                          ? buildPortrait(context)
-                          : buildLandScape(context),
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  cubit.changeRegisterStudent();
-                },
-                child: Icon(
-                  cubit.register
-                ),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {  },
+      builder: (BuildContext context, Object? state) {
+        var cubit = AppCubit.get(context);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context, showBus: true, pop: false, state: state),
+            body: WillPopScope(
+              onWillPop:  () async {
+                final difference = DateTime.now().difference(timeBackPressed);
+                final isExitWarning = difference >= const Duration(seconds: 2);
+                timeBackPressed = DateTime.now();
+                if(isExitWarning){
+                  showToast(
+                      message: 'اضغط مرة أخرى للخروج من البرنامج',
+                      state: ToastStates.WARNING);
+                  return false;
+                } else {
+                  return true;
+                }
+              },
+              child: OrientationBuilder(
+                builder: (BuildContext context, Orientation orientation) =>
+                    orientation == Orientation.portrait
+                        ? buildPortrait(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null)
+                        : buildLandScape(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null),
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
 
-      ),
     );
   }
 
@@ -104,15 +96,16 @@ class HomeScreen extends StatelessWidget {
     onTap: () {
       if(index == 0){
         navigateTo(context, const ChooseRequestScreen());
+        // AppCubit.get(context).getProfileData();
       }
       else if(index == 1){
         navigateTo(context, ChooseComplaintsScreen());
       }
       else if(index == 2){
-        navigateTo(context, FamilyReportScreen());
+        navigateTo(context,  FamilyReportScreen());
       }
       else {
-        navigateTo(context, QueriesScreen());
+        navigateTo(context, const QueriesScreen());
       }
     },
     child: Container(
@@ -189,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      navigateTo(context, NewsDetailsScreen());
+                      navigateTo(context, const NewsDetailsScreen());
                     },
                   ),
                 ),
@@ -201,50 +194,69 @@ class HomeScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildPortrait(context) => Padding(
+  Widget buildPortrait(context, isRegister) => Padding(
     padding: const EdgeInsets.all(12.0),
     child: Column(
       children: [
             Builder(builder: (context) {
-              if (AppCubit.get(context).isRegister) {
+              if(isRegister == null){
                 return Column(
                   children: [
-                    Container(
-                      height: 120.0,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) =>
-                            buildRequestsList(requests[index], context, index),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(
-                          width: 12,
-                        ),
-                        itemCount: requests.length,
+                    Shimmer.fromColors(
+                      child: Container(
+                        height: 120.0,
+                        width: double.infinity,
+                        color: baseColor,
                       ),
+                      baseColor: baseColor,
+                      highlightColor:highlightColor,
                     ),
-                    Container(
-                      width: double.infinity,
-                      child: Text(
-                        'غرامات الطالب',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
+                    const SizedBox(height: 4.0,),
                     buildFinesBox(context),
                   ],
                 );
-              } else {
-                return InkWell(
-                  onTap: () {
-                    navigateTo(context, BookingRoom1Screen());
-                  },
-                  child: defaultTiTleBoxColumn(
-                      img: 'assets/images/request.svg',
-                      title: 'طلب الالتحاق بالسكن',
-                      height: 122.0,
-                      widthImage: 50.0,
-                      heightImage: 50.0),
-                );
+              }else{
+                if (isRegister) {
+                  return Column(
+                    children: [
+                      Container(
+                        height: 120.0,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) =>
+                              buildRequestsList(requests[index], context, index),
+                          separatorBuilder: (context, index) =>
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          itemCount: requests.length,
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          'غرامات الطالب',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      buildFinesBox(context),
+                    ],
+                  );
+                } else {
+                  return InkWell(
+                    onTap: () {
+                      navigateTo(context, BookingRoom1Screen());
+                      // AppCubit.get(context).getProfileData();
+                    },
+                    child: defaultTiTleBoxColumn(
+                        img: 'assets/images/request.svg',
+                        title: 'طلب الالتحاق بالسكن',
+                        height: 122.0,
+                        widthImage: 50.0,
+                        heightImage: 50.0),
+                  );
+                }
               }
             }),
             const SizedBox(
@@ -274,63 +286,121 @@ class HomeScreen extends StatelessWidget {
     ),
   );
 
-  Widget buildLandScape(context) =>  Builder(
+  Widget buildLandScape(context, isRegister) =>  Builder(
     builder: (context) {
-      if (AppCubit.get(context).isRegister) {
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              Container(
+      if(isRegister == null){
+        return Row(
+          children: [
+            Shimmer.fromColors(
+              child: Container(
                 width: 140.0,
                 height: double.infinity,
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) =>
-                      buildRequestsList(requests[index], context, index),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 12.0,
-                  ),
-                  itemCount: requests.length,
-                ),
+                color: baseColor,
               ),
-              const SizedBox(width: 5.0,),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildFinesBox(context),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
+              baseColor: baseColor,
+              highlightColor:highlightColor,
+            ),
+            const SizedBox(width: 5.0,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Shimmer.fromColors(
+                    child: Container(
+                      height: 87.0,
                       width: double.infinity,
-                      child: Text(
-                        'اخبار عن السكن',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
+                      color: baseColor,
                     ),
-                    Expanded(
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(context),
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 16,
-                        ),
-                        itemCount: 8,
-                      ),
+                    baseColor: baseColor,
+                    highlightColor:highlightColor,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Shimmer.fromColors(
+                    child: Container(
+                      height: 14.0,
+                      width: double.infinity,
+                      color: baseColor,
                     ),
-                  ],
-                ),
+                    baseColor: baseColor,
+                    highlightColor:highlightColor,
+                  ),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  Expanded(
+                    child:  Shimmer.fromColors(
+                      child: Container(
+                        height: 87.0,
+                        width: double.infinity,
+                        color: baseColor,
+                      ),
+                      baseColor: baseColor,
+                      highlightColor:highlightColor,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }else{
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
+        if (isRegister) {
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 140.0,
+                  height: double.infinity,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        buildRequestsList(requests[index], context, index),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 12.0,
+                    ),
+                    itemCount: requests.length,
+                  ),
+                ),
+                const SizedBox(width: 5.0,),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildFinesBox(context),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          'اخبار عن السكن',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => buildNewsItem(context),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 16,
+                          ),
+                          itemCount: 8,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }else{
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              children: [
                 InkWell(
                   onTap: () {
                     navigateTo(context, BookingRoom1Screen());
@@ -355,29 +425,30 @@ class HomeScreen extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         child: Text(
-                        'اخبار عن السكن',
-                        style: TextStyle(
-                          color: mainColors,
-                          fontSize: 20.0,
+                          'اخبار عن السكن',
+                          style: TextStyle(
+                            color: mainColors,
+                            fontSize: 20.0,
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildNewsItem(context),
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 16,
+                      Expanded(
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => buildNewsItem(context),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 16,
+                          ),
+                          itemCount: 8,
                         ),
-                        itemCount: 8,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
+        }
       }
     }
   );

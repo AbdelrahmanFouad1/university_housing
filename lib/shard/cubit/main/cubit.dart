@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/network/end_point.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class AppCubit extends Cubit<AppStates>{
@@ -14,26 +18,99 @@ class AppCubit extends Cubit<AppStates>{
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  // Login Screen
-  IconData suffix = Icons.visibility_outlined;
-  bool isPassword = true;
-
-  void changePasswordVisibility() {
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-
-    emit(ChangePasswordVisibilityState());
-  }
-
-
   // Home Screen
-  bool isRegister = true;
-  IconData register = Icons.app_registration;
-  void changeRegisterStudent() {
-    isRegister = !isRegister;
-    register = isRegister ? Icons.app_registration : Icons.backspace_outlined;
-    emit(ChangeRegisterStudentState());
+  ProfileModel? profileModel;
+  String? tokeen = CacheHelper.getData(key: 'token');
+
+  int sum = 0;
+
+  void getProfileData(){
+
+    emit(GetProfileLoadingStates());
+
+    DioHelper.getData(
+      url: USERS_PROFILE,
+      token: tokeen??'',
+    ).then((value) {
+      sum = 0;
+      if(value != null){
+        // printFullText(value.data.toString());
+        profileModel = ProfileModel.fromJson(value.data);
+        for (var element in profileModel!.fines) {
+          sum += element.fineValue;
+        }
+        // print('LOLLLLLL'+sum.toString());
+        emit(GetProfileSuccessStates());
+      }
+    }).catchError((error){
+      print(error.toString());
+      emit(GetProfileErrorStates(error.toString()));
+    });
   }
+
+  // Change Damaged Screen
+  void postDamaged({
+    required String complaints,
+  }) {
+    emit(PostDamagedLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_DAMAGED,
+      token: tokeen??'',
+      data: {
+        'damagedthing': complaints,
+      },
+    ).then((value) {
+      emit(PostDamagedSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostDamagedErrorStates(error));
+    });
+  }
+
+  // Change lost Screen
+  void postLost({
+    required String complaints,
+  }) {
+    emit(PostLostLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_MISSING,
+      token: tokeen??'',
+      data: {
+        'missingthing': complaints,
+      },
+    ).then((value) {
+      emit(PostLostSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostLostErrorStates(error));
+    });
+  }
+
+  // Complaints Screen
+  void postComplaints({
+    required String complaints,
+  }) {
+    emit(PostComplaintsLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_COMPLAINTS,
+      token: tokeen??'',
+      data: {
+        'complaint': complaints,
+      },
+    ).then((value) {
+      emit(PostComplaintsSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostComplaintsErrorStates(error));
+    });
+  }
+
 
   // Hosting Requests Screen
   bool isStudent = true;
@@ -102,6 +179,7 @@ class AppCubit extends Cubit<AppStates>{
       emit(ImagePickedSuccessState());
     } else {
       print('No image selected.');
+      getProfileData();
       emit(ImagePickedErrorState());
     }
   }
@@ -109,6 +187,28 @@ class AppCubit extends Cubit<AppStates>{
   Future<void> removePikeImage() async {
     familyImage = null;
     emit(ImageRemoveSuccessState());
+  }
+
+  void postReports({
+    required String reason,
+    required String image,
+  }) {
+    emit(PostReportLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_REPORT,
+      token: tokeen??'',
+      data: {
+        'reason': reason,
+        'parentIsendorsement': image,
+      },
+    ).then((value) {
+      emit(PostReportSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostReportErrorStates(error));
+    });
   }
 
   // edit profile screen
@@ -124,7 +224,7 @@ class AppCubit extends Cubit<AppStates>{
     Icons.edit,
     color: mainColors,
   );
-  CircleAvatar img = CircleAvatar(
+  CircleAvatar img = const CircleAvatar(
     radius: 60,
     backgroundImage:
         NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -202,7 +302,7 @@ class AppCubit extends Cubit<AppStates>{
 
   void changeIsStudent_job(bool student) {
     isStudent_job = student;
-    emit(ChangeStudent_jobState());
+    emit(ChangeStudentJobState());
   }
   void changeIsBoy(bool kind) {
     isBoy = kind;
@@ -226,8 +326,8 @@ class AppCubit extends Cubit<AppStates>{
   }
 
 
-  void IsAgree(bool Is_agree){
-    agree = Is_agree;
+  void IsAgree(bool IsAgree){
+    agree = IsAgree;
     emit(IsAgreeSuccessState());
   }
 
