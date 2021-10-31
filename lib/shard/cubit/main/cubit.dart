@@ -32,6 +32,7 @@ class AppCubit extends Cubit<AppStates>{
       url: USERS_PROFILE,
       token: tokeen??'',
     ).then((value) {
+      sum = 0;
       if(value != null){
         // printFullText(value.data.toString());
         profileModel = ProfileModel.fromJson(value.data);
@@ -178,6 +179,7 @@ class AppCubit extends Cubit<AppStates>{
       emit(ImagePickedSuccessState());
     } else {
       print('No image selected.');
+      getProfileData();
       emit(ImagePickedErrorState());
     }
   }
@@ -185,6 +187,28 @@ class AppCubit extends Cubit<AppStates>{
   Future<void> removePikeImage() async {
     familyImage = null;
     emit(ImageRemoveSuccessState());
+  }
+
+  void postReports({
+    required String reason,
+    required String image,
+  }) {
+    emit(PostReportLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_REPORT,
+      token: tokeen??'',
+      data: {
+        'reason': reason,
+        'parentIsendorsement': image,
+      },
+    ).then((value) {
+      emit(PostReportSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostReportErrorStates(error));
+    });
   }
 
   // edit profile screen
@@ -200,7 +224,7 @@ class AppCubit extends Cubit<AppStates>{
     Icons.edit,
     color: mainColors,
   );
-  CircleAvatar img = CircleAvatar(
+  CircleAvatar img = const CircleAvatar(
     radius: 60,
     backgroundImage:
         NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
@@ -302,8 +326,8 @@ class AppCubit extends Cubit<AppStates>{
   }
 
 
-  void IsAgree(bool Is_agree){
-    agree = Is_agree;
+  void IsAgree(bool IsAgree){
+    agree = IsAgree;
     emit(IsAgreeSuccessState());
   }
 
