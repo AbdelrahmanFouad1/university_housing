@@ -1,6 +1,10 @@
+import 'package:university_housing/model/complaints_model.dart';
+
 String token ='';
 
 String idDB ='';
+
+ComplaintsModel? currentComplaintsModel ;
 
 void printFullText(String text)
 {

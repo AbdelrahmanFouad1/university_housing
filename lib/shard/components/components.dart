@@ -543,8 +543,7 @@ Widget buildDialog({
   required Widget child,
 }) =>
     AlertDialog(
-      backgroundColor:
-          ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+      backgroundColor: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
       title: Text(
         title,
         textDirection: TextDirection.rtl,
@@ -556,8 +555,7 @@ Widget buildDialog({
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-              color:
-                  ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+              color: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
               child: child),
         ),
       ),
@@ -855,5 +853,44 @@ Widget smallDashBoardTitleBox({
               ),
               textAlign: TextAlign.center),
         ],
+      ),
+    );
+
+
+Widget dashWhiteBoard(
+    context, {
+      double? height = 200.0,
+      int? maxLine = 8,
+      required String text,
+    }) =>
+    Container(
+      width: double.infinity,
+      height: height,
+      decoration: BoxDecoration(
+        color:
+        ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.grey, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: ThemeCubit.get(context).darkTheme
+                ? Colors.indigo.withOpacity(0.2)
+                : Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(5, 5), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Text(
+            text,
+            maxLines: maxLine,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
       ),
     );
