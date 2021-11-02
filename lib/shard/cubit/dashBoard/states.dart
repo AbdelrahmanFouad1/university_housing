@@ -44,6 +44,9 @@ class SelectSecurityBuilding extends DashBoardStates {}
 class ShowSecurityDetails extends DashBoardStates {}
 class ChangeSecurityEditIcon extends DashBoardStates {}
 
+//requests
+class SavingCurrentComplaintsModelSuccess extends DashBoardStates {}
+
 
 
 

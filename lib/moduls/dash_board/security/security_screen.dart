@@ -98,6 +98,69 @@ class SecurityScreen extends StatelessWidget {
       exitTime: '10:00 PM',
       notes: 'متأخر جدا',
     ),
+    SecurityModel(
+      id: '42018122',
+      name: 'عبدالرحمن محمد فؤاد',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '3:00 PM',
+      notes: 'لا يوجد',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
+    SecurityModel(
+      id: '42020102',
+      name: 'عمرو سعيد حسن',
+      enterDate: 'nov 6,2021',
+      enterTime: '9:00 AM',
+      exitDate: 'nov 6,2021',
+      exitTime: '10:00 PM',
+      notes: 'متأخر جدا',
+    ),
   ];
 
   @override
@@ -134,190 +197,196 @@ class SecurityScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  height: 600.0,
-                  child: Column(
-                    children: [
-                      defaultDashBoardTitleBox(
-                          img: 'assets/images/security.png',
-                          title: 'إداره الأمن'
-                      ),
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'تاريخ التقرير :',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodyText1,
-                          ),
-                          SizedBox(width: 20.0,),
-                          Expanded(
-                            child: Container(
-                              width: double.infinity,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                color:
-                                ThemeCubit
-                                    .get(context)
-                                    .darkTheme ? finesColorDark : Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                  8.0,
-                                ),
-                                border: Border.all(color: Colors.grey, width: 1),
-                              ),
-                              child: TextFormField(
-                                keyboardType: TextInputType.datetime,
-                                controller: dateController,
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: () {
-                                  showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.parse('2030-12-12')
-                                  ).then((value) {
-                                    if (value == null) {
-                                      showToast(message: 'برجاء تحديد التاريخ',
-                                          state: ToastStates.WARNING);
-                                    } else {
-                                      dateController.text =
-                                          DateFormat.yMMMd().format(value);
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'اسم المبنى :',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodyText1,
-                          ),
-                          SizedBox(width: 20.0,),
-                          Expanded(
-                            child: Container(
-                              width: double.infinity,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                color:
-                                ThemeCubit
-                                    .get(context)
-                                    .darkTheme ? finesColorDark : Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                  8.0,
-                                ),
-                                border: Border.all(color: Colors.grey, width: 1),
-                              ),
-                              child: TextFormField(
-                                controller: buildingController,
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: () {
-                                  showDialog<void>(
-                                    context: context,
-                                    builder: (context) =>
-                                        buildDialog(
-                                            context: context,
-                                            title: 'اختر المبنى',
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: _buildingList.map((e) =>
-                                                  RadioListTile(
-                                                    activeColor: ThemeCubit
-                                                        .get(context)
-                                                        .darkTheme
-                                                        ? mainTextColor
-                                                        : backGroundDark,
-                                                    tileColor: backGroundDark,
-                                                    title: Text(
-                                                      e.text,
-                                                    ),
-                                                    groupValue: cubit
-                                                        .currentSecurityBuildingVal,
-                                                    value: e.index,
-                                                    onChanged: (int? val) {
-                                                      cubit.selectSecurityBuilding(
-                                                          val ?? e.index);
-                                                      buildingController.text =
-                                                          e.text;
-                                                      Navigator.pop(context);
-                                                    },
-                                                  )).toList(),
-                                            )
-                                        ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 1.0,
-                        color: separator,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      if(dateController.text != '' && buildingController.text != '')
-                      Expanded(
-                        // flex: 1,
-                        child: ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) =>
-                              securityItem(
-                                item: list[index],
-                                allList: list,
-                                cubit: cubit,
-                                context: context,
-                                index: index,
-                              ),
-                          separatorBuilder: (context, index) =>
-                              Container(
-                                margin: EdgeInsets.symmetric(vertical: 10.0),
-                                width: double.infinity,
-                                height: 1.0,
-                                color: separator,
-                              ),
-                          itemCount: list.length,
+                child: Column(
+                  children: [
+                    defaultDashBoardTitleBox(
+                        img: 'assets/images/security.png',
+                        title: 'إداره الأمن'
+                    ),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'تاريخ التقرير :',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText1,
                         ),
-                      ),
-                    ],
-                  ),
+                        SizedBox(width: 20.0,),
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.only(top: 12.0),
+                            decoration: BoxDecoration(
+                              color:
+                              ThemeCubit
+                                  .get(context)
+                                  .darkTheme ? finesColorDark : Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                8.0,
+                              ),
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.datetime,
+                              controller: dateController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Nov 3, 2021',
+                                hintStyle: TextStyle(
+                                  fontSize: 16.0,
+                                    color: Colors.grey
+                                ),
+                              ),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1,
+                              textAlign: TextAlign.center,
+                              onTap: () {
+                                showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime.parse('2030-12-12')
+                                ).then((value) {
+                                  if (value == null) {
+                                    showToast(message: 'برجاء تحديد التاريخ',
+                                        state: ToastStates.WARNING);
+                                  } else {
+                                    dateController.text =
+                                        DateFormat.yMMMd().format(value);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'اسم المبنى :',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText1,
+                        ),
+                        SizedBox(width: 20.0,),
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.only(top: 12.0),
+                            decoration: BoxDecoration(
+                              color:
+                              ThemeCubit
+                                  .get(context)
+                                  .darkTheme ? finesColorDark : Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                8.0,
+                              ),
+                              border: Border.all(color: Colors.grey, width: 1),
+                            ),
+                            child: TextFormField(
+                              controller: buildingController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'إسكان مميز (أ)',
+                                hintStyle: TextStyle(
+                                    fontSize: 16.0,
+                                  color: Colors.grey
+                                ),
+                              ),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1,
+                              textAlign: TextAlign.center,
+                              onTap: () {
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (context) =>
+                                      buildDialog(
+                                          context: context,
+                                          title: 'اختر المبنى',
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: _buildingList.map((e) =>
+                                                RadioListTile(
+                                                  activeColor: ThemeCubit
+                                                      .get(context)
+                                                      .darkTheme
+                                                      ? mainTextColor
+                                                      : backGroundDark,
+                                                  tileColor: backGroundDark,
+                                                  title: Text(
+                                                    e.text,
+                                                  ),
+                                                  groupValue: cubit
+                                                      .currentSecurityBuildingVal,
+                                                  value: e.index,
+                                                  onChanged: (int? val) {
+                                                    cubit.selectSecurityBuilding(
+                                                        val ?? e.index);
+                                                    buildingController.text =
+                                                        e.text;
+                                                    Navigator.pop(context);
+                                                  },
+                                                )).toList(),
+                                          )
+                                      ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1.0,
+                      color: separator,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    if(!dateController.text.isEmpty && !buildingController.text.isEmpty)
+                    ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) =>
+                          securityItem(
+                            item: list[index],
+                            allList: list,
+                            cubit: cubit,
+                            context: context,
+                            index: index,
+                          ),
+                      separatorBuilder: (context, index) =>
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            width: double.infinity,
+                            height: 1.0,
+                            color: separator,
+                          ),
+                      itemCount: list.length,
+                    ),
+                  ],
                 ),
               ),
             ),
