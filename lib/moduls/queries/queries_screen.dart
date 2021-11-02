@@ -15,6 +15,7 @@ class QueriesScreen extends StatelessWidget {
 
    QueriesScreen({Key? key}) : super(key: key);
 
+   //part 3
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
