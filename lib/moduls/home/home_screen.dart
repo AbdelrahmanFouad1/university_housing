@@ -105,7 +105,8 @@ class HomeScreen extends StatelessWidget {
         navigateTo(context,  FamilyReportScreen());
       }
       else {
-        navigateTo(context, const QueriesScreen());
+        navigateTo(context,  QueriesScreen());
+        AppCubit.get(context).getQueriesData();
       }
     },
     child: Container(

@@ -89,8 +89,7 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeCubit.get(context).darkTheme?  ThemeMode.dark : ThemeMode.light ,
-            // home: SplashScreen(startWidget: startWidget),
-            home: DashHomeScreen(),
+            home: SplashScreen(startWidget: startWidget),
           );
         },
       ),
