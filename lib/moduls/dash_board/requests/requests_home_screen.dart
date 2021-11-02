@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/requests_home_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_complaints_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
-class DashHomeScreen extends StatelessWidget {
-  const DashHomeScreen({Key? key}) : super(key: key);
+class RequestsHomeScreen extends StatelessWidget {
+  const RequestsHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: dashAppBar(title: 'إدارة الإسكان الجامعى', context: context,pop: false),
+        appBar: dashAppBar(title: 'طلبات الساكنين', context: context),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(
@@ -25,21 +25,22 @@ class DashHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, RoomsHomeScreen());
+                    navigateTo(context, DashComplimentsScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       img: 'assets/images/home.png',
-                      title: 'إداره الغرف'
+                      title: 'طلبات التسكين'
                   ),
                 ),
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, StudentsScreen());
+                    navigateTo(context, DashComplimentsScreen());
                   },
                   child: defaultDashBoardTitleBox(
-                      img: 'assets/images/team.png',
-                      title: 'الساكنين'
+                      title: 'الشكوى',
+                    svg: true,
+                    svgImage: 'assets/images/review.svg'
                   ),
                 ),
                 SizedBox(height: 12.0,),
@@ -48,18 +49,18 @@ class DashHomeScreen extends StatelessWidget {
                     navigateTo(context, SecurityScreen());
                   },
                   child: defaultDashBoardTitleBox(
-                      img: 'assets/images/security.png',
-                      title: 'إداره الأمن'
+                      svgImage:  'assets/images/research.svg',
+                      title: 'الاستعلامات',
+                    svg: true,
                   ),
                 ),
                 SizedBox(height: 12.0,),
                 InkWell(
-                  onTap: (){
-                    navigateTo(context, RequestsHomeScreen());
-                  },
+                  onTap: (){},
                   child: defaultDashBoardTitleBox(
-                      img: 'assets/images/checklist.png',
-                      title: 'طلبات الساكنين'
+                      svgImage: 'assets/images/follow.svg',
+                      title: 'طلبات الإستضافة',
+                    svg: true
                   ),
                 ),
                 SizedBox(height: 12.0,),
@@ -68,8 +69,9 @@ class DashHomeScreen extends StatelessWidget {
                     navigateTo(context, AddNewsScreen());
                   },
                   child: defaultDashBoardTitleBox(
-                      img: 'assets/images/newspaper.png',
-                      title: 'أخبار المعهد'
+                      svgImage:  'assets/images/family.svg',
+                      title: 'أقرارات ولي الأمر',
+                    svg: true,
                   ),
                 ),
               ],

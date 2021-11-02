@@ -28,6 +28,7 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (route) => false,
     );
+
 Widget defaultButton({
   double? width,
   double? height,
@@ -111,7 +112,6 @@ Widget defaultFormField(
       ),
     );
 
-
 Widget defaultButton2({
   double? width,
   double? height,
@@ -144,7 +144,6 @@ Widget defaultButton2({
       ),
     );
 
-
 AppBar defaultAppBar({
   required BuildContext context,
   double? titleSpacing = 12.0,
@@ -153,100 +152,108 @@ AppBar defaultAppBar({
   bool? bookingDone = false,
   Widget? popToScreen,
   Object? state,
-})=> AppBar(
-    titleSpacing: titleSpacing,
-    automaticallyImplyLeading: false,
-    actions: [
-      if(showBus == true)
-        Container(
-          padding: const EdgeInsets.all(0.0),
-          width: 30.0,
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: SvgPicture.asset(
-              'assets/icon/bus.svg',
-              width: 18.0,
-              height: 18.0,
-            ),
-            onPressed: () {
-              navigateTo(context, const BusScreen());
-            },
-          ),
-        ),
-      Container(
-        padding: const EdgeInsets.all(0.0),
-        width: 30.0,
-        child: IconButton(
-          padding: EdgeInsets.zero,
-          icon:  Icon(
-            Icons.person_outline,
-            color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
-          ),
-          onPressed: () {
-            navigateTo(context, const ProfileScreen());
-          },
-        ),
-      ),
-      Container(
-        padding: const EdgeInsets.all(0.0),
-        width: 30.0,
-        child: IconButton(
-          padding: EdgeInsets.zero,
-          icon: Stack(
-            alignment: AlignmentDirectional.topEnd,
-            children: [
-              Icon(
-                IconBroken.Notification,
-                color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
+}) =>
+    AppBar(
+        titleSpacing: titleSpacing,
+        automaticallyImplyLeading: false,
+        actions: [
+          if (showBus == true)
+            Container(
+              padding: const EdgeInsets.all(0.0),
+              width: 30.0,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: SvgPicture.asset(
+                  'assets/icon/bus.svg',
+                  width: 18.0,
+                  height: 18.0,
+                ),
+                onPressed: () {
+                  navigateTo(context, const BusScreen());
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 2.0,left: 4.0),
-                child: SvgPicture.asset('assets/icon/dot.svg'),
+            ),
+          Container(
+            padding: const EdgeInsets.all(0.0),
+            width: 30.0,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.person_outline,
+                color: ThemeCubit.get(context).darkTheme
+                    ? mainTextColor
+                    : mainColors,
               ),
-            ],
-          ),
-          onPressed: () {
-            navigateTo(context, const NotificationsScreen());
-          },
-        ),
-      ),
-      if(pop == true)
-        Container(
-          padding: const EdgeInsets.all(0.0),
-          width: 30.0,
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon:  Icon(
-              IconBroken.Arrow___Left_2,
-              color:ThemeCubit.get(context).darkTheme ? mainTextColor :  mainColors,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-      if(bookingDone == true)
-        InkWell(
-          onTap: (){
-            navigateTo(context, HomeScreen());
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: SvgPicture.asset(
-                'assets/images/back_arrow.svg',
-              color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
-
+              onPressed: () {
+                navigateTo(context, const ProfileScreen());
+              },
             ),
           ),
-        ),
-      const SizedBox(width: 6.0,),
-    ],
-    title: Text(
-      'أهلا , ${state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.id : 'xxxxxxxx'}',
-      style: Theme.of(context).textTheme.headline6,
-    )
-);
-
+          Container(
+            padding: const EdgeInsets.all(0.0),
+            width: 30.0,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Stack(
+                alignment: AlignmentDirectional.topEnd,
+                children: [
+                  Icon(
+                    IconBroken.Notification,
+                    color: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.0, left: 4.0),
+                    child: SvgPicture.asset('assets/icon/dot.svg'),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                navigateTo(context, const NotificationsScreen());
+              },
+            ),
+          ),
+          if (pop == true)
+            Container(
+              padding: const EdgeInsets.all(0.0),
+              width: 30.0,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: Icon(
+                  IconBroken.Arrow___Left_2,
+                  color: ThemeCubit.get(context).darkTheme
+                      ? mainTextColor
+                      : mainColors,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          if (bookingDone == true)
+            InkWell(
+              onTap: () {
+                navigateTo(context, HomeScreen());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: SvgPicture.asset(
+                  'assets/images/back_arrow.svg',
+                  color: ThemeCubit.get(context).darkTheme
+                      ? mainTextColor
+                      : mainColors,
+                ),
+              ),
+            ),
+          const SizedBox(
+            width: 6.0,
+          ),
+        ],
+        title: Text(
+          'أهلا , ${state is GetProfileSuccessStates ? AppCubit.get(context).profileModel!.id : 'xxxxxxxx'}',
+          style: Theme.of(context).textTheme.headline6,
+        ));
 
 Widget defaultTitleBox({
   required String img,
@@ -304,7 +311,6 @@ Widget defaultTiTleBoxColumn({
         color: boxColor,
         borderRadius: BorderRadius.circular(8.0),
       ),
-
       child: Column(
         mainAxisAlignment: mainAxisAlignment,
         children: [
@@ -337,7 +343,7 @@ Widget whiteBoard(
   context, {
   double? height = 250.0,
   int? maxLine = 10,
-  String? hint ,
+  String? hint = '',
   TextEditingController? controller,
 }) =>
     Container(
@@ -364,9 +370,10 @@ Widget whiteBoard(
         child: TextFormField(
           controller: controller,
           scrollPhysics: const BouncingScrollPhysics(),
-          cursorColor:ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+          cursorColor:
+              ThemeCubit.get(context).darkTheme ? mainTextColor : mainColors,
           maxLines: maxLine,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyText1,
@@ -480,33 +487,35 @@ Widget buildEnquiry(
   required double height,
   required StatusStates state,
   required Widget body,
-}) => Container(
-  height: height,
-  width: double.infinity,
-  decoration: BoxDecoration(
-    color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
-    borderRadius: BorderRadius.circular(8.0),
-  ),
-  child: Row(
-    children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Container(
-          height: double.infinity,
-          width: 10.0,
-          decoration:  BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(22.0),
-              bottomLeft: Radius.circular(22.0),
-            ),
-            color: chooseStatusColor(state),
-          ),
-        ),
+}) =>
+    Container(
+      height: height,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color:
+            ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
       ),
-      body,
-    ],
-  ),
-);
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Container(
+              height: double.infinity,
+              width: 10.0,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(22.0),
+                  bottomLeft: Radius.circular(22.0),
+                ),
+                color: chooseStatusColor(state),
+              ),
+            ),
+          ),
+          body,
+        ],
+      ),
+    );
 
 enum StatusStates { ACCEPT, REJECT, WAITING }
 
@@ -528,7 +537,6 @@ Color chooseStatusColor(StatusStates state) {
   return color;
 }
 
-
 Widget buildDialog({
   required context,
   required String title,
@@ -548,9 +556,9 @@ Widget buildDialog({
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-              color: ThemeCubit.get(context).darkTheme? mainColors: Colors.white,
-              child: child
-          ),
+              color:
+                  ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+              child: child),
         ),
       ),
       actions: [
@@ -565,81 +573,287 @@ Widget buildDialog({
       ],
     );
 
-
-
 Widget roomBox({
   String? buildingName,
   int? roomNumber,
   int? floor,
-}) => Container(
-  width: double.infinity,
-  height: 140.0,
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(8.0),
-    color: mainColors,
-  ),
-  child: Stack(
-    children: [
-      Container(
-        width: double.infinity,
-        height: 140.0,
-        child: SvgPicture.asset(
-          'assets/images/layer1.svg',
-          alignment: AlignmentDirectional.centerEnd,
-        ),
+}) =>
+    Container(
+      width: double.infinity,
+      height: 140.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: mainColors,
       ),
-      Row(
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
-                SizedBox(height: 6.0,),
-                Text(
-                  'انت الان مقيم في ',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-
-                  ),
-                ),
-                Text(
-                  'غرفة:  ${roomNumber??''}',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Text(
-                  'الدور:  ${floor??''}',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Text(
-                  'المبنى:  ${buildingName ?? ''}',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ],
+          Container(
+            width: double.infinity,
+            height: 140.0,
+            child: SvgPicture.asset(
+              'assets/images/layer1.svg',
+              alignment: AlignmentDirectional.centerEnd,
             ),
           ),
-          const Spacer(),
-          SvgPicture.asset(
-            'assets/images/layer22.svg',
-            width: 100.0,
-            height: 92.0,
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 6.0,
+                    ),
+                    Text(
+                      'انت الان مقيم في ',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      'غرفة:  ${roomNumber ?? ''}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Text(
+                      'الدور:  ${floor ?? ''}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Text(
+                      'المبنى:  ${buildingName ?? ''}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              SvgPicture.asset(
+                'assets/images/layer22.svg',
+                width: 100.0,
+                height: 92.0,
+              ),
+              const SizedBox(
+                width: 22.0,
+              ),
+            ],
           ),
-          const SizedBox(width: 22.0,),
         ],
       ),
-    ],
-  ),
-);
+    );
+
+
+
+
+
+
+
+
+
+
+// dashBoard
+
+AppBar dashAppBar({
+  required String title,
+  required context,
+  Widget? action,
+  bool? pop = true,
+}) =>
+    AppBar(
+      automaticallyImplyLeading: false,
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      actions: [
+        if (action != null) action,
+        Container(
+          margin: EdgeInsets.all(10.0),
+          width: 30.0,
+          child: IconButton(
+            icon: Icon(
+              Icons.brightness_4,
+              color: ThemeCubit.get(context).darkTheme
+                  ? mainTextColor
+                  : mainColors,
+            ),
+            onPressed: () {
+              ThemeCubit.get(context).changeTheme();
+            },
+          ),
+        ),
+        if (pop == true)
+          Container(
+            padding: const EdgeInsets.all(0.0),
+            width: 30.0,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                IconBroken.Arrow___Left_2,
+                color: ThemeCubit.get(context).darkTheme
+                    ? mainTextColor
+                    : mainColors,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+      ],
+    );
+
+Widget dashTextFormField({
+  required TextEditingController controller,
+  required TextInputType type,
+  required String hint,
+  required context,
+}) =>
+    Container(
+      width: double.infinity,
+      height: 45.0,
+      decoration: BoxDecoration(
+        color:
+            ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
+        borderRadius: BorderRadius.circular(
+          8.0,
+        ),
+        border: Border.all(color: Colors.grey, width: 1),
+      ),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: type,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hint,
+          hintStyle: Theme.of(context).textTheme.bodyText1,
+          contentPadding: const EdgeInsetsDirectional.all(10.0),
+        ),
+      ),
+    );
+
+Widget switchedTextFormField({
+  required context,
+  required cubit,
+  required controller,
+}) =>
+    Expanded(
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+          hintStyle: Theme.of(context).textTheme.bodyText1,
+        ),
+        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true
+            ? false
+            : true,
+        enableInteractiveSelection:
+            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true
+                ? true
+                : false,
+        style: Theme.of(context).textTheme.bodyText1,
+        textAlign: TextAlign.center,
+      ),
+    );
+
+Widget defaultDashBoardTitleBox({
+  String? img,
+  required String title,
+  bool? svg = false,
+  String? svgImage ,
+}) =>
+    Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: mainColors,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      height: 88.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            width: 20,
+          ),
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: svg == false ?Image.asset(
+              img!,
+              width: 50.0,
+              height: 50.0,
+            ):SvgPicture.asset(
+              svgImage!,
+              width: 50.0,
+              height: 50.0,
+            ),
+          ),
+          const SizedBox(
+            width: 20.0,
+          ),
+          Text(title,
+              style: TextStyle(
+                color: finesColor,
+                fontSize: 20.0,
+              ),
+              textAlign: TextAlign.center),
+        ],
+      ),
+    );
+
+
+
+Widget smallDashBoardTitleBox({
+  String? img,
+  required String title,
+  bool? svg = false,
+  String? svgImage ,
+}) =>
+    Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: mainColors,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      height: 50.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            width: 20,
+          ),
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: svg == false ?Image.asset(
+              img!,
+              width: 30.0,
+              height: 30.0,
+            ):SvgPicture.asset(
+              svgImage!,
+              width: 30.0,
+              height: 30.0,
+            ),
+          ),
+          const SizedBox(
+            width: 16.0,
+          ),
+          Text(title,
+              style: TextStyle(
+                color: finesColor,
+                fontSize: 18.0,
+              ),
+              textAlign: TextAlign.center),
+        ],
+      ),
+    );

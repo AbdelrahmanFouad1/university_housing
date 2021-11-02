@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/models/buidings_model.dart';
+import 'package:university_housing/model/buidings_model.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -54,6 +54,84 @@ class AvailableNow extends StatelessWidget {
       level: false,
       statues: false,
     ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+    BuildingsModel(
+      code: 'Rm520',
+      name: 'أسكان مميز (أ)',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      studentNum: '20',
+      employeeNum: '10',
+      managerName: 'أحمد معتز سعيد',
+      managerPhone: '01119108602',
+      level: true,
+      statues: true,
+    ),
+
   ];
 
   @override
@@ -84,47 +162,53 @@ class AvailableNow extends StatelessWidget {
                 ),
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  defaultDashBoardTitleBox(
-                      img: 'assets/images/verification.png',
-                      title: 'الموجود حاليا'),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 1.0,
-                    color: separator,
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => buildingItem(
-                          item: item[index],
-                          cubit: cubit,
-                          context: context,
-                          index: index,
-                          stateList: _stateList,
-                          levelList: _levelList,
-                          allList: item),
-                      separatorBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
+            body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  height: 600.0,
+                  child: Column(
+                    children: [
+                      defaultDashBoardTitleBox(
+                          img: 'assets/images/verification.png',
+                          title: 'الموجود حاليا'),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      Container(
                         width: double.infinity,
                         height: 1.0,
                         color: separator,
                       ),
-                      itemCount: item.length,
-                    ),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) => buildingItem(
+                              item: item[index],
+                              cubit: cubit,
+                              context: context,
+                              index: index,
+                              stateList: _stateList,
+                              levelList: _levelList,
+                              allList: item),
+                          separatorBuilder: (context, index) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            width: double.infinity,
+                            height: 1.0,
+                            color: separator,
+                          ),
+                          itemCount: item.length,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
