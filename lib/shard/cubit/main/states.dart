@@ -96,6 +96,26 @@ class PostReportErrorStates extends AppStates {
   PostReportErrorStates(this.error);
 }
 
+class PostQueriesLoadingStates extends AppStates {}
+
+class PostQueriesSuccessStates extends AppStates {}
+
+class PostQueriesErrorStates extends AppStates {
+  final String error;
+
+  PostQueriesErrorStates(this.error);
+}
+
+class GetQueriesLoadingStates extends AppStates {}
+
+class GetQueriesSuccessStates extends AppStates {}
+
+class GetQueriesErrorStates extends AppStates {
+  final String error;
+
+  GetQueriesErrorStates(this.error);
+}
+
 
 
 

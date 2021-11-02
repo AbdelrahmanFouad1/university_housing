@@ -12,3 +12,5 @@ const ORDERS_DAMAGED = 'orders/damagedthings';
 
 const ORDERS_REPORT = 'orders/endorsement';
 
+const ORDERS_ENQUIRES = 'orders/enquirys';
+

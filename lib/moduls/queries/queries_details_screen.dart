@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/model/comments_model.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class QueriesDetailsScreen extends StatelessWidget {
-  const QueriesDetailsScreen({Key? key}) : super(key: key);
+  CommentsModel commentsModel;
+
+  QueriesDetailsScreen({Key? key, required this.commentsModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,34 +81,11 @@ class QueriesDetailsScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-                                    Builder(
-                                      builder: (context) {
-                                        if (cubit.profileImage == null) {
-                                          return const CircleAvatar(
-                                            radius: 30.0,
-                                            backgroundImage: NetworkImage(
-                                                'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
-                                          );
-                                        } else {
-                                          return CircleAvatar(
-                                            radius: 30.0,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  150.0,
-                                                ),
-                                                image: DecorationImage(
-                                                  image: FileImage(
-                                                      cubit.profileImage!),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
+                                  const CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: NetworkImage(
+                                      'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                                ),
                                     const SizedBox(
                                       width: 10.0,
                                     ),
@@ -114,14 +94,14 @@ class QueriesDetailsScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'عبدالرحمن محمد فؤاد',
+                                          commentsModel.user!.username!,
                                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
-                                          '42018122',
+                                          '${commentsModel.user!.id!}',
                                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
@@ -139,7 +119,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                   child: SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
                                     child: Text(
-                                      '«إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو  »',
+                                      commentsModel.enquiry!,
                                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: 14.0,
                                       ),
@@ -155,7 +135,8 @@ class QueriesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Row(
+                    if(commentsModel.isReplied!)
+                      Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -195,7 +176,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                         child: SingleChildScrollView(
                                           physics: const BouncingScrollPhysics(),
                                           child: Text(
-                                            '«إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو إن هذا الكتاب حسن الطوية فهو  »',
+                                            commentsModel.enquiryAnswer!,
                                             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                               fontSize: 14.0,
                                             ),
