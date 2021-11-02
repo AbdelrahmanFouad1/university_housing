@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_complaints_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
@@ -25,7 +25,6 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, DashComplimentsScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       img: 'assets/images/home.png',
@@ -46,7 +45,6 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, SecurityScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       svgImage:  'assets/images/research.svg',
@@ -66,7 +64,6 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, AddNewsScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       svgImage:  'assets/images/family.svg',
