@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/models/students_model.dart';
+import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
@@ -90,6 +90,87 @@ class StudentsScreen extends StatelessWidget {
       address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
       level: true,
     ),
+    StudentsModel(
+      id: '42020005',
+      buildingName: 'عماره الزهراء',
+      credit: true,
+      job: true,
+      gender: true,
+      nationalID: '30002740101666',
+      nationalPhoto: '',
+      paymentDate: '20-02-2021',
+      phone: '01119109758',
+      room: '203',
+      section: 'هندسه عماره',
+      name: 'علاء محمود خميس',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      level: true,
+    ),
+    StudentsModel(
+      id: '42020005',
+      buildingName: 'عماره الزهراء',
+      credit: true,
+      job: true,
+      gender: true,
+      nationalID: '30002740101666',
+      nationalPhoto: '',
+      paymentDate: '20-02-2021',
+      phone: '01119109758',
+      room: '203',
+      section: 'هندسه عماره',
+      name: 'علاء محمود خميس',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      level: true,
+    ),
+    StudentsModel(
+      id: '42020005',
+      buildingName: 'عماره الزهراء',
+      credit: true,
+      job: true,
+      gender: true,
+      nationalID: '30002740101666',
+      nationalPhoto: '',
+      paymentDate: '20-02-2021',
+      phone: '01119109758',
+      room: '203',
+      section: 'هندسه عماره',
+      name: 'علاء محمود خميس',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      level: true,
+    ),
+    StudentsModel(
+      id: '42020005',
+      buildingName: 'عماره الزهراء',
+      credit: true,
+      job: true,
+      gender: true,
+      nationalID: '30002740101666',
+      nationalPhoto: '',
+      paymentDate: '20-02-2021',
+      phone: '01119109758',
+      room: '203',
+      section: 'هندسه عماره',
+      name: 'علاء محمود خميس',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      level: true,
+    ),
+    StudentsModel(
+      id: '42020005',
+      buildingName: 'عماره الزهراء',
+      credit: true,
+      job: true,
+      gender: true,
+      nationalID: '30002740101666',
+      nationalPhoto: '',
+      paymentDate: '20-02-2021',
+      phone: '01119109758',
+      room: '203',
+      section: 'هندسه عماره',
+      name: 'علاء محمود خميس',
+      address: 'مجاوره 28 امام مسجد علي ابن ابي طالب',
+      level: true,
+    ),
+
   ];
 
   @override
@@ -120,250 +201,256 @@ class StudentsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  defaultDashBoardTitleBox(
-                      img: 'assets/images/team.png', title: 'الساكنين'),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'الترم :',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: Radio(
-                                  value: 1,
-                                  groupValue: cubit.termNum,
-                                  activeColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  focusColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  onChanged: (value) {
-                                    cubit.changeTerm(1);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'الأول',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: Radio(
-                                  value: 2,
-                                  groupValue: cubit.termNum,
-                                  activeColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  focusColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  hoverColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  onChanged: (value) {
-                                    cubit.changeTerm(2);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'الثاني',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: Radio(
-                                  value: 3,
-                                  groupValue: cubit.termNum,
-                                  activeColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  focusColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  hoverColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  onChanged: (value) {
-                                    cubit.changeTerm(3);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'الثالث',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'النوع :',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: Radio(
-                                  value: true,
-                                  groupValue: cubit.isStudentKind,
-                                  activeColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  focusColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  onChanged: (value) {
-                                    cubit.changePeopleType(true);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'طلاب',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              SizedBox(
-                                width: 20.0,
-                                height: 20.0,
-                                child: Radio(
-                                  value: false,
-                                  groupValue: cubit.isStudentKind,
-                                  activeColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  focusColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  hoverColor: ThemeCubit.get(context).darkTheme
-                                      ? mainTextColor
-                                      : mainColors,
-                                  onChanged: (value) {
-                                    cubit.changePeopleType(false);
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(
-                                'عاملين',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 1.0,
-                    color: separator,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: ListView.separated(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => studentItem(
-                        item:  list[index],
-                        allList: list,
-                        cubit: cubit,
-                        context: context,
-                        index: index,
-                        level: _levelList,
-                        credit: _creditList,
-                        gender: _genderList,
-                        job: _jobList
+            body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  height: 600.0,
+                  child: Column(
+                    children: [
+                      defaultDashBoardTitleBox(
+                          img: 'assets/images/team.png', title: 'الساكنين'),
+                      SizedBox(
+                        height: 12.0,
                       ),
-                      separatorBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'الترم :',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: 1,
+                                      groupValue: cubit.termNum,
+                                      activeColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changeTerm(1);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'الأول',
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: 2,
+                                      groupValue: cubit.termNum,
+                                      activeColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      hoverColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changeTerm(2);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'الثاني',
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: 3,
+                                      groupValue: cubit.termNum,
+                                      activeColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      hoverColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changeTerm(3);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'الثالث',
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'النوع :',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: true,
+                                      groupValue: cubit.isStudentKind,
+                                      activeColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changePeopleType(true);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'طلاب',
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: false,
+                                      groupValue: cubit.isStudentKind,
+                                      activeColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      hoverColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changePeopleType(false);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'عاملين',
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
                         width: double.infinity,
                         height: 1.0,
                         color: separator,
                       ),
-                      itemCount: list.length,
-                    ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) => studentItem(
+                            item:  list[index],
+                            allList: list,
+                            cubit: cubit,
+                            context: context,
+                            index: index,
+                            level: _levelList,
+                            credit: _creditList,
+                            gender: _genderList,
+                            job: _jobList
+                          ),
+                          separatorBuilder: (context, index) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            width: double.infinity,
+                            height: 1.0,
+                            color: separator,
+                          ),
+                          itemCount: list.length,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

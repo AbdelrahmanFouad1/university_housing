@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:university_housing/models/buidings_model.dart';
-import 'package:university_housing/models/students_model.dart';
+import 'package:university_housing/model/buidings_model.dart';
+import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -197,6 +197,34 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void deleteStudent(List<StudentsModel> list ,index) {
     list.removeAt(index);
     emit(DeleteStudentSuccess());
+  }
+
+
+
+
+//security
+  int currentSecurityBuildingVal = 0;
+  void selectSecurityBuilding(int currentNum) {
+    currentSecurityBuildingVal = currentNum;
+    emit(SelectSecurityBuilding());
+  }
+
+
+  double animatedSecurityHeight = 0.0;
+  bool showSecurity_details = false;
+  int currentSecurityIndex = -1;
+  void showSecurityDetails(bool show ,int index) {
+    if(currentSecurityIndex == index){
+      showSecurity_details = show;
+      animatedSecurityHeight == 0.0? animatedSecurityHeight= 400.0: animatedSecurityHeight= 0.0;
+      emit(ShowSecurityDetails());
+    }
+  }
+
+  bool showSecurityEdit = false;
+  void changeSecurityEditIcon(bool edit){
+    showSecurityEdit = edit;
+    emit(ChangeSecurityEditIcon());
   }
 
 }

@@ -39,4 +39,11 @@ class SelectStudentCredit extends DashBoardStates {}
 
 
 
+//security
+class SelectSecurityBuilding extends DashBoardStates {}
+class ShowSecurityDetails extends DashBoardStates {}
+class ChangeSecurityEditIcon extends DashBoardStates {}
+
+
+
 
