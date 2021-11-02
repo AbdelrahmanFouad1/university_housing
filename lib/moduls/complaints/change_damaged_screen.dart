@@ -16,8 +16,11 @@ class ChangeDamagedScreen extends StatelessWidget {
       listener: (BuildContext context, state) {
         if(state is PostDamagedSuccessStates){
           showToast(message: 'تم رفع الشكوى بنجاح', state: ToastStates.SUCCESS);
+          damageController.text = '';
+          AppCubit.get(context).getProfileData();
         }else if(state is PostDamagedErrorStates){
           showToast(message: 'لم يتم رفع الشكوى, الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+          AppCubit.get(context).getProfileData();
         }
       },
       builder: (BuildContext context, Object? state) {

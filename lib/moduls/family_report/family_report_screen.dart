@@ -17,8 +17,12 @@ class FamilyReportScreen extends StatelessWidget {
      listener: (context,state){
        if(state is PostReportSuccessStates){
          showToast(message: 'تم رفع التقرير بنجاح', state: ToastStates.SUCCESS);
+         reasonController.text = '';
+         AppCubit.get(context).getProfileData();
+         AppCubit.get(context).removePikeImage();
        }else if(state is PostReportErrorStates){
          showToast(message: 'لم يتم رفع التقرير, الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+         AppCubit.get(context).getProfileData();
        }
      },
      builder: (context,state){

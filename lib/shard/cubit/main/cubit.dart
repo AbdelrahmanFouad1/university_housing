@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:university_housing/model/comments_model.dart';
 import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -211,6 +213,54 @@ class AppCubit extends Cubit<AppStates>{
     });
   }
 
+
+  //Queries Screen
+  void postQueries({
+    required String queries,
+  }) {
+    emit(PostQueriesLoadingStates());
+
+    DioHelper.postData(
+      url: ORDERS_ENQUIRES,
+      token: tokeen??'',
+      data: {
+        'enquiry': queries,
+      },
+    ).then((value) {
+      emit(PostQueriesSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostQueriesErrorStates(error));
+    });
+  }
+
+  List<CommentsModel>? commentModel = [];
+  void getQueriesData(){
+
+    emit(GetQueriesLoadingStates());
+
+    DioHelper.getData(
+      url: ORDERS_ENQUIRES,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2MzNzg2ZjMzZWViMDAxNmQxNmI4ZiIsImlhdCI6MTYzNTg0NTI2MiwiZXhwIjoxNjM4NDM3MjYyfQ.qTyr2yr-3h-klgP2AOmtHS9DOqNksDMvk5CbaQxqUbY',
+    ).then((value) {
+      if(value != null){
+        // printFullText(value.data.toString());
+        value.data.forEach((element) {
+          commentModel!.add(CommentsModel.fromJson(element)) ;
+        });
+        getProfileData();
+        emit(GetQueriesSuccessStates());
+      }
+    }).catchError((error){
+      getProfileData();
+      print(error.toString());
+      emit(GetQueriesErrorStates(error.toString()));
+    });
+  }
+
+
+
   // edit profile screen
   bool isDark = false ;
   void toggleButton(){
@@ -304,6 +354,7 @@ class AppCubit extends Cubit<AppStates>{
     isStudent_job = student;
     emit(ChangeStudentJobState());
   }
+
   void changeIsBoy(bool kind) {
     isBoy = kind;
     emit(ChangeKindState());
