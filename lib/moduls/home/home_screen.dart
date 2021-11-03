@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/moduls/booking_room/booking_room1_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/family_report/family_report_screen.dart';
@@ -11,10 +12,8 @@ import 'package:university_housing/moduls/news_details/news_details_screen.dart'
 import 'package:university_housing/moduls/queries/queries_screen.dart';
 import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
-import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class MainModel {
@@ -57,9 +56,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {  },
+      listener: (BuildContext context, state) {
+        if(state is GetProfileSuccessStates){
+          AppCubit.get(context).getNews();
+        }
+      },
       builder: (BuildContext context, Object? state) {
-        var cubit = AppCubit.get(context);
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
@@ -79,10 +81,9 @@ class HomeScreen extends StatelessWidget {
                 }
               },
               child: OrientationBuilder(
-                builder: (BuildContext context, Orientation orientation) =>
-                    orientation == Orientation.portrait
-                        ? buildPortrait(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null)
-                        : buildLandScape(context,state is GetProfileSuccessStates? AppCubit.get(context).profileModel!.isresident : null),
+                builder: (BuildContext context, Orientation orientation) => orientation == Orientation.portrait
+                        ? buildPortrait(context, AppCubit.get(context).profileModel != null? AppCubit.get(context).profileModel!.isresident : null, state)
+                        : buildLandScape(context, AppCubit.get(context).profileModel != null? AppCubit.get(context).profileModel!.isresident : null, state),
               ),
             ),
           ),
@@ -138,19 +139,27 @@ class HomeScreen extends StatelessWidget {
         ),
   );
 
-  Widget buildNewsItem(context) => Row(
+  Widget buildNewsItem(context, News model) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
         width: 128.0,
         height: 80.0,
+        // child: FadeInImage(
+        //   image: NetworkImage(
+        //     '${model.image}',
+        //   ),
+        //   fit: BoxFit.cover,
+        //   placeholder: const AssetImage('assets/images/room.png'),
+        // ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
             8.0,
           ),
-          image: const DecorationImage(
+          image: DecorationImage(
             image: NetworkImage(
-                'https://image.freepik.com/free-photo/swimming-pool-beach-luxury-hotel-outdoor-pools-spa-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer-turkey_146671-18751.jpg'),
+              '${model.image}',
+            ),
             fit: BoxFit.cover,
           ),
         ),
@@ -162,9 +171,10 @@ class HomeScreen extends StatelessWidget {
             height: 70.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'وفرت إدارة المعهد مجموعـة من العمارات السكـنية بالإضافـة الى مبنى للإسكـا ',
+                  '${model.title}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -183,7 +193,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      navigateTo(context, const NewsDetailsScreen());
+                      navigateTo(context,  NewsDetailsScreen(model: model,));
                     },
                   ),
                 ),
@@ -195,7 +205,55 @@ class HomeScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildPortrait(context, isRegister) => Padding(
+  Widget buildNewsShimmerItem(context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Shimmer.fromColors(
+        child: Container(
+          height: 80.0,
+          width: 128.0,
+          color: baseColor,
+        ),
+        baseColor: baseColor,
+        highlightColor:highlightColor,
+      ),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Container(
+            height: 70.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Shimmer.fromColors(
+                    child: Container(
+                      height: 14.0,
+                      color: baseColor,
+                    ),
+                    baseColor: baseColor,
+                    highlightColor:highlightColor,
+                  ),
+                  Spacer(),
+                  Shimmer.fromColors(
+                    child: Container(
+                      height: 14.0,
+                      color: baseColor,
+                    ),
+                    baseColor: baseColor,
+                    highlightColor:highlightColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+
+  Widget buildPortrait(context, isRegister, state) => Padding(
     padding: const EdgeInsets.all(12.0),
     child: Column(
       children: [
@@ -276,18 +334,18 @@ class HomeScreen extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => buildNewsItem(context),
+            itemBuilder: (context, index) => state is GetNewsSuccessStates? buildNewsItem(context, AppCubit.get(context).newsModel!.news[index]) : buildNewsShimmerItem(context),
             separatorBuilder: (context, index) => const SizedBox(
               height: 16,
             ),
-            itemCount: 8,
+            itemCount: state is GetNewsSuccessStates?  AppCubit.get(context).newsModel!.news.length : 8,
           ),
         ),
       ],
     ),
   );
 
-  Widget buildLandScape(context, isRegister) =>  Builder(
+  Widget buildLandScape(context, isRegister, state) =>  Builder(
     builder: (context) {
       if(isRegister == null){
         return Row(
@@ -384,7 +442,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => buildNewsItem(context),
+                          itemBuilder: (context, index) => buildNewsItem(context, AppCubit.get(context).newsModel!.news[index]),
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 16,
                           ),
@@ -436,7 +494,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => buildNewsItem(context),
+                          itemBuilder: (context, index) => buildNewsItem(context, AppCubit.get(context).newsModel!.news[index]),
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 16,
                           ),

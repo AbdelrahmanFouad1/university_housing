@@ -116,6 +116,16 @@ class GetQueriesErrorStates extends AppStates {
   GetQueriesErrorStates(this.error);
 }
 
+class GetNewsLoadingStates extends AppStates {}
+
+class GetNewsSuccessStates extends AppStates {}
+
+class GetNewsErrorStates extends AppStates {
+  final String error;
+
+  GetNewsErrorStates(this.error);
+}
+
 
 
 
