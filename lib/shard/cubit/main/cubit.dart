@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/comments_model.dart';
+import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/network/end_point.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
@@ -41,7 +40,6 @@ class AppCubit extends Cubit<AppStates>{
         for (var element in profileModel!.fines) {
           sum += element.fineValue;
         }
-        // print('LOLLLLLL'+sum.toString());
         emit(GetProfileSuccessStates());
       }
     }).catchError((error){
@@ -49,6 +47,27 @@ class AppCubit extends Cubit<AppStates>{
       emit(GetProfileErrorStates(error.toString()));
     });
   }
+
+  NewsModel? newsModel;
+
+  void getNews(){
+    emit(GetNewsLoadingStates());
+
+    DioHelper.getData(
+      url: NEWS,
+    ).then((value) {
+      if(value != null){
+        // printFullText(value.data.toString());
+        newsModel = NewsModel.fromJson(value.data);
+        emit(GetNewsSuccessStates());
+      }
+    }).catchError((error){
+      print(error.toString());
+      emit(GetNewsErrorStates(error.toString()));
+    });
+  }
+
+
 
   // Change Damaged Screen
   void postDamaged({

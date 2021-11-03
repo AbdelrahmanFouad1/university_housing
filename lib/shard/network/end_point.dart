@@ -14,3 +14,5 @@ const ORDERS_REPORT = 'orders/endorsement';
 
 const ORDERS_ENQUIRES = 'orders/enquirys';
 
+const NEWS = 'news';
+

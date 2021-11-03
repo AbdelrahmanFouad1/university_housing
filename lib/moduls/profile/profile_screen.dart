@@ -15,13 +15,11 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = AppCubit.get(context);
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
@@ -68,12 +66,9 @@ class ProfileScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Conditional.single(
                 context: context,
-                conditionBuilder: (BuildContext context) =>
-                    state is GetProfileSuccessStates,
-                widgetBuilder: (BuildContext context) =>
-                    buildProfileItem(context),
-                fallbackBuilder: (BuildContext context) =>
-                    buildProfileShimmerItem(context),
+                conditionBuilder: (BuildContext context) => AppCubit.get(context).profileModel != null,
+                widgetBuilder: (BuildContext context) => buildProfileItem(context),
+                fallbackBuilder: (BuildContext context) => buildProfileShimmerItem(context),
               ),
             ),
           ),

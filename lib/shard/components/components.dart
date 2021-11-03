@@ -251,7 +251,7 @@ AppBar defaultAppBar({
           ),
         ],
         title: Text(
-          'أهلا , ${state is GetProfileSuccessStates ? AppCubit.get(context).profileModel!.id : 'xxxxxxxx'}',
+          'أهلا , ${AppCubit.get(context).profileModel != null ? AppCubit.get(context).profileModel!.id : 'xxxxxxxx'}',
           style: Theme.of(context).textTheme.headline6,
         ));
 

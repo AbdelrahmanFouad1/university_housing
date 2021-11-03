@@ -67,11 +67,7 @@ class FinesScreen extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) =>
-                            state is GetProfileSuccessStates
-                                  ? buildFineList(
-                                    context,
-                                    AppCubit.get(context).profileModel!.fines[index])
-                                : buildFineShimmerList(context),
+                        AppCubit.get(context).profileModel != null ? buildFineList(context, AppCubit.get(context).profileModel!.fines[index]) : buildFineShimmerList(context),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12,
                         ),
@@ -81,28 +77,6 @@ class FinesScreen extends StatelessWidget {
                             : 8,
                       ),
 
-                      // Conditional.single(
-                      //     context: context,
-                      //     conditionBuilder: (BuildContext context) => state is GetProfileSuccessStates,
-                      //     widgetBuilder: (BuildContext context)=> ListView.separated(
-                      //       shrinkWrap: true,
-                      //       physics: const BouncingScrollPhysics(),
-                      //       itemBuilder: (context, index) => buildFineList(context),
-                      //       separatorBuilder: (context, index) => const SizedBox(
-                      //         height: 12,
-                      //       ),
-                      //       itemCount: 1,
-                      //     ),
-                      //     fallbackBuilder: (BuildContext context)=> ListView.separated(
-                      //       shrinkWrap: true,
-                      //       physics: const BouncingScrollPhysics(),
-                      //       itemBuilder: (context, index) => buildFineShimmerList(context),
-                      //       separatorBuilder: (context, index) => const SizedBox(
-                      //         height: 12,
-                      //       ),
-                      //       itemCount: 1,
-                      //     ),
-                      // ),
 
                       const SizedBox(
                         height: 10.0,
