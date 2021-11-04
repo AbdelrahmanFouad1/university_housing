@@ -16,3 +16,9 @@ const ORDERS_ENQUIRES = 'orders/enquirys';
 
 const NEWS = 'news';
 
+const ORDER_CHANGE_ROOM = 'orders/requeststochangeroom';
+
+const ORDER_GUEST = 'orders/Guest';
+
+const ORDER_LEAVING = 'orders/requeststoleft';
+

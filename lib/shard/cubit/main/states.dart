@@ -12,6 +12,8 @@ class ImagePickedErrorState extends AppStates {}
 
 class ChangeStudentState extends AppStates {}
 
+class ChangeReasonState extends AppStates {}
+
 class DoubleClickState extends AppStates {}
 
 class ChangeThemeSuccessState extends AppStates {}
@@ -124,6 +126,36 @@ class GetNewsErrorStates extends AppStates {
   final String error;
 
   GetNewsErrorStates(this.error);
+}
+
+class PostChangeRoomLoadingStates extends AppStates {}
+
+class PostChangeRoomSuccessStates extends AppStates {}
+
+class PostChangeRoomErrorStates extends AppStates {
+  final String error;
+
+  PostChangeRoomErrorStates(this.error);
+}
+
+class PostGuestLoadingStates extends AppStates {}
+
+class PostGuestSuccessStates extends AppStates {}
+
+class PostGuestErrorStates extends AppStates {
+  final String error;
+
+  PostGuestErrorStates(this.error);
+}
+
+class PostLeavingLoadingStates extends AppStates {}
+
+class PostLeavingSuccessStates extends AppStates {}
+
+class PostLeavingErrorStates extends AppStates {
+  final String error;
+
+  PostLeavingErrorStates(this.error);
 }
 
 

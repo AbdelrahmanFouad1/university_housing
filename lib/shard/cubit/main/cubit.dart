@@ -163,7 +163,66 @@ class AppCubit extends Cubit<AppStates>{
     emit(RemovePikeIdImageState());
   }
 
+  void postStudentGuest({
+    required String name,
+    required String date,
+    required String durationOfHosting,
+    required String studentId,
+  }) {
+    emit(PostGuestLoadingStates());
 
+    DioHelper.postData(
+      url: ORDER_GUEST,
+      token: tokeen??'',
+      data: {
+        'NameofGuest': name,
+        'HostDate': date,
+        'DurationOfHosting': durationOfHosting,
+        'studentId': studentId,
+
+      },
+    ).then((value) {
+      emit(PostGuestSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostGuestErrorStates(error));
+    });
+  }
+
+  void postGuest({
+    required String name,
+    required String date,
+    required  String durationOfHosting,
+    required String guestIsIDCard,
+    required String relation,
+  }) {
+    emit(PostGuestLoadingStates());
+
+    DioHelper.postData(
+      url: ORDER_GUEST,
+      token: tokeen??'',
+      data: {
+        'NameofGuest': name,
+        'HostDate': date,
+        'DurationOfHosting': durationOfHosting,
+        'guestIsIDCard': guestIsIDCard,
+        'relation': relation,
+      },
+    ).then((value) {
+      emit(PostGuestSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostGuestErrorStates(error));
+    });
+  }
+
+
+
+
+
+  // Booking Room 1
   File? nationalIdImage;
   Future<void> pikeNationalIdImage() async {
     final pickedFile = await picker.getImage(
@@ -183,6 +242,7 @@ class AppCubit extends Cubit<AppStates>{
     nationalIdImage = null;
     emit(RemoveNationalIdImageState());
   }
+
 
 
   // family Report
@@ -358,6 +418,28 @@ class AppCubit extends Cubit<AppStates>{
     emit(ChangeRoomState());
   }
 
+  void postChangeRoom({
+    required int room,
+    required int floor,
+  }) {
+    emit(PostChangeRoomLoadingStates());
+
+    DioHelper.postData(
+      url: ORDER_CHANGE_ROOM,
+      token: tokeen??'',
+      data: {
+        'numofnextroom': room,
+        'floornumberofnextroom': floor,
+      },
+    ).then((value) {
+      emit(PostChangeRoomSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostChangeRoomErrorStates(error));
+    });
+  }
+
 
 //  Booking Room
 
@@ -420,13 +502,32 @@ class AppCubit extends Cubit<AppStates>{
   }
 
 
+  //Leaving Room Screen
+  bool isReason = true;
+  void changeIsReason(bool reason) {
+    isReason = reason;
+    emit(ChangeReasonState());
+  }
 
+  void postLeavingRoom({
+    required String reason,
+  }) {
+    emit(PostLeavingLoadingStates());
 
-
-
-
-
-
+    DioHelper.postData(
+      url: ORDER_LEAVING,
+      token: tokeen??'',
+      data: {
+        'reason': reason,
+      },
+    ).then((value) {
+      emit(PostLeavingSuccessStates());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostLeavingErrorStates(error));
+    });
+  }
 
 //  receipt screen
   File? receiptImage;

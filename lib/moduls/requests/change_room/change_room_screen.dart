@@ -16,70 +16,70 @@ class ChangeRoomScreen extends StatelessWidget {
 
   final List<ChangeFloorModel> _group = [
     ChangeFloorModel(
-      text: "الدور الأول",
+      text: "1",
       index: 1,
     ),
     ChangeFloorModel(
-      text: "الدور الثانى",
+      text: "2",
       index: 2,
     ),
     ChangeFloorModel(
-      text: "الدور الثالث",
+      text: "3",
       index: 3,
     ),
     ChangeFloorModel(
-      text: "الدور الرابع",
+      text: "4",
       index: 4,
     ),
     ChangeFloorModel(
-      text: "الدور الخامس",
+      text: "5",
       index: 5,
     ),
   ];
 
   final List<ChangeRoomModel> _groupRoom = [
     ChangeRoomModel(
-      text: "غرفة 201",
+      text: "201",
       index: 1,
     ),
     ChangeRoomModel(
-      text: "غرفة 202",
+      text: "202",
       index: 2,
     ),
     ChangeRoomModel(
-      text: "غرفة 203",
+      text: "203",
       index: 3,
     ),
     ChangeRoomModel(
-      text: "غرفة 204",
+      text: "204",
       index: 4,
     ),
     ChangeRoomModel(
-      text: "غرفة 205",
+      text: "205",
       index: 5,
     ),
     ChangeRoomModel(
-      text: "غرفة 306",
+      text: "306",
       index: 6,
     ),
     ChangeRoomModel(
-      text: "غرفة 307",
+      text: "307",
       index: 7,
     ),
     ChangeRoomModel(
-      text: "غرفة 308",
+      text: "308",
       index: 8,
     ),
     ChangeRoomModel(
-      text: "غرفة 409",
+      text: "409",
       index: 9,
     ),
     ChangeRoomModel(
-      text: "غرفة 510",
+      text: "510",
       index: 10,
     ),
     ChangeRoomModel(
-      text: "غرفة 511",
+      text: "511",
       index: 11,
     ),
   ];
@@ -88,165 +88,180 @@ class ChangeRoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {  },
-        builder: (BuildContext context, Object? state) {
-          var cubit =  AppCubit.get(context);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: defaultAppBar(context: context),
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      roomBox(),
-                      const SizedBox(height: 12.0,),
-                      Text(
-                        'طلب تغيير الغرفة',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {
+        if(state is PostChangeRoomSuccessStates){
+          navigateTo(context, const SuccessChangeRoomScreen());
+        }else if(state is PostChangeRoomErrorStates){
+          showToast(message: 'لم يتم تقديم الطلب, الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+        }
+      },
+      builder: (BuildContext context, Object? state) {
+        var cubit =  AppCubit.get(context);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    roomBox(
+                      roomNumber: AppCubit.get(context).profileModel!.roomnumber,
+                      floor: AppCubit.get(context).profileModel!.floor,
+                      buildingName: AppCubit.get(context).profileModel!.buildingName,
+                    ),
+                    const SizedBox(height: 12.0,),
+                    Text(
+                      'طلب تغيير الغرفة',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.w900,
                       ),
-                      const SizedBox(height: 24.0,),
+                    ),
+                    const SizedBox(height: 24.0,),
 
-                      // change floor
-                      Container(
-                        width: double.infinity,
-                        height:45.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 14.0),
-                        decoration: BoxDecoration(
-                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
-                          borderRadius: BorderRadius.circular(8.0,),
-                          border: Border.all(color: Colors.grey, width: 1),
-                        ),
-                        child: TextFormField(
-                          controller: floorController,
-                          // enabled: false,
-                          readOnly: true,
-                          onTap: () {
-                            showDialog<void>(
-                                context: context,
-                                builder: (context) => buildDialog(
-                                    context: context,
-                                    title: 'اختر رقم الدور',
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: _group.map((e) => RadioListTile(
-                                        activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
-                                        tileColor: backGroundDark,
-                                        title: Text(
-                                            e.text,
-                                          style: Theme.of(context).textTheme.bodyText1!,
-                                        ),
-                                        groupValue: cubit.currVal,
-                                        value: e.index,
-                                        onChanged: (int? val) {
-                                          cubit.changeFloor(val!, e.text);
-                                          floorController.text = cubit.currText;
-                                          Navigator.pop(context);
-                                        },
-                                      )).toList(),
-                                    ),
-                                ),
-                            );
-                          },
-                          decoration:   InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: Icon(
-                              Icons.keyboard_arrow_down,
-                              color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
-                            ),
-                            hintText: 'اختر رقم الدور',
-                            hintStyle: Theme.of(context).textTheme.subtitle1,
-                            contentPadding:const EdgeInsetsDirectional.all(8.0),
-                          ),
-                        ),
+                    // change floor
+                    Container(
+                      width: double.infinity,
+                      height:45.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                      decoration: BoxDecoration(
+                        color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0,),
+                        border: Border.all(color: Colors.grey, width: 1),
                       ),
-
-                      const SizedBox(height: 16.0,),
-
-                      // change room
-                      Container(
-                        width: double.infinity,
-                        height:45.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 14.0),
-                        decoration: BoxDecoration(
-                          color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
-                          borderRadius: BorderRadius.circular(8.0,),
-                          border: Border.all(color: Colors.grey, width: 1),
-                        ),
-                        child: TextFormField(
-                          controller: roomController,
-                          readOnly: true,
-                          onTap: (){
-                            if(floorController.text.isEmpty){
-                              showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
-                            }else{
-                              showDialog<void>(
-                                context: context,
-                                builder: (context) => buildDialog(
+                      child: TextFormField(
+                        controller: floorController,
+                        // enabled: false,
+                        readOnly: true,
+                        onTap: () {
+                          showDialog<void>(
+                              context: context,
+                              builder: (context) => buildDialog(
                                   context: context,
-                                  title: 'اختر رقم الغرفه',
+                                  title: 'اختر رقم الدور',
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: _groupRoom.map((e) => RadioListTile(
+                                    children: _group.map((e) => RadioListTile(
+                                      activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
+                                      tileColor: backGroundDark,
                                       title: Text(
-                                        e.text,
+                                          e.text,
                                         style: Theme.of(context).textTheme.bodyText1!,
                                       ),
-                                      groupValue: cubit.currentRoomVal,
+                                      groupValue: cubit.currVal,
                                       value: e.index,
                                       onChanged: (int? val) {
-                                        cubit.selectRoom(val!, e.text);
-                                        roomController.text = cubit.currentRoomText;
-                                        cubit.ShowAllDetails(true);
+                                        cubit.changeFloor(val!, e.text);
+                                        floorController.text = cubit.currText;
                                         Navigator.pop(context);
                                       },
                                     )).toList(),
                                   ),
-                                ),
-                              );
-                            }
-                          },
-                          decoration:   InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon:  Icon(
-                              Icons.keyboard_arrow_down,
-                              color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
-                            ),
-                            hintText: 'اختر رقم الغرفة',
-                            hintStyle: Theme.of(context).textTheme.subtitle1,
-                            contentPadding:const EdgeInsetsDirectional.all(8.0),
+                              ),
+                          );
+                        },
+                        decoration:   InputDecoration(
+                          border: InputBorder.none,
+                          suffixIcon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
                           ),
+                          hintText: 'اختر رقم الدور',
+                          hintStyle: Theme.of(context).textTheme.subtitle1,
+                          contentPadding:const EdgeInsetsDirectional.all(8.0),
                         ),
                       ),
-                      const SizedBox(height: 160.0,),
+                    ),
 
+                    const SizedBox(height: 16.0,),
 
-                      defaultButton(
-                        function: (){
-                          navigateTo(context, const SuccessChangeRoomScreen());
-                        },
-                        text: 'تقديم الطلب',
-                        width: double.infinity,
-                        height: 47.0,
-                        btnColor: mainColors,
-                        marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
+                    // change room
+                    Container(
+                      width: double.infinity,
+                      height:45.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                      decoration: BoxDecoration(
+                        color:ThemeCubit.get(context).darkTheme? finesColorDark : Colors.white,
+                        borderRadius: BorderRadius.circular(8.0,),
+                        border: Border.all(color: Colors.grey, width: 1),
                       ),
-                    ],
-                  ),
+                      child: TextFormField(
+                        controller: roomController,
+                        readOnly: true,
+                        onTap: (){
+                          if(floorController.text.isEmpty){
+                            showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
+                          }else{
+                            showDialog<void>(
+                              context: context,
+                              builder: (context) => buildDialog(
+                                context: context,
+                                title: 'اختر رقم الغرفه',
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: _groupRoom.map((e) => RadioListTile(
+                                    title: Text(
+                                      e.text,
+                                      style: Theme.of(context).textTheme.bodyText1!,
+                                    ),
+                                    groupValue: cubit.currentRoomVal,
+                                    value: e.index,
+                                    onChanged: (int? val) {
+                                      cubit.selectRoom(val!, e.text);
+                                      roomController.text = cubit.currentRoomText;
+                                      cubit.ShowAllDetails(true);
+                                      Navigator.pop(context);
+                                    },
+                                  )).toList(),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        decoration:   InputDecoration(
+                          border: InputBorder.none,
+                          suffixIcon:  Icon(
+                            Icons.keyboard_arrow_down,
+                            color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
+                          ),
+                          hintText: 'اختر رقم الغرفة',
+                          hintStyle: Theme.of(context).textTheme.subtitle1,
+                          contentPadding:const EdgeInsetsDirectional.all(8.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 160.0,),
+
+
+                    defaultButton(
+                      function: (){
+                        if(floorController.text.isEmpty || roomController.text.isEmpty){
+                          showToast(message: 'بررجاء أستكمال البيانات لتقديم الطلب', state: ToastStates.WARNING);
+                        }else{
+                          int floor =int.parse(floorController.text);
+                          int room =int.parse(roomController.text);
+                          AppCubit.get(context).postChangeRoom(room: room, floor: floor);
+                          print(floor);
+                          print(room);
+                        }
+                      },
+                      text: 'تقديم الطلب',
+                      width: double.infinity,
+                      height: 47.0,
+                      btnColor: mainColors,
+                      marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
 
-      ),
     );
   }
 }
