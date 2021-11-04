@@ -8,6 +8,7 @@ import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/notifications/notifications_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
+import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -740,6 +741,52 @@ Widget dashTextFormField({
         style: Theme.of(context).textTheme.bodyText2,
       ),
     );
+
+
+Widget dashPasswordFormField({
+  required TextEditingController passwordController,
+  required String hint,
+  required context,
+  required DashBoardCubit cubit,
+  required int index,
+}) =>
+    Container(
+      width: double.infinity,
+      height: 45.0,
+      decoration: BoxDecoration(
+        color:
+        ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
+        borderRadius: BorderRadius.circular(
+          8.0,
+        ),
+        border: Border.all(color: Colors.grey, width: 1),
+      ),
+      child: TextFormField(
+        controller: passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: cubit.isPassword,
+        style: Theme.of(context).textTheme.bodyText1,
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            color: ThemeCubit.get(context).darkTheme
+                ? mainTextColor
+                : mainColors,
+            onPressed: () {
+                cubit.changePasswordVisibility(index);
+            },
+            icon: Icon(
+              cubit.suffix,
+            ),
+          ),
+          border: InputBorder.none,
+          hintText: hint,
+          hintStyle: Theme.of(context).textTheme.bodyText1,
+          contentPadding: const EdgeInsetsDirectional.all(10.0),
+        ),
+      ),
+    );
+
+
 
 Widget switchedTextFormField({
   required context,

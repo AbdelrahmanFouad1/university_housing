@@ -50,5 +50,9 @@ class SavingCurrentComplaintsModelSuccess extends DashBoardStates {}
 class SavingCurrentQueriesModelSuccess extends DashBoardStates {}
 
 
+//changePassword
+class ChangePasswordVisibilityState extends DashBoardStates {}
+
+
 
 
