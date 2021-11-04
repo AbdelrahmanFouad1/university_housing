@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_family/dash_family_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_hosts/dash_hosts_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_queries/dash_queries_screen.dart';
+import 'package:university_housing/moduls/dash_board/requests/dash_rooms_requestes/dash_rooms_requests_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
@@ -25,6 +29,7 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
+                    navigateTo(context, DashRoomsRequestsScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       img: 'assets/images/home.png',
@@ -45,6 +50,7 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
+                    navigateTo(context, DashQueriesScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       svgImage:  'assets/images/research.svg',
@@ -54,7 +60,9 @@ class RequestsHomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 12.0,),
                 InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    navigateTo(context, DashHostsScreen());
+                  },
                   child: defaultDashBoardTitleBox(
                       svgImage: 'assets/images/follow.svg',
                       title: 'طلبات الإستضافة',
@@ -64,6 +72,7 @@ class RequestsHomeScreen extends StatelessWidget {
                 SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
+                    navigateTo(context, DashFamilyScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       svgImage:  'assets/images/family.svg',

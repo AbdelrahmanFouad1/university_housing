@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/moduls/boarding/on_boarding.dart';
+import 'package:university_housing/moduls/dash_board/dash_home_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/security/main/main_security_screen.dart';
@@ -14,6 +15,8 @@ import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 import 'package:university_housing/shard/style/theme/cubit/states.dart';
 import 'package:university_housing/shard/style/theme/theme.dart';
+
+import 'moduls/dash_board/requests/requests_home_screen.dart';
 
 
 void main() async {
@@ -86,7 +89,8 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeCubit.get(context).darkTheme?  ThemeMode.dark : ThemeMode.light ,
-            home: SplashScreen(startWidget: startWidget),
+            // home: SplashScreen(startWidget: startWidget),
+            home: DashHomeScreen(),
           );
         },
       ),

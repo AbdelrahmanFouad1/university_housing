@@ -1,10 +1,14 @@
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/queries_model.dart';
+import 'package:university_housing/model/students_model.dart';
 
 String token ='';
 
 String idDB ='';
 
 ComplaintsModel? currentComplaintsModel ;
+QueriesModel? currentQueriesModel ;
+StudentsModel? currentStudentsModel ;
 
 void printFullText(String text)
 {
