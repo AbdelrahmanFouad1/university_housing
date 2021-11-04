@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/home/home_screen.dart';
+import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -26,7 +28,7 @@ class SuccessLeavingScreen extends StatelessWidget {
                   color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  navigateTo(context, HomeScreen());
                 },
               ),
             ),

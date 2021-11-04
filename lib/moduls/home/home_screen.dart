@@ -334,11 +334,11 @@ class HomeScreen extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => state is GetNewsSuccessStates? buildNewsItem(context, AppCubit.get(context).newsModel!.news[index]) : buildNewsShimmerItem(context),
+            itemBuilder: (context, index) => AppCubit.get(context).newsModel != null? buildNewsItem(context, AppCubit.get(context).newsModel!.news[index]) : buildNewsShimmerItem(context),
             separatorBuilder: (context, index) => const SizedBox(
               height: 16,
             ),
-            itemCount: state is GetNewsSuccessStates?  AppCubit.get(context).newsModel!.news.length : 8,
+            itemCount: AppCubit.get(context).newsModel != null? AppCubit.get(context).newsModel!.news.length : 8,
           ),
         ),
       ],
