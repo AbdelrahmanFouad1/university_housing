@@ -36,6 +36,7 @@ class SelectStudentGender extends DashBoardStates {}
 class SelectStudentLevel extends DashBoardStates {}
 class SelectStudentJob extends DashBoardStates {}
 class SelectStudentCredit extends DashBoardStates {}
+class SavingCurrentStudentsModelSuccess extends DashBoardStates {}
 
 
 
@@ -46,6 +47,7 @@ class ChangeSecurityEditIcon extends DashBoardStates {}
 
 //requests
 class SavingCurrentComplaintsModelSuccess extends DashBoardStates {}
+class SavingCurrentQueriesModelSuccess extends DashBoardStates {}
 
 
 

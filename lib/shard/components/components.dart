@@ -357,7 +357,7 @@ Widget whiteBoard(
         boxShadow: [
           BoxShadow(
             color: ThemeCubit.get(context).darkTheme
-                ? Colors.indigo.withOpacity(0.2)
+                ? Colors.black.withOpacity(0.5)
                 : Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
@@ -366,7 +366,7 @@ Widget whiteBoard(
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextFormField(
           controller: controller,
           scrollPhysics: const BouncingScrollPhysics(),
@@ -377,7 +377,6 @@ Widget whiteBoard(
             border: InputBorder.none,
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyText1,
-            contentPadding: const EdgeInsetsDirectional.all(10.0),
           ),
         ),
       ),
@@ -738,6 +737,7 @@ Widget dashTextFormField({
           hintStyle: Theme.of(context).textTheme.bodyText1,
           contentPadding: const EdgeInsetsDirectional.all(10.0),
         ),
+        style: Theme.of(context).textTheme.bodyText2,
       ),
     );
 
@@ -874,7 +874,7 @@ Widget dashWhiteBoard(
         boxShadow: [
           BoxShadow(
             color: ThemeCubit.get(context).darkTheme
-                ? Colors.indigo.withOpacity(0.2)
+                ? Colors.black.withOpacity(0.5)
                 : Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,

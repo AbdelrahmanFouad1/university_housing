@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
+import 'package:university_housing/moduls/dash_board/students/add_fines.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -1094,25 +1095,6 @@ Widget studentItem({
                             height: 5.0,
                           ),
 
-                          //requests
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '- الطلابات :',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ),
-                              switchedTextFormField(
-                                context: context,
-                                cubit: cubit,
-                                controller: nationalPhotoController,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
 
                           //fines
                           Row(
@@ -1133,6 +1115,20 @@ Widget studentItem({
                           SizedBox(
                             height: 5.0,
                           ),
+
+                          // fines button
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          defaultButton(
+                              function: (){
+                                cubit.savingCurrentStudentsModel(item);
+                                navigateTo(context,AddFiensScreen());
+                              },
+                              text: 'إضافة غرامة',
+                              btnColor: mainColors,
+                            width: double.infinity
+                          ),
                         ],
                       ),
                     ),
@@ -1141,536 +1137,555 @@ Widget studentItem({
             ),
           );
         }else{
-          return Dismissible(
-            direction: DismissDirection.startToEnd,
-            resizeDuration: Duration(milliseconds: 200),
-            onDismissed: (direction) {
-              cubit.deleteStudent(allList,index);
+          return InkWell(
+            onTap: (){
+              cubit.currentStudentIndex = index;
+              cubit.showStudentDetails(
+                  !cubit.showStudent_details, index);
             },
-            background: Container(
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadiusDirectional.circular(8.0),
+            child: Dismissible(
+              direction: DismissDirection.startToEnd,
+              resizeDuration: Duration(milliseconds: 200),
+              onDismissed: (direction) {
+                cubit.deleteStudent(allList,index);
+              },
+              background: Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadiusDirectional.circular(8.0),
+                ),
+                padding: EdgeInsets.all(5.0),
+                alignment: AlignmentDirectional.centerStart,
+                child: Icon(
+                  Icons.delete_forever,
+                  color: Colors.white,
+                ),
               ),
-              padding: EdgeInsets.all(5.0),
-              alignment: AlignmentDirectional.centerStart,
-              child: Icon(
-                Icons.delete_forever,
-                color: Colors.white,
-              ),
-            ),
-            key: ObjectKey(item),
-            child: Card(
-              color: ThemeCubit.get(context).darkTheme ? backGroundDark : backGround,
-              elevation: 0.0,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          item.name!,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          item.id!,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      if (cubit.showStudent_details == false ||
-                          cubit.currentStudentIndex != index)
-                        Container(
-                          width: 30.0,
-                          height: 30.0,
-                          child: IconButton(
-                            onPressed: () {
-                              cubit.currentStudentIndex = index;
-                              cubit.showStudentDetails(
-                                  !cubit.showStudent_details, index);
-                            },
-                            icon: Icon(
-                              Icons.keyboard_arrow_down,
-                              color: ThemeCubit.get(context).darkTheme
-                                  ? mainTextColor
-                                  : mainColors,
-                            ),
+              key: ObjectKey(item),
+              child: Card(
+                color: ThemeCubit.get(context).darkTheme ? backGroundDark : backGround,
+                elevation: 0.0,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.name!,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      if (cubit.showStudent_details == true &&
-                          cubit.currentStudentIndex == index)
-                        Container(
-                          width: 30.0,
-                          height: 30.0,
-                          child: IconButton(
-                            onPressed: () {
-                              cubit.showStudentDetails(
-                                  !cubit.showStudent_details, index);
-                            },
-                            alignment: Alignment.center,
-                            icon: Icon(
-                              Icons.keyboard_arrow_up,
-                              color: ThemeCubit.get(context).darkTheme
-                                  ? mainTextColor
-                                  : mainColors,
-                            ),
+                        Expanded(
+                          child: Text(
+                            item.id!,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                      if (cubit.showStudent_details == true &&
-                          cubit.currentStudentIndex == index)
-                        Container(
-                          width: 50.0,
-                          height: 30.0,
-                          child: IconButton(
-                            onPressed: () {
-                              // if (cubit.showStudentEdit == true) {
-                              //   item.id = idController.text;
-                              //   item.name = nameController.text;
-                              //   item.phone = phoneController.text;
-                              //   item.nationalPhoto = nationalPhotoController.text;
-                              //   item.nationalID = nationalIDController.text;
-                              //   item.section = sectionController.text;
-                              //   item.address = addressController.text;
-                              //   item.room = roomController.text;
-                              //   item.paymentDate = paymentDateController.text;
-                              //   item.level =
-                              //   statueController.text == 'معطل' ? false : true;
-                              //   item.credit =
-                              //   statueController.text == 'بنكي' ? true : false;
-                              //   item.gender =
-                              //   genderController.text == 'ذكر' ? true : false;
-                              //   item.job = jobController.text == 'طلاب' ? true : false;
-                              // }
-                              cubit.changeStudentEditIcon(!cubit.showStudentEdit);
-                            },
-                            icon: Icon(
-                              cubit.showStudentEdit == false ? Icons.edit : Icons.done,
-                              size: 20.0,
-                              color: ThemeCubit.get(context).darkTheme
-                                  ? mainTextColor
-                                  : mainColors,
+                        if (cubit.showStudent_details == false ||
+                            cubit.currentStudentIndex != index)
+                          Container(
+                            width: 30.0,
+                            height: 30.0,
+                            child: IconButton(
+                              onPressed: () {
+                                cubit.currentStudentIndex = index;
+                                cubit.showStudentDetails(
+                                    !cubit.showStudent_details, index);
+                              },
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: ThemeCubit.get(context).darkTheme
+                                    ? mainTextColor
+                                    : mainColors,
+                              ),
                             ),
-                            alignment: AlignmentDirectional.center,
                           ),
-                        ),
-                    ],
-                  ),
-                  if (cubit.showStudent_details == true &&
-                      cubit.currentStudentIndex == index)
-                    SizedBox(
-                      height: 10.0,
+                        if (cubit.showStudent_details == true &&
+                            cubit.currentStudentIndex == index)
+                          Container(
+                            width: 30.0,
+                            height: 30.0,
+                            child: IconButton(
+                              onPressed: () {
+                                cubit.showStudentDetails(
+                                    !cubit.showStudent_details, index);
+                              },
+                              alignment: Alignment.center,
+                              icon: Icon(
+                                Icons.keyboard_arrow_up,
+                                color: ThemeCubit.get(context).darkTheme
+                                    ? mainTextColor
+                                    : mainColors,
+                              ),
+                            ),
+                          ),
+                        if (cubit.showStudent_details == true &&
+                            cubit.currentStudentIndex == index)
+                          Container(
+                            width: 50.0,
+                            height: 30.0,
+                            child: IconButton(
+                              onPressed: () {
+                                if (cubit.showStudentEdit == true) {
+                                  if (phoneController.text.length == 11 && nationalIDController.text.length==14) {
+                                    item.id = idController.text;
+                                    item.name = nameController.text;
+                                    item.address = addressController.text;
+                                    item.section = sectionController.text;
+                                    item.gender = genderController.text == 'ذكر'? true : false;
+                                    item.job = jobController.text == 'طلاب'? true : false;
+                                    item.phone = phoneController.text;
+                                    item.buildingName = buildingController.text;
+                                    item.room = roomController.text;
+                                    item.level = levelController.text == 'مميز' ? true :false;
+                                    item.credit = creditController.text == 'رفع إيصال' ? true :false;
+                                    item.paymentDate = paymentDateController.text;
+                                    item.nationalID = nationalIDController.text;
+                                    item.nationalPhoto = nationalPhotoController.text;
+                                  } else {
+                                    if(phoneController.text.length != 11){
+                                      showToast(
+                                          message: 'رقم الموبيل غير صحيح',
+                                          state: ToastStates.ERROR);
+                                      cubit.changeStudentEditIcon(!cubit.showStudentEdit);
+                                    }else{
+                                      showToast(
+                                          message: 'الرقم القومي غير صحيح',
+                                          state: ToastStates.ERROR);
+                                      cubit.changeStudentEditIcon(!cubit.showStudentEdit);
+                                    }
+                                  }
+                                }
+                                cubit.changeStudentEditIcon(!cubit.showStudentEdit);
+                              },
+                              icon: Icon(
+                                cubit.showStudentEdit == false ? Icons.edit : Icons.done,
+                                size: 20.0,
+                                color: ThemeCubit.get(context).darkTheme
+                                    ? mainTextColor
+                                    : mainColors,
+                              ),
+                              alignment: AlignmentDirectional.center,
+                            ),
+                          ),
+                      ],
                     ),
-                  if (cubit.showStudent_details == true &&
-                      cubit.currentStudentIndex == index)
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 120),
-                      height: cubit.animatedStudentHeight,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: cubit.showStudentEdit == true
-                            ? ThemeCubit.get(context).darkTheme
-                            ? mainColors
-                            : Colors.white
-                            : ThemeCubit.get(context).darkTheme
-                            ? backGroundDark
-                            : backGround,
+                    if (cubit.showStudent_details == true &&
+                        cubit.currentStudentIndex == index)
+                      SizedBox(
+                        height: 10.0,
                       ),
-                      child: Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- رقم الطالب :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: idController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // name
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- اسم الطالب :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: nameController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //address
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- العنوان :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: addressController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // section
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- القسم :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: sectionController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // gender
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- النوع :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: genderController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // job
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الوظيفة :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: jobController,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.zero,
-                                      hintStyle: Theme.of(context).textTheme.bodyText1,
-                                    ),
-                                    readOnly:
-                                    cubit.showStudentEdit == true ? false : true,
-                                    enableInteractiveSelection:
-                                    cubit.showStudentEdit == true ? true : false,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.center,
-                                    // onTap: () {
-                                    //   showDialog<void>(
-                                    //     barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
-                                    //     context: context,
-                                    //     builder: (context) => buildDialog(
-                                    //       context: context,
-                                    //       title: 'اختر رقم الدور',
-                                    //       child: Column(
-                                    //         mainAxisSize: MainAxisSize.min,
-                                    //         children: stateList.map((e) => RadioListTile(
-                                    //           activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
-                                    //           tileColor: backGroundDark,
-                                    //           title: Text(
-                                    //             e.text,
-                                    //             style: Theme.of(context).textTheme.bodyText1!,
-                                    //           ),
-                                    //           groupValue: cubit.currentJobVal,
-                                    //           value: e.index,
-                                    //           onChanged: (int? val) {
-                                    //             cubit.selectState(val!, e.text);
-                                    //             statueController.text = cubit.currentStateText;
-                                    //             Navigator.pop(context);
-                                    //           },
-                                    //         )).toList(),
-                                    //       ),
-                                    //     ),
-                                    //   );
-                                    // },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //phone
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الموبيل :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: phoneController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-
-                            // buildingName
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- المبنى :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: buildingController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-
-                            // room
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الغرفة :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: roomController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // level
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- نوع السكن :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: levelController,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.zero,
-                                      hintStyle: Theme.of(context).textTheme.bodyText1,
-                                    ),
-                                    readOnly:
-                                    cubit.showStudentEdit == true ? false : true,
-                                    enableInteractiveSelection:
-                                    cubit.showStudentEdit == true ? true : false,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            // credit
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- نوع الدفع :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: creditController,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.zero,
-                                      hintStyle: Theme.of(context).textTheme.bodyText1,
-                                    ),
-                                    readOnly:
-                                    cubit.showStudentEdit == true ? false : true,
-                                    enableInteractiveSelection:
-                                    cubit.showStudentEdit == true ? true : false,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //payment date
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- تاريخ الدفع :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: paymentDateController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //nationalID
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الرقم القومي :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: nationalIDController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //nationalPhoto
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- صورة البطاقه :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: nationalPhotoController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //requests
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الطلابات :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: nationalPhotoController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-
-                            //fines
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    '- الغرامات :',
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                switchedTextFormField(
-                                  context: context,
-                                  cubit: cubit,
-                                  controller: nationalPhotoController,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                          ],
+                    if (cubit.showStudent_details == true &&
+                        cubit.currentStudentIndex == index)
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 120),
+                        height: cubit.animatedStudentHeight,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: cubit.showStudentEdit == true
+                              ? ThemeCubit.get(context).darkTheme
+                              ? mainColors
+                              : Colors.white
+                              : ThemeCubit.get(context).darkTheme
+                              ? backGroundDark
+                              : backGround,
                         ),
-                      ),
-                    )
-                ],
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- رقم الطالب :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: idController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // name
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- اسم الطالب :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: nameController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //address
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- العنوان :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: addressController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // section
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- القسم :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: sectionController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // gender
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- النوع :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: genderController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // job
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الوظيفة :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: jobController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.zero,
+                                        hintStyle: Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                      readOnly:
+                                      cubit.showStudentEdit == true ? false : true,
+                                      enableInteractiveSelection:
+                                      cubit.showStudentEdit == true ? true : false,
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      textAlign: TextAlign.center,
+                                      // onTap: () {
+                                      //   showDialog<void>(
+                                      //     barrierColor:ThemeCubit.get(context).darkTheme? backGroundDark : Colors.white,
+                                      //     context: context,
+                                      //     builder: (context) => buildDialog(
+                                      //       context: context,
+                                      //       title: 'اختر رقم الدور',
+                                      //       child: Column(
+                                      //         mainAxisSize: MainAxisSize.min,
+                                      //         children: stateList.map((e) => RadioListTile(
+                                      //           activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
+                                      //           tileColor: backGroundDark,
+                                      //           title: Text(
+                                      //             e.text,
+                                      //             style: Theme.of(context).textTheme.bodyText1!,
+                                      //           ),
+                                      //           groupValue: cubit.currentJobVal,
+                                      //           value: e.index,
+                                      //           onChanged: (int? val) {
+                                      //             cubit.selectState(val!, e.text);
+                                      //             statueController.text = cubit.currentStateText;
+                                      //             Navigator.pop(context);
+                                      //           },
+                                      //         )).toList(),
+                                      //       ),
+                                      //     ),
+                                      //   );
+                                      // },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //phone
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الموبيل :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: phoneController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+
+                              // buildingName
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- المبنى :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: buildingController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+
+                              // room
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الغرفة :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: roomController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // level
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- نوع السكن :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: levelController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.zero,
+                                        hintStyle: Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                      readOnly:
+                                      cubit.showStudentEdit == true ? false : true,
+                                      enableInteractiveSelection:
+                                      cubit.showStudentEdit == true ? true : false,
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              // credit
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- نوع الدفع :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: creditController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.zero,
+                                        hintStyle: Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                      readOnly:
+                                      cubit.showStudentEdit == true ? false : true,
+                                      enableInteractiveSelection:
+                                      cubit.showStudentEdit == true ? true : false,
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //payment date
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- تاريخ الدفع :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: paymentDateController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //nationalID
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الرقم القومي :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: nationalIDController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //nationalPhoto
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- صورة البطاقه :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: nationalPhotoController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //requests
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الطلابات :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: nationalPhotoController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+
+                              //fines
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '- الغرامات :',
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  switchedTextFormField(
+                                    context: context,
+                                    cubit: cubit,
+                                    controller: nationalPhotoController,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                  ],
+                ),
               ),
             ),
           );

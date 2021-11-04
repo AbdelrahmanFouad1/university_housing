@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/buidings_model.dart';
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/queries_model.dart';
 import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -202,6 +203,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
+  void savingCurrentStudentsModel(StudentsModel item) {
+    currentStudentsModel = item;
+    emit(SavingCurrentStudentsModelSuccess());
+  }
+
 
 
 //security
@@ -236,6 +242,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     void savingCurrentComplaintsModel(ComplaintsModel item) {
     currentComplaintsModel = item;
     emit(SavingCurrentComplaintsModelSuccess());
+  }
+
+  void savingCurrentQueriesModel(QueriesModel item) {
+    currentQueriesModel = item;
+    emit(SavingCurrentQueriesModelSuccess());
   }
 
 }

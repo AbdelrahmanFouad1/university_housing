@@ -4,9 +4,7 @@ import 'package:university_housing/moduls/dash_board/requests/requests_home_scre
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
-import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/style/color.dart';
 class DashHomeScreen extends StatelessWidget {
   const DashHomeScreen({Key? key}) : super(key: key);
 
