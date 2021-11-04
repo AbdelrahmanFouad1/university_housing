@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/requests/change_room/change_room_screen.dart';
 import 'package:university_housing/moduls/requests/hosting_requests_screen.dart';
-import 'package:university_housing/moduls/requests/leaving_room_screen.dart';
+import 'package:university_housing/moduls/requests/leaving_room/leaving_room_screen.dart';
 import 'package:university_housing/moduls/requests/total_cost_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/cubit/main/cubit.dart';
+import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 
 class ChooseRequestScreen extends StatelessWidget {
@@ -12,17 +16,22 @@ class ChooseRequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: defaultAppBar(context: context),
-        body: OrientationBuilder(
-          builder: (BuildContext context, Orientation orientation) =>
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, state) {  },
+      builder: (BuildContext context, Object? state) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context),
+            body: OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) =>
               orientation == Orientation.portrait
                   ? buildPortrait(context)
                   : buildLandScape(context),
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -84,7 +93,7 @@ class ChooseRequestScreen extends StatelessWidget {
               width: double.infinity,
             ),
             onTap: (){
-              navigateTo(context, TotalCostScreen());
+              navigateTo(context, const FinesScreen());
             },
           ),
         ],

@@ -72,9 +72,7 @@ class FinesScreen extends StatelessWidget {
                           height: 12,
                         ),
                         itemCount:
-                        state is GetProfileSuccessStates
-                           ? AppCubit.get(context).profileModel!.fines.length
-                            : 8,
+                        AppCubit.get(context).profileModel != null ? AppCubit.get(context).profileModel!.fines.length : 8,
                       ),
 
 
