@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
 import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/requests_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
+import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class DashHomeScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ class DashHomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: dashAppBar(title: 'إدارة الإسكان الجامعى', context: context,pop: false),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -63,7 +64,7 @@ class DashHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
                     navigateTo(context, ChangePasswordScreen());
@@ -76,7 +77,7 @@ class DashHomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 12.0, color: Colors.grey),
                   ),
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
                     showDialog<void>(
@@ -128,6 +129,13 @@ class DashHomeScreen extends StatelessWidget {
                         ],
                       ),
                     );
+                    CacheHelper.removeData(key: 'token');
+                    CacheHelper.removeData(key: 'isStudent');
+                    CacheHelper.removeData(key: 'isSecurity');
+                    CacheHelper.removeData(key: 'isHousingManager');
+                    CacheHelper.removeData(key: 'isStudentAffairs');
+                    CacheHelper.removeData(key: 'isresident');
+                    navigateAndFinish(context, LoginScreen());
                   },
                   child: Text(
                     'تسجيل خروج',
@@ -152,14 +160,14 @@ class DashHomeScreen extends StatelessWidget {
 
                 InkWell(
                   onTap: (){
-                    navigateTo(context, RoomsHomeScreen());
+                    navigateTo(context, const RoomsHomeScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       img: 'assets/images/home.png',
                       title: 'إداره الغرف'
                   ),
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
                     navigateTo(context, StudentsScreen());
@@ -169,7 +177,7 @@ class DashHomeScreen extends StatelessWidget {
                       title: 'الساكنين'
                   ),
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
                     navigateTo(context, SecurityScreen());
@@ -179,17 +187,17 @@ class DashHomeScreen extends StatelessWidget {
                       title: 'إداره الأمن'
                   ),
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, RequestsHomeScreen());
+                    navigateTo(context, const RequestsHomeScreen());
                   },
                   child: defaultDashBoardTitleBox(
                       img: 'assets/images/checklist.png',
                       title: 'طلبات الساكنين'
                   ),
                 ),
-                SizedBox(height: 12.0,),
+                const SizedBox(height: 12.0,),
                 InkWell(
                   onTap: (){
                     navigateTo(context, AddNewsScreen());

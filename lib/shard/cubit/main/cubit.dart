@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/comments_model.dart';
+import 'package:university_housing/model/my_orders_model.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/network/end_point.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
@@ -321,7 +323,6 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.getData(
       url: ORDERS_ENQUIRES,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxN2MzNzg2ZjMzZWViMDAxNmQxNmI4ZiIsImlhdCI6MTYzNTg0NTI2MiwiZXhwIjoxNjM4NDM3MjYyfQ.qTyr2yr-3h-klgP2AOmtHS9DOqNksDMvk5CbaQxqUbY',
     ).then((value) {
       if(value != null){
         // printFullText(value.data.toString());
@@ -552,6 +553,27 @@ class AppCubit extends Cubit<AppStates>{
     receiptImage = null;
     emit(ImageRemoveSuccessState());
   }
+
+  // Follow Requests Screen
+  MyOrdersModel? myOrdersModel;
+  void getOrderData(){
+
+    emit(GetOrderLoadingStates());
+
+    DioHelper.getData(
+      url: ORDER_MYORDER,
+      token: tokeen??'',
+    ).then((value) {
+        // printFullText(value.data.toString());
+        myOrdersModel = MyOrdersModel.fromJson(value!.data);
+        emit(GetOrderSuccessStates());
+    }).catchError((error){
+      print(error.toString());
+      emit(GetOrderErrorStates(error.toString()));
+    });
+  }
+
+
 
   // E-payment Screen
 
