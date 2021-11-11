@@ -158,6 +158,16 @@ class PostLeavingErrorStates extends AppStates {
   PostLeavingErrorStates(this.error);
 }
 
+class GetOrderLoadingStates extends AppStates {}
+
+class GetOrderSuccessStates extends AppStates {}
+
+class GetOrderErrorStates extends AppStates {
+  final String error;
+
+  GetOrderErrorStates(this.error);
+}
+
 
 
 

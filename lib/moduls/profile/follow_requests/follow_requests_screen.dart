@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:university_housing/moduls/profile/follow_requests/follow_requests_detailes_screen.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:university_housing/model/my_orders_model.dart';
+import 'package:university_housing/moduls/profile/follow_requests/follow_requests_complaint_screen.dart';
+import 'package:university_housing/moduls/profile/follow_requests/follow_requests_damaged_screen.dart';
+import 'package:university_housing/moduls/profile/follow_requests/follow_requests_lost_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
@@ -15,77 +19,81 @@ class FollowRequestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formKey = GlobalKey<FormState>();
-    var searchController = TextEditingController();
 
-    return BlocProvider(create: (context)=> AppCubit(),
-      child: BlocConsumer<AppCubit,AppStates>(
-        listener:(context,state){},
-        builder :(context,state){
-          var cubit = AppCubit.get(context);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-                titleSpacing: 12.0,
-                title: Text(
-                  'متابعه طلباتي',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 8.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(0.0),
-                      width: 34.0,
-                      child: IconButton(
-                        padding:EdgeInsets.zero,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/images/back_arrow.svg',
-                          width: 18.0,
-                          height: 18.0,
-                          color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
-                        ),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              titleSpacing: 12.0,
+              title: Text(
+                'متابعه طلباتي',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 8.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(0.0),
+                    width: 34.0,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: SvgPicture.asset(
+                        'assets/images/back_arrow.svg',
+                        width: 18.0,
+                        height: 18.0,
+                        color: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
                       ),
                     ),
                   ),
-                ],
-              ),
-              body: Padding(
+                ),
+              ],
+            ),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 10.0,),
                     Text(
                       '* يجب مراعاه الارشادات التاليه',
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 14.0,
-                      ),
+                            fontSize: 14.0,
+                          ),
                     ),
-                    const SizedBox(height:10.0),
+                    const SizedBox(height: 10.0),
                     Row(
                       children: [
                         Container(
                           width: 10.0,
                           height: 10.0,
                           decoration: BoxDecoration(
-                             borderRadius: BorderRadiusDirectional.circular(3.0),
+                            borderRadius: BorderRadiusDirectional.circular(3.0),
                             color: Colors.green,
                           ),
                         ),
-                        const SizedBox(width: 5.0,),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
                         Text(
                           'تمت الموافقه علي طلبكم',
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontSize: 10.0,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 10.0,
+                                  ),
                         ),
-                        const SizedBox(width: 14.0,),
+                        const SizedBox(
+                          width: 14.0,
+                        ),
                         Container(
                           width: 10.0,
                           height: 10.0,
@@ -94,14 +102,19 @@ class FollowRequestsScreen extends StatelessWidget {
                             color: Colors.amber,
                           ),
                         ),
-                        const SizedBox(width: 5.0,),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
                         Text(
                           'جاري الرد علي طلبكم',
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontSize: 10.0,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 10.0,
+                                  ),
                         ),
-                        const SizedBox(width: 14.0,),
+                        const SizedBox(
+                          width: 14.0,
+                        ),
                         Container(
                           width: 10.0,
                           height: 10.0,
@@ -110,103 +123,348 @@ class FollowRequestsScreen extends StatelessWidget {
                             color: Colors.red,
                           ),
                         ),
-                        const SizedBox(width: 5.0,),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
                         Text(
                           'تم رفض طلبكم',
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontSize: 10.0,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 10.0,
+                                  ),
                         ),
                       ],
                     ),
-                    const SizedBox(height:8.0),
+                    const SizedBox(height: 8.0),
                     Container(
                       width: double.infinity,
-                      height:1.0,
+                      height: 1.0,
                       color: separator,
                     ),
-                    const SizedBox(height:15.0),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 50.0,
-                            child: defaultFormField(
-                              controller: searchController,
-                              type: TextInputType.text,
-                              validate: (String value) {
-                                if (value.isEmpty) {
-                                  return 'enter text to search';
-                                }
-                                return null;
-                              },
-                              onSubmit: (String text) {},
-                              hint: 'بحث ...',
-                              prefix: Icons.search,
-                              context: context,
-                            ),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 15.0,
                     ),
-                    const SizedBox(height:15.0),
-                    Expanded(
-                      flex: 1,
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemBuilder:(context,index)=>buildRequestItem(cubit,context),
-                        separatorBuilder:(context,index)=>const SizedBox(height: 8.0,),
-                        itemCount: 10 ,
-                      ),
+                    Conditional.single(
+                      context: context,
+                      conditionBuilder: (BuildContext context) => AppCubit.get(context).myOrdersModel != null ,
+                      widgetBuilder: (BuildContext context) => buildOrderScreen(context),
+                      fallbackBuilder: (BuildContext context) => buildOrderShimmerScreen(context),
                     ),
-                    const SizedBox(height:10.0),
                   ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
-Widget buildRequestItem(AppCubit cubit ,context)=> Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  child:buildEnquiry(
-      context,
-      height: 100.0,
-      state: StatusStates.ACCEPT,
-      body: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
+
+Widget buildOrderScreen(context) => Column(
+      children: [
+        //complaints
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Complaintsorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          } else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/review.svg',
+                    svg: true,
+                    title: 'شكوى عامة'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.Complaintsorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildComplaintsItem(context, AppCubit.get(context).myOrdersModel!.Complaintsorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Complaintsorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //Damagedthingsorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Damagedthingsorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/broken-plate.svg',
+                    svg: true,
+                    title: 'تبديل التالف'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.Damagedthingsorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildDamagedItem(context, AppCubit.get(context).myOrdersModel!.Damagedthingsorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Damagedthingsorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //Missingthingsorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Missingthingsorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/locate.svg',
+                    svg: true,
+                    title: 'المفقودات'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.Missingthingsorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildMissingItem(context, AppCubit.get(context).myOrdersModel!.Missingthingsorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Missingthingsorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //RequestsTochangeRoomorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/talk.svg',
+                    svg: true,
+                    title: 'طلب تغير الغرفة'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildRequestChangeRoomItem(context, AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //Endorsementorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Endorsementorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/family.svg',
+                    svg: true,
+                    title: 'أقرارات ولى الأمر'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.Endorsementorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildEndorsementItem(context, AppCubit.get(context).myOrdersModel!.Endorsementorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Endorsementorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //Guestorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Guestorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/follow.svg',
+                    svg: true,
+                    title: 'طلبات الاستضافة'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height:AppCubit.get(context).myOrdersModel!.Guestorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildGuestItem(context, AppCubit.get(context).myOrdersModel!.Guestorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Guestorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+
+        }),
+
+        //leftRequestsorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.leftRequestsorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/leave.svg',
+                    svg: true,
+                    title: 'طلب إخلاء السكن'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height: AppCubit.get(context).myOrdersModel!.leftRequestsorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildLeftRoomItem(context, AppCubit.get(context).myOrdersModel!.leftRequestsorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.leftRequestsorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+
+        //Bookingsorders
+        Builder(builder: (context) {
+          if(AppCubit.get(context).myOrdersModel!.Bookingsorders.isEmpty){
+            return const SizedBox(height: 2.0,);
+          }else{
+            return Column(
+              children: [
+                smallDashBoardTitleBox(
+                    svgImage: 'assets/images/request.svg',
+                    svg: true,
+                    title: 'طلب الألتحاق بالسكن'),
+                const SizedBox(height: 15.0),
+                Container(
+                  height: AppCubit.get(context).myOrdersModel!.Bookingsorders.length == 1 ? 105 : 210,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) =>
+                        buildBookingsRoomItem(context, AppCubit.get(context).myOrdersModel!.Bookingsorders[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: AppCubit.get(context).myOrdersModel!.Bookingsorders.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+            );
+          }
+        }),
+      ],
+    );
+
+Widget buildComplaintsItem(context, ComplaintsordersModel model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children:[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    child: Text(
-                      'طلب الاستضافه',
-                      style: Theme.of(context).textTheme.bodyText1,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        model.complaint ,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'التاريخ : 2021-23-9',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ],
+                  ],
+                ),
               ),
               InkWell(
                 onTap: (){
                   navigateTo(
                       context,
-                      FollowRequestsDetailsScreen(),
+                      FollowRequestsComplaintScreen(model: model,),
                   );
                 },
                 child: Text(
@@ -225,4 +483,448 @@ Widget buildRequestItem(AppCubit cubit ,context)=> Padding(
   ),
 );
 
+Widget buildDamagedItem(context, DamagedthingsordersModel model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        model.damagedthing,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  navigateTo(
+                      context,
+                      FollowRequestsDamagedScreen(model: model,),
+                  );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
 
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildMissingItem(context, MissingthingsordersModel model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        model.missingthing,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  navigateTo(
+                      context,
+                      FollowRequestsLostScreen(model: model),
+                  );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildRequestChangeRoomItem(context,RequestsTochangeRoomordersModel  model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.isreply ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                       'رقم الغرفة: ${model.numofnextroom}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                       'رقم الدور: ${model.floornumberofnextroom}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  // navigateTo(
+                  //     context,
+                  //   FollowRequestsDetailsScreen(requestsTochangeRoomordersModel: model,),
+                  // );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildEndorsementItem(context,EndorsementordersModel  model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        model.reason,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  // navigateTo(
+                  //     context,
+                  //   FollowRequestsDetailsScreen(endorsementordersModel: model,),
+                  // );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildGuestItem(context,GuestordersModel  model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state: model.reply == '' ? StatusStates.WAITING :  StatusStates.ACCEPT,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        'الأسم: ${model.NameofGuest}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child:  Text(
+                        'تاريخ الأقامة: ${model.HostDate}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  // navigateTo(
+                  //     context,
+                  //   FollowRequestsDetailsScreen(guestordersModel: model,),
+                  // );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildLeftRoomItem(context, LeftRequestsordersModel model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state:  model.isreply ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child:  Text(
+                      'سبب الأخلاء: ${model.reply}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ],
+              ),
+              InkWell(
+                onTap: (){
+                  // navigateTo(
+                  //     context,
+                  //   FollowRequestsDetailsScreen(leftRequestsordersModel: model,),
+                  // );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: buildEnquiry(
+        context,
+        height: 100.0,
+        state:  model.isreply ? StatusStates.WAITING :  StatusStates.ACCEPT,
+        body: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child:  Text(
+                      'السبب',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                ],
+              ),
+              InkWell(
+                onTap: (){
+                  // navigateTo(
+                  //     context,
+                  //   FollowRequestsDetailsScreen(bookingsordersModel: model,),
+                  // );
+                },
+                child: Text(
+                  'عرض التفاصيل',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    decoration:TextDecoration.underline,
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+
+        ),
+      ),
+  ),
+);
+
+Widget buildOrderShimmerScreen(context) => Column(
+  children: [
+    Shimmer.fromColors(
+      child: Container(
+        height: 50.0,
+        width: double.infinity,
+        color: baseColor,
+      ),
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+    ),
+    const SizedBox(height: 15.0),
+    Container(
+      height: 215,
+      child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) =>
+            buildRequestShimmerItem(context),
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 8.0,
+        ),
+        itemCount: 10,
+      ),
+    ),
+    const SizedBox(
+      height: 20.0,
+    ),
+    Shimmer.fromColors(
+      child: Container(
+        height: 50.0,
+        width: double.infinity,
+        color: baseColor,
+      ),
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+    ),
+    const SizedBox(height: 15.0),
+    Container(
+      height: 215,
+      child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) =>
+            buildRequestShimmerItem(context),
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 8.0,
+        ),
+        itemCount: 10,
+      ),
+    ),
+    const SizedBox(
+      height: 20.0,
+    ),
+  ],
+);
+
+Widget buildRequestShimmerItem(context) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child:  Shimmer.fromColors(
+        child: Container(
+          height: 100.0,
+          width: double.infinity,
+          color: baseColor,
+        ),
+        baseColor: baseColor,
+        highlightColor: highlightColor,
+      ),
+);

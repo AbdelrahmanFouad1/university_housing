@@ -138,10 +138,10 @@ class QueriesScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 25.0,
                   backgroundImage: NetworkImage(
-                      'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                    model.user!.image!,
                   ),
                 ),
                 const SizedBox(width: 10.0,),
