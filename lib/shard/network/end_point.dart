@@ -22,3 +22,5 @@ const ORDER_GUEST = 'orders/Guest';
 
 const ORDER_LEAVING = 'orders/requeststoleft';
 
+const ORDER_MYORDER = 'orders/myorders';
+

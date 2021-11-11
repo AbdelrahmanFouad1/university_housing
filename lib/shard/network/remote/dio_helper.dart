@@ -83,27 +83,5 @@ class DioHelper{
 
   }
 
-  static Future<Response?> getData2({
-    required String url,
-    Map<String, dynamic>? query,
-  })async
-  {
-
-    try{
-      return await dio.get(
-        url,
-        // queryParameters: query??null,
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
-    }on DioError catch(e){
-      var message =  e.response!.data.toString();
-      showToast(message: message, state: ToastStates.ERROR);
-    }
-
-  }
 
 }

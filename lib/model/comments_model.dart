@@ -36,6 +36,7 @@ class CommentsModel{
 }
 
 class UserModel{
+   String? image;
    bool? isStudent;
    String? buildingName;
    bool? buildingType;
@@ -47,6 +48,7 @@ class UserModel{
    String? phone;
 
    UserModel({
+     this.image,
      this.isStudent,
      this.buildingName,
      this.buildingType,
@@ -59,6 +61,7 @@ class UserModel{
    });
 
   UserModel.fromJson(Map<String, dynamic> json) {
+    image = json['image'];
     isStudent = json['isStudent'];
     buildingName = json['buildingName'];
     buildingType = json['buildingType'];
@@ -72,6 +75,7 @@ class UserModel{
 
    Map<String, dynamic> toJson() {
      final data = <String, dynamic>{};
+     data['image'] = image;
      data['isStudent'] = isStudent;
      data['buildingName'] = buildingName;
      data['buildingType'] = buildingType;

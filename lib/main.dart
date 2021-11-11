@@ -43,6 +43,8 @@ void main() async {
         widget =  HomeScreen(isRegister: isresident,);
       }else if(isSecurity == true){
         widget =  MainSecurityScreen();
+      }else if(isHousingManager == true){
+        widget =  DashHomeScreen();
       }else {
         widget =  LoginScreen();
       }
@@ -56,7 +58,6 @@ void main() async {
 
   bool? isDark = CacheHelper.getData(key: 'isDark');
 
-  print('from main ${isDark}');
   runApp(MyApp(startWidget: widget, isDark: isDark,));
 }
 
@@ -89,8 +90,8 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeCubit.get(context).darkTheme?  ThemeMode.dark : ThemeMode.light ,
-            // home: SplashScreen(startWidget: startWidget),
-            home: DashHomeScreen(),
+            home: SplashScreen(startWidget: startWidget),
+            // home: DashHomeScreen(),
           );
         },
       ),
