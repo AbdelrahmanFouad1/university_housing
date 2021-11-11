@@ -121,6 +121,7 @@ Widget defaultButton2({
   required VoidCallback function,
   required String text,
   required Color btnColor,
+  required style,
 }) =>
     Container(
       width: width,
@@ -130,10 +131,7 @@ Widget defaultButton2({
         onPressed: function,
         child: Text(
           text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: fontSize,
-          ),
+          style: style,
         ),
       ),
       decoration: BoxDecoration(
@@ -764,7 +762,7 @@ Widget dashPasswordFormField({
       child: TextFormField(
         controller: passwordController,
         keyboardType: TextInputType.visiblePassword,
-        obscureText: cubit.isPassword,
+        obscureText: index == 1 ? cubit.isFirstPassword : index ==2 ? cubit.isSecPassword : cubit.isThirdPassword ,
         style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
           suffixIcon: IconButton(
@@ -775,7 +773,7 @@ Widget dashPasswordFormField({
                 cubit.changePasswordVisibility(index);
             },
             icon: Icon(
-              cubit.suffix,
+              index == 1 ? cubit.suffix1 :index == 2 ? cubit.suffix2 : cubit.suffix3,
             ),
           ),
           border: InputBorder.none,

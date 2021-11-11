@@ -7,7 +7,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:university_housing/model/login_model.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/cubit/cubit.dart';
-import 'package:university_housing/moduls/security/main/main_security_screen.dart';
+import 'package:university_housing/moduls/security/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';

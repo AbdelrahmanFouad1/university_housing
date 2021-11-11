@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/security/main/main_security_screen.dart';
+import 'package:university_housing/moduls/security/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
