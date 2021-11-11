@@ -251,14 +251,26 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
   //change password
-  int? index ;
-  IconData suffix = Icons.visibility_outlined;
-  bool isPassword = true;
+  IconData suffix1 = Icons.visibility_outlined;
+  IconData suffix2 = Icons.visibility_outlined;
+  IconData suffix3 = Icons.visibility_outlined;
+  bool isFirstPassword = true;
+  bool isSecPassword = true;
+  bool isThirdPassword = true;
 
-  void changePasswordVisibility(int currentIndex) {
-    index = currentIndex;
-    isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+  void changePasswordVisibility(int index) {
+    if(index == 1){
+      isFirstPassword = !isFirstPassword;
+      suffix1 = isFirstPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    }
+    if(index == 2){
+      isSecPassword = !isSecPassword;
+      suffix2 = isSecPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    }
+    if(index == 3){
+      isThirdPassword = !isThirdPassword;
+      suffix3 = isThirdPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    }
 
     emit(ChangePasswordVisibilityState());
   }

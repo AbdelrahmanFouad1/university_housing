@@ -1,26 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/requests_home_screen.dart';
-import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
-import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
-import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
+import 'package:university_housing/moduls/security/enter_student_login_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
-class DashHomeScreen extends StatelessWidget {
-  const DashHomeScreen({Key? key}) : super(key: key);
+
+class MainSecurityScreen extends StatelessWidget {
+  var searchController = TextEditingController();
+
+  MainSecurityScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: dashAppBar(title: 'إدارة الإسكان الجامعى', context: context,pop: false),
+        appBar: dashAppBar(
+            title: 'إدارة الأمن ( أسكان مميز ب )',
+            context: context,
+            pop: false),
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -55,18 +59,21 @@ class DashHomeScreen extends StatelessWidget {
                         ),
                         Text(
                           '202076',
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                  ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 12.0,),
+                SizedBox(
+                  height: 12.0,
+                ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     navigateTo(context, ChangePasswordScreen());
                   },
                   child: Text(
@@ -77,9 +84,11 @@ class DashHomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 12.0, color: Colors.grey),
                   ),
                 ),
-                const SizedBox(height: 12.0,),
+                SizedBox(
+                  height: 12.0,
+                ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     showDialog<void>(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -93,7 +102,7 @@ class DashHomeScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/images/warning.svg',
+                                    'assets/images/warning.svg',
                                   width: 25.0,
                                   height: 25.0,
                                   alignment: Alignment.center,
@@ -129,25 +138,15 @@ class DashHomeScreen extends StatelessWidget {
                         ],
                       ),
                     );
-                    CacheHelper.removeData(key: 'token');
-                    CacheHelper.removeData(key: 'isStudent');
-                    CacheHelper.removeData(key: 'isSecurity');
-                    CacheHelper.removeData(key: 'isHousingManager');
-                    CacheHelper.removeData(key: 'isStudentAffairs');
-                    CacheHelper.removeData(key: 'isresident');
-                    navigateAndFinish(context, LoginScreen());
                   },
                   child: Text(
                     'تسجيل خروج',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.bold , color: Colors.red),
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                 ),
-
                 const SizedBox(
-                  height: 22.0,
+                  height: 12.0,
                 ),
                 Container(
                   width: double.infinity,
@@ -155,57 +154,32 @@ class DashHomeScreen extends StatelessWidget {
                   color: separator,
                 ),
                 const SizedBox(
-                  height: 22.0,
+                  height: 12.0,
                 ),
-
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, const RoomsHomeScreen());
-                  },
-                  child: defaultDashBoardTitleBox(
-                      img: 'assets/images/home.png',
-                      title: 'إداره الغرف'
+                Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  child: defaultFormField(
+                    controller: searchController,
+                    type: TextInputType.text,
+                    onSubmit: (String text) {},
+                    hint: 'بحث ...',
+                    prefix: IconBroken.Search,
+                    context: context,
+                    validate: () {},
                   ),
                 ),
-                const SizedBox(height: 12.0,),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, StudentsScreen());
-                  },
-                  child: defaultDashBoardTitleBox(
-                      img: 'assets/images/team.png',
-                      title: 'الساكنين'
-                  ),
+                const SizedBox(
+                  height: 12.0,
                 ),
-                const SizedBox(height: 12.0,),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, SecurityScreen());
-                  },
-                  child: defaultDashBoardTitleBox(
-                      img: 'assets/images/security.png',
-                      title: 'إداره الأمن'
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => buildSecurityCard(context),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 18.0,
                   ),
-                ),
-                const SizedBox(height: 12.0,),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, const RequestsHomeScreen());
-                  },
-                  child: defaultDashBoardTitleBox(
-                      img: 'assets/images/checklist.png',
-                      title: 'طلبات الساكنين'
-                  ),
-                ),
-                const SizedBox(height: 12.0,),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, AddNewsScreen());
-                  },
-                  child: defaultDashBoardTitleBox(
-                      img: 'assets/images/newspaper.png',
-                      title: 'أخبار المعهد'
-                  ),
+                  itemCount: 8,
                 ),
               ],
             ),
@@ -214,4 +188,66 @@ class DashHomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildSecurityCard(context) => Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 115,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                8.0,
+              ),
+              color: ThemeCubit.get(context).darkTheme
+                  ? mainColors
+                  : containerFollowStudent,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 25.0,
+                        backgroundImage: NetworkImage(
+                            'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                      ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'عبدالرحمن محمد فؤاد',
+                            style: Theme.of(context).textTheme.bodyText2
+                          ),
+                          Text(
+                            '42018122',
+                            style: Theme.of(context).textTheme.bodyText2
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                defaultButton2(
+                  function: () {
+                    navigateTo(context, EnterStudentDetailsScreen());
+                  },
+                  text: 'إدخال التفاصيل',
+                  width: double.infinity,
+                  height: 32.0,
+                  btnColor: ThemeCubit.get(context).darkTheme
+                      ? Colors.black45
+                      : mainColors,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
 }

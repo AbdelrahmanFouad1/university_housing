@@ -33,7 +33,6 @@ class ChangePasswordScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-
                     SizedBox(height: 12.0,),
                     dashPasswordFormField(
                       context: context,
@@ -44,17 +43,12 @@ class ChangePasswordScreen extends StatelessWidget {
                     ),
 
                     SizedBox(height: 12.0,),
-                    InkWell(
-                      onTap: (){
-                        cubit.index = 2;
-                      },
-                      child: dashPasswordFormField(
-                          context: context,
-                          hint: 'كلمة المرور الجديده',
-                          cubit: cubit,
-                          passwordController: newPassController,
-                          index: 2,
-                      ),
+                    dashPasswordFormField(
+                        context: context,
+                        hint: 'كلمة المرور الجديده',
+                        cubit: cubit,
+                        passwordController: newPassController,
+                      index: 2,
                     ),
                     SizedBox(height: 12.0,),
                     dashPasswordFormField(
@@ -62,7 +56,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         hint: 'تأكيد كلمة المرور',
                         cubit: cubit,
                         passwordController: confirmNewPassController,
-                        index: 3,
+                      index: 3
                     ),
 
 
@@ -97,7 +91,7 @@ void validation({
   required String confirmPass,
 }){
   if(newPass != confirmPass){
-    showToast(message: 'قم بإدخال الباسوورد بطريقة صحيحه', state: ToastStates.ERROR);
+    showToast(message: 'قم بإدخال الباسوورد الجديد بطريقة صحيحه', state: ToastStates.ERROR);
   }else{
   //  done
   }
