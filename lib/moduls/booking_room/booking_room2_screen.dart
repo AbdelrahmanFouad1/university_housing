@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -13,88 +14,34 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class BookingRoom2Screen extends StatelessWidget {
   var floorController = TextEditingController();
   var roomController = TextEditingController();
+  int currentIndex = 0;
 
-  final List<SelectFloorModel> _group = [
-    SelectFloorModel
-      (
-      text: "الدور الأول",
-      index: 1,
-    ),
-    SelectFloorModel
-      (
-      text: "الدور الثانى",
-      index: 2,
-    ),
-    SelectFloorModel
-      (
-      text: "الدور الثالث",
-      index: 3,
-    ),
-    SelectFloorModel
-      (
-      text: "الدور الرابع",
-      index: 4,
-    ),
-    SelectFloorModel
-      (
-      text: "الدور الخامس",
-      index: 5,
-    ),
-  ];
+  BookingRoom2Screen({
+    Key? key,
+    required this.section,
+    required this. phone,
+    required this. address,
+    required this. NationalID,
+    required this. cardPhoto,
+    required this. firstTerm,
+    required this. secondTerm,
+    required this. thirdTerm,
+    required this. gender,
+  }): super(key: key);
 
-  final List<SelectRoomModel> _groupRoom = [
-    SelectRoomModel(
-      text: "غرفة 201",
-      index: 1,
-    ),
-    SelectRoomModel(
-      text: "غرفة 202",
-      index: 2,
-    ),
-    SelectRoomModel(
-      text: "غرفة 203",
-      index: 3,
-    ),
-    SelectRoomModel(
-      text: "غرفة 204",
-      index: 4,
-    ),
-    SelectRoomModel(
-      text: "غرفة 205",
-      index: 5,
-    ),
-    SelectRoomModel(
-      text: "غرفة 306",
-      index: 6,
-    ),
-    SelectRoomModel(
-      text: "غرفة 307",
-      index: 7,
-    ),
-    SelectRoomModel(
-      text: "غرفة 308",
-      index: 8,
-    ),
-    SelectRoomModel(
-      text: "غرفة 409",
-      index: 9,
-    ),
-    SelectRoomModel(
-      text: "غرفة 510",
-      index: 10,
-    ),
-    SelectRoomModel(
-      text: "غرفة 511",
-      index: 11,
-    ),
-  ];
-
-  BookingRoom2Screen({Key? key}) : super(key: key);
+  String section;
+  String phone;
+  String address;
+  String NationalID;
+  String cardPhoto;
+  bool firstTerm;
+  bool secondTerm;
+  bool thirdTerm;
+  bool gender;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (create)=> AppCubit(),
-    child: BlocConsumer<AppCubit,AppStates>(
+    return BlocConsumer<AppCubit,AppStates>(
       listener: (context,state){},
       builder: (context,state){
         var cubit = AppCubit.get(context);
@@ -174,153 +121,25 @@ class BookingRoom2Screen extends StatelessWidget {
 
 
 
+                    // todo المفروض احدد عماير البنات من الولاد
                     // houses
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: (){
-                                cubit.changeHouseColor(1);
-                                cubit.IsDouble(true);
-                                cubit.ShowAllDetails(false);
-                                floorController.text = '';
-                                roomController.text = '';
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 150.0,
-                                  decoration: BoxDecoration(
-                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainTextColor : backGroundDark) : (cubit.selectedHouse == 1? mainColors : Colors.white),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(color: Colors.grey, width: 1),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/building1.png',
-                                        width: double.infinity,
-                                        height: 100.0,
-                                        fit:BoxFit.fill,
-                                      ),
-                                      Text(
-                                        'دار الضيافه',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainColors : mainTextColor) : (cubit.selectedHouse == 1? Colors.white : mainColors) ,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        '(زوجي)',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 1? mainColors : mainTextColor) : ( cubit.selectedHouse == 1? Colors.white : mainColors),
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: InkWell(
-                              onTap: (){
-                                cubit.changeHouseColor(2);
-                                cubit.IsDouble(false);
-                                cubit.ShowAllDetails(false);
-                                floorController.text = '';
-                                roomController.text = '';
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 150.0,
-                                  decoration: BoxDecoration(
-                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainTextColor : backGroundDark) : (cubit.selectedHouse == 2? mainColors : Colors.white),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(color: Colors.grey, width: 1),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/building2.png',
-                                        width: double.infinity,
-                                        height: 100.0,
-                                        fit:BoxFit.fill,
-                                      ),
-                                      Text(
-                                        'أسكان مميز (أ)',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainColors : mainTextColor) : (cubit.selectedHouse == 2? Colors.white : mainColors) ,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        '(فردي)',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 2? mainColors : mainTextColor) : (cubit.selectedHouse == 2? Colors.white : mainColors) ,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: InkWell(
-                              onTap: (){
-                                cubit.changeHouseColor(3);
-                                cubit.IsDouble(false);
-                                cubit.ShowAllDetails(false);
-                                floorController.text = '';
-                                roomController.text = '';
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 150.0,
-                                  decoration: BoxDecoration(
-                                    color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainTextColor : backGroundDark) : (cubit.selectedHouse == 3? mainColors : Colors.white),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(color: Colors.grey, width: 1),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/building3.png',
-                                        width: double.infinity,
-                                        height: 100.0,
-                                        fit:BoxFit.fill,
-                                      ),
-                                      Text(
-                                        'أسكان مميز (ب)',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainColors : mainTextColor) : (cubit.selectedHouse == 3? Colors.white : mainColors) ,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        '(فردي)',
-                                        style: TextStyle(
-                                          color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == 3? mainColors : mainTextColor) : (cubit.selectedHouse == 3? Colors.white : mainColors) ,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Container(
+                      height: 150.0,
+                      child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context,index){
+                            currentIndex = index;
+                          return houseItem(
+                              index: index,
+                              context: context,
+                              cubit: cubit,
+                              floorController: floorController,
+                              roomController: roomController
+                          );
+                          },
+                          separatorBuilder: (context,index)=> SizedBox(width: 10.0,),
+                          itemCount: buildings!.Buildings.length,
                       ),
                     ),
                     const SizedBox(height: 26.0,),
@@ -341,6 +160,7 @@ class BookingRoom2Screen extends StatelessWidget {
                         controller: floorController,
                         readOnly: true,
                         onTap: (){
+                          cubit.currentFloorVal = -1;
                           showDialog<void>(
                             context: context,
                             builder: (context) => buildDialog(
@@ -348,12 +168,12 @@ class BookingRoom2Screen extends StatelessWidget {
                               title: 'اختر رقم الدور',
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                children: _group.map((e) => RadioListTile(
+                                children: cubit.groupFloor.map((e) => RadioListTile(
                                   title: Text(
                                       e.text,
                                     style: Theme.of(context).textTheme.bodyText1!,
                                   ),
-                                  groupValue: cubit.currentVal,
+                                  groupValue: cubit.currentFloorVal,
                                   value: e.index,
                                   onChanged: (int? val) {
                                     cubit.selectFloor(val!, e.text);
@@ -367,10 +187,6 @@ class BookingRoom2Screen extends StatelessWidget {
                         },
                         decoration:  InputDecoration(
                           border: InputBorder.none,
-                          // suffixIcon: Icon(
-                          //   Icons.keyboard_arrow_down,
-                          //   color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
-                          // ),
                           hintText: 'اختر رقم الدور',
                           hintStyle: Theme.of(context).textTheme.bodyText1,
                           contentPadding:const EdgeInsetsDirectional.all(8.0),
@@ -395,6 +211,7 @@ class BookingRoom2Screen extends StatelessWidget {
                         controller: roomController,
                         readOnly: true,
                         onTap: (){
+                          cubit.currentRoomVal = -1;
                           if(floorController.text.isEmpty){
                             showToast(state: ToastStates.WARNING,message: 'أدخل رقم الدور أولا');
                           }else{
@@ -402,23 +219,39 @@ class BookingRoom2Screen extends StatelessWidget {
                               context: context,
                               builder: (context) => buildDialog(
                                 context: context,
-                                title: 'اختر رقم الغرفه',
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: _groupRoom.map((e) => RadioListTile(
-                                    title: Text(
-                                        e.text,
-                                      style: Theme.of(context).textTheme.bodyText1!,
-                                    ),
-                                    groupValue: cubit.currentRoomVal,
-                                    value: e.index,
-                                    onChanged: (int? val) {
-                                      cubit.selectRoom(val!, e.text);
-                                      roomController.text = cubit.currentRoomText;
-                                      cubit.ShowAllDetails(true);
-                                      Navigator.pop(context);
-                                    },
-                                  )).toList(),
+                                title: 'اختر رقم الغرفة',
+                                child: Builder(
+                                  builder: (context){
+                                    if(cubit.roomsList.isEmpty){
+                                      return Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Text(
+                                              '"غير متاح غرف في هذا الدور حاليا !!"',
+                                            style: Theme.of(context).textTheme.bodyText2,
+                                          ),
+                                        ),
+                                      );
+                                    }else{
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: cubit.groupRooms.map((e) => RadioListTile(
+                                          title: Text(
+                                            e.text,
+                                            style: Theme.of(context).textTheme.bodyText1!,
+                                          ),
+                                          groupValue: cubit.currentRoomVal,
+                                          value: e.index,
+                                          onChanged: (int? val) {
+                                            cubit.selectRoom(val!, e.text);
+                                            roomController.text = cubit.currentRoomText;
+                                            cubit.ShowAllDetails(true);
+                                            Navigator.pop(context);
+                                          },
+                                        )).toList(),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             );
@@ -427,10 +260,6 @@ class BookingRoom2Screen extends StatelessWidget {
 
                         decoration:   InputDecoration(
                           border: InputBorder.none,
-                          // suffixIcon: Icon(
-                          // Icons.keyboard_arrow_down,
-                          // color:ThemeCubit.get(context).darkTheme? mainTextColor : Colors.black38,
-                          // ),
                           hintText: 'اختر رقم الغرفه',
                           hintStyle: Theme.of(context).textTheme.bodyText1,
                           contentPadding:const EdgeInsetsDirectional.all(8.0),
@@ -506,7 +335,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      ' 2997 ',
+                                      '${buildings!.Buildings[currentIndex].cost}',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: 14.0,
@@ -523,6 +352,7 @@ class BookingRoom2Screen extends StatelessWidget {
                               color: separator,
                             ),
                             const SizedBox(height: 16.0,),
+
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(
@@ -548,6 +378,7 @@ class BookingRoom2Screen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 16.0,),
+
                             Container(
                               width: double.infinity,
                               height:1.0,
@@ -568,7 +399,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      '3497',
+                                      '${buildings!.Buildings[currentIndex].cost + 500}',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: 14.0,
@@ -633,6 +464,21 @@ class BookingRoom2Screen extends StatelessWidget {
                       child: defaultButton(
                           function: (){
                             if(cubit.agree==true){
+                              cubit.postBookingRoom(
+                                  firstTerm: firstTerm,
+                                  secondTerm: secondTerm,
+                                  thirdTerm: thirdTerm,
+                                  gender: gender,
+                                  buildingType: buildings!.Buildings[currentIndex].buildingLevels,
+                                  Section: section,
+                                  phone: phone,
+                                  address: address,
+                                  NationalID: NationalID,
+                                  cardPhoto: cardPhoto,
+                                  buildingName: buildings!.Buildings[currentIndex].buildingName,
+                                  roomnumber: int.parse(roomController.text),
+                                  floor: int.parse(floorController.text),
+                              );
                               navigateTo(context, const ChoosePaymentMethodScreen());
                             }else{
                               showToast(message: 'برجاء الموافقه علي الشروط', state: ToastStates.WARNING);
@@ -649,7 +495,6 @@ class BookingRoom2Screen extends StatelessWidget {
           ),
         );
       },
-    ) ,
     );
   }
 }
@@ -667,7 +512,8 @@ class SelectFloorModel
   });
 }
 
-class SelectRoomModel {
+class SelectRoomModel
+{
   late String text;
   late int index;
 
@@ -676,3 +522,71 @@ class SelectRoomModel {
     required this.index,
   });
 }
+
+
+Widget houseItem ({
+ required AppCubit cubit,
+ required context,
+ required floorController,
+ required roomController,
+ required index,
+})=> InkWell(
+  onTap: (){
+    cubit.changeHouseColor(index);
+    cubit.IsDouble(buildings!.Buildings[index].buildingLevels == true ? false : true);
+    cubit.ShowAllDetails(false);
+    floorController.text = '';
+    roomController.text = '';
+    cubit.selectedBuildingItem = index;
+  },
+  child: Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+    child: Container(
+      width: 100.0,
+      height: 150.0,
+      decoration: BoxDecoration(
+        color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == index? mainTextColor : backGroundDark) : (cubit.selectedHouse == index? mainColors : Colors.white),
+        borderRadius: BorderRadius.circular(5.0),
+        border: Border.all(color: Colors.grey, width: 1),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 90.0,
+            height: 90.0,
+            margin: EdgeInsetsDirectional.all(5.0),
+            decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(5.0),
+             border: Border.all(color: Colors.grey, width: 1),
+              image: DecorationImage(
+                image: NetworkImage(
+                  'https://graduation-projec.herokuapp.com${buildings!.Buildings[index].image}',
+                ),
+                fit: BoxFit.cover
+              ),
+           ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text(
+              '${buildings!.Buildings[index].buildingName}',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == index? mainColors : mainTextColor) : (cubit.selectedHouse == index? Colors.white : mainColors) ,
+                fontSize: 12.0,
+              ),
+            ),
+          ),
+          Text(
+            buildings!.Buildings[index].buildingLevels == true ? '(فردي)':'(زوجي)',
+            style: TextStyle(
+              color: ThemeCubit.get(context).darkTheme? (cubit.selectedHouse == index? mainColors : mainTextColor) : ( cubit.selectedHouse == index? Colors.white : mainColors),
+              fontSize: 12.0,
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+);

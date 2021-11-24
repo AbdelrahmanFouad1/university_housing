@@ -1,13 +1,17 @@
 import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/comments_model.dart';
+import 'package:university_housing/model/get_buildings_model.dart';
+import 'package:university_housing/model/get_notifications_model.dart';
+import 'package:university_housing/model/get_reviews_model.dart';
 import 'package:university_housing/model/my_orders_model.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
+import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
@@ -16,9 +20,9 @@ import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 
-class AppCubit extends Cubit<AppStates>{
-
+class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
+
   static AppCubit get(context) => BlocProvider.of(context);
 
   // Home Screen
@@ -27,16 +31,15 @@ class AppCubit extends Cubit<AppStates>{
 
   int sum = 0;
 
-  void getProfileData(){
-
+  void getProfileData() {
     emit(GetProfileLoadingStates());
 
     DioHelper.getData(
       url: USERS_PROFILE,
-      token: tokeen??'',
+      token: tokeen ?? '',
     ).then((value) {
       sum = 0;
-      if(value != null){
+      if (value != null) {
         // printFullText(value.data.toString());
         profileModel = ProfileModel.fromJson(value.data);
         for (var element in profileModel!.fines) {
@@ -44,7 +47,7 @@ class AppCubit extends Cubit<AppStates>{
         }
         emit(GetProfileSuccessStates());
       }
-    }).catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetProfileErrorStates(error.toString()));
     });
@@ -52,24 +55,22 @@ class AppCubit extends Cubit<AppStates>{
 
   NewsModel? newsModel;
 
-  void getNews(){
+  void getNews() {
     emit(GetNewsLoadingStates());
 
     DioHelper.getData(
       url: NEWS,
     ).then((value) {
-      if(value != null){
+      if (value != null) {
         // printFullText(value.data.toString());
         newsModel = NewsModel.fromJson(value.data);
         emit(GetNewsSuccessStates());
       }
-    }).catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(GetNewsErrorStates(error.toString()));
     });
   }
-
-
 
   // Change Damaged Screen
   void postDamaged({
@@ -79,13 +80,14 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDERS_DAMAGED,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'damagedthing': complaints,
       },
-    ).then((value) {
-      emit(PostDamagedSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostDamagedSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostDamagedErrorStates(error));
@@ -100,13 +102,14 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDERS_MISSING,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'missingthing': complaints,
       },
-    ).then((value) {
-      emit(PostLostSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostLostSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostLostErrorStates(error));
@@ -121,19 +124,19 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDERS_COMPLAINTS,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'complaint': complaints,
       },
-    ).then((value) {
-      emit(PostComplaintsSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostComplaintsSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostComplaintsErrorStates(error));
     });
   }
-
 
   // Hosting Requests Screen
   bool isStudent = true;
@@ -145,6 +148,7 @@ class AppCubit extends Cubit<AppStates>{
 
   File? idImage;
   var picker = ImagePicker();
+
   Future<void> pikeIdImage() async {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery,
@@ -175,17 +179,17 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDER_GUEST,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'NameofGuest': name,
         'HostDate': date,
         'DurationOfHosting': durationOfHosting,
         'studentId': studentId,
-
       },
-    ).then((value) {
-      emit(PostGuestSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostGuestSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostGuestErrorStates(error));
@@ -195,7 +199,7 @@ class AppCubit extends Cubit<AppStates>{
   void postGuest({
     required String name,
     required String date,
-    required  String durationOfHosting,
+    required String durationOfHosting,
     required String guestIsIDCard,
     required String relation,
   }) {
@@ -203,7 +207,7 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDER_GUEST,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'NameofGuest': name,
         'HostDate': date,
@@ -211,21 +215,19 @@ class AppCubit extends Cubit<AppStates>{
         'guestIsIDCard': guestIsIDCard,
         'relation': relation,
       },
-    ).then((value) {
-      emit(PostGuestSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostGuestSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostGuestErrorStates(error));
     });
   }
 
-
-
-
-
   // Booking Room 1
   File? nationalIdImage;
+
   Future<void> pikeNationalIdImage() async {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery,
@@ -244,8 +246,6 @@ class AppCubit extends Cubit<AppStates>{
     nationalIdImage = null;
     emit(RemoveNationalIdImageState());
   }
-
-
 
   // family Report
   File? familyImage;
@@ -280,20 +280,20 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDERS_REPORT,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'reason': reason,
         'parentIsendorsement': image,
       },
-    ).then((value) {
-      emit(PostReportSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostReportSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostReportErrorStates(error));
     });
   }
-
 
   //Queries Screen
   void postQueries({
@@ -303,13 +303,14 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDERS_ENQUIRES,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'enquiry': queries,
       },
-    ).then((value) {
-      emit(PostQueriesSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostQueriesSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostQueriesErrorStates(error));
@@ -317,34 +318,33 @@ class AppCubit extends Cubit<AppStates>{
   }
 
   List<CommentsModel>? commentModel = [];
-  void getQueriesData(){
 
+  void getQueriesData() {
     emit(GetQueriesLoadingStates());
 
     DioHelper.getData(
       url: ORDERS_ENQUIRES,
     ).then((value) {
-      if(value != null){
+      if (value != null) {
         // printFullText(value.data.toString());
         value.data.forEach((element) {
-          commentModel!.add(CommentsModel.fromJson(element)) ;
+          commentModel!.add(CommentsModel.fromJson(element));
         });
         getProfileData();
         emit(GetQueriesSuccessStates());
       }
-    }).catchError((error){
+    }).catchError((error) {
       getProfileData();
       print(error.toString());
       emit(GetQueriesErrorStates(error.toString()));
     });
   }
 
-
-
   // edit profile screen
-  bool isDark = false ;
-  void toggleButton(){
-    isDark =!isDark;
+  bool isDark = false;
+
+  void toggleButton() {
+    isDark = !isDark;
     emit(ChangeThemeSuccessState());
   }
 
@@ -354,11 +354,8 @@ class AppCubit extends Cubit<AppStates>{
     Icons.edit,
     color: mainColors,
   );
-  CircleAvatar img = const CircleAvatar(
-    radius: 60,
-    backgroundImage:
-        NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
-  );
+
+  late CircleAvatar img;
 
   Future<void> pikeProfileIdImage() async {
     final pickedFile = await profilePicker.getImage(
@@ -367,7 +364,10 @@ class AppCubit extends Cubit<AppStates>{
 
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
-      icon = Icon(Icons.delete,color: mainColors,);
+      icon = Icon(
+        Icons.check_rounded,
+        color: mainColors,
+      );
       img = CircleAvatar(
         radius: 60,
         child: Container(
@@ -383,24 +383,167 @@ class AppCubit extends Cubit<AppStates>{
           ),
         ),
       );
+      printFullText('lalalalala   '+ profileImage.toString());
+      uploadImage(profileImage!);
       emit(ImagePickedSuccessState());
-      showToast(state: ToastStates.SUCCESS,message: 'تم رفع الصوره بنجاح');
     } else {
       emit(ImagePickedErrorState());
-      showToast(state: ToastStates.ERROR,message: 'لم يتم رفع الصوره');
+      showToast(state: ToastStates.WARNING, message: 'لم يتم أختيار الصوره');
     }
   }
 
-  void deleteImg (){
-    profileImage =null;
-    icon = Icon( Icons.edit, color: mainColors,);
-    img = CircleAvatar(radius: 60, backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),);
-    emit(ImageRemoveSuccessState());
-    showToast(state: ToastStates.SUCCESS,message: 'تم حذف الصوره بنجاح');
+
+//  todo henaaaaaaaa
+// void updateImg() {
+//   emit(UpdateImgLoadingStates());
+//   DioHelper.putData(
+//     url: PUT_PROFILE,
+//     data: {
+//       'image': profileImage!.path.toString(),
+//     },
+//     token: tokeen
+//   ).then((value){
+//     showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
+//     emit(UpdateImgSuccessState());
+//     profileImage = null;
+//     icon = Icon(
+//       Icons.edit,
+//       color: mainColors,
+//     );
+//     getProfileData();
+//   }).catchError((error){
+//     print('Erooooooooooor ==> ' + error.toString());
+//     emit(UpdateImgErrorStates(error.toString()));
+//     showToast(message: 'لم يتم رفع الصوره , الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+//   });
+//
+//   }
+
+  static late Dio dio;
+
+  FormData? formData;
+  Future<void> uploadImage(File file) async {
+    String fileName = file.path.split('/').last;
+    formData = FormData.fromMap({
+      "image":
+      await MultipartFile.fromFile(file.path, filename:fileName),
+    });
+    dio = Dio(
+      BaseOptions(
+        baseUrl: BASE_URL,
+        receiveDataWhenStatusError: true,
+        connectTimeout: 50000,
+        receiveTimeout: 3000,
+        // headers: {
+        //   'Accept':'application/json, text/plain, */*',
+        //   'Content-Type':'application/json',
+        //   'Authorization':"**",
+        //   'User-Aagent':"4.1.0;android;6.0.1;default;A001",
+        //   "HZUID":"2",
+        // }
+      )
+    );
+
+    // final res = await dio.delete(
+    //   UPLOAD,
+    //   data: formData,
+    //   options: Options(
+    //
+    //     followRedirects: false,
+    //     // will not throw errors
+    //     validateStatus: (status) => true,
+    //   ),
+    // );
+    //
+    // printFullText(res.data.toString());
+
+
+    try{
+      await dio.post('upload', data: formData).then((value){
+        print(value.data.toString());
+      });
+    }on DioError catch(e){
+      var message =  e.response!.data['message'].toString();
+      printFullText(message);
+      showToast(message: message, state: ToastStates.ERROR);
+    }
+
   }
 
-  //Change Room Screen
 
+
+
+
+  void updateImg() {
+    icon = Icon(
+      Icons.edit,
+      color: mainColors,
+    );
+    profileImage = null;
+    emit(UpdateImgLoadingStates());
+
+    // DioHelper.postData(
+    //     url: UPLOAD,
+    //     data2: formData,
+    //     // data: formData!,
+    //   token: tokeen
+    // ).then((value) {
+    //   if(value != null){
+    //     showToast(message: ' uploaded', state: ToastStates.SUCCESS);
+    //     emit(UpdateImgSuccessState());
+    //   }else{
+    //     print('nuuuuuuuuuuuuul');
+    //   }
+    //   // DioHelper.putData(
+    //   //   url: PUT_PROFILE,
+    //   //   data: {
+    //   //     'image': value!.data.toString(),
+    //   //   },
+    //   // ).then((value){
+    //   //   icon = Icon(
+    //   //     Icons.edit,
+    //   //     color: mainColors,
+    //   //   );
+    //   //   showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
+    //   //   emit(UpdateImgSuccessState());
+    //   //   profileImage = null;
+    //   // }).catchError((error){
+    //   //   print('Erooooooooooor ==> ' + error.toString());
+    //   //   emit(UpdateImgErrorStates(error.toString()));
+    //   //   showToast(message: 'لم يتم رفع الصوره , الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+    //   // });
+    // });
+
+    // img = CircleAvatar(
+    //   radius: 60,
+    //   backgroundImage:
+    //       NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+    // );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Change Room Screen
   int currVal = 0;
   String currText = '';
 
@@ -427,34 +570,34 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDER_CHANGE_ROOM,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'numofnextroom': room,
         'floornumberofnextroom': floor,
       },
-    ).then((value) {
-      emit(PostChangeRoomSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostChangeRoomSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostChangeRoomErrorStates(error));
     });
   }
 
-
 //  Booking Room
 
   int selectedHouse = -1;
   bool? showDetails = false;
   bool? showAll = false;
-  bool? isDouble= false;
-  bool? agree= false;
-  bool isStudent_job = true;
+  bool? isDouble = false;
+  bool? agree = false;
+  int term = 1;
   bool isBoy = true;
 
-  void changeIsStudent_job(bool student) {
-    isStudent_job = student;
-    emit(ChangeStudentJobState());
+  void changeTerm(int first) {
+    term = first;
+    emit(ChangeTermState());
   }
 
   void changeIsBoy(bool kind) {
@@ -462,38 +605,38 @@ class AppCubit extends Cubit<AppStates>{
     emit(ChangeKindState());
   }
 
- void changeHouseColor (int Selected){
-   selectedHouse = Selected;
-   showDetails = true;
-   emit(SelectHouseSuccessState());
- }
+  void changeHouseColor(int Selected) {
+    selectedHouse = Selected;
+    showDetails = true;
+    emit(SelectHouseSuccessState());
+  }
 
-  void ShowAllDetails (bool ShowAll){
+  void ShowAllDetails(bool ShowAll) {
     showAll = ShowAll;
     emit(ShowAllDetailsSuccessState());
   }
 
-  void IsDouble (bool IsDouble){
+  void IsDouble(bool IsDouble) {
     isDouble = IsDouble;
     emit(IsDoubleSuccessState());
   }
 
-
-  void IsAgree(bool IsAgree){
+  void IsAgree(bool IsAgree) {
     agree = IsAgree;
     emit(IsAgreeSuccessState());
   }
 
-  int currentVal = 0;
+  int currentFloorVal = -1;
   String currentText = '';
 
   void selectFloor(int currentNum, String currentFloor) {
-    currentVal = currentNum;
+    currentFloorVal = currentNum;
     currentText = currentFloor;
+    getFloorAndRooms(selectedBuildingItem);
     emit(SelectFloorState());
   }
 
-  int currentRoomVal = 0;
+  int currentRoomVal = -1;
   String currentRoomText = '';
 
   void selectRoom(int currentNum, String currentFloor) {
@@ -502,9 +645,9 @@ class AppCubit extends Cubit<AppStates>{
     emit(SelectRoomState());
   }
 
-
   //Leaving Room Screen
   bool isReason = true;
+
   void changeIsReason(bool reason) {
     isReason = reason;
     emit(ChangeReasonState());
@@ -517,13 +660,14 @@ class AppCubit extends Cubit<AppStates>{
 
     DioHelper.postData(
       url: ORDER_LEAVING,
-      token: tokeen??'',
+      token: tokeen ?? '',
       data: {
         'reason': reason,
       },
-    ).then((value) {
-      emit(PostLeavingSuccessStates());
-    },
+    ).then(
+      (value) {
+        emit(PostLeavingSuccessStates());
+      },
     ).catchError((error) {
       print(error.toString());
       emit(PostLeavingErrorStates(error));
@@ -556,44 +700,236 @@ class AppCubit extends Cubit<AppStates>{
 
   // Follow Requests Screen
   MyOrdersModel? myOrdersModel;
-  void getOrderData(){
 
+  void getOrderData() {
     emit(GetOrderLoadingStates());
 
     DioHelper.getData(
       url: ORDER_MYORDER,
-      token: tokeen??'',
+      token: tokeen ?? '',
     ).then((value) {
-        // printFullText(value.data.toString());
-        myOrdersModel = MyOrdersModel.fromJson(value!.data);
-        emit(GetOrderSuccessStates());
-    }).catchError((error){
+      // printFullText(value.data.toString());
+      myOrdersModel = MyOrdersModel.fromJson(value!.data);
+      emit(GetOrderSuccessStates());
+    }).catchError((error) {
       print(error.toString());
       emit(GetOrderErrorStates(error.toString()));
     });
   }
 
-
-
   // E-payment Screen
 
   String cardNumber = '';
-  String expiryDate= '';
+  String expiryDate = '';
   String cardHolderName = '';
-  String cvvCode= '';
+  String cvvCode = '';
   bool isCvvFocused = false;
 
-void changeCreditCardModel(CreditCardModel creditCardModel){
-  cardNumber = creditCardModel.cardNumber;
-  expiryDate = creditCardModel.expiryDate;
-  cardHolderName = creditCardModel.cardHolderName;
-  cvvCode = creditCardModel.cvvCode;
-  isCvvFocused = creditCardModel.isCvvFocused;
+  void changeCreditCardModel(CreditCardModel creditCardModel) {
+    cardNumber = creditCardModel.cardNumber;
+    expiryDate = creditCardModel.expiryDate;
+    cardHolderName = creditCardModel.cardHolderName;
+    cvvCode = creditCardModel.cvvCode;
+    isCvvFocused = creditCardModel.isCvvFocused;
 
-  emit(ChangeCreditCardModelState());
-}
+    emit(ChangeCreditCardModelState());
+  }
 
 // notifications
-bool isBus = false;
+  bool isBus = false;
+
+
+
+
+// Booking room api
+
+
+  void getBuildings() {
+    emit(GetBuildingDataLoadingStates());
+
+    DioHelper.getData(
+      url: GET_BUILDINGS,
+      query: {
+        // 'gender':'true',
+        'availability': 'true'
+      },
+    ).then((value) {
+      if (value != null) {
+        buildings = GetBuildingsModel.fromJson(value.data);
+        emit(GetBuildingDataSuccessStates());
+      }
+    }).catchError((error) {
+      print('Erooooooooooor ==> ' + error.toString());
+      emit(GetBuildingDataErrorStates(error.toString()));
+    });
+  }
+
+  List<SelectFloorModel> groupFloor = [
+    SelectFloorModel(text: 'الأول', index: 1),
+    SelectFloorModel(text: 'الثاني', index: 2),
+    SelectFloorModel(text: 'الثالث', index: 3),
+    SelectFloorModel(text: 'الرابع', index: 4),
+  ];
+
+  List<int> roomsList= [];
+  List<SelectRoomModel> groupRooms = [];
+  int selectedBuildingItem = -1;
+
+  void getFloorAndRooms(int index) {
+     roomsList= [];
+     groupRooms = [];
+    buildings!.Buildings[index].rooms.forEach((element) {
+      if(currentFloorVal == 1){
+        if(element.floor == 1){
+          roomsList.add(element.roomnumber);
+        }
+      }else if(currentFloorVal == 2){
+        if(element.floor == 2){
+          roomsList.add(element.roomnumber);
+        }
+      }else if(currentFloorVal == 3){
+        if(element.floor == 3){
+          roomsList.add(element.roomnumber);
+        }
+      }else{
+        if(element.floor == 4){
+          roomsList.add(element.roomnumber);
+        }
+      }
+    });
+
+    roomsList.forEach((element) {
+      groupRooms.add(SelectRoomModel(
+          text: element.toString(),
+          index: element)
+      );
+    });
+
+    emit(GetFloorAndRoomSuccessStates());
+  }
+
+
+  void postBookingRoom({
+    required bool firstTerm,
+    required bool secondTerm,
+    required bool thirdTerm,
+    required bool gender,
+    required bool buildingType,
+    required String Section,
+    required String phone,
+    required String address,
+    required String NationalID,
+    required String cardPhoto,
+    required String buildingName,
+    required int roomnumber,
+    required int floor,
+  }) {
+    emit(PostBookingLoadingStates());
+
+    DioHelper.postData(
+      url: BOOKING_ROOM,
+      token: tokeen ?? '',
+      data: {
+        'firstTerm': firstTerm,
+        'secondTerm': secondTerm,
+        'thirdTerm': thirdTerm,
+        'gender': gender,
+        'buildingType': buildingType,
+        'Section': Section,
+        'phone': phone,
+        'address': address,
+        'NationalID': NationalID,
+        'cardPhoto': cardPhoto,
+        'buildingName': buildingName,
+        'roomnumber': roomnumber,
+        'floor': floor,
+      },
+    ).then(
+      (value) {
+        emit(PostBookingSuccessStates());
+        showToast(message: 'done', state: ToastStates.SUCCESS);
+        print('Datttttttttta => ' + value!.data.toString());
+      },
+    ).catchError((error) {
+      print(error.toString());
+      emit(PostBookingErrorStates(error));
+      showToast(message: 'error', state: ToastStates.ERROR);
+    });
+  }
+
+
+  // notification with api
+
+  GetNotificationsModel? notifications;
+  void getNotifications() {
+    emit(GetNotificationsLoadingStates());
+
+    DioHelper.getData(
+      url: 'users/${profileModel!.idDB}/notification',
+      // url: 'users/6175cc2bfcc4ec001613f3f1/notification',
+      token: tokeen ?? '',
+      // 'id': '6175cc2bfcc4ec001613f3f1',
+    ).then((value) {
+      if (value != null) {
+        notifications = GetNotificationsModel.fromJson(value.data);
+        emit(GetNotificationsSuccessStates());
+      }
+    }).catchError((error) {
+      print('Erooooooooooor ==> ' + error.toString());
+      emit(GetNotificationsErrorStates(error.toString()));
+    });
+  }
+
+
+
+  // reviews with api
+  List<Reviews> reviews =[];
+  void getReviews(){
+    reviews =[];
+    DioHelper.getData(
+      url: REVIEWS,
+      token: tokeen,
+    ).then((value) {
+      if (value != null) {
+        value.data.forEach((element) {
+          reviews.add(Reviews.fromJson(element));
+        });
+        emit(GetReviewsSuccessStates());
+      }
+    }).catchError((error) {
+      emit(GetReviewsErrorStates(error.toString()));
+    });
+  }
+
+  void postReviews({
+  required String comment,
+  required double rate,
+  }){
+    emit(PostReviewLoadingStates());
+
+    DioHelper.postData(
+      url: REVIEWS,
+      token: tokeen ?? '',
+      data: {
+        'comment':comment,
+        'rating':rate.toInt(),
+      },
+    ).then(
+          (value) {
+        emit(PostReviewSuccessStates());
+        showToast(message: 'تمت إضافه التقييم بنجاح', state: ToastStates.SUCCESS);
+        getReviews();
+      },
+    ).catchError((error) {
+      emit(PostReviewErrorStates(error));
+      showToast(message: 'نأسف لوجود عطل ما, حاول في وقت لاحق', state: ToastStates.ERROR);
+    });
+  }
+
+
 
 }
+
+
+
+

@@ -7,6 +7,7 @@ import 'package:university_housing/moduls/bus/bus_screen.dart';
 import 'package:university_housing/moduls/fines/fines_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/notifications/notifications_screen.dart';
+import 'package:university_housing/moduls/profile/edit_profile_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
@@ -184,7 +185,12 @@ AppBar defaultAppBar({
                     : mainColors,
               ),
               onPressed: () {
-                navigateTo(context, const ProfileScreen());
+                AppCubit.get(context).getReviews();
+                if(AppCubit.get(context).profileModel!.isresident){
+                  navigateTo(context, const ProfileScreen());
+                }else{
+                  navigateTo(context, const EditProfileScreen());
+                }
               },
             ),
           ),
@@ -568,6 +574,8 @@ Widget buildDialog({
         ),
       ],
     );
+
+
 
 Widget roomBox({
   String? buildingName,

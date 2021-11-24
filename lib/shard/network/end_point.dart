@@ -24,3 +24,15 @@ const ORDER_LEAVING = 'orders/requeststoleft';
 
 const ORDER_MYORDER = 'orders/myorders';
 
+const BOOKING_ROOM = 'users/addrequesttoBookingRoom';
+
+const GET_BUILDINGS = 'buildings';
+
+const PUT_PROFILE = 'users/profile';
+
+const UPLOAD = 'upload';
+
+const REVIEWS = 'orders/review';
+
+
+

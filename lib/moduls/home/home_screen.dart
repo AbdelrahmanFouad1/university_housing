@@ -6,6 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/moduls/booking_room/booking_room1_screen.dart';
+import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
+import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/complaints/choose_complaints_screen.dart';
 import 'package:university_housing/moduls/family_report/family_report_screen.dart';
 import 'package:university_housing/moduls/news_details/news_details_screen.dart';
@@ -59,6 +61,7 @@ class HomeScreen extends StatelessWidget {
       listener: (BuildContext context, state) {
         if(state is GetProfileSuccessStates){
           AppCubit.get(context).getNews();
+          AppCubit.get(context).getNotifications();
         }
       },
       builder: (BuildContext context, Object? state) {
@@ -305,8 +308,11 @@ class HomeScreen extends StatelessWidget {
                 } else {
                   return InkWell(
                     onTap: () {
-                      navigateTo(context, BookingRoom1Screen());
-                      // AppCubit.get(context).getProfileData();
+                      if(AppCubit.get(context).profileModel!.isWaiting){
+                        navigateTo(context, ChoosePaymentMethodScreen());
+                      }else{
+                        navigateTo(context, BookingRoom1Screen());
+                      }
                     },
                     child: defaultTiTleBoxColumn(
                         img: 'assets/images/request.svg',
@@ -462,8 +468,11 @@ class HomeScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    navigateTo(context, BookingRoom1Screen());
-                  },
+                    if(AppCubit.get(context).profileModel!.isWaiting){
+                      navigateTo(context, ChoosePaymentMethodScreen());
+                    }else{
+                      navigateTo(context, BookingRoom1Screen());
+                    }                  },
                   child: defaultTiTleBoxColumn(
                     img: 'assets/images/request.svg',
                     title: 'طلب الالتحاق بالسكن',
@@ -498,7 +507,7 @@ class HomeScreen extends StatelessWidget {
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 16,
                           ),
-                          itemCount: 8,
+                          itemCount: AppCubit.get(context).newsModel!.news.length,
                         ),
                       ),
                     ],
