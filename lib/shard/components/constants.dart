@@ -1,4 +1,6 @@
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_buildings_model.dart';
+import 'package:university_housing/model/get_notifications_model.dart';
 import 'package:university_housing/model/queries_model.dart';
 import 'package:university_housing/model/students_model.dart';
 
@@ -9,6 +11,8 @@ String idDB ='';
 ComplaintsModel? currentComplaintsModel ;
 QueriesModel? currentQueriesModel ;
 StudentsModel? currentStudentsModel ;
+
+GetBuildingsModel? buildings;
 
 void printFullText(String text)
 {

@@ -16,7 +16,6 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
-
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
 
@@ -45,7 +44,9 @@ class EditProfileScreen extends StatelessWidget {
                     'assets/images/back_arrow.svg',
                     width: 18.0,
                     height: 18.0,
-                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                    color: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
                   ),
                 ),
               ],
@@ -64,15 +65,20 @@ class EditProfileScreen extends StatelessWidget {
                         child: Stack(
                           alignment: AlignmentDirectional.bottomStart,
                           children: [
-                          Builder(
-                            builder: (context){
-                              if(cubit.profileImage == null){
-                                return cubit.img;
-                              }else{
-                                return cubit.img;
-                              }
-                            },
-                          ),
+                            Builder(
+                              builder: (context) {
+                                if(cubit.profileImage == null){
+                                  return CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage: NetworkImage(
+                                      AppCubit.get(context).profileModel!.image,
+                                    ),
+                                  );
+                                }else{
+                                  return cubit.img;
+                                }
+                              },
+                            ),
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: CircleAvatar(
@@ -82,9 +88,9 @@ class EditProfileScreen extends StatelessWidget {
                                   iconSize: 20.0,
                                   icon: cubit.icon,
                                   onPressed: () {
-                                    if(cubit.profileImage != null){
-                                      cubit.deleteImg();
-                                    }else{
+                                    if (cubit.profileImage != null) {
+                                      cubit.updateImg();
+                                    } else {
                                       cubit.pikeProfileIdImage();
                                     }
                                   },
@@ -103,7 +109,10 @@ class EditProfileScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              navigateTo(context, FollowRequestsScreen(),);
+                              navigateTo(
+                                context,
+                                FollowRequestsScreen(),
+                              );
                               AppCubit.get(context).getOrderData();
                             },
                             child: Row(
@@ -117,19 +126,20 @@ class EditProfileScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     IconBroken.Arrow___Left_2,
-                                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
                                   ),
                                   onPressed: () {
                                     navigateTo(context, FollowRequestsScreen());
                                     AppCubit.get(context).getOrderData();
-                                    },
+                                  },
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               width: double.infinity,
                               height: 1.0,
@@ -138,7 +148,10 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              navigateTo(context,StudentRateScreen(),);
+                              navigateTo(
+                                context,
+                                StudentRateScreen(),
+                              );
                             },
                             child: Row(
                               children: [
@@ -151,18 +164,22 @@ class EditProfileScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     IconBroken.Arrow___Left_2,
-                                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
                                   ),
                                   onPressed: () {
-                                    navigateTo(context,StudentRateScreen(),);
+                                    navigateTo(
+                                      context,
+                                      StudentRateScreen(),
+                                    );
                                   },
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               width: double.infinity,
                               height: 1.0,
@@ -184,7 +201,9 @@ class EditProfileScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     IconBroken.Arrow___Left_2,
-                                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
                                   ),
                                   onPressed: () {
                                     navigateTo(context, AboutAppScreen());
@@ -194,8 +213,7 @@ class EditProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               width: double.infinity,
                               height: 1.0,
@@ -217,18 +235,20 @@ class EditProfileScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     IconBroken.Arrow___Left_2,
-                                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
                                   ),
                                   onPressed: () {
-                                    navigateTo(context, TechnicalSupportScreen());
+                                    navigateTo(
+                                        context, TechnicalSupportScreen());
                                   },
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding:
-                            const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               width: double.infinity,
                               height: 1.0,
@@ -250,18 +270,20 @@ class EditProfileScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     IconBroken.Arrow___Left_2,
-                                    color: ThemeCubit.get(context).darkTheme? mainTextColor : mainColors,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
                                   ),
                                   onPressed: () {
-                                    navigateTo(context, TechnicalSupportScreen());
+                                    navigateTo(
+                                        context, TechnicalSupportScreen());
                                   },
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               width: double.infinity,
                               height: 1.0,
@@ -285,46 +307,54 @@ class EditProfileScreen extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     AnimatedPositioned(
-                                      duration: const Duration(milliseconds: 1000),
+                                      duration:
+                                          const Duration(milliseconds: 1000),
                                       child: InkWell(
                                         onTap: () {
                                           cubit.toggleButton();
                                           ThemeCubit.get(context).changeTheme();
                                         },
                                         child: AnimatedSwitcher(
-                                          duration:
-                                              const Duration(milliseconds: 1000),
+                                          duration: const Duration(
+                                              milliseconds: 1000),
                                           transitionBuilder: (Widget child,
                                               Animation<double> animation) {
                                             return RotationTransition(
-                                                child: child,
-                                                turns: animation);
+                                                child: child, turns: animation);
                                           },
-                                          child: ThemeCubit.get(context).darkTheme ? Icon(
-                                                  Icons.nightlight_round,
-                                                  color: Colors.white,
-                                                  size: 20.0,
-                                                  key: UniqueKey(),
-                                                ) : Icon(
-                                                  Icons.wb_sunny_sharp,
-                                                  color: Colors.amberAccent,
-                                                  size: 20.0,
-                                                  key: UniqueKey(),
-                                                ),
+                                          child:
+                                              ThemeCubit.get(context).darkTheme
+                                                  ? Icon(
+                                                      Icons.nightlight_round,
+                                                      color: Colors.white,
+                                                      size: 20.0,
+                                                      key: UniqueKey(),
+                                                    )
+                                                  : Icon(
+                                                      Icons.wb_sunny_sharp,
+                                                      color: Colors.amberAccent,
+                                                      size: 20.0,
+                                                      key: UniqueKey(),
+                                                    ),
                                         ),
                                       ),
                                       curve: Curves.easeIn,
                                       top: 5.0,
-                                      right: ThemeCubit.get(context).darkTheme ? 40.0 : 0.0,
-                                      left: ThemeCubit.get(context).darkTheme ? 0.0 : 40.0,
+                                      right: ThemeCubit.get(context).darkTheme
+                                          ? 40.0
+                                          : 0.0,
+                                      left: ThemeCubit.get(context).darkTheme
+                                          ? 0.0
+                                          : 40.0,
                                     ),
                                   ],
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.0),
-                                  color: ThemeCubit.get(context).darkTheme == true
-                                      ? mainColors
-                                      : Colors.white,
+                                  color:
+                                      ThemeCubit.get(context).darkTheme == true
+                                          ? mainColors
+                                          : Colors.white,
                                 ),
                               )
                             ],
@@ -334,7 +364,7 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                           defaultButton(
                             text: 'تسجيل خروج',
-                            function: (){
+                            function: () {
                               CacheHelper.removeData(key: 'token');
                               CacheHelper.removeData(key: 'isStudent');
                               CacheHelper.removeData(key: 'isSecurity');
@@ -342,6 +372,10 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
                               navigateAndFinish(context, LoginScreen());
+                              // var token = CacheHelper.removeData(key: 'token');
+                              // var isStudent = CacheHelper.removeData(key: 'token');
+                              // print('------looooool${token}');
+                              // print('------looooool2${isStudent}');
                             },
                             btnColor: Colors.red,
                             fontSize: 20,

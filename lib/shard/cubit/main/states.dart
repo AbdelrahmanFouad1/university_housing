@@ -8,6 +8,8 @@ class ImagePickedSuccessState extends AppStates {}
 
 class RemovePikeIdImageState extends AppStates {}
 
+class ImageRemoveSuccessState extends AppStates {}
+
 class ImagePickedErrorState extends AppStates {}
 
 class ChangeStudentState extends AppStates {}
@@ -17,8 +19,6 @@ class ChangeReasonState extends AppStates {}
 class DoubleClickState extends AppStates {}
 
 class ChangeThemeSuccessState extends AppStates {}
-
-class ImageRemoveSuccessState extends AppStates {}
 
 class SelectHouseSuccessState extends AppStates {}
 
@@ -36,7 +36,7 @@ class ChangeFloorState extends AppStates {}
 
 class ChangeRoomState extends AppStates {}
 
-class ChangeStudentJobState extends AppStates {}
+class ChangeTermState extends AppStates {}
 
 class ChangeKindState extends AppStates {}
 
@@ -170,6 +170,54 @@ class GetOrderErrorStates extends AppStates {
 
 
 
+// booking room api
+class PostBookingLoadingStates extends AppStates {}
+class PostBookingSuccessStates extends AppStates {}
+class PostBookingErrorStates extends AppStates {
+  final String error;
+  PostBookingErrorStates(this.error);
+}
 
 
+// get buildings from api
+class GetBuildingDataLoadingStates extends AppStates {}
+class GetBuildingDataSuccessStates extends AppStates {}
+class GetBuildingDataErrorStates extends AppStates {
+  final String error;
+  GetBuildingDataErrorStates(this.error);
+}
+class GetFloorAndRoomSuccessStates extends AppStates {}
 
+
+// get notifications from api
+class GetNotificationsLoadingStates extends AppStates {}
+class GetNotificationsSuccessStates extends AppStates {}
+class GetNotificationsErrorStates extends AppStates {
+  final String error;
+  GetNotificationsErrorStates(this.error);
+}
+
+// get rate from api
+class GetReviewsSuccessStates extends AppStates {}
+class GetReviewsErrorStates extends AppStates {
+  final String error;
+  GetReviewsErrorStates(this.error);
+}
+
+
+//post rate to api
+
+class PostReviewLoadingStates extends AppStates {}
+class PostReviewSuccessStates extends AppStates {}
+class PostReviewErrorStates extends AppStates {
+  final String error;
+  PostReviewErrorStates(this.error);
+}
+
+// update profile image
+class UpdateImgLoadingStates extends AppStates {}
+class UpdateImgSuccessState extends AppStates {}
+class UpdateImgErrorStates extends AppStates {
+  final String error;
+  UpdateImgErrorStates(this.error);
+}

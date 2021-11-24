@@ -12,19 +12,17 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class ChoosePaymentMethodScreen extends StatelessWidget {
   const ChoosePaymentMethodScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (create)=> AppCubit(),
-      child: BlocConsumer<AppCubit,AppStates>(
-        listener: (context,state){},
-        builder: (context,state){
-          // var cubit = AppCubit.get(context);
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: defaultAppBar(context: context),
-              body: SingleChildScrollView(
+    return BlocConsumer<AppCubit,AppStates>(
+      listener: (context,state){},
+      builder: (context,state){
+        // var cubit = AppCubit.get(context);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            appBar: defaultAppBar(context: context,pop: false),
+            body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -115,8 +113,8 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                                     'رفع الإيصال',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white
+                                        fontSize: 16.0,
+                                        color: Colors.white
                                     ),
                                   ),
                                 ),
@@ -140,8 +138,8 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                                     'الدفع الكترونيا',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white
+                                        fontSize: 16.0,
+                                        color: Colors.white
                                     ),
                                   ),
                                 ),
@@ -164,10 +162,9 @@ class ChoosePaymentMethodScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      ) ,
+          ),
+        );
+      },
     );
   }
 }
