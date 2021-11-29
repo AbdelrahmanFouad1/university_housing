@@ -60,6 +60,7 @@ class HomeScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (BuildContext context, state) {
         if(state is GetProfileSuccessStates){
+          showToast(message: 'تم تسجيل الدخول بنجاح', state: ToastStates.SUCCESS);
           AppCubit.get(context).getNews();
           AppCubit.get(context).getNotifications();
         }

@@ -6,12 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/buidings_model.dart';
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/model/queries_model.dart';
 import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
+import 'package:university_housing/shard/network/end_point.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
+import 'package:university_housing/shard/network/remote/dio_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
@@ -20,7 +24,26 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
   static DashBoardCubit get(context) => BlocProvider.of(context);
 
+  ProfileModel? profileModel;
+  String? tokeen = CacheHelper.getData(key: 'token');
 
+  void getDashProfileData() {
+    emit(GetProfileLoadingStates());
+
+    DioHelper.getData(
+      url: USERS_PROFILE,
+      token: tokeen ?? '',
+    ).then((value) {
+      if (value != null) {
+        // printFullText(value.data.toString());
+        profileModel = ProfileModel.fromJson(value.data);
+        emit(GetProfileSuccessStates());
+      }
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetProfileErrorStates(error.toString()));
+    });
+  }
 
   // Add building
   bool isSpecial = true;

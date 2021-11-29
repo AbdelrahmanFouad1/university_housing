@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:university_housing/model/login_model.dart';
+import 'package:university_housing/moduls/dash_board/dash_home_screen.dart';
 import 'package:university_housing/moduls/home/home_screen.dart';
 import 'package:university_housing/moduls/login/cubit/cubit.dart';
 import 'package:university_housing/moduls/security/main_security_screen.dart';
@@ -32,9 +33,6 @@ class LoginScreen extends StatelessWidget {
         listener: (BuildContext context, state) async {
           if (state is LoginSuccessStates) {
             LoginCubit.get(context).buttonController.stop();
-            if (state.loginModel.isStudent) {
-              // print(state.loginModel.token);
-              // print(state.loginModel.idDB);
               CacheHelper.saveData(key: 'token', value: state.loginModel.token)
                   .then((value) {
                 token = state.loginModel.token;
@@ -44,22 +42,18 @@ class LoginScreen extends StatelessWidget {
                 CacheHelper.saveData(key: 'isHousingManager', value: state.loginModel.isHousingManager);
                 CacheHelper.saveData(key: 'isStudentAffairs', value: state.loginModel.isStudentAffairs);
                 CacheHelper.saveData(key: 'isresident', value: state.loginModel.isresident);
-                navigateAndFinish(context,
-                    HomeScreen(isRegister: state.loginModel.isresident));
+                if (state.loginModel.isStudent) {
+                    navigateAndFinish(context, HomeScreen(isRegister: state.loginModel.isresident));
+                }
+                if (state.loginModel.isSecurity) {
+                    navigateAndFinish(context, MainSecurityScreen());
+                }
+                if (state.loginModel.isHousingManager) {
+                    navigateAndFinish(context, const DashHomeScreen());
+                }
+
               });
-            }
-            if (state.loginModel.isSecurity) {
-              CacheHelper.saveData(key: 'token', value: state.loginModel.token)
-                  .then((value) {
-                CacheHelper.saveData(key: 'isStudent', value: state.loginModel.isStudent);
-                CacheHelper.saveData(key: 'isSecurity', value: state.loginModel.isSecurity);
-                CacheHelper.saveData(key: 'isHousingManager', value: state.loginModel.isHousingManager);
-                CacheHelper.saveData(key: 'isStudentAffairs', value: state.loginModel.isStudentAffairs);
-                token = state.loginModel.token;
-                idDB = state.loginModel.idDB!;
-                navigateAndFinish(context, MainSecurityScreen());
-              });
-            }
+
           }
         },
         builder: (BuildContext context, Object? state) {

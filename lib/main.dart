@@ -41,7 +41,7 @@ void main() async {
       }else if(isSecurity == true){
         widget =  MainSecurityScreen();
       }else if(isHousingManager == true){
-        widget =  DashHomeScreen();
+        widget =  const DashHomeScreen();
       }else {
         widget =  LoginScreen();
       }
@@ -73,10 +73,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
         BlocProvider(create: (BuildContext context) => ThemeCubit()..changeTheme(fromShared: isDark),),
-        BlocProvider(create: (BuildContext context) => AppCubit()..getProfileData()..getBuildings()
-    ),
-        BlocProvider(create: (context) => SecurityCubit()),
-        BlocProvider(create: (context) => DashBoardCubit()),
+        BlocProvider(create: (BuildContext context) => AppCubit()..getProfileData()..getBuildings()),
+        BlocProvider(create: (BuildContext context) => DashBoardCubit()..getDashProfileData()),
+        BlocProvider(create: (BuildContext context) => SecurityCubit()..getSecurityProfileData()),
+
       ],
       child: BlocConsumer<ThemeCubit, ThemeStates>(
         listener: (BuildContext context, state) {

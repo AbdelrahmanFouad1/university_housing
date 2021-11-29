@@ -2,6 +2,15 @@ abstract class DashBoardStates {}
 
 class DashBoardInitialState extends DashBoardStates {}
 
+//get profile data from API
+class GetProfileLoadingStates extends DashBoardStates {}
+class GetProfileSuccessStates extends DashBoardStates {}
+class GetProfileErrorStates extends DashBoardStates {
+  final String error;
+
+  GetProfileErrorStates(this.error);
+}
+
 // add building
 class ChangeBuildingLevel extends DashBoardStates {}
 class ChangeBuildingStatues extends DashBoardStates {}
