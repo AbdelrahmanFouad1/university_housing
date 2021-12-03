@@ -13,7 +13,8 @@ class ProfileModel{
   late bool isHousingManager;
   late bool isStudentAffairs;
   late bool isPaid;
-  late String paidAt;
+  //todo cant fetch
+  String? paidAt;
   late String paymentMethod;
   late bool isresident;
   late int numofAttendanceDays;
@@ -24,7 +25,7 @@ class ProfileModel{
   late int floor;
   late bool isFine;
    List<AttendancesModel> attendances = [];
-   List<ExitandEntersModel> ExitandEnters = [];
+   List<ExitAndEntersModel> ExitandEnters = [];
    List<FinesModel> fines = [];
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -42,7 +43,6 @@ class ProfileModel{
     isHousingManager = json['isHousingManager'];
     isStudentAffairs = json['isStudentAffairs'];
     isPaid = json['isPaid'];
-    paidAt = json['paidAt'];
     paymentMethod = json['paymentMethod'];
     isresident = json['isresident'];
     numofAttendanceDays = json['numofAttendanceDays'];
@@ -56,6 +56,12 @@ class ProfileModel{
       isFine = json['isFine'];
     }
 
+    if (json['paidAt'] != null) {
+      paidAt = json['paidAt'];
+    }else{
+      paidAt = '';
+    }
+
 
       json['attendances'].forEach((element) {
         attendances.add(AttendancesModel.fromJson(element));
@@ -63,7 +69,7 @@ class ProfileModel{
 
 
       json['ExitandEnters'].forEach((element) {
-        ExitandEnters.add(ExitandEntersModel.fromJson(element));
+        ExitandEnters.add(ExitAndEntersModel.fromJson(element));
       });
 
     json['fines'].forEach((element) {
@@ -74,7 +80,7 @@ class ProfileModel{
   }
 }
 
-class ExitandEntersModel {
+class ExitAndEntersModel {
   late String enterAt;
   late String exitAt;
   late String enterDate;
@@ -94,7 +100,7 @@ class ExitandEntersModel {
   //       required this.createdAt,
   //       required this.updatedAt});
 
-  ExitandEntersModel.fromJson(Map<String, dynamic> json) {
+  ExitAndEntersModel.fromJson(Map<String, dynamic> json) {
     enterAt = json['enterAt'];
     exitAt = json['exitAt'];
     enterDate = json['enterDate'];

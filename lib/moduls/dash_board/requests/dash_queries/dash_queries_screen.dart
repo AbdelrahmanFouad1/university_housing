@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/model/buidings_model.dart';
-import 'package:university_housing/model/complaints_model.dart';
 import 'package:university_housing/model/queries_model.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_details_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_queries/dash_queries_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';

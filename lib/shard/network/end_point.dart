@@ -34,5 +34,11 @@ const UPLOAD = 'upload';
 
 const REVIEWS = 'orders/review';
 
+const ADD_BUILDING = 'buildings/createbuilding';
+
+const ROOMS_NUM = 'buildings/rooms';
+
+const CREATE_NEWS = 'news/createnews';
+
 
 

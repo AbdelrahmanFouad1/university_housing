@@ -12,15 +12,27 @@ class AddBuilding extends StatelessWidget {
   var codeController = TextEditingController();
   var nameController = TextEditingController();
   var addressController = TextEditingController();
-  var student_roomController = TextEditingController();
-  var employee_roomController = TextEditingController();
   var manager_nameController = TextEditingController();
   var manager_phoneController = TextEditingController();
+  var costController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
-        listener: (context,state){},
+        listener: (context,state){
+          if(state is postBuildingSuccessStates ){
+            navigateTo(context, AddingSuccessScreen());
+          }
+          if(state is postBuildingLoadingStates ){
+            showDialog<void>(
+                context: context,
+                builder: (context)=> waitingDialog(context: context)
+            );
+          }
+          if (state is postBuildingErrorStates ){
+            Navigator.pop(context);
+          }
+        },
         builder: (context,state){
           var cubit = DashBoardCubit.get(context);
           return Directionality(
@@ -75,24 +87,6 @@ class AddBuilding extends StatelessWidget {
 
                       dashTextFormField(
                         context: context,
-                        type: TextInputType.number,
-                        controller: student_roomController,
-                        hint: 'عدد غرف الطلبة',
-                      ),
-                      SizedBox(height: 12.0,),
-
-
-                      dashTextFormField(
-                        context: context,
-                        type: TextInputType.number,
-                        controller: employee_roomController,
-                        hint: 'عدد غرف العاملين',
-                      ),
-                      SizedBox(height: 12.0,),
-
-
-                      dashTextFormField(
-                        context: context,
                         type: TextInputType.text,
                         controller: manager_nameController,
                         hint: 'اسم مشرف المبنى',
@@ -106,7 +100,15 @@ class AddBuilding extends StatelessWidget {
                         hint: 'رقم المشرف',
                       ),
 
+                      SizedBox(height: 12.0,),
+                      dashTextFormField(
+                        context: context,
+                        type: TextInputType.number,
+                        controller: costController,
+                        hint: 'سعر الغرف',
+                      ),
 
+                      //level
                       SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -193,6 +195,8 @@ class AddBuilding extends StatelessWidget {
                         ),
                       ),
 
+
+                      //status
                       SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -279,6 +283,93 @@ class AddBuilding extends StatelessWidget {
                         ),
                       ),
 
+                      //gender
+                      SizedBox(height: 12.0,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'النوع :',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: true,
+                                      groupValue: cubit.isBoy,
+                                      activeColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changeGenderStatues(true);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'ذكور',
+                                    style:
+                                    Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 10.0,),
+                                  SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: Radio(
+                                      value: false,
+                                      groupValue: cubit.isBoy,
+                                      activeColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      focusColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      hoverColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      onChanged: (value) {
+                                        cubit.changeGenderStatues(false);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    'إناث',
+                                    style:
+                                    Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       // button
                       SizedBox(height: 12.0,),
                       Container(
@@ -294,8 +385,8 @@ class AddBuilding extends StatelessWidget {
                                 context: context,
                                 code: codeController.text,
                                 managerName: manager_nameController.text,
-                                numOfEmployee: employee_roomController.text,
-                                numOfStudents: employee_roomController.text
+                                cost: costController.text,
+                                cubit: cubit,
                               );
                             },
                             text: 'تأكيد',
@@ -320,10 +411,10 @@ void validation({
   required String code,
   required String name,
   required String address,
-  required String numOfStudents,
-  required String numOfEmployee,
   required String managerName,
   required String managerPhone,
+  required String cost,
+  required DashBoardCubit cubit,
 }){
   if(code.isEmpty){
     showToast(message: 'أدخل الكوود', state: ToastStates.ERROR);
@@ -331,17 +422,27 @@ void validation({
     showToast(message: 'أدخل اسم المبنى', state: ToastStates.ERROR);
   }else if(address.isEmpty){
     showToast(message: 'أدخل العنوان', state: ToastStates.ERROR);
-  }else if(numOfStudents.isEmpty){
-    showToast(message: 'أدخل عدد غرف الطلبة', state: ToastStates.ERROR);
-  }else if(numOfEmployee.isEmpty){
-    showToast(message: 'أدخل عدد غرف العاملين', state: ToastStates.ERROR);
   }else if(managerName.isEmpty){
     showToast(message: 'أدخل اسم المشرف', state: ToastStates.ERROR);
   }else if(managerPhone.isEmpty){
     showToast(message: 'أدخل رقم المشرف', state: ToastStates.ERROR);
   }else if(managerPhone.length != 11){
     showToast(message: 'رقم الموبيل غير صحيح', state: ToastStates.ERROR);
+  }else if(cost.isEmpty){
+    showToast(message: 'أدخل سعر الغرف', state: ToastStates.ERROR);
   }else{
-    navigateTo(context, AddingSuccessScreen());
+    DashBoardCubit.get(context).postBuilding(
+        buildingName: name,
+        buildingCode: code,
+        slug: code,
+        buildingLevels: cubit.isSpecial,
+        image: "/uploads/image-1632876610271.jpg",
+        gender: cubit.isBoy,
+        availability: cubit.isWorking,
+        address: address,
+        buildingsupervisorName: managerName,
+        buildingsupervisorPhonenumber: managerPhone,
+        cost: int.parse(cost),
+    );
   }
 }

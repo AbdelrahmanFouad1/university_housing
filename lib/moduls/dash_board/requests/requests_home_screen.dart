@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_family/dash_family_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_hosts/dash_hosts_screen.dart';
