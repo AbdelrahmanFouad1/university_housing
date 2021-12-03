@@ -115,4 +115,31 @@ class DioHelper{
   }
 
 
+
+  static Future<Response?> deleteData({
+    required String url,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? query,
+    String? token,
+  })async
+  {
+    try{
+      return await dio.delete(
+        url,
+        data: data,
+        queryParameters: query,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ${token??''}'
+          },
+        ),
+      );
+    }on DioError catch(e){
+      var message =  e.response!.data['message'].toString();
+      showToast(message: message, state: ToastStates.ERROR);
+    }
+
+  }
+
 }

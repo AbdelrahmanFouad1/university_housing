@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -576,6 +577,36 @@ Widget buildDialog({
     );
 
 
+Widget waitingDialog({
+  required context
+})=>
+    AlertDialog(
+      backgroundColor: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+      contentPadding: EdgeInsets.zero,
+      content: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+            ),
+            height: 120.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 12.0,),
+                Text(
+                  'برجاء الأنتظار ...',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ],
+            )),
+      ),
+    );
+
+
+
 
 Widget roomBox({
   String? buildingName,
@@ -744,7 +775,7 @@ Widget dashTextFormField({
           hintStyle: Theme.of(context).textTheme.bodyText1,
           contentPadding: const EdgeInsetsDirectional.all(10.0),
         ),
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     );
 
@@ -807,11 +838,11 @@ Widget switchedTextFormField({
           contentPadding: EdgeInsets.zero,
           hintStyle: Theme.of(context).textTheme.bodyText1,
         ),
-        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true
+        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true
             ? false
             : true,
         enableInteractiveSelection:
-            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true
+            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true
                 ? true
                 : false,
         style: Theme.of(context).textTheme.bodyText1,

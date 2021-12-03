@@ -17,7 +17,20 @@ class AddNewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PostNewsSuccessStates ){
+          navigateTo(context, AddingSuccessScreen());
+        }
+        if(state is PostNewsLoadingStates ){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }
+        if (state is PostNewsErrorStates ){
+          Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
         var cubit = DashBoardCubit.get(context);
         return Directionality(
@@ -43,7 +56,7 @@ class AddNewsScreen extends StatelessWidget {
                     whiteBoard(
                         context,
                         hint: 'الموضوع ...',
-                        controller: bodyController
+                        controller: bodyController,
                     ),
                     SizedBox(height: 12.0,),
                     Builder(
@@ -146,9 +159,10 @@ class AddNewsScreen extends StatelessWidget {
                           context: context,
                           title: titleController.text,
                           body: bodyController.text,
+                          cubit: cubit,
                         );
                       },
-                      text: 'تقديم الطلب',
+                      text: 'إضافة الخبر',
                       width: double.infinity,
                       height: 47.0,
                       btnColor: mainColors,
@@ -168,12 +182,17 @@ void validation({
   required context,
   required String title,
   required String body,
+  required DashBoardCubit cubit,
 }){
   if(title.isEmpty){
     showToast(message: 'أدخل عنوان الخبر', state: ToastStates.ERROR);
   }else if(body.isEmpty){
     showToast(message: 'أدخل الموضوع', state: ToastStates.ERROR);
   }else{
-    navigateTo(context, AddingSuccessScreen());
+    cubit.postNews(
+      title: title,
+      text: body,
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BBC_News_%282008%29.svg/1200px-BBC_News_%282008%29.svg.png'
+    );
   }
 }

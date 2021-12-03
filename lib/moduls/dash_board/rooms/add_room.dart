@@ -10,7 +10,7 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class AddRoom extends StatelessWidget {
   AddRoom({Key? key}) : super(key: key);
   var codeController = TextEditingController();
-  var nameController = TextEditingController();
+  var roomCodeController = TextEditingController();
   var roomNumberController= TextEditingController();
   var floorNumberController = TextEditingController();
   var priceController = TextEditingController();
@@ -18,7 +18,20 @@ class AddRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
-        listener: (context,state){},
+        listener: (context,state){
+          if(state is postRoomSuccessStates ){
+            navigateTo(context, AddingSuccessScreen());
+          }
+          if(state is postRoomLoadingStates ){
+            showDialog<void>(
+                context: context,
+                builder: (context)=> waitingDialog(context: context)
+            );
+          }
+          if (state is postRoomErrorStates ){
+            Navigator.pop(context);
+          }
+        },
         builder: (context,state){
           var cubit = DashBoardCubit.get(context);
           return Directionality(
@@ -56,8 +69,8 @@ class AddRoom extends StatelessWidget {
                       dashTextFormField(
                         context: context,
                         type: TextInputType.text,
-                        controller: nameController,
-                        hint: 'اسم المبنى',
+                        controller: roomCodeController,
+                        hint: 'كوود الغرفة',
                       ),
                       SizedBox(height: 12.0,),
 
@@ -80,14 +93,7 @@ class AddRoom extends StatelessWidget {
                       SizedBox(height: 12.0,),
 
 
-                      dashTextFormField(
-                        context: context,
-                        type: TextInputType.number,
-                        controller: priceController,
-                        hint: 'السعر',
-                      ),
-
-                      SizedBox(height: 12.0,),
+                      // type
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -106,7 +112,7 @@ class AddRoom extends StatelessWidget {
                                     height: 20.0,
                                     child: Radio(
                                       value: true,
-                                      groupValue: cubit.isSingle,
+                                      groupValue: cubit.isSpecialRoom,
                                       activeColor:
                                       ThemeCubit.get(context).darkTheme
                                           ? mainTextColor
@@ -140,7 +146,7 @@ class AddRoom extends StatelessWidget {
                                     height: 20.0,
                                     child: Radio(
                                       value: false,
-                                      groupValue: cubit.isSingle,
+                                      groupValue: cubit.isSpecialRoom,
                                       activeColor:
                                       ThemeCubit.get(context).darkTheme
                                           ? mainTextColor
@@ -173,6 +179,7 @@ class AddRoom extends StatelessWidget {
                         ),
                       ),
 
+                      // room for
                       SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -259,6 +266,7 @@ class AddRoom extends StatelessWidget {
                         ),
                       ),
 
+                      //status
                       SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -354,12 +362,12 @@ class AddRoom extends StatelessWidget {
                         child: defaultButton(
                             function: () {
                               validation(
-                                name: nameController.text,
                                 context: context,
-                                code: codeController.text,
-                                floorNumber: floorNumberController.text,
-                                price: priceController.text,
-                                roomNumber: roomNumberController.text
+                                  roomCode: roomCodeController.text,
+                                  code: codeController.text,
+                                  floorNumber: floorNumberController.text,
+                                  roomNumber: roomNumberController.text,
+                                cubit: cubit,
                               );
                             },
                             text: 'تأكيد',
@@ -382,22 +390,28 @@ class AddRoom extends StatelessWidget {
 void validation({
   required context,
   required String code,
-  required String name,
+  required String roomCode,
   required String roomNumber,
   required String floorNumber,
-  required String price,
+  required DashBoardCubit cubit,
 }){
   if(code.isEmpty){
-    showToast(message: 'أدخل الكوود', state: ToastStates.ERROR);
-  }else if(name.isEmpty){
-    showToast(message: 'أدخل اسم المبنى', state: ToastStates.ERROR);
+    showToast(message: 'أدخل كوود المبنى', state: ToastStates.ERROR);
+  }else if(roomCode.isEmpty){
+    showToast(message: 'أدخل كوود الغرفة', state: ToastStates.ERROR);
   }else if(roomNumber.isEmpty){
     showToast(message: 'أدخل رقم الغرفة', state: ToastStates.ERROR);
   }else if(floorNumber.isEmpty){
     showToast(message: 'أدخل رقم الدور', state: ToastStates.ERROR);
-  }else if(price.isEmpty){
-    showToast(message: 'أدخل السعر', state: ToastStates.ERROR);
   }else{
-    navigateTo(context, AddingSuccessScreen());
+    cubit.postRoom(
+        slug: code,
+        availability: cubit.available,
+        type: cubit.isSpecialRoom,
+        roomfor: cubit.isStudent,
+        roomcode: roomCode,
+        floor: int.parse(floorNumber),
+        roomnumber: int.parse(roomNumber),
+    );
   }
 }
