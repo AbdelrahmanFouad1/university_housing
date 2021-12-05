@@ -115,8 +115,13 @@ class ShowSecurityDetails extends DashBoardStates {}
 class ChangeSecurityEditIcon extends DashBoardStates {}
 
 //requests
-class SavingCurrentComplaintsModelSuccess extends DashBoardStates {}
-class SavingCurrentQueriesModelSuccess extends DashBoardStates {}
+class GetAllOrdersLoadingStates extends DashBoardStates {}
+class GetAllOrdersSuccessStates extends DashBoardStates {}
+class GetAllOrdersErrorStates extends DashBoardStates {
+  final String error;
+
+  GetAllOrdersErrorStates(this.error);
+}
 
 
 //changePassword

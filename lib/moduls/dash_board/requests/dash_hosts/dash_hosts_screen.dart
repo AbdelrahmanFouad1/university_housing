@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_hosts/dash_hosts_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -66,14 +67,14 @@ class DashHostsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(context),
+                        itemBuilder: (context, index) => GuestItem(context,item: cubit.allOrders!.guestOrders![index]),
                         separatorBuilder: (context, index) => Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: 2,
+                        itemCount: cubit.allOrders!.guestOrders!.length,
                       ),
                     ),
                   ],
@@ -88,24 +89,28 @@ class DashHostsScreen extends StatelessWidget {
 }
 
 
-Widget ComplaintsItem(
-    context,
+Widget GuestItem(
+    context,{
+      required GuestOrders item,
+    }
     ) {
   return InkWell(
     onTap: (){
-      navigateTo(context, DashHostsDetailsScreen());
+      navigateTo(context, DashHostsDetailsScreen(
+        guestItem: item,
+      ));
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            'احمد سعيد علي محمد',
+            item.user.username,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Expanded(
           child: Text(
-            '42019006',
+            item.user.id.toString(),
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -115,7 +120,9 @@ Widget ComplaintsItem(
           height: 30.0,
           child: IconButton(
             onPressed: () {
-              navigateTo(context, DashHostsDetailsScreen());
+              navigateTo(context, DashHostsDetailsScreen(
+                guestItem: item,
+              ));
             },
             icon: Icon(
               Icons.keyboard_arrow_down,

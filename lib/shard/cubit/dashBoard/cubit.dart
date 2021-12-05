@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_buildings_model.dart';
 import 'package:university_housing/model/get_num_rooms_model.dart';
 import 'package:university_housing/model/news_model.dart';
@@ -592,14 +593,22 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 // requests
 
-    void savingCurrentComplaintsModel(ComplaintsModel item) {
-    currentComplaintsModel = item;
-    emit(SavingCurrentComplaintsModelSuccess());
-  }
-
-  void savingCurrentQueriesModel(QueriesModel item) {
-    currentQueriesModel = item;
-    emit(SavingCurrentQueriesModelSuccess());
+  GetAllOrdersModel? allOrders;
+  void GetAllOrders() {
+    emit(GetAllOrdersLoadingStates());
+    DioHelper.getData(
+      url: ALL_ORDERS,
+      token: tokeen ?? '',
+    ).then((value) {
+      if (value != null) {
+        allOrders = GetAllOrdersModel.fromJson(value.data);
+        print(allOrders!.leftOrders.length.toString());
+        emit(GetAllOrdersSuccessStates());
+      }
+    }).catchError((error) {
+      print('erooooor'+error.toString());
+      emit(GetAllOrdersErrorStates(error.toString()));
+    });
   }
 
 

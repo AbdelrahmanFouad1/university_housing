@@ -40,5 +40,7 @@ const ROOMS_NUM = 'buildings/rooms';
 
 const CREATE_NEWS = 'news/createnews';
 
+const ALL_ORDERS = 'orders/allOrders';
+
 
 

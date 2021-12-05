@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -11,6 +12,15 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashFamilyDetailsScreen extends StatelessWidget {
+
+  DashFamilyDetailsScreen({
+    Key? key,
+    required this.familyItem,
+  }): super(key: key);
+
+  FamilyOrders? familyItem;
+
+
   var managerController = TextEditingController();
   var now = new DateTime.now();
 
@@ -60,7 +70,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'TTM52',
+                                  '${familyItem!.idDB}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -84,7 +94,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'احمد سعيد علي محمد',
+                                  '${familyItem!.user.username}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -108,7 +118,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '42019006',
+                                  '${familyItem!.user.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -132,7 +142,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '19',
+                                  '${familyItem!.user.roomnumber.toString()}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -156,7 +166,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'عماره الزهراء',
+                                  '${familyItem!.user.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -180,7 +190,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'Nov 12, 2021',
+                                  '${familyItem!.createdAt}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -239,7 +249,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                     child: SingleChildScrollView(
                                       physics: BouncingScrollPhysics(),
                                       child: Text(
-                                        'هنالك العديد من الأنواع المتوفرة لنصوص لوريم إيبسوم، ولكن الغالبية تم تعديلها بشكل ما عبر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات أو عبارات محرجة أو غير لائقة مخبأة في هذا النص. بينما تعمل جميع مولّدات نصوص لوريم إيبسوم على الإنترنت على إعادة تكرار مقاطع من نص لوريم إيبسوم نفسه عدة مرات بما تتطلبه الحاجة، يقوم مولّدنا هذا باستخدام كلمات من قاموس يحوي على أكثر من 200 كلمة لا تينية، مضاف إليها مجموعة من الجمل النموذجية، لتكوين نص لوريم إيبسوم ذو شكل منطقي قريب إلى النص الحقيقي. وبالتالي يكون النص الناتح خالي من التكرار، أو أي كلمات أو عبارات غير لائقة أو ما شابه. وهذا ما يجعله أول مولّد نص لوريم إيبسوم حقيقي على الإنترنت.',
+                                        '${familyItem!.reason}',
                                         style: Theme.of(context).textTheme.bodyText1,
                                       ),
                                     ),

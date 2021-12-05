@@ -204,6 +204,7 @@ class DashHomeScreen extends StatelessWidget {
                     const SizedBox(height: 12.0,),
                     InkWell(
                       onTap: (){
+                        cubit.GetAllOrders();
                         navigateTo(context, const RequestsHomeScreen());
                       },
                       child: defaultDashBoardTitleBox(
