@@ -1,61 +1,60 @@
 class ProfileModel{
-  late String idDB;
   late int id;
-  late String username;
   late bool gender;
-  late String image;
-  late String address;
   late int NationalID;
-  late String cardPhoto;
   late bool isEmployee;
   late bool isStudent;
   late bool isSecurity;
   late bool isHousingManager;
   late bool isStudentAffairs;
   late bool isPaid;
-  //todo cant fetch
   late dynamic paidAt;
-  late String paymentMethod;
   late bool isresident;
   late int numofAttendanceDays;
   late bool isWaiting;
-  late String buildingName;
   late bool buildingType;
   late int roomnumber;
   late int floor;
   late bool isFine;
+  late String paymentMethod;
+  late String username;
+  late String image;
+  late String address;
+  late String cardPhoto;
+  late String idDB;
+  late String buildingName;
    List<AttendancesModel> attendances = [];
    List<ExitAndEntersModel> ExitandEnters = [];
    List<FinesModel> fines = [];
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    idDB = json['_id'];
+    idDB = json['_id']?? 'empty';
     id = json['id'];
-    username = json['username'];
+    username = json['username']?? 'empty';
     gender = json['gender'];
-    image = json['image'];
-    address = json['address'];
+    image = json['image']?? 'empty';
+    address = json['address']?? 'empty';
     NationalID = json['NationalID'];
-    cardPhoto = json['cardPhoto'];
+    cardPhoto = json['cardPhoto']?? 'empty';
     isEmployee = json['isEmployee'];
     isStudent = json['isStudent'];
     isSecurity = json['isSecurity'];
     isHousingManager = json['isHousingManager'];
     isStudentAffairs = json['isStudentAffairs'];
     isPaid = json['isPaid'];
-    paymentMethod = json['paymentMethod'];
+    paymentMethod = json['paymentMethod'] ?? 'empty';
     isresident = json['isresident'];
     numofAttendanceDays = json['numofAttendanceDays'];
     isWaiting = json['isWaiting'];
-    buildingName = json['buildingName'];
+    buildingName = json['buildingName']?? 'empty';
     buildingType = json['buildingType'];
     roomnumber = json['roomnumber'];
     floor = json['floor'];
     isFine = json['isFine'] ?? 'empty';
-    paidAt = json['paidAt'] ?? 'empty';
 
-
-
+    if(json['paidAt'] != null){
+      paidAt = json['paidAt'];
+    }
 
       json['attendances'].forEach((element) {
         attendances.add(AttendancesModel.fromJson(element));

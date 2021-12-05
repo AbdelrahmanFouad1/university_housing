@@ -30,6 +30,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   String? tokeen = CacheHelper.getData(key: 'token');
 
   void getDashProfileData() {
+    print('----------get Profile Data----------');
     emit(GetProfileLoadingStates());
 
     DioHelper.getData(
@@ -41,7 +42,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         emit(GetProfileSuccessStates());
       }
     }).catchError((error) {
-      print(error.toString());
+      print('----------get Profile Data---------- Error  ${error.toString()}');
       emit(GetProfileErrorStates(error.toString()));
     });
   }
@@ -595,6 +596,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
   GetAllOrdersModel? allOrders;
   void GetAllOrders() {
+    print('----------get all order----------');
     emit(GetAllOrdersLoadingStates());
     DioHelper.getData(
       url: ALL_ORDERS,
@@ -602,11 +604,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     ).then((value) {
       if (value != null) {
         allOrders = GetAllOrdersModel.fromJson(value.data);
-        print(allOrders!.leftOrders.length.toString());
+        // print(allOrders!.leftOrders.length.toString());
         emit(GetAllOrdersSuccessStates());
       }
     }).catchError((error) {
-      print('erooooor'+error.toString());
+      print('get all order '+error.toString());
       emit(GetAllOrdersErrorStates(error.toString()));
     });
   }
