@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:university_housing/moduls/dash_board/add_news/add_news_screen.dart';
 import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/requests_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
@@ -14,6 +13,8 @@ import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+
+import 'news/news_screen.dart';
 class DashHomeScreen extends StatelessWidget {
   const DashHomeScreen({Key? key}) : super(key: key);
 
@@ -26,6 +27,7 @@ class DashHomeScreen extends StatelessWidget {
         }
       },
       builder: (BuildContext context, state) {
+        var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
@@ -171,6 +173,7 @@ class DashHomeScreen extends StatelessWidget {
 
                     InkWell(
                       onTap: (){
+                        cubit.getRoomsNum();
                         navigateTo(context, const RoomsHomeScreen());
                       },
                       child: defaultDashBoardTitleBox(
@@ -201,6 +204,7 @@ class DashHomeScreen extends StatelessWidget {
                     const SizedBox(height: 12.0,),
                     InkWell(
                       onTap: (){
+                        cubit.GetAllOrders();
                         navigateTo(context, const RequestsHomeScreen());
                       },
                       child: defaultDashBoardTitleBox(
@@ -211,7 +215,8 @@ class DashHomeScreen extends StatelessWidget {
                     const SizedBox(height: 12.0,),
                     InkWell(
                       onTap: (){
-                        navigateTo(context, AddNewsScreen());
+                        cubit.getNews();
+                        navigateTo(context, NewsScreen());
                       },
                       child: defaultDashBoardTitleBox(
                           img: 'assets/images/newspaper.png',

@@ -8,8 +8,6 @@ String token ='';
 
 String idDB ='';
 
-ComplaintsModel? currentComplaintsModel ;
-QueriesModel? currentQueriesModel ;
 StudentsModel? currentStudentsModel ;
 
 GetBuildingsModel? buildings;

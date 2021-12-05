@@ -372,10 +372,7 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
                               navigateAndFinish(context, LoginScreen());
-                              // var token = CacheHelper.removeData(key: 'token');
-                              // var isStudent = CacheHelper.removeData(key: 'token');
-                              // print('------looooool${token}');
-                              // print('------looooool2${isStudent}');
+
                             },
                             btnColor: Colors.red,
                             fontSize: 20,

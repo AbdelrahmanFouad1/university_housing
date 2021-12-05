@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:university_housing/model/buidings_model.dart';
-import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashQueriesDetailsScreen extends StatelessWidget {
+
+  DashQueriesDetailsScreen({
+    Key? key,
+    required this.enquiryItem,
+  }): super(key: key);
+
+  Enquiry? enquiryItem;
 
   var managerController = TextEditingController();
   var now = new DateTime.now();
@@ -24,7 +29,6 @@ class DashQueriesDetailsScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = DashBoardCubit.get(context);
-        managerController.text = currentQueriesModel!.managerReply! ;
         return Directionality(
           textDirection: ui.TextDirection.rtl,
           child: Scaffold(
@@ -78,7 +82,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.code}',
+                                  enquiryItem!.idDB,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -102,7 +106,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.name}',
+                                  enquiryItem!.user.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -127,7 +131,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.id}',
+                                  enquiryItem!.user.id.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -153,7 +157,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.room}',
+                                  enquiryItem!.user.roomnumber.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -179,7 +183,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.buildingName}',
+                                  enquiryItem!.user.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -205,7 +209,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentQueriesModel!.queriesDate}',
+                                  enquiryItem!.createdAt,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -226,7 +230,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                           SizedBox(
                             height: 10.0,
                           ),
-                          dashWhiteBoard(context,text:'${currentQueriesModel!.StudentQueries}',),
+                          dashWhiteBoard(context,text: enquiryItem!.enquiry,),
 
 
                           //managerReply
@@ -247,10 +251,10 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               if(managerController.text.isEmpty){
                                 showToast(message:'يجب الرد علي الأستعلام أولا' ,state: ToastStates.ERROR);
                               }else{
-                                currentQueriesModel!.isReplied = true;
-                                currentQueriesModel!.managerReply = managerController.text;
-                                currentQueriesModel!.replyDate = DateFormat.yMMMd().format(now) ;
-                                showToast(message:'${currentQueriesModel!.replyDate}'+'\n'+'${currentQueriesModel!.managerReply}' ,state: ToastStates.SUCCESS);
+                                enquiryItem!.isReplied = true;
+                                enquiryItem!.enquiryAnswer = managerController.text;
+                                enquiryItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                showToast(message:'${enquiryItem!.enquiryAnswer}'+'\n'+'${enquiryItem!.updatedAt}' ,state: ToastStates.SUCCESS);
                               }
                             },
                             text: 'تأكيد الرد',

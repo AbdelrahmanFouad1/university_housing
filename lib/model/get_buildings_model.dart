@@ -19,7 +19,7 @@ class BuildingModel{
   late bool availability;
   late int rating;
   late int numReviews;
-  late String _id;
+  late String idDB;
   late String slug;
   late String buildingName;
   late String buildingCode;
@@ -39,7 +39,7 @@ class BuildingModel{
     availability = json['availability'];
     rating = json['rating'];
     numReviews = json['numReviews'];
-    _id = json['_id'];
+    idDB = json['_id'];
     slug = json['slug'];
     buildingName = json['buildingName'];
     buildingCode = json['buildingCode'];
@@ -68,7 +68,7 @@ class Rooms {
   late bool availability;
   late String userresidentId;
   late String userresidentName;
-  late String _id;
+  late String idDB;
   late String roomcode;
   late bool type;
   late String slug;
@@ -82,7 +82,7 @@ class Rooms {
     availability = json['availability'];
     userresidentId = json['userresidentId'];
     userresidentName = json['userresidentName'];
-    _id = json['_id'];
+    idDB = json['_id'];
     roomcode = json['roomcode'];
     type = json['type'];
     slug = json['slug'];

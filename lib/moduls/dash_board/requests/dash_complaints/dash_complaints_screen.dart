@@ -1,147 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/model/buidings_model.dart';
 import 'package:university_housing/model/complaints_model.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_details_screen.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
+import 'dash_complaints_details_screen.dart';
+
 class DashComplimentsScreen extends StatelessWidget {
 
-
-  final List<ComplaintsModel> complaintsItem = [
-    ComplaintsModel(
-      code: 'Rm520',
-      name: 'حسام السيد علي',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'complaints',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'complaints',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'complaints',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
-
-  final List<ComplaintsModel> damagesItem = [
-    ComplaintsModel(
-      code: 'Rm520',
-      name: 'حسام السيد علي',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'damagedthings',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'damagedthings',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'damagedthings',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
-
-  final List<ComplaintsModel> lostItem = [
-    ComplaintsModel(
-      code: '223LL',
-      name: 'اميره علس السيد',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'missingthings',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'KIL523',
-      name: 'خالد سامح الاسيوطي',
-      id: '420203369',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'missingthings',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'oop523',
-      name: 'سميره احمد سعيد متولي',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'missingthings',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +69,8 @@ class DashComplimentsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(
-                            item: lostItem[index],
+                        itemBuilder: (context, index) => MissingItem(
+                            item: cubit.allOrders!.missing[index],
                             cubit: cubit,
                             context: context,
                             index: index,
@@ -210,7 +81,7 @@ class DashComplimentsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: lostItem.length,
+                        itemCount: cubit.allOrders!.missing.length,
                       ),
                     ),
 
@@ -239,8 +110,8 @@ class DashComplimentsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(
-                            item: damagesItem[index],
+                        itemBuilder: (context, index) => DamagedItem(
+                            item: cubit.allOrders!.damaged[index],
                             cubit: cubit,
                             context: context,
                             index: index,
@@ -251,7 +122,7 @@ class DashComplimentsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: damagesItem.length,
+                        itemCount: cubit.allOrders!.damaged.length,
                       ),
                     ),
 
@@ -282,7 +153,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ComplaintsItem(
-                            item: complaintsItem[index],
+                            item: cubit.allOrders!.complaints[index],
                             cubit: cubit,
                             context: context,
                             index: index,
@@ -293,7 +164,7 @@ class DashComplimentsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: complaintsItem.length,
+                        itemCount: cubit.allOrders!.complaints.length,
                       ),
                     ),
                   ],
@@ -308,34 +179,30 @@ class DashComplimentsScreen extends StatelessWidget {
 }
 
 
-Widget ComplaintsItem({
+Widget MissingItem({
   required BuildContext context,
   required DashBoardCubit cubit,
-  required ComplaintsModel item,
+  required Missing item,
   required int index,
 }) {
-  var codeController = TextEditingController();
-  var nameController = TextEditingController();
-  codeController.text = item.code!;
-  nameController.text = item.name!;
   return InkWell(
     onTap: (){
-      cubit.savingCurrentComplaintsModel(item);
-      if(currentComplaintsModel != null){
-        navigateTo(context, DashComplimentsDetailsScreen());
-      }
+      navigateTo(context, DashComplimentsDetailsScreen(
+        type: 'missing',
+        missingItem: item,
+      ));
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.name!,
+            item.user.username,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Expanded(
           child: Text(
-            item.code!,
+            item.user.id.toString(),
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -345,10 +212,119 @@ Widget ComplaintsItem({
           height: 30.0,
           child: IconButton(
             onPressed: () {
-              cubit.savingCurrentComplaintsModel(item);
-              if(currentComplaintsModel != null){
-                navigateTo(context, DashComplimentsDetailsScreen());
-              }
+              navigateTo(context, DashComplimentsDetailsScreen(
+                type: 'missing',
+                missingItem: item,
+              ));
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: ThemeCubit
+                  .get(context)
+                  .darkTheme
+                  ? mainTextColor
+                  : mainColors,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+Widget DamagedItem({
+  required BuildContext context,
+  required DashBoardCubit cubit,
+  required Damaged item,
+  required int index,
+}) {
+  return InkWell(
+    onTap: (){
+      navigateTo(context, DashComplimentsDetailsScreen(
+        type: 'damaged',
+        damagedItem: item,
+      ));
+    },
+    child: Row(
+      children: [
+        Expanded(
+          child: Text(
+            item.user.username,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            item.user.id.toString(),
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          width: 30.0,
+          height: 30.0,
+          child: IconButton(
+            onPressed: () {
+              navigateTo(context, DashComplimentsDetailsScreen(
+                type: 'damaged',
+                damagedItem: item,
+              ));
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: ThemeCubit
+                  .get(context)
+                  .darkTheme
+                  ? mainTextColor
+                  : mainColors,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+
+Widget ComplaintsItem({
+  required BuildContext context,
+  required DashBoardCubit cubit,
+  required Complaints item,
+  required int index,
+}) {
+  return InkWell(
+    onTap: (){
+      navigateTo(context, DashComplimentsDetailsScreen(
+        type: 'complaints',
+        complaintsItem: item,
+      ));
+    },
+    child: Row(
+      children: [
+        Expanded(
+          child: Text(
+            item.user.username,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            item.user.id.toString(),
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          width: 30.0,
+          height: 30.0,
+          child: IconButton(
+            onPressed: () {
+              navigateTo(context, DashComplimentsDetailsScreen(
+                type: 'complaints',
+                complaintsItem: item,
+              ));
             },
             icon: Icon(
               Icons.keyboard_arrow_down,

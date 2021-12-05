@@ -4,14 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashRoomsRequestsDetailsScreen extends StatelessWidget {
+
+  DashRoomsRequestsDetailsScreen({
+    Key? key,
+    required this.type,
+    this.bookingItem,
+    this.changeItem,
+    this.leftItem,
+}): super(key: key);
+
+  String type;
+  BookingOrders? bookingItem;
+  ChangeRoom? changeItem;
+  LeftOrders? leftItem;
 
   var managerController = TextEditingController();
   var now = new DateTime.now();
@@ -50,15 +65,15 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    if(currentComplaintsModel!.complaintType == 'book')
+                    if(type == 'book')
                       smallDashBoardTitleBox(
                           img: 'assets/images/room.png',
                           title: 'حجز الغرف'),
-                    if(currentComplaintsModel!.complaintType == 'change')
+                    if(type == 'change')
                       smallDashBoardTitleBox(
                           img: 'assets/images/replace.png',
                           title: 'تبديل الغرف'),
-                    if(currentComplaintsModel!.complaintType == 'exit')
+                    if(type == 'exit')
                       smallDashBoardTitleBox(
                           svgImage:'assets/images/leave.svg',
                           svg: true,
@@ -84,7 +99,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.code}',
+                                type == 'book'? '${bookingItem!.idDB}': type == 'change'? '${changeItem!.idDB}':'${leftItem!.idDB}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -109,7 +124,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.complaintDate}',
+                                  type == 'book'? '${bookingItem!.createdAt}': type == 'change'? '${changeItem!.createdAt}':'${leftItem!.createdAt}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -134,10 +149,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.name}',
+                                  type == 'book'? '${bookingItem!.user.username}': type == 'change'? '${changeItem!.user.username}':'${leftItem!.user.username}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
-
                                 ),
                               ),
                             ],
@@ -159,7 +173,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.id}',
+                                  type == 'book'? '${bookingItem!.user.id}': type == 'change'? '${changeItem!.user.id}':'${leftItem!.user.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -185,7 +199,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.room}',
+                                  type == 'book'? '${bookingItem!.roomnumber}': type == 'change'? '${changeItem!.user.roomnumber}':'${leftItem!.user.roomnumber}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -211,7 +225,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.buildingName}',
+                                  type == 'book'? '${bookingItem!.buildingName}': type == 'change'? '${changeItem!.user.buildingName}':'${leftItem!.user.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -225,7 +239,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           // if student want change
-                          if(currentComplaintsModel!.complaintType == 'change')
+                          if(type == 'change')
                           Column(
                             children: [
                               SizedBox(
@@ -262,7 +276,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      // student name
+                                      // next room num
                                       Row(
                                         children: [
                                           Expanded(
@@ -275,7 +289,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              '19',
+                                              '${changeItem!.numofnextroom.toString()}',
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
                                             ),
@@ -285,8 +299,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 10.0,
                                       ),
-
-                                      // student id
+                                      // next floor num
                                       Row(
                                         children: [
                                           Expanded(
@@ -299,7 +312,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                              '2',
+                                              '${changeItem!.floornumberofnextroom.toString()}',
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
                                             ),
@@ -309,7 +322,6 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 10.0,
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -321,10 +333,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           // if student want book
-                          if(currentComplaintsModel!.complaintType == 'book')
+                          if(type == 'book')
                             Column(
                             children: [
-
                               //floor
                               SizedBox(
                                 height: 10.0,
@@ -341,7 +352,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      '3',
+                                      '${bookingItem!.floor.toString()}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -366,7 +377,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'مميز',
+                                      bookingItem!.buildingType ? 'مميز':'عادي',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -391,7 +402,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'علوم حاسب',
+                                      '${bookingItem!.Section}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -417,7 +428,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'الأول',
+                                      bookingItem!.firstTerm ? 'الأول': bookingItem!.secondTerm? 'الثاني' :'الثالث',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -444,10 +455,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'ذكر',
+                                      bookingItem!.gender ? 'ذكر':'أنثى',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
-
                                     ),
                                   ),
                                 ],
@@ -470,7 +480,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      '01119109808',
+                                      '${bookingItem!.phone}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -496,7 +506,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      'شارع  احمد خطاب مدينه نصر محافظه القاهره',
+                                      '${bookingItem!.address}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -521,7 +531,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: Text(
-                                      '30002740101958',
+                                      '${bookingItem!.NationalID}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -594,11 +604,27 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                     function: (){
-                                      currentComplaintsModel!.isReplied = true;
-                                      currentComplaintsModel!.isAccepted = true;
-                                      currentComplaintsModel!.managerReply = managerController.text;
-                                      currentComplaintsModel!.replyDate = DateFormat.yMMMd().format(now) ;
-                                      showToast(message: '${currentComplaintsModel!.isAccepted}'+'${currentComplaintsModel!.replyDate}'+'${currentComplaintsModel!.managerReply}' ,state: ToastStates.SUCCESS);
+                                      if(type == 'book'){
+                                        bookingItem!.isReplied = true;
+                                        bookingItem!.isAccepted = true;
+                                        bookingItem!.reply = managerController.text;
+                                        bookingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message: '${bookingItem!.isAccepted}'+'${bookingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      } else if(type == 'change'){
+                                        changeItem!.isReplied = true;
+                                        // todo isAccepted not found in api
+                                        // changeItem!.isAccepted = true;
+                                        changeItem!.reply = managerController.text;
+                                        changeItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message:'${changeItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      }else{
+                                        leftItem!.isReplied = true;
+                                        // todo isAccepted not found in api
+                                        // leftItem!.isAccepted = true;
+                                        leftItem!.reply = managerController.text;
+                                        leftItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message:'${leftItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      }
                                     },
                                     text: 'اوافق',
                                     btnColor: Colors.green,
@@ -608,11 +634,27 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: (){
-                                    currentComplaintsModel!.isReplied = true;
-                                    currentComplaintsModel!.isAccepted = false;
-                                    currentComplaintsModel!.managerReply = managerController.text;
-                                    currentComplaintsModel!.replyDate = DateFormat.yMMMd().format(now) ;
-                                    showToast(message: '${currentComplaintsModel!.isAccepted}'+'${currentComplaintsModel!.replyDate}'+'${currentComplaintsModel!.managerReply}' ,state: ToastStates.ERROR);
+                                    if(type == 'book'){
+                                      bookingItem!.isReplied = true;
+                                      bookingItem!.isAccepted = false;
+                                      bookingItem!.reply = managerController.text;
+                                      bookingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message: '${bookingItem!.isAccepted}'+'${bookingItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                    } else if(type == 'change'){
+                                      changeItem!.isReplied = true;
+                                      // todo isAccepted not found in api
+                                      // changeItem!.isAccepted = false;
+                                      changeItem!.reply = managerController.text;
+                                      changeItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message:'${changeItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                    }else{
+                                      leftItem!.isReplied = true;
+                                      // todo isAccepted not found in api
+                                      // leftItem!.isAccepted = false;
+                                      leftItem!.reply = managerController.text;
+                                      leftItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message:'${leftItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                    }
                                   },
                                   text: 'ارفض',
                                   btnColor: Colors.red,
@@ -631,6 +673,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
       },
     );
   }
+
 }
 
 
