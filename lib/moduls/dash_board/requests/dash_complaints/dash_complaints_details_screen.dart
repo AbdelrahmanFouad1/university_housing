@@ -4,14 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashComplimentsDetailsScreen extends StatelessWidget {
+
+  DashComplimentsDetailsScreen({
+    Key? key,
+    required this.type,
+    this.missingItem,
+    this.damagedItem,
+    this.complaintsItem,
+  }): super(key: key);
+
+  String type;
+  Missing? missingItem;
+  Damaged? damagedItem;
+  Complaints? complaintsItem;
 
   var managerController = TextEditingController();
   var now = new DateTime.now();
@@ -50,17 +63,17 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    if(currentComplaintsModel!.complaintType == 'missingthings')
+                    if(type == 'missing')
                     smallDashBoardTitleBox(
                         svgImage:'assets/images/locate.svg',
                         svg: true,
                         title:  'شكوى شئ مفقود'),
-                    if(currentComplaintsModel!.complaintType == 'damagedthings')
+                    if(type == 'damaged')
                       smallDashBoardTitleBox(
                           svgImage:'assets/images/broken-plate.svg',
                           svg: true,
                           title:  'شكوى شئ تالف'),
-                    if(currentComplaintsModel!.complaintType == 'complaints')
+                    if(type == 'complaints')
                       smallDashBoardTitleBox(
                           svgImage:'assets/images/review.svg',
                           svg: true,
@@ -86,7 +99,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.code}',
+                                  type == 'missing'? '${missingItem!.idDB}': type == 'damaged'? '${damagedItem!.idDB}':'${complaintsItem!.idDB}',
+
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -110,7 +124,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.name}',
+                                  type == 'missing'? '${missingItem!.user.username}': type == 'damaged'? '${damagedItem!.user.username}':'${complaintsItem!.user.username}',
+
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -135,7 +150,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.id}',
+                                  type == 'missing'? '${missingItem!.user.id}': type == 'damaged'? '${damagedItem!.user.id}':'${complaintsItem!.user.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -161,7 +176,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.room}',
+                                  type == 'missing'? '${missingItem!.user.roomnumber}': type == 'damaged'? '${damagedItem!.user.roomnumber}':'${complaintsItem!.user.roomnumber}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -187,7 +202,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.buildingName}',
+                                  type == 'missing'? '${missingItem!.user.buildingName}': type == 'damaged'? '${damagedItem!.user.buildingName}':'${complaintsItem!.user.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -213,7 +228,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '${currentComplaintsModel!.complaintDate}',
+                                  type == 'missing'? '${missingItem!.createdAt}': type == 'damaged'? '${damagedItem!.createdAt}':'${complaintsItem!.createdAt}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -234,7 +249,10 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                           SizedBox(
                             height: 10.0,
                           ),
-                          dashWhiteBoard(context,text:'${currentComplaintsModel!.StudentComplaint}',),
+                          dashWhiteBoard(
+                            context,
+                            text: type == 'missing'? '${missingItem!.missingthing}': type == 'damaged'? '${damagedItem!.damagedthing}':'${complaintsItem!.complaint}',
+                          ),
 
 
                           //managerReply
@@ -255,11 +273,28 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                     function: (){
-                                      currentComplaintsModel!.isReplied = true;
-                                      currentComplaintsModel!.isAccepted = true;
-                                      currentComplaintsModel!.managerReply = managerController.text;
-                                      currentComplaintsModel!.replyDate = DateFormat.yMMMd().format(now) ;
-                                      showToast(message: '${currentComplaintsModel!.isAccepted}'+'${currentComplaintsModel!.replyDate}'+'${currentComplaintsModel!.managerReply}' ,state: ToastStates.SUCCESS);
+                                      if(type == 'missing'){
+                                        missingItem!.isReplied = true;
+                                        // todo isAccepted not found in api
+                                        // missingItem!.isAccepted = true;
+                                        missingItem!.reply = managerController.text;
+                                        missingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message:'${missingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      } else if(type == 'damaged'){
+                                        damagedItem!.isReplied = true;
+                                        // todo isAccepted not found in api
+                                        // damagedItem!.isAccepted = true;
+                                        damagedItem!.reply = managerController.text;
+                                        damagedItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message:'${damagedItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      }else{
+                                        complaintsItem!.isReplied = true;
+                                        // todo isAccepted not found in api
+                                        // complaintsItem!.isAccepted = true;
+                                        complaintsItem!.reply = managerController.text;
+                                        complaintsItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                        showToast(message:'${complaintsItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      }
                                     },
                                     text: 'اوافق',
                                     btnColor: Colors.green,
@@ -269,11 +304,28 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: (){
-                                    currentComplaintsModel!.isReplied = true;
-                                    currentComplaintsModel!.isAccepted = false;
-                                    currentComplaintsModel!.managerReply = managerController.text;
-                                    currentComplaintsModel!.replyDate = DateFormat.yMMMd().format(now) ;
-                                    showToast(message: '${currentComplaintsModel!.isAccepted}'+'${currentComplaintsModel!.replyDate}'+'${currentComplaintsModel!.managerReply}' ,state: ToastStates.ERROR);
+                                    if(type == 'missing'){
+                                      missingItem!.isReplied = true;
+                                      // todo isAccepted not found in api
+                                      // missingItem!.isAccepted = false;
+                                      missingItem!.reply = managerController.text;
+                                      missingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message:'${missingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                    } else if(type == 'damaged'){
+                                      damagedItem!.isReplied = true;
+                                      // todo isAccepted not found in api
+                                      // damagedItem!.isAccepted = false;
+                                      damagedItem!.reply = managerController.text;
+                                      damagedItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message:'${damagedItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                    }else{
+                                      complaintsItem!.isReplied = true;
+                                      // todo isAccepted not found in api
+                                      // complaintsItem!.isAccepted = false;
+                                      complaintsItem!.reply = managerController.text;
+                                      complaintsItem!.updatedAt = DateFormat.yMMMd().format(now) ;
+                                      showToast(message:'${complaintsItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                    }
                                   },
                                   text: 'ارفض',
                                   btnColor: Colors.red,

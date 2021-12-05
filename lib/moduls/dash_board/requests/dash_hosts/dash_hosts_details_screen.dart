@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashHostsDetailsScreen extends StatelessWidget {
+
+  DashHostsDetailsScreen({
+    Key? key,
+    required this.guestItem,
+  }): super(key: key);
+
+  GuestOrders? guestItem;
+
   var managerController = TextEditingController();
   var now = new DateTime.now();
   bool isStudent =  false ;
@@ -78,7 +85,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'TTM52',
+                                  guestItem!.idDB.toString(),
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -102,7 +109,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'احمد سعيد علي محمد',
+                                    guestItem!.user.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -126,7 +133,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '42019006',
+                                  guestItem!.user.id.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -150,7 +157,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  '19',
+                                  guestItem!.user.roomnumber.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -174,7 +181,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'عماره الزهراء',
+                                    guestItem!.user.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -198,7 +205,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  'Nov 12, 2021',
+                                  guestItem!.createdAt,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -221,6 +228,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                             height: 10.0,
                           ),
 
+                          //todo want to edit
                           if (isStudent == true)
                             Container(
                               width: double.infinity,
@@ -259,7 +267,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                         Expanded(
                                           flex: 2,
                                           child: Text(
-                                            'علي محمود سعيد',
+                                              guestItem!.NameofGuest,
                                             style: Theme.of(context).textTheme.bodyText1,
                                             textAlign: TextAlign.center,
                                           ),
@@ -307,7 +315,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                         Expanded(
                                           flex: 2,
                                           child: Text(
-                                            'Feb 2, 2021',
+                                              guestItem!.HostDate,
                                             style: Theme.of(context).textTheme.bodyText1,
                                             textAlign: TextAlign.center,
                                           ),
@@ -380,7 +388,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       Expanded(
                                         flex: 2,
                                         child: Text(
-                                          'علي محمود سعيد',
+                                            guestItem!.NameofGuest,
                                           style: Theme.of(context).textTheme.bodyText1,
                                           textAlign: TextAlign.center,
                                         ),
@@ -404,7 +412,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       Expanded(
                                         flex: 2,
                                         child: Text(
-                                          'اخي',
+                                            guestItem!.relation,
                                           style: Theme.of(context).textTheme.bodyText1,
                                           textAlign: TextAlign.center,
                                         ),
@@ -428,7 +436,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       Expanded(
                                         flex: 2,
                                         child: Text(
-                                          'Feb 2, 2021',
+                                            guestItem!.HostDate,
                                           style: Theme.of(context).textTheme.bodyText1,
                                           textAlign: TextAlign.center,
                                         ),

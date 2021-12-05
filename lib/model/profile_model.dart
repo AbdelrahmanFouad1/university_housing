@@ -14,7 +14,7 @@ class ProfileModel{
   late bool isStudentAffairs;
   late bool isPaid;
   //todo cant fetch
-  String? paidAt;
+  late dynamic paidAt;
   late String paymentMethod;
   late bool isresident;
   late int numofAttendanceDays;
@@ -51,16 +51,10 @@ class ProfileModel{
     buildingType = json['buildingType'];
     roomnumber = json['roomnumber'];
     floor = json['floor'];
+    isFine = json['isFine'] ?? 'empty';
+    paidAt = json['paidAt'] ?? 'empty';
 
-    if (json['isFine'] != null) {
-      isFine = json['isFine'];
-    }
 
-    if (json['paidAt'] != null) {
-      paidAt = json['paidAt'];
-    }else{
-      paidAt = '';
-    }
 
 
       json['attendances'].forEach((element) {

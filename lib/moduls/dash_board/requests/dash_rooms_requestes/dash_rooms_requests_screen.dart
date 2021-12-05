@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/complaints_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_rooms_requestes/dash_rooms_requests_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -11,136 +14,6 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashRoomsRequestsScreen extends StatelessWidget {
-
-
-  final List<ComplaintsModel> bookItem = [
-    ComplaintsModel(
-      code: 'Rm520',
-      name: 'حسام السيد علي',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'book',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'book',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'book',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
-
-  final List<ComplaintsModel> changeItem = [
-    ComplaintsModel(
-      code: 'Rm520',
-      name: 'حسام السيد علي',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'change',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'change',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'Y423Z',
-      name: 'احمد سيد عيد',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'change',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
-
-  final List<ComplaintsModel> exitItem = [
-    ComplaintsModel(
-      code: '223LL',
-      name: 'اميره علس السيد',
-      id: '42018553',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'exit',
-      isAccepted: true,
-      isReplied: true,
-      managerReply: 'يتم الان التحقق من الأمر',
-      replyDate: '21-10-2021',
-      room: '203',
-      StudentComplaint: 'يوجد سرقه من عامل النظافة',
-    ),
-    ComplaintsModel(
-      code: 'KIL523',
-      name: 'خالد سامح الاسيوطي',
-      id: '420203369',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'exit',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-    ComplaintsModel(
-      code: 'oop523',
-      name: 'سميره احمد سعيد متولي',
-      id: '42021052',
-      buildingName: 'أسكان مميز (أ)',
-      complaintDate: '20-10-2021',
-      complaintType: 'exit',
-      isReplied: false,
-      managerReply: '',
-      replyDate: '',
-      room: '203',
-      StudentComplaint: 'يوجد معامله سيئه من الامن',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -196,11 +69,10 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(
-                            item: bookItem[index],
+                        itemBuilder: (context, index) => BookingItem(
+                            item: cubit.allOrders!.bookingOrders[index],
                             cubit: cubit,
                             context: context,
-                            index: index,
                         ),
                         separatorBuilder: (context, index) => Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -208,7 +80,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: bookItem.length,
+                        itemCount: cubit.allOrders!.bookingOrders.length,
                       ),
                     ),
 
@@ -236,11 +108,10 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(
-                            item: changeItem[index],
+                        itemBuilder: (context, index) => ChangeItem(
+                            item: cubit.allOrders!.changeRoom[index],
                             cubit: cubit,
                             context: context,
-                            index: index,
                             ),
                         separatorBuilder: (context, index) => Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -248,7 +119,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: changeItem.length,
+                        itemCount: cubit.allOrders!.changeRoom.length,
                       ),
                     ),
 
@@ -278,11 +149,10 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         padding: EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => ComplaintsItem(
-                            item: exitItem[index],
+                        itemBuilder: (context, index) => LeavingItem(
+                            item: cubit.allOrders!.leftOrders[index],
                             cubit: cubit,
                             context: context,
-                            index: index,
                         ),
                         separatorBuilder: (context, index) => Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -290,7 +160,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: exitItem.length,
+                        itemCount: cubit.allOrders!.leftOrders.length,
                       ),
                     ),
                   ],
@@ -305,34 +175,29 @@ class DashRoomsRequestsScreen extends StatelessWidget {
 }
 
 
-Widget ComplaintsItem({
+Widget BookingItem({
   required BuildContext context,
   required DashBoardCubit cubit,
-  required ComplaintsModel item,
-  required int index,
+  required BookingOrders item,
 }) {
-  var codeController = TextEditingController();
-  var nameController = TextEditingController();
-  codeController.text = item.code!;
-  nameController.text = item.name!;
   return InkWell(
     onTap: (){
-      cubit.savingCurrentComplaintsModel(item);
-      if(currentComplaintsModel != null){
-        navigateTo(context, DashRoomsRequestsDetailsScreen());
-      }
+        navigateTo(context, DashRoomsRequestsDetailsScreen(
+          type: 'book',
+          bookingItem: item,
+        ));
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.name!,
+            item.user.username,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Expanded(
           child: Text(
-            item.code!,
+            item.user.id.toString(),
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -342,10 +207,117 @@ Widget ComplaintsItem({
           height: 30.0,
           child: IconButton(
             onPressed: () {
-              cubit.savingCurrentComplaintsModel(item);
-              if(currentComplaintsModel != null){
-                navigateTo(context, DashRoomsRequestsDetailsScreen());
-              }
+                navigateTo(context, DashRoomsRequestsDetailsScreen(
+                  type: 'book',
+                  bookingItem: item,
+                ));
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: ThemeCubit
+                  .get(context)
+                  .darkTheme
+                  ? mainTextColor
+                  : mainColors,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+
+Widget ChangeItem({
+  required BuildContext context,
+  required DashBoardCubit cubit,
+  required ChangeRoom item,
+}) {
+  return InkWell(
+    onTap: (){
+      navigateTo(context, DashRoomsRequestsDetailsScreen(
+        type: 'change',
+        changeItem: item,
+      ));
+    },
+    child: Row(
+      children: [
+        Expanded(
+          child: Text(
+            item.user.username,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            item.user.id.toString(),
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          width: 30.0,
+          height: 30.0,
+          child: IconButton(
+            onPressed: () {
+              navigateTo(context, DashRoomsRequestsDetailsScreen(
+                type: 'change',
+                changeItem: item,
+              ));
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: ThemeCubit
+                  .get(context)
+                  .darkTheme
+                  ? mainTextColor
+                  : mainColors,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+Widget LeavingItem({
+  required BuildContext context,
+  required DashBoardCubit cubit,
+  required LeftOrders item,
+}) {
+  return InkWell(
+    onTap: (){
+      navigateTo(context, DashRoomsRequestsDetailsScreen(
+        type: 'exit',
+        leftItem: item,
+      ));
+    },
+    child: Row(
+      children: [
+        Expanded(
+          child: Text(
+            item.user.username,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            item.user.id.toString(),
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          width: 30.0,
+          height: 30.0,
+          child: IconButton(
+            onPressed: () {
+              navigateTo(context, DashRoomsRequestsDetailsScreen(
+                type: 'exit',
+                leftItem: item,
+              ));
             },
             icon: Icon(
               Icons.keyboard_arrow_down,

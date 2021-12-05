@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/queries_model.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_queries/dash_queries_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -12,33 +13,6 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashQueriesScreen extends StatelessWidget {
 
-
-  final List<QueriesModel> queriesItem = [
-    QueriesModel(
-      code: 'TTR52',
-      name: 'أحمد الغندور علي',
-      id: '42020111',
-      buildingName: 'أسكان مميز (أ)',
-      isReplied: false,
-      managerReply: '',
-      replyDate: 'Nov 2,2021',
-      room: '203',
-      queriesDate: 'Nov 2,2021',
-      StudentQueries: 'أمته اقدر ادفع المصاؤف ؟'
-    ),
-    QueriesModel(
-      code: 'Rm520',
-      name: 'أمنيه سيد مصطفي',
-      id: '42019336',
-      buildingName: 'أسكان مميز (أ)',
-      isReplied: true,
-      managerReply: 'لا خلاص كده كله متسجل عندنا لو دفعتي عن طريق الابلكيشن بتاع السكن',
-      replyDate: 'Nov 2,2021',
-      room: '14',
-      queriesDate: 'Nov 2,2021',
-      StudentQueries: 'لو دفعت عن طريق الانترنت .. هبقا مضطره اجيب الوصل بردو ؟'
-    ),
-  ];
 
 
   @override
@@ -95,10 +69,9 @@ class DashQueriesScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ComplaintsItem(
-                            item: queriesItem[index],
+                            item: cubit.allOrders!.enquiry[index],
                             cubit: cubit,
                             context: context,
-                            index: index,
                         ),
                         separatorBuilder: (context, index) => Container(
                           margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -106,7 +79,7 @@ class DashQueriesScreen extends StatelessWidget {
                           height: 1.0,
                           color: separator,
                         ),
-                        itemCount: queriesItem.length,
+                        itemCount: cubit.allOrders!.enquiry.length,
                       ),
                     ),
 
@@ -125,31 +98,25 @@ class DashQueriesScreen extends StatelessWidget {
 Widget ComplaintsItem({
   required BuildContext context,
   required DashBoardCubit cubit,
-  required QueriesModel item,
-  required int index,
+  required Enquiry item,
 }) {
-  var codeController = TextEditingController();
-  var nameController = TextEditingController();
-  codeController.text = item.code!;
-  nameController.text = item.name!;
   return InkWell(
     onTap: (){
-      cubit.savingCurrentQueriesModel(item);
-      if(currentQueriesModel != null){
-        navigateTo(context, DashQueriesDetailsScreen());
-      }
+      navigateTo(context, DashQueriesDetailsScreen(
+        enquiryItem: item,
+      ));
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.name!,
+            item.user.username,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         Expanded(
           child: Text(
-            item.code!,
+            item.user.id.toString(),
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -159,10 +126,9 @@ Widget ComplaintsItem({
           height: 30.0,
           child: IconButton(
             onPressed: () {
-              cubit.savingCurrentQueriesModel(item);
-              if(currentQueriesModel != null){
-                navigateTo(context, DashQueriesDetailsScreen());
-              }
+              navigateTo(context, DashQueriesDetailsScreen(
+                enquiryItem: item,
+              ));
             },
             icon: Icon(
               Icons.keyboard_arrow_down,
