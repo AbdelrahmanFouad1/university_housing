@@ -144,9 +144,9 @@ class GuestordersModel{
   late String reply;
   late String idDB;
   late String NameofGuest;
-  late String studentId;
-  late String guestIsIDCard;
-  late String relation;
+   String? studentId;
+   String? guestIsIDCard;
+   String? relation;
 
   GuestordersModel.fromJson(Map<String, dynamic> json) {
     HostDate = json['HostDate'];
