@@ -15,7 +15,14 @@ class SecurityShowWarningState extends SecurityStates {}
 class SecurityDoNotShowWarningState extends SecurityStates {}
 
 
+//get user in security data from API
+class GetUserSecurityLoadingStates extends SecurityStates {}
+class GetUserSecuritySuccessStates extends SecurityStates {}
+class GetUserSecurityErrorStates extends SecurityStates {
+  final String error;
 
+  GetUserSecurityErrorStates(this.error);
+}
 
 
 
