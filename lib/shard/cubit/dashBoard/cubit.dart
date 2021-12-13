@@ -1,15 +1,16 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:university_housing/model/complaints_model.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
+import 'package:university_housing/model/get_all_users_model.dart';
 import 'package:university_housing/model/get_buildings_model.dart';
+import 'package:university_housing/model/get_dash_security_model.dart';
 import 'package:university_housing/model/get_num_rooms_model.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
-import 'package:university_housing/model/queries_model.dart';
-import 'package:university_housing/model/students_model.dart';
+import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -173,6 +174,9 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
   // Available now
   GetBuildingsModel? availableNow;
+
+  List<AlertDialogModel> buildingsName = [];
+
   void getAvailableNowData() {
     emit(GetAvailableNowLoadingStates());
     DioHelper.getData(
@@ -180,8 +184,15 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       token: tokeen ?? '',
     ).then((value) {
       if (value != null) {
+        buildingsName = [];
         availableNow = GetBuildingsModel.fromJson(value.data);
-        print(availableNow!.Buildings.length.toString());
+        availableNow!.Buildings.asMap().forEach((index,element) {
+          buildingsName.add(
+              AlertDialogModel(
+                text: element.buildingName,
+                index: index,
+              ));
+        });
         emit(GetAvailableNowSuccessStates());
       }
     }).catchError((error) {
@@ -392,6 +403,9 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
+
+
+
 //  News Screen
 
   File? newsImage;
@@ -487,21 +501,65 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
 
+
+
+
 //  Students
 
   int termNum = 1;
   void changeTerm(int term) {
     termNum = term;
-    emit(ChangeTerm());
+    getAllUsers(
+      query: {
+          if(termNum == 1)
+            'firstTerm':true,
+          if(termNum == 2)
+            'secondTerm':true,
+          if(termNum == 3)
+            'thirdTerm':true,
+          if(isStudentKind)
+            'isStudent':true,
+          if(!isStudentKind)
+            'isEmployee':true,
+      }
+    );
   }
 
   bool isStudentKind = true;
   void changePeopleType(bool student) {
     isStudentKind = student;
-    emit(ChangePeopleType());
+    getAllUsers(
+        query: {
+          if(termNum == 1)
+            'firstTerm':true,
+          if(termNum == 2)
+            'secondTerm':true,
+          if(termNum == 3)
+            'thirdTerm':true,
+          if(isStudentKind)
+            'isStudent':true,
+          if(!isStudentKind)
+            'isEmployee':true,
+        }
+    );
   }
 
 
+  bool waitingIsStudentKind = true;
+  void changeWaitingPeopleType(bool student) {
+    waitingIsStudentKind = student;
+    getAllUsers(
+        query: {
+            'firstTerm':false,
+            'secondTerm':false,
+            'thirdTerm':false,
+          if(waitingIsStudentKind)
+            'isStudent':true,
+          if(!waitingIsStudentKind)
+            'isEmployee':true,
+        }
+    );
+  }
 
   double animatedStudentHeight = 0.0;
   bool showStudent_details = false;
@@ -509,7 +567,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void showStudentDetails(bool show ,int index) {
     if(currentStudentIndex == index){
       showStudent_details = show;
-      animatedStudentHeight == 0.0? animatedStudentHeight= 900.0: animatedStudentHeight= 0.0;
+      animatedStudentHeight == 0.0? animatedStudentHeight= 1000.0: animatedStudentHeight= 0.0;
       emit(ShowStudentDetails());
     }
   }
@@ -520,12 +578,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(ChangeStudentEditIcon());
   }
 
-  int currentStudentGenderVal = 0;
-  String currentStudentGenderText = '';
-
-  void selectStudentGender(int currentNum) {
-    currentStudentGenderVal = currentNum;
-    emit(SelectStudentGender());
+  int currentStudentTermVal = 0;
+  String currentStudentTermText = '';
+  void selectStudentTerm(int currentNum) {
+    currentStudentTermVal = currentNum;
+    emit(SelectStudentTerm());
   }
 
   int currentStudentLevelVal = 0;
@@ -552,24 +609,258 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(SelectStudentCredit());
   }
 
-  void deleteStudent(List<StudentsModel> list ,index) {
-    list.removeAt(index);
-    emit(DeleteStudentSuccess());
+
+  GetAllUsersModel? allUsers;
+  void getAllUsers({
+    Map<String, dynamic>? query,
+   }) {
+    print('----------get all users----------');
+    emit(GetAllUsersLoadingStates());
+    DioHelper.getData(
+      url: ALL_USERS,
+      query: query,
+      token: tokeen ?? '',
+    ).then((value) {
+      if (value != null) {
+        allUsers = GetAllUsersModel.fromJson(value.data);
+        emit(GetAllUsersSuccessStates());
+      }
+    }).catchError((error) {
+      print('get all users '+error.toString());
+      emit(GetAllUsersErrorStates(error.toString()));
+    });
   }
 
 
-  void savingCurrentStudentsModel(StudentsModel item) {
-    currentStudentsModel = item;
-    emit(SavingCurrentStudentsModelSuccess());
+  //todo add phone number
+  void putStudent({
+    required String idDB,
+    required int id,
+    required String username,
+    required bool isStudent,
+    required bool isEmployee,
+    required bool firstTerm,
+    required bool secondTerm,
+    required bool thirdTerm,
+    required int NationalID,
+    required String address,
+    required String buildingName,
+    required bool buildingType,
+    required int roomnumber,
+    required String Section,
+    required bool isPaid,
+    required String paidAt,
+    required String cardPhoto,
+  }) {
+    emit(PutStudentLoadingStates());
+    DioHelper.putData(
+      url: 'users/${idDB}',
+      token: tokeen ?? '',
+      data: {
+        'id': id,
+        'username': username,
+        'isStudent': isStudent,
+        'isEmployee': isEmployee,
+        'NationalID': NationalID,
+        'address': address,
+        'buildingName': buildingName,
+        'buildingType': buildingType,
+        'roomnumber': roomnumber,
+        'Section': Section,
+        'isPaid': isPaid,
+        'paidAt': paidAt,
+        'cardPhoto': cardPhoto,
+
+      },
+    ).then((value) {
+      emit(PutStudentSuccessStates());
+      // getAllUsers();
+    },
+    ).catchError((error) {
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutStudentErrorStates(error.toString()));
+    });
   }
+
+
+  void deleteStudent(id , bool isWaiting) {
+    emit(DeleteStudentLoadingStates());
+    DioHelper.deleteData(
+      url: 'users/${id}',
+      token: tokeen ?? '',
+    ).then((value) {
+      emit(DeleteStudentSuccess());
+      if(isWaiting)
+        getAllUsers(query: {
+        'firstTerm':false,
+        'secondTerm':false,
+        'thirdTerm':false,
+        if(waitingIsStudentKind)
+        'isStudent':true,
+        if(!waitingIsStudentKind)
+        'isEmployee':true,
+        });
+      if(!isWaiting)
+        getAllUsers(query: {
+        if(termNum == 1)
+          'firstTerm':true,
+      if(termNum == 2)
+      'secondTerm':true,
+      if(termNum == 3)
+      'thirdTerm':true,
+      if(isStudentKind)
+      'isStudent':true,
+      if(!isStudentKind)
+      'isEmployee':true,
+      });
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(DeleteStudentError(error.toString()));
+      showToast(message: 'حدث خطأ ما, برجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+    });
+  }
+
+
+  bool gender = true;
+  void changeGender(bool boy) {
+    gender = boy;
+    emit(ChangeGender());
+  }
+
+  bool student = true;
+  void changeJob(bool student) {
+    student = student;
+    emit(ChangeJob());
+  }
+
+  void postStudent({
+    required int id,
+    required String password,
+    required bool gender,
+    required String username,
+    required bool isStudent,
+    required bool isEmployee,
+  }) {
+    emit(postStudentLoadingStates());
+    DioHelper.postData(
+      url: POST_STUDENT,
+      token: tokeen ?? '',
+      data: {
+        'id': id,
+        'password': password,
+        'gender': gender,
+        'username': username,
+        'isStudent': isStudent,
+        'isEmployee': isEmployee,
+      },
+    ).then((value) {
+      print(value!.statusMessage);
+      emit(postStudentSuccessStates());
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      // showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(postStudentErrorStates(error.toString()));
+    });
+  }
+
+
+  bool showFinesEdit = true;
+  void changeFinesEditIcon(bool edit){
+    showFinesEdit = edit;
+    emit(ChangeFinesEditIcon());
+  }
+
+  int fineIndex = -1;
+  void changeFineIndex(int index){
+    fineIndex = index;
+    emit(ChangeFinesIndex());
+  }
+
+  void putFines({
+    required String idDB,
+    required String fineReason,
+    required num fineValue,
+    required bool isFine,
+    String? costRoom,
+  }) {
+    emit(PutFinesLoadingStates());
+    DioHelper.putData(
+      url: 'users/${idDB}/updatefine',
+      token: tokeen ?? '',
+      data: {
+        'fineReason': fineReason,
+        'fineValue': fineValue,
+        'isFine': isFine,
+        // if(costRoom!=null)
+        // 'CostRoom': costRoom,
+      },
+    ).then((value) {
+      emit(PutFinesSuccessStates());
+    },
+    ).catchError((error) {
+      print('errrrrrrrror '+error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutFinesErrorStates(error.toString()));
+    });
+  }
+
+  void postFines({
+    required String idDB,
+    required String fineReason,
+    required int fineValue,
+    required bool isFine,
+  }) {
+    emit(postFinesLoadingStates());
+
+    DioHelper.postData(
+      url: 'users/${idDB}/addfine',
+      token: tokeen ?? '',
+      data: {
+        'fineReason': fineReason,
+        'fineValue': fineValue,
+        'isFine': isFine,
+      },
+    ).then((value) {
+      if (value != null) {
+        print(value.statusMessage);
+        emit(postFinesSuccessStates());
+        getAllUsers(query: {
+          if(termNum == 1)
+            'firstTerm':true,
+          if(termNum == 2)
+            'secondTerm':true,
+          if(termNum == 3)
+            'thirdTerm':true,
+          if(isStudentKind)
+            'isStudent':true,
+          if(!isStudentKind)
+            'isEmployee':true,
+        });
+      }
+    }).catchError((error) {
+      print(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(postFinesErrorStates(error.toString()));
+    });
+  }
+
+
 
 
 
 //security
   int currentSecurityBuildingVal = 0;
-  void selectSecurityBuilding(int currentNum) {
+  void selectSecurityBuilding(int currentNum ,String text) {
     currentSecurityBuildingVal = currentNum;
+    print(text);
     emit(SelectSecurityBuilding());
+    getAllAttendance(
+        query: {
+          'buildingName': text
+        }
+    );
   }
 
 
@@ -579,7 +870,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void showSecurityDetails(bool show ,int index) {
     if(currentSecurityIndex == index){
       showSecurity_details = show;
-      animatedSecurityHeight == 0.0? animatedSecurityHeight= 400.0: animatedSecurityHeight= 0.0;
+      animatedSecurityHeight == 0.0? animatedSecurityHeight= 300.0: animatedSecurityHeight= 0.0;
       emit(ShowSecurityDetails());
     }
   }
@@ -591,11 +882,59 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
+  List<GetDashSecurityModel> allAttendance = [];
+  void getAllAttendance({Map<String, dynamic>? query }) {
+    print('----------get all Attendance----------');
+    emit(GetAllAttendanceLoadingStates());
+    allAttendance = [];
+    DioHelper.getData(
+      url: ALL_ATTENDANCE,
+      token: tokeen ?? '',
+      query: query,
+    ).then((value) {
+      if (value != null) {
+        value.data.forEach((element) {
+          allAttendance.add(GetDashSecurityModel.fromJson(element));
+        });
+        emit(GetAllAttendanceSuccessStates());
+      }
+    }).catchError((error) {
+      print('get all Attendance '+error.toString());
+      emit(GetAllAttendanceErrorStates(error.toString()));
+    });
+  }
+
+
+  // void getAttendanceByBuilding({
+  //   String? username,
+  // }) {
+  //   emit(GetUserSecurityLoadingStates());
+  //   DioHelper.getData(
+  //     url: '$GET_USERSECUTIRY?username=$username',
+  //     token: tokeen ?? '',
+  //   ).then((value) {
+  //     if (value != null) {
+  //
+  //       // printFullText(value.data.toString());
+  //       mainSecurityModel = [];
+  //       value.data.forEach((element) {
+  //         mainSecurityModel.add(MainSecurityModel.fromJson(element));
+  //       });
+  //       print('-----------user security-----------success');
+  //       emit(GetUserSecuritySuccessStates());
+  //     }
+  //   }).catchError((error) {
+  //     print('-----------user security-----------${error.toString()}');
+  //     emit(GetUserSecurityErrorStates(error.toString()));
+  //   });
+  // }
+
+
 
 // requests
 
   GetAllOrdersModel? allOrders;
-  void GetAllOrders() {
+  void getAllOrders() {
     print('----------get all order----------');
     emit(GetAllOrdersLoadingStates());
     DioHelper.getData(
@@ -604,7 +943,6 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     ).then((value) {
       if (value != null) {
         allOrders = GetAllOrdersModel.fromJson(value.data);
-        // print(allOrders!.leftOrders.length.toString());
         emit(GetAllOrdersSuccessStates());
       }
     }).catchError((error) {
@@ -612,6 +950,247 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(GetAllOrdersErrorStates(error.toString()));
     });
   }
+
+  void putReplayBookRoom({
+    required String idDB,
+    required String reply,
+    required bool isAccepted,
+    required bool isWaiting,
+    required bool isReplied,
+  }) {
+    emit(PutReplayRoomLoadingStates());
+    DioHelper.putData(
+      url: 'users/bookingrequests/${idDB}/accept',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isAccepted': isAccepted,
+        'isWaiting': isWaiting,
+        'isReplied': isReplied,
+      },
+    ).then((value) {
+      emit(PutReplayRoomSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayRoomErrorStates(error.toString()));
+    });
+  }
+
+
+  void putReplayChange({
+    required String idDB,
+    required String reply,
+    // required bool isAccepted,
+    required bool isReplied,
+  }) {
+    emit(PutReplayChangeLoadingStates());
+    DioHelper.putData(
+      url: 'orders/requesttochangroom/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        // 'isAccepted': isAccepted,
+        'isReplied': isReplied,
+      },
+    ).then((value) {
+      emit(PutReplayChangeSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayChangeErrorStates(error.toString()));
+    });
+  }
+
+
+  void putReplayExit({
+    required String idDB,
+    required String reply,
+    // required bool isAccepted,
+    required bool isReplied,
+  }) {
+    emit(PutReplayExitLoadingStates());
+    DioHelper.putData(
+      url: 'orders/requesttoleft/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        // 'isAccepted': isAccepted,
+        'isReplied': isReplied,
+      },
+    ).then((value) {
+      emit(PutReplayExitSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayExitErrorStates(error.toString()));
+    });
+  }
+
+
+  void putEnquiry({
+    required String idDB,
+    required String enquiryAnswer,
+    required bool isReplied,
+  }) {
+    emit(PutReplayEnquiryLoadingStates());
+    DioHelper.putData(
+      url: 'orders/enquiry/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'enquiryAnswer': enquiryAnswer,
+        'isReplied': isReplied,
+      },
+    ).then((value) {
+      emit(PutReplayEnquirySuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayEnquiryErrorStates(error.toString()));
+    });
+  }
+
+
+  void putHosting({
+    required String idDB,
+    required String reply,
+    required bool isReplied,
+    // required bool isAccepted,
+  }) {
+    emit(PutReplayHostingLoadingStates());
+    DioHelper.putData(
+      url: 'orders/replytorequesttoaddguests/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isReplied': isReplied,
+        // required bool isAccepted,
+      },
+    ).then((value) {
+      emit(PutReplayHostingSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayHostingErrorStates(error.toString()));
+    });
+  }
+
+  void putFamilyReport({
+    required String idDB,
+    required String reply,
+    required bool isReplied,
+    // required bool isAccepted,
+  }) {
+    emit(PutReplayReportLoadingStates());
+    DioHelper.putData(
+      url: 'orders/endorsement/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isReplied': isReplied,
+        // required bool isAccepted,
+      },
+    ).then((value) {
+      emit(PutReplayReportSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayReportErrorStates(error.toString()));
+    });
+  }
+
+  void putMissing({
+    required String idDB,
+    required String reply,
+    required bool isReplied,
+    // required bool isAccepted,
+  }) {
+    emit(PutReplayMissingLoadingStates());
+    DioHelper.putData(
+      url: 'orders/addmissingthing/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isReplied': isReplied,
+        // required bool isAccepted,
+      },
+    ).then((value) {
+      emit(PutReplayMissingSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayMissingErrorStates(error.toString()));
+    });
+  }
+
+  void putDamaged({
+    required String idDB,
+    required String reply,
+    required bool isReplied,
+    // required bool isAccepted,
+  }) {
+    emit(PutReplayDamagedLoadingStates());
+    DioHelper.putData(
+      url: 'orders/damagedthings/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isReplied': isReplied,
+        // required bool isAccepted,
+      },
+    ).then((value) {
+      emit(PutReplayDamagedSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayDamagedErrorStates(error.toString()));
+    });
+  }
+
+
+  void putComplaints({
+    required String idDB,
+    required String reply,
+    required bool isReplied,
+    // required bool isAccepted,
+  }) {
+    emit(PutReplayComplaintsLoadingStates());
+    DioHelper.putData(
+      url: 'orders/complaint/${idDB}/replied',
+      token: tokeen ?? '',
+      data: {
+        'reply': reply,
+        'isReplied': isReplied,
+        // required bool isAccepted,
+      },
+    ).then((value) {
+      emit(PutReplayComplaintsSuccessStates());
+      getAllOrders();
+    },
+    ).catchError((error) {
+      printFullText(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutReplayComplaintsErrorStates(error.toString()));
+    });
+  }
+
+
+
+
+
 
 
   //change password

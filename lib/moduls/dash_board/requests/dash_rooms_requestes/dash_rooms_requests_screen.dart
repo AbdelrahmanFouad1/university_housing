@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/model/complaints_model.dart';
-import 'package:university_housing/model/get_all_orders_model.dart';
-import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_rooms_requestes/dash_rooms_requests_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -191,14 +187,16 @@ Widget BookingItem({
       children: [
         Expanded(
           child: Text(
-            item.user.username,
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user == null ? 'فارغ' : item.user!.username,
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Expanded(
           child: Text(
-            item.user.id.toString(),
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user == null ? 'فارغ' : item.user!.id.toString(),
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -245,14 +243,16 @@ Widget ChangeItem({
       children: [
         Expanded(
           child: Text(
-            item.user.username,
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user!.username,
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Expanded(
           child: Text(
-            item.user.id.toString(),
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user!.id.toString(),
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -298,14 +298,16 @@ Widget LeavingItem({
       children: [
         Expanded(
           child: Text(
-            item.user.username,
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user!.username,
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Expanded(
           child: Text(
-            item.user.id.toString(),
-            style: Theme.of(context).textTheme.bodyText1,
+            item.user!.id.toString(),
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),

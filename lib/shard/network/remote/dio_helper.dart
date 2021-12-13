@@ -58,15 +58,6 @@ class DioHelper{
     String? token,
   })async
   {
-    // dio.options.headers = {
-    //   'Content-Type': 'application/json',
-    //   // 'User-Agent': 'PostmanRuntime/7.28.4',
-    //   // 'Accept': '*/*',
-    //   // 'Accept-Encoding': 'gzip, deflate, br',
-    //   // 'Connection': 'keep-alive',
-    //   'Authorization' : 'Bearer $token',
-    // };
-
     try{
       return await dio.get(
         url,

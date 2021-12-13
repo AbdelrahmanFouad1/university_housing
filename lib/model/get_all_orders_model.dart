@@ -1,38 +1,55 @@
 class GetAllOrdersModel{
-  List<Missing> missing = [];
-  List<Complaints> complaints = [];
-  List<Damaged> damaged = [];
-  List<Enquiry> enquiry = [];
-  List<ChangeRoom> changeRoom = [];
-  List<FamilyOrders> familyOrders = [];
-  List<GuestOrders>? guestOrders;
-  List<LeftOrders> leftOrders = [];
-  List<BookingOrders> bookingOrders = [];
+  late List<Missing> missing ;
+  late List<Complaints> complaints;
+  late List<Damaged> damaged ;
+  late List<Enquiry> enquiry;
+  late List<ChangeRoom> changeRoom;
+  late List<FamilyOrders> familyOrders;
+  late List<GuestOrders>? guestOrders;
+  late List<LeftOrders> leftOrders;
+  late List<BookingOrders> bookingOrders;
 
   GetAllOrdersModel.fromJson(Map<String, dynamic> json) {
-    json['Missingthingsorders'].forEach((element) {
-      missing.add(Missing.fromJson(element));
-    });
 
-    json['Complaintsorders'].forEach((element) {
-      complaints.add(Complaints.fromJson(element));
-    });
+    if( json['Missingthingsorders'] != null){
+      missing = List.from(json['Missingthingsorders'])
+          .map((e) => Missing.fromJson(e))
+          .toList();
+    }
 
-    json['Damagedthingsorders'].forEach((element) {
-      damaged.add(Damaged.fromJson(element));
-    });
+    if( json['Complaintsorders'] != null){
+      complaints = List.from(json['Complaintsorders'])
+          .map((e) => Complaints.fromJson(e))
+          .toList();
+    }
 
-    json['enquiryorders'].forEach((element) {
-      enquiry.add(Enquiry.fromJson(element));
-    });
+    if( json['Damagedthingsorders'] != null){
+      damaged = List.from(json['Damagedthingsorders'])
+          .map((e) => Damaged.fromJson(e))
+          .toList();
+    }
 
-    json['RequestsTochangeRoomorders'].forEach((element) {
-      changeRoom.add(ChangeRoom.fromJson(element));
-    });
+    if( json['enquiryorders'] != null){
+      enquiry = List.from(json['enquiryorders'])
+          .map((e) => Enquiry.fromJson(e))
+          .toList();
+    }
 
-    json['Endorsementorders'].forEach((element) {
-      familyOrders.add(FamilyOrders.fromJson(element));
-    });
+
+    if( json['RequestsTochangeRoomorders'] != null){
+      changeRoom = List.from(json['RequestsTochangeRoomorders'])
+          .map((e) => ChangeRoom.fromJson(e))
+          .toList();
+    }
+
+    if( json['Endorsementorders'] != null){
+      familyOrders = List.from(json['Endorsementorders'])
+          .map((e) => FamilyOrders.fromJson(e))
+          .toList();
+    }
+
+
+
 
     if( json['Guestorders'] != null){
       guestOrders = List.from(json['Guestorders'])
@@ -40,17 +57,20 @@ class GetAllOrdersModel{
           .toList();
     }
 
-    // json['Guestorders'].forEach((element) {
-    //   guestOrders.add(GuestOrders.fromJson(element));
-    // });
+    if( json['leftRequestsorders'] != null){
+      leftOrders = List.from(json['leftRequestsorders'])
+          .map((e) => LeftOrders.fromJson(e))
+          .toList();
+    }
 
-    json['leftRequestsorders'].forEach((element) {
-      leftOrders.add(LeftOrders.fromJson(element));
-    });
 
-    json['Bookingsorders'].forEach((element) {
-      bookingOrders.add(BookingOrders.fromJson(element));
-    });
+
+    if( json['Bookingsorders'] != null){
+      bookingOrders = List.from(json['Bookingsorders'])
+          .map((e) => BookingOrders.fromJson(e))
+          .toList();
+    }
+
   }
 
 }
@@ -63,16 +83,19 @@ class Missing{
   late String missingthing;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   Missing.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'];
+    isReplied = json['isReplied'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     missingthing = json['missingthing']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
 
   }
 }
@@ -84,16 +107,18 @@ class Complaints{
   late String complaint;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   Complaints.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'];
+    isReplied = json['isReplied'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     complaint = json['complaint']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
 
   }
 }
@@ -105,16 +130,18 @@ class Damaged{
   late String damagedthing;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   Damaged.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'];
+    isReplied = json['isReplied'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     damagedthing = json['damagedthing']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
 
   }
 }
@@ -126,16 +153,18 @@ class Enquiry{
   late String enquiry;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   Enquiry.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'];
+    isReplied = json['isReplied'] ?? false;
     enquiryAnswer = json['enquiryAnswer']?? 'empty';
     idDB = json['_id']?? 'empty';
     enquiry = json['enquiry']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
 
   }
 }
@@ -148,19 +177,19 @@ class ChangeRoom{
   late int floornumberofnextroom;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   ChangeRoom.fromJson(Map<String, dynamic> json) {
-    if(json['isReplied'] != null){
-      isReplied = json['isReplied'];
-    }
+    isReplied = json['isReplied'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
-    numofnextroom = json['numofnextroom'];
-    floornumberofnextroom = json['floornumberofnextroom'];
+    numofnextroom = json['numofnextroom'] ?? 0;
+    floornumberofnextroom = json['floornumberofnextroom'] ?? 0;
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
 
   }
 }
@@ -173,17 +202,19 @@ class FamilyOrders{
   late String reportImg;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   FamilyOrders.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'];
+      isReplied = json['isReplied'] ?? false;
     reply = json['reply'] ?? 'empty';
     idDB = json['_id']?? 'empty';
     reason = json['reason']?? 'empty';
     reportImg = json['parentIsendorsement']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+      if(json['user'] !=null){
+        user = User.fromJson(json['user']);
+      }
 
   }
 }
@@ -192,7 +223,7 @@ class FamilyOrders{
 // todo missing isStudent
 // todo missing num of hosting days
 class GuestOrders{
-  // late bool isReplied;
+  late bool isReplied;
   late String reply;
   late String idDB;
   late String HostDate;
@@ -202,21 +233,22 @@ class GuestOrders{
   late int DurationOfHosting;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   GuestOrders.fromJson(Map<String, dynamic> json) {
+    isReplied = json['isReplied'] ?? false;
     HostDate = json['HostDate']?? 'empty';
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty' ;
     NameofGuest = json['NameofGuest']?? 'empty';
-
     guestIsIDCard = json['guestIsIDCard'] ?? 'empty';
     relation = json['relation'] ?? 'empty';
-
     DurationOfHosting = json['DurationOfHosting']?? 0;
     createdAt = json['createdAt'] ?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
   }
 }
 
@@ -227,19 +259,18 @@ class LeftOrders{
   late String reason;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   LeftOrders.fromJson(Map<String, dynamic> json) {
-    if(json['isReplied'] != null){
-      isReplied = json['isReplied'];
-    }
-
+      isReplied = json['isReplied'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     reason = json['reason']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+      if(json['user'] !=null){
+        user = User.fromJson(json['user']);
+      }
 
   }
 }
@@ -265,12 +296,10 @@ class BookingOrders{
   late String phone;
   late String createdAt;
   late String updatedAt;
-  late User user;
+  User? user;
 
   BookingOrders.fromJson(Map<String, dynamic> json) {
-    if(json['isReplied'] != null){
-      isReplied = json['isReplied'];
-    }
+      isReplied = json['isReplied'] ?? false;
 
     if(json['secondTerm']!= null){
       secondTerm = json['secondTerm'];
@@ -301,18 +330,20 @@ class BookingOrders{
     }
 
     address = json['address']?? 'empty';
-    NationalID = json['NationalID'];
+    NationalID = json['NationalID'] ?? 0;
     cardPhoto = json['cardPhoto']?? 'empty';
     buildingName = json['buildingName']?? 'empty';
-    roomnumber = json['roomnumber'];
-    floor = json['floor'];
+    roomnumber = json['roomnumber'] ?? 0;
+    floor = json['floor'] ?? 0;
     Section = json['Section']?? 'empty';
     phone = json['phone']?? 'empty';
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
-    user = User.fromJson(json['user']);
+      if(json['user'] !=null){
+        user = User.fromJson(json['user']);
+      }
   }
 }
 

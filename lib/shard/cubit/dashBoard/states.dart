@@ -100,12 +100,53 @@ class ChangeTerm extends DashBoardStates {}
 class ChangePeopleType extends DashBoardStates {}
 class ShowStudentDetails extends DashBoardStates {}
 class ChangeStudentEditIcon extends DashBoardStates {}
-class DeleteStudentSuccess extends DashBoardStates {}
-class SelectStudentGender extends DashBoardStates {}
+class SelectStudentTerm extends DashBoardStates {}
 class SelectStudentLevel extends DashBoardStates {}
 class SelectStudentJob extends DashBoardStates {}
 class SelectStudentCredit extends DashBoardStates {}
-class SavingCurrentStudentsModelSuccess extends DashBoardStates {}
+class GetAllUsersLoadingStates extends DashBoardStates {}
+class GetAllUsersSuccessStates extends DashBoardStates {}
+class GetAllUsersErrorStates extends DashBoardStates {
+  final String error;
+
+  GetAllUsersErrorStates(this.error);
+}
+class PutStudentLoadingStates extends DashBoardStates {}
+class PutStudentSuccessStates extends DashBoardStates {}
+class PutStudentErrorStates extends DashBoardStates {
+  final String error;
+  PutStudentErrorStates(this.error);
+}
+class DeleteStudentLoadingStates extends DashBoardStates {}
+class DeleteStudentSuccess extends DashBoardStates {}
+class DeleteStudentError extends DashBoardStates {
+  final String error;
+  DeleteStudentError(this.error);
+}
+class postStudentLoadingStates extends DashBoardStates {}
+class postStudentSuccessStates extends DashBoardStates {}
+class postStudentErrorStates extends DashBoardStates {
+  final String error;
+  postStudentErrorStates(this.error);
+}
+class ChangeGender extends DashBoardStates {}
+class ChangeJob extends DashBoardStates {}
+class ChangeFinesIndex extends DashBoardStates {}
+class ChangeFinesEditIcon extends DashBoardStates {}
+class PutFinesLoadingStates extends DashBoardStates {}
+class PutFinesSuccessStates extends DashBoardStates {}
+class PutFinesErrorStates extends DashBoardStates {
+  final String error;
+  PutFinesErrorStates(this.error);
+}
+class postFinesLoadingStates extends DashBoardStates {}
+class postFinesSuccessStates extends DashBoardStates {}
+class postFinesErrorStates extends DashBoardStates {
+  final String error;
+  postFinesErrorStates(this.error);
+}
+
+
 
 
 
@@ -113,8 +154,6 @@ class SavingCurrentStudentsModelSuccess extends DashBoardStates {}
 class SelectSecurityBuilding extends DashBoardStates {}
 class ShowSecurityDetails extends DashBoardStates {}
 class ChangeSecurityEditIcon extends DashBoardStates {}
-
-//requests
 class GetAllOrdersLoadingStates extends DashBoardStates {}
 class GetAllOrdersSuccessStates extends DashBoardStates {}
 class GetAllOrdersErrorStates extends DashBoardStates {
@@ -122,6 +161,84 @@ class GetAllOrdersErrorStates extends DashBoardStates {
 
   GetAllOrdersErrorStates(this.error);
 }
+
+
+
+
+//get all requests
+class GetAllAttendanceLoadingStates extends DashBoardStates {}
+class GetAllAttendanceSuccessStates extends DashBoardStates {}
+class GetAllAttendanceErrorStates extends DashBoardStates {
+  final String error;
+
+  GetAllAttendanceErrorStates(this.error);
+}
+//book room
+class PutReplayRoomLoadingStates extends DashBoardStates {}
+class PutReplayRoomSuccessStates extends DashBoardStates {}
+class PutReplayRoomErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayRoomErrorStates(this.error);
+}
+//change room
+class PutReplayChangeLoadingStates extends DashBoardStates {}
+class PutReplayChangeSuccessStates extends DashBoardStates {}
+class PutReplayChangeErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayChangeErrorStates(this.error);
+}
+//exit room
+class PutReplayExitLoadingStates extends DashBoardStates {}
+class PutReplayExitSuccessStates extends DashBoardStates {}
+class PutReplayExitErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayExitErrorStates(this.error);
+}
+//enquiry
+class PutReplayEnquiryLoadingStates extends DashBoardStates {}
+class PutReplayEnquirySuccessStates extends DashBoardStates {}
+class PutReplayEnquiryErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayEnquiryErrorStates(this.error);
+}
+//hosting
+class PutReplayHostingLoadingStates extends DashBoardStates {}
+class PutReplayHostingSuccessStates extends DashBoardStates {}
+class PutReplayHostingErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayHostingErrorStates(this.error);
+}
+//report
+class PutReplayReportLoadingStates extends DashBoardStates {}
+class PutReplayReportSuccessStates extends DashBoardStates {}
+class PutReplayReportErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayReportErrorStates(this.error);
+}
+//missing
+class PutReplayMissingLoadingStates extends DashBoardStates {}
+class PutReplayMissingSuccessStates extends DashBoardStates {}
+class PutReplayMissingErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayMissingErrorStates(this.error);
+}
+//damaged
+class PutReplayDamagedLoadingStates extends DashBoardStates {}
+class PutReplayDamagedSuccessStates extends DashBoardStates {}
+class PutReplayDamagedErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayDamagedErrorStates(this.error);
+}
+//complaints
+class PutReplayComplaintsLoadingStates extends DashBoardStates {}
+class PutReplayComplaintsSuccessStates extends DashBoardStates {}
+class PutReplayComplaintsErrorStates extends DashBoardStates {
+  final String error;
+  PutReplayComplaintsErrorStates(this.error);
+}
+
+
+
 
 
 //changePassword

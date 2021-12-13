@@ -12,10 +12,8 @@ import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
-import 'fiens_details_screen.dart';
-
-class StudentsScreen extends StatelessWidget {
-  StudentsScreen({Key? key}) : super(key: key);
+class WaitingStudentsScreen extends StatelessWidget {
+  WaitingStudentsScreen({Key? key}) : super(key: key);
 
   final List<AlertDialogModel> _termList = [
     AlertDialogModel(
@@ -115,127 +113,9 @@ class StudentsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     defaultDashBoardTitleBox(
-                        svgImage: 'assets/images/check.svg',
+                        svgImage:  'assets/images/warn.svg',
                         svg: true,
-                        title: 'مقيدين بالسكن'),
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'الترم :',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 20.0,
-                                  height: 20.0,
-                                  child: Radio(
-                                    value: 1,
-                                    groupValue: cubit.termNum,
-                                    activeColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    focusColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    onChanged: (value) {
-                                      cubit.changeTerm(1);
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(
-                                  'الأول',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                SizedBox(
-                                  width: 20.0,
-                                  height: 20.0,
-                                  child: Radio(
-                                    value: 2,
-                                    groupValue: cubit.termNum,
-                                    activeColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    focusColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    hoverColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    onChanged: (value) {
-                                      cubit.changeTerm(2);
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(
-                                  'الثاني',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10.0,
-                                ),
-                                SizedBox(
-                                  width: 20.0,
-                                  height: 20.0,
-                                  child: Radio(
-                                    value: 3,
-                                    groupValue: cubit.termNum,
-                                    activeColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    focusColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    hoverColor: ThemeCubit.get(context).darkTheme
-                                        ? mainTextColor
-                                        : mainColors,
-                                    onChanged: (value) {
-                                      cubit.changeTerm(3);
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(
-                                  'الثالث',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        title: 'غير مقيدين بالسكن'),
                     SizedBox(
                       height: 12.0,
                     ),
@@ -257,7 +137,7 @@ class StudentsScreen extends StatelessWidget {
                                   height: 20.0,
                                   child: Radio(
                                     value: true,
-                                    groupValue: cubit.isStudentKind,
+                                    groupValue: cubit.waitingIsStudentKind,
                                     activeColor: ThemeCubit.get(context).darkTheme
                                         ? mainTextColor
                                         : mainColors,
@@ -265,7 +145,7 @@ class StudentsScreen extends StatelessWidget {
                                         ? mainTextColor
                                         : mainColors,
                                     onChanged: (value) {
-                                      cubit.changePeopleType(true);
+                                      cubit.changeWaitingPeopleType(true);
                                     },
                                   ),
                                 ),
@@ -290,7 +170,7 @@ class StudentsScreen extends StatelessWidget {
                                   height: 20.0,
                                   child: Radio(
                                     value: false,
-                                    groupValue: cubit.isStudentKind,
+                                    groupValue: cubit.waitingIsStudentKind,
                                     activeColor: ThemeCubit.get(context).darkTheme
                                         ? mainTextColor
                                         : mainColors,
@@ -301,7 +181,7 @@ class StudentsScreen extends StatelessWidget {
                                         ? mainTextColor
                                         : mainColors,
                                     onChanged: (value) {
-                                      cubit.changePeopleType(false);
+                                      cubit.changeWaitingPeopleType(false);
                                     },
                                   ),
                                 ),
@@ -329,6 +209,7 @@ class StudentsScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
+
                     Builder(
                         builder: (context){
                           if(state is GetAllUsersLoadingStates){
@@ -397,24 +278,19 @@ Widget studentItem({
   var creditController = TextEditingController();
   var paymentDateController = TextEditingController();
   var buildingController = TextEditingController();
-  var fiensController = TextEditingController();
-
-  DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(item.createdAt);
-  String date = tempDate.toString().substring(0, 10);
 
   idController.text = item.id.toString();
   nameController.text = item.username;
-  fiensController.text = item.fines.length.toString();
-  addressController.text = item.address;
+  addressController.text = item.address.isEmpty ? 'فارغ':item.address;
   sectionController.text = item.section;
   nationalIDController.text = item.NationalID.toString();
-  paymentDateController.text = date;
+  paymentDateController.text = 'فارغ';
   roomController.text = item.roomnumber.toString();
-  buildingController.text = item.buildingName;
-  termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :'الثالث';
+  buildingController.text = item.buildingName.isEmpty ? 'فارغ':item.buildingName;
+  termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :item.thirdTerm == true ?'الثالث':'فارغ';
   nationalPhotoController.text = item.cardPhoto;
   phoneController.text = item.phone;
-  levelController.text = item.buildingType == true ? 'مميز' : 'عادي';
+  levelController.text = 'فارغ';
   jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
   creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
   return Builder(
@@ -468,11 +344,9 @@ Widget studentItem({
                         height: 30.0,
                         child: IconButton(
                           onPressed: () {
-                            cubit.showStudentDetails(
-                                !cubit.showStudent_details, index);
+                            cubit.showStudentDetails(!cubit.showStudent_details, index);
                             if(cubit.showStudentEdit)
-                            cubit.changeStudentEditIcon(!cubit.showStudentEdit);
-
+                              cubit.changeStudentEditIcon(!cubit.showStudentEdit);
                           },
                           alignment: Alignment.center,
                           icon: Icon(
@@ -1012,38 +886,6 @@ Widget studentItem({
                             height: 5.0,
                           ),
 
-                          //fines
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '- الغرامات :',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: fiensController,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                    hintStyle: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                  readOnly: true,
-                                  enableInteractiveSelection:false,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                  textAlign: TextAlign.center,
-                                  onTap: (){
-                                    navigateTo(context, FinesDetailsScreen(item:  item,));
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-
                           //nationalPhoto
                           Text(
                             'صورة البطاقه',
@@ -1089,6 +931,21 @@ Widget studentItem({
                             height: 5.0,
                           ),
 
+
+
+
+                          // fines button
+                          // SizedBox(
+                          //   height: 10.0,
+                          // ),
+                          // defaultButton(
+                          //     function: (){
+                          //       navigateTo(context,AddFiensScreen());
+                          //     },
+                          //     text: 'إضافة غرامة',
+                          //     btnColor: mainColors,
+                          //   width: double.infinity
+                          // ),
                         ],
                       ),
                     ),
@@ -1108,7 +965,7 @@ Widget studentItem({
               direction: DismissDirection.startToEnd,
               resizeDuration: Duration(milliseconds: 200),
               onDismissed: (direction) {
-                cubit.deleteStudent(item.idDB , false);
+                cubit.deleteStudent(item.idDB,true);
               },
               background: Container(
                 decoration: BoxDecoration(
@@ -1141,22 +998,22 @@ Widget studentItem({
                     ),
                   ),
                   Container(
-                      width: 30.0,
-                      height: 30.0,
-                      child: IconButton(
-                        onPressed: () {
-                          cubit.currentStudentIndex = index;
-                          cubit.showStudentDetails(
-                              !cubit.showStudent_details, index);
-                        },
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                        ),
+                    width: 30.0,
+                    height: 30.0,
+                    child: IconButton(
+                      onPressed: () {
+                        cubit.currentStudentIndex = index;
+                        cubit.showStudentDetails(
+                            !cubit.showStudent_details, index);
+                      },
+                      icon: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

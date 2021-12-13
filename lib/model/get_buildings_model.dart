@@ -34,19 +34,26 @@ class BuildingModel{
 
   BuildingModel.fromJson(Map<String, dynamic> json) {
     buildingLevels = json['buildingLevels'];
-    gender = json['gender'];
-    cost = json['cost'];
     availability = json['availability'];
-    rating = json['rating'];
-    numReviews = json['numReviews'];
-    idDB = json['_id'];
-    slug = json['slug'];
-    buildingName = json['buildingName'];
-    buildingCode = json['buildingCode'];
-    image = json['image'];
-    address = json['address'];
-    buildingsupervisorName = json['buildingsupervisorName'];
-    buildingsupervisorPhonenumber = json['buildingsupervisorPhonenumber'];
+
+    gender = json['gender'];
+    if(json['cost'] !=null){
+      cost = json['cost'];
+    }
+    if(json['rating'] !=null){
+      rating = json['rating'];
+    }
+    if(json['numReviews'] !=null){
+      numReviews = json['numReviews'];
+    }
+    idDB = json['_id']??'فارغ';
+    slug = json['slug']??'فارغ';
+    buildingName = json['buildingName']??'فارغ';
+    buildingCode = json['buildingCode']??'فارغ';
+    image = json['image']??'فارغ';
+    address = json['address']??'فارغ';
+    buildingsupervisorName = json['buildingsupervisorName']??'فارغ';
+    buildingsupervisorPhonenumber = json['buildingsupervisorPhonenumber']??'فارغ';
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
 
@@ -76,14 +83,24 @@ class Rooms {
   late String createdAt;
 
   Rooms.fromJson(Map<String, dynamic> json) {
-    roomnumber = json['roomnumber'];
-    floor = json['floor'];
+
+    if(json['roomnumber'] !=null){
+      roomnumber = json['roomnumber'];
+    }else{
+      roomnumber = 0;
+    }
+
+    if(json['floor'] !=null){
+      floor = json['floor'];
+    }else{
+      floor=0;
+    }
     roomfor = json['roomfor'];
     availability = json['availability'];
-    userresidentId = json['userresidentId'];
-    userresidentName = json['userresidentName'];
+    userresidentId = json['userresidentId'] ??'فارغ';
+    userresidentName = json['userresidentName'] ??'فارغ';
     idDB = json['_id'];
-    roomcode = json['roomcode'];
+    roomcode = json['roomcode']??'فارغ';
     type = json['type'];
     slug = json['slug'];
     updatedAt = json['updatedAt'];
@@ -106,7 +123,9 @@ class Review {
   Review.fromJson(Map<String, dynamic> json) {
     idDB = json['_id'];
     username = json['username'];
-    rating = json['rating'];
+    if(json['rating'] !=null){
+      rating = json['rating'];
+    }
     comment = json['comment'];
     user = json['user'];
     createdAt = json['createdAt'];

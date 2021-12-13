@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -29,13 +31,29 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
   LeftOrders? leftItem;
 
   var managerController = TextEditingController();
-  var now = new DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PutReplayRoomLoadingStates || state is PutReplayChangeLoadingStates || state is PutReplayExitLoadingStates ){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetAllOrdersSuccessStates){
+          Navigator.pop(context);
+          showToast(message: 'تم الرد بنجاح', state: ToastStates.SUCCESS);
+        }
+      },
       builder: (context, state) {
+
+        if(type=='book' && bookingItem!.reply != 'empty' || type=='change' && changeItem!.reply!= 'empty' || type=='exit' && leftItem!.reply!= 'empty' ){
+          managerController.text = type == 'book'? '${bookingItem!.reply}': type == 'change'? '${changeItem!.reply}':'${leftItem!.reply}';
+        }
+        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(type == 'book'? '${bookingItem!.createdAt}': type == 'change'? '${changeItem!.createdAt}':'${leftItem!.createdAt}',);
+        String date = tempDate.toString().substring(0, 10);
+
         var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
@@ -98,10 +116,10 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
+                                child: SelectableText(
                                 type == 'book'? '${bookingItem!.idDB}': type == 'change'? '${changeItem!.idDB}':'${leftItem!.idDB}',
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                             ],
@@ -123,8 +141,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'book'? '${bookingItem!.createdAt}': type == 'change'? '${changeItem!.createdAt}':'${leftItem!.createdAt}',
+                                child: SelectableText(
+                                    date,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -148,8 +166,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'book'? '${bookingItem!.user.username}': type == 'change'? '${changeItem!.user.username}':'${leftItem!.user.username}',
+                                child: SelectableText(
+                                  type == 'book'? '${bookingItem!.user!.username}': type == 'change'? '${changeItem!.user!.username}':'${leftItem!.user!.username}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -172,8 +190,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'book'? '${bookingItem!.user.id}': type == 'change'? '${changeItem!.user.id}':'${leftItem!.user.id}',
+                                child: SelectableText(
+                                  type == 'book'? '${bookingItem!.user!.id}': type == 'change'? '${changeItem!.user!.id}':'${leftItem!.user!.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -198,8 +216,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'book'? '${bookingItem!.roomnumber}': type == 'change'? '${changeItem!.user.roomnumber}':'${leftItem!.user.roomnumber}',
+                                child: SelectableText(
+                                  type == 'book'? '${bookingItem!.roomnumber}': type == 'change'? '${changeItem!.user!.roomnumber}':'${leftItem!.user!.roomnumber}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -224,8 +242,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'book'? '${bookingItem!.buildingName}': type == 'change'? '${changeItem!.user.buildingName}':'${leftItem!.user.buildingName}',
+                                child: SelectableText(
+                                  type == 'book'? '${bookingItem!.buildingName}': type == 'change'? '${changeItem!.user!.buildingName}':'${leftItem!.user!.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -288,7 +306,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           ),
                                           Expanded(
                                             flex: 2,
-                                            child: Text(
+                                            child: SelectableText(
                                               '${changeItem!.numofnextroom.toString()}',
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
@@ -311,7 +329,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           ),
                                           Expanded(
                                             flex: 2,
-                                            child: Text(
+                                            child: SelectableText(
                                               '${changeItem!.floornumberofnextroom.toString()}',
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
@@ -351,7 +369,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       '${bookingItem!.floor.toString()}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -376,7 +394,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       bookingItem!.buildingType ? 'مميز':'عادي',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -401,7 +419,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       '${bookingItem!.Section}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -427,7 +445,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       bookingItem!.firstTerm ? 'الأول': bookingItem!.secondTerm? 'الثاني' :'الثالث',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -454,7 +472,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       bookingItem!.gender ? 'ذكر':'أنثى',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -479,7 +497,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       '${bookingItem!.phone}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -505,7 +523,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       '${bookingItem!.address}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -530,7 +548,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: SelectableText(
                                       '${bookingItem!.NationalID}',
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
@@ -563,9 +581,18 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                     height: 180.0,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8.0,),
-                                      image: DecorationImage(
-                                        image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/New_Norwegian_ID_Card_%282021%29_%28Front%29.png/640px-New_Norwegian_ID_Card_%282021%29_%28Front%29.png'),
-                                        fit: BoxFit.fitWidth,
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl: bookingItem!.cardPhoto,
+                                      fit: BoxFit.fill,
+                                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>  Container(
+                                        alignment: Alignment.center,
+                                        height: 80.0,
+                                        child: Icon(Icons.error,
+                                          color: ThemeCubit.get(context).darkTheme
+                                              ? mainTextColor
+                                              : mainColors,),
                                       ),
                                     ),
                                   ),
@@ -605,25 +632,46 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                     function: (){
                                       if(type == 'book'){
-                                        bookingItem!.isReplied = true;
-                                        bookingItem!.isAccepted = true;
-                                        bookingItem!.reply = managerController.text;
-                                        bookingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message: '${bookingItem!.isAccepted}'+'${bookingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putReplayBookRoom(
+                                          idDB: bookingItem!.idDB,
+                                          isReplied: true,
+                                          isAccepted: true,
+                                          isWaiting: false,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                        );
+                                        cubit.putStudent(
+                                            idDB: bookingItem!.user!.idDB,
+                                            id: bookingItem!.user!.id,
+                                            username: bookingItem!.user!.username,
+                                            isStudent: bookingItem!.user!.isStudent,
+                                            isEmployee: bookingItem!.user!.isEmployee,
+                                            firstTerm: bookingItem!.firstTerm,
+                                            secondTerm: bookingItem!.secondTerm,
+                                            thirdTerm: bookingItem!.thirdTerm,
+                                            NationalID: bookingItem!.NationalID,
+                                            address: bookingItem!.address,
+                                            buildingName: bookingItem!.buildingName,
+                                            buildingType: bookingItem!.buildingType,
+                                            roomnumber: bookingItem!.roomnumber,
+                                            Section: bookingItem!.Section,
+                                            isPaid: false,
+                                            paidAt: '',
+                                            cardPhoto: bookingItem!.cardPhoto,
+                                        );
                                       } else if(type == 'change'){
-                                        changeItem!.isReplied = true;
                                         // todo isAccepted not found in api
-                                        // changeItem!.isAccepted = true;
-                                        changeItem!.reply = managerController.text;
-                                        changeItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message:'${changeItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putReplayChange(
+                                          idDB: changeItem!.idDB,
+                                            reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                          isReplied: true
+                                        );
                                       }else{
-                                        leftItem!.isReplied = true;
                                         // todo isAccepted not found in api
-                                        // leftItem!.isAccepted = true;
-                                        leftItem!.reply = managerController.text;
-                                        leftItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message:'${leftItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putReplayExit(
+                                            idDB: leftItem!.idDB,
+                                            reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                            isReplied: true
+                                        );
                                       }
                                     },
                                     text: 'اوافق',
@@ -635,25 +683,27 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                   function: (){
                                     if(type == 'book'){
-                                      bookingItem!.isReplied = true;
-                                      bookingItem!.isAccepted = false;
-                                      bookingItem!.reply = managerController.text;
-                                      bookingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message: '${bookingItem!.isAccepted}'+'${bookingItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                      cubit.putReplayBookRoom(
+                                          idDB: bookingItem!.idDB,
+                                          isReplied: true,
+                                          isAccepted: false,
+                                          isWaiting: true,
+                                        reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                      );
                                     } else if(type == 'change'){
-                                      changeItem!.isReplied = true;
                                       // todo isAccepted not found in api
-                                      // changeItem!.isAccepted = false;
-                                      changeItem!.reply = managerController.text;
-                                      changeItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message:'${changeItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                      cubit.putReplayChange(
+                                          idDB: changeItem!.idDB,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                          isReplied: true
+                                      );
                                     }else{
-                                      leftItem!.isReplied = true;
                                       // todo isAccepted not found in api
-                                      // leftItem!.isAccepted = false;
-                                      leftItem!.reply = managerController.text;
-                                      leftItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message:'${leftItem!.updatedAt}' ,state: ToastStates.ERROR);
+                                      cubit.putReplayExit(
+                                          idDB: leftItem!.idDB,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                          isReplied: true
+                                      );
                                     }
                                   },
                                   text: 'ارفض',
