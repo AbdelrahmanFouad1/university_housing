@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => ThemeCubit()..changeTheme(fromShared: isDark),),
         BlocProvider(create: (BuildContext context) => AppCubit()..getProfileData()..getBuildings()),
         BlocProvider(create: (BuildContext context) => DashBoardCubit()..getDashProfileData()),
-        BlocProvider(create: (BuildContext context) => SecurityCubit()..getSecurityProfileData()),
+        BlocProvider(create: (BuildContext context) => SecurityCubit()..getSecurityProfileData()..getUserInSecurity()),
 
       ],
       child: BlocConsumer<ThemeCubit, ThemeStates>(

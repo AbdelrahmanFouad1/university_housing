@@ -42,6 +42,8 @@ const CREATE_NEWS = 'news/createnews';
 
 const ALL_ORDERS = 'orders/allOrders';
 
+const GET_USERSECUTIRY = 'users/enterANDexitUsers/security';
+
 const ALL_USERS = 'users';
 
 const ALL_ATTENDANCE = 'users/enterANDexitUsers/security';

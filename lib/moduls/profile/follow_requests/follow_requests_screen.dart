@@ -14,6 +14,11 @@ import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
+import 'follow_requests_change_room_screen.dart';
+import 'follow_requests_endorsement_screen.dart';
+import 'follow_requests_guest_screen.dart';
+import 'follow_requests_left_room_screen.dart';
+
 class FollowRequestsScreen extends StatelessWidget {
   const FollowRequestsScreen({Key? key}) : super(key: key);
 
@@ -627,10 +632,10 @@ Widget buildRequestChangeRoomItem(context,RequestsTochangeRoomordersModel  model
               ),
               InkWell(
                 onTap: (){
-                  // navigateTo(
-                  //     context,
-                  //   FollowRequestsDetailsScreen(requestsTochangeRoomordersModel: model,),
-                  // );
+                  navigateTo(
+                      context,
+                    FollowRequestsChangeRoomScreen(model: model,),
+                  );
                 },
                 child: Text(
                   'عرض التفاصيل',
@@ -679,10 +684,10 @@ Widget buildEndorsementItem(context,EndorsementordersModel  model) => Padding(
               ),
               InkWell(
                 onTap: (){
-                  // navigateTo(
-                  //     context,
-                  //   FollowRequestsDetailsScreen(endorsementordersModel: model,),
-                  // );
+                  navigateTo(
+                      context,
+                    FollowRequestsEndorsementScreen(model: model,),
+                  );
                 },
                 child: Text(
                   'عرض التفاصيل',
@@ -740,10 +745,10 @@ Widget buildGuestItem(context,GuestordersModel  model) => Padding(
               ),
               InkWell(
                 onTap: (){
-                  // navigateTo(
-                  //     context,
-                  //   FollowRequestsDetailsScreen(guestordersModel: model,),
-                  // );
+                  navigateTo(
+                      context,
+                    FollowGuestRoomScreen(model: model,),
+                  );
                 },
                 child: Text(
                   'عرض التفاصيل',
@@ -779,7 +784,7 @@ Widget buildLeftRoomItem(context, LeftRequestsordersModel model) => Padding(
                   Container(
                     width: double.infinity,
                     child:  Text(
-                      'سبب الأخلاء: ${model.reply}',
+                      'سبب الأخلاء: ${model.reason}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText1,
@@ -789,10 +794,10 @@ Widget buildLeftRoomItem(context, LeftRequestsordersModel model) => Padding(
               ),
               InkWell(
                 onTap: (){
-                  // navigateTo(
-                  //     context,
-                  //   FollowRequestsDetailsScreen(leftRequestsordersModel: model,),
-                  // );
+                  navigateTo(
+                      context,
+                    FollowRequestsLeftRoomScreen(model: model,),
+                  );
                 },
                 child: Text(
                   'عرض التفاصيل',

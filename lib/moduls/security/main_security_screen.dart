@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
-import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/moduls/security/enter_student_login_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
@@ -13,28 +14,22 @@ import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class MainSecurityScreen extends StatelessWidget {
-  var searchController = TextEditingController();
+  final searchController = TextEditingController();
 
   MainSecurityScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SecurityCubit, SecurityStates>(
-      listener: (BuildContext context, state) {
-        if(state is GetProfileSuccessStates){
-          showToast(message: 'تم تسجيل الدخول بنجاح', state: ToastStates.SUCCESS);
-        }
-      },
+      listener: (BuildContext context, state) {},
       builder: (BuildContext context, Object? state) {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            appBar: dashAppBar(
-                title: 'إدارة الأمن ( أسكان مميز ب )',
-                context: context,
-                pop: false),
+            appBar:
+                dashAppBar(title: 'إدارة الأمن', context: context, pop: false),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -69,17 +64,19 @@ class MainSecurityScreen extends StatelessWidget {
                             ),
                             Text(
                               '202076',
-                              style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                  ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12.0,
                     ),
                     InkWell(
@@ -94,7 +91,7 @@ class MainSecurityScreen extends StatelessWidget {
                             .copyWith(fontSize: 12.0, color: Colors.grey),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12.0,
                     ),
                     InkWell(
@@ -117,11 +114,14 @@ class MainSecurityScreen extends StatelessWidget {
                                       height: 25.0,
                                       alignment: Alignment.center,
                                     ),
-                                    SizedBox(width: 10.0,),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
                                     Text(
                                       'تأكيد الخروج من الحساب ؟',
                                       textDirection: TextDirection.rtl,
-                                      style: Theme.of(context).textTheme.subtitle1,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
                                     ),
                                   ],
                                 ),
@@ -142,7 +142,10 @@ class MainSecurityScreen extends StatelessWidget {
                                 child: Text(
                                   'تأكيد',
                                   textDirection: TextDirection.rtl,
-                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.red),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: Colors.red),
                                 ),
                               ),
                             ],
@@ -166,7 +169,7 @@ class MainSecurityScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12.0,
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: 50.0,
                       child: defaultFormField(
@@ -177,19 +180,32 @@ class MainSecurityScreen extends StatelessWidget {
                         prefix: IconBroken.Search,
                         context: context,
                         validate: () {},
+                        onChange: (value) {
+                          SecurityCubit.get(context)
+                              .getUserByNameInSecurity(username: value);
+                        },
                       ),
                     ),
                     const SizedBox(
                       height: 12.0,
                     ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => buildSecurityCard(context),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 18.0,
+                    Conditional.single(
+                      context: context,
+                      conditionBuilder: (context) => state is GetUserSecurityLoadingStates,
+                      widgetBuilder: (context) => const Center(child: CircularProgressIndicator()),
+                      fallbackBuilder: (context) => ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => buildSecurityCard(
+                            context,
+                            SecurityCubit.get(context)
+                                .mainSecurityModel[index]),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 18.0,
+                        ),
+                        itemCount:
+                            SecurityCubit.get(context).mainSecurityModel.length,
                       ),
-                      itemCount: 8,
                     ),
                   ],
                 ),
@@ -201,7 +217,7 @@ class MainSecurityScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSecurityCard(context) => Column(
+  Widget buildSecurityCard(context, MainSecurityModel model) => Column(
         children: [
           Container(
             width: double.infinity,
@@ -231,14 +247,10 @@ class MainSecurityScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'عبدالرحمن محمد فؤاد',
-                            style: Theme.of(context).textTheme.bodyText2
-                          ),
-                          Text(
-                            '42018122',
-                            style: Theme.of(context).textTheme.bodyText2
-                          ),
+                          Text(model.username,
+                              style: Theme.of(context).textTheme.bodyText2),
+                          Text('${model.id}',
+                              style: Theme.of(context).textTheme.bodyText2),
                         ],
                       ),
                     ],
@@ -255,7 +267,10 @@ class MainSecurityScreen extends StatelessWidget {
                   btnColor: ThemeCubit.get(context).darkTheme
                       ? Colors.black45
                       : mainColors,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.white),
                 ),
               ],
             ),
