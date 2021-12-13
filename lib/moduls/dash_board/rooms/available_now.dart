@@ -103,33 +103,33 @@ class AvailableNow extends StatelessWidget {
                     ),
                     Builder(
                       builder: (context){
-                        if (state is GetAvailableNowLoadingStates){
+                        if (cubit.availableNow != null){
+                          return ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) => buildingItem(
+                                  item: cubit.availableNow!.Buildings[index],
+                                  cubit: cubit,
+                                  context: context,
+                                  index: index,
+                                  stateList: _stateList,
+                                  levelList: _levelList,
+                                  genderList: _genderList
+                              ),
+                              separatorBuilder: (context, index) => Container(
+                                margin: EdgeInsets.symmetric(vertical: 10.0),
+                                width: double.infinity,
+                                height: 1.0,
+                                color: separator,
+                              ),
+                              itemCount: cubit.availableNow!.Buildings.length,
+                            );
+                      }else{
                           return Container(
                               width:double.infinity,
                               height: 300.0,
                               child: Center(child: CircularProgressIndicator()));
-                      }else{
-                          return ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) => buildingItem(
-                              item: cubit.availableNow!.Buildings[index],
-                              cubit: cubit,
-                              context: context,
-                              index: index,
-                              stateList: _stateList,
-                              levelList: _levelList,
-                              genderList: _genderList
-                            ),
-                            separatorBuilder: (context, index) => Container(
-                              margin: EdgeInsets.symmetric(vertical: 10.0),
-                              width: double.infinity,
-                              height: 1.0,
-                              color: separator,
-                            ),
-                            itemCount: cubit.availableNow!.Buildings.length,
-                          );
                         }
                       },
                     ),
@@ -657,7 +657,6 @@ Widget buildingItem({
         ),
       );
     } else {
-      // todo re put el card
       return Dismissible(
         direction: DismissDirection.startToEnd,
         resizeDuration: Duration(milliseconds: 200),
@@ -677,484 +676,31 @@ Widget buildingItem({
           ),
         ),
         key: UniqueKey(),
-        child: Card(
-          color: ThemeCubit.get(context).darkTheme ? backGroundDark : backGround,
-          elevation: 0.0,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      item.buildingName,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ),
-                  if (cubit.showDetails == false || cubit.currentIndex != index)
-                    Container(
-                      width: 30.0,
-                      height: 30.0,
-                      child: IconButton(
-                        onPressed: () {
-                          cubit.currentIndex = index;
-                          cubit.showBuildingDetails(!cubit.showDetails, index);
-                        },
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                        ),
-                      ),
-                    ),
-                  if (cubit.showDetails == true && cubit.currentIndex == index)
-                    Container(
-                      width: 30.0,
-                      height: 30.0,
-                      child: IconButton(
-                        onPressed: () {
-                          cubit.showBuildingDetails(!cubit.showDetails, index);
-                          cubit.showEdit = false;
-                        },
-                        alignment: Alignment.center,
-                        icon: Icon(
-                          Icons.keyboard_arrow_up,
-                          color: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                        ),
-                      ),
-                    ),
-                  if (cubit.showDetails == true && cubit.currentIndex == index)
-                    Container(
-                      width: 50.0,
-                      height: 30.0,
-                      child: IconButton(
-                        onPressed: () {
-                          if (cubit.showEdit == true) {
-                            if (managerPhoneController.text.length == 11) {
-                              item.buildingCode = codeController.text;
-                              item.buildingName = nameController.text;
-                              item.buildingsupervisorPhonenumber = managerPhoneController.text;
-                              item.buildingsupervisorName = managerNameController.text;
-                              item.address = addressController.text;
-                              item.availability = cubit.currentBuildingStateVal == 0 ? true : false;
-                              item.buildingLevels = cubit.currentBuildingLevelVal == 0 ? true :false;
-                              item.gender = cubit.currentBuildingGenderVal == 0 ? true :false;
-                              cubit.putBuilding(
-                                availability: item.availability,
-                                //todo put building image
-                                image: item.image,
-                                address: item.address,
-                                buildingName: item.buildingName,
-                                buildingCode: item.buildingCode,
-                                buildingLevels: item.buildingLevels,
-                                buildingsupervisorName: item.buildingsupervisorName,
-                                buildingsupervisorPhonenumber: item.buildingsupervisorPhonenumber,
-                                numberofrooms: item.rooms.length,
-                                gender: item.gender,
-                                slug: item.slug,
-                              );
-                            } else {
-                              showToast(
-                                  message: 'رقم الموبيل غير صحيح',
-                                  state: ToastStates.ERROR);
-                              cubit.changeBuildingEditIcon(!cubit.showEdit);
-                            }
-                          }
-                          cubit.changeBuildingEditIcon(!cubit.showEdit);
-                        },
-                        icon: Icon(
-                          cubit.showEdit == false ? Icons.edit : Icons.done,
-                          size: 20.0,
-                          color: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                        ),
-                        alignment: AlignmentDirectional.center,
-                      ),
-                    ),
-                ],
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                item.buildingName,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
-              if (cubit.showDetails == true && cubit.currentIndex == index)
-                SizedBox(
-                  height: 10.0,
+            ),
+            Container(
+                width: 30.0,
+                height: 30.0,
+                child: IconButton(
+                  onPressed: () {
+                    cubit.currentIndex = index;
+                    cubit.showBuildingDetails(!cubit.showDetails, index);
+                  },
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
+                  ),
                 ),
-              if (cubit.showDetails == true && cubit.currentIndex == index)
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 120),
-                  height: cubit.animatedHeight,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: cubit.showEdit == true
-                        ? ThemeCubit.get(context).darkTheme
-                        ? mainColors
-                        : Colors.white
-                        : ThemeCubit.get(context).darkTheme
-                        ? backGroundDark
-                        : backGround,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 6.0),
-                    child: Column(
-                      children: [
-                        //code
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- الكوود :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            switchedTextFormField(
-                              context: context,
-                              cubit: cubit,
-                              controller: codeController,
-                            ),
-                          ],
-                        ),
-
-                        //BuildingName
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- اسم المبنى :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            switchedTextFormField(
-                              context: context,
-                              cubit: cubit,
-                              controller: nameController,
-                            ),
-                          ],
-                        ),
-
-                        //address
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- العنوان :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            switchedTextFormField(
-                              context: context,
-                              cubit: cubit,
-                              controller: addressController,
-                            ),
-                          ],
-                        ),
-
-
-                        // gender
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- النوع :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                controller: genderController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.zero,
-                                  hintStyle:
-                                  Theme.of(context).textTheme.bodyText1,
-                                ),
-                                readOnly: true,
-                                enableInteractiveSelection:
-                                cubit.showEdit == true ? true : false,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: () {
-                                  if (cubit.showEdit == true) {
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (context) => buildDialog(
-                                          context: context,
-                                          title: 'اختر النوع',
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: genderList
-                                                .map((e) => RadioListTile(
-                                              activeColor:
-                                              ThemeCubit.get(context)
-                                                  .darkTheme
-                                                  ? mainTextColor
-                                                  : backGroundDark,
-                                              tileColor: backGroundDark,
-                                              title: Text(
-                                                e.text,
-                                              ),
-                                              groupValue:
-                                              cubit.currentBuildingGenderVal,
-                                              value: e.index,
-                                              onChanged: (int? val) {
-                                                cubit.selectBuildingGender(
-                                                    val ?? e.index);
-                                                levelController.text =
-                                                    cubit.currentBuildingGenderText;
-                                                if (val == 0) {
-                                                  item.gender = true;
-                                                } else {
-                                                  item.gender = false;
-                                                }
-                                                Navigator.pop(context);
-                                              },
-                                            ))
-                                                .toList(),
-                                          )),
-                                    );
-                                  }
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-
-                        //Room Num
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- عدد الغرف :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                controller: roomNumController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.zero,
-                                  hintStyle: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                readOnly: true,
-                                enableInteractiveSelection:false,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: (){
-                                  navigateTo(context, EditRooms(selectedBuilding: item,));
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-
-
-
-                        //level
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- المستوى :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                controller: levelController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.zero,
-                                  hintStyle:
-                                  Theme.of(context).textTheme.bodyText1,
-                                ),
-                                readOnly: true,
-                                enableInteractiveSelection:
-                                cubit.showEdit == true ? true : false,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: () {
-                                  if (cubit.showEdit == true) {
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (context) => buildDialog(
-                                          context: context,
-                                          title: 'اختر المستوى',
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: levelList
-                                                .map((e) => RadioListTile(
-                                              activeColor:
-                                              ThemeCubit.get(context)
-                                                  .darkTheme
-                                                  ? mainTextColor
-                                                  : backGroundDark,
-                                              tileColor: backGroundDark,
-                                              title: Text(
-                                                e.text,
-                                              ),
-                                              groupValue:
-                                              cubit.currentBuildingLevelVal,
-                                              value: e.index,
-                                              onChanged: (int? val) {
-                                                cubit.selectBuildingLevel(
-                                                    val ?? e.index);
-                                                levelController.text =
-                                                    cubit
-                                                        .currentBuildingLevelText;
-                                                if (val == 0) {
-                                                  item.buildingLevels = true;
-                                                } else {
-                                                  item.buildingLevels = false;
-                                                }
-                                                Navigator.pop(context);
-                                              },
-                                            ))
-                                                .toList(),
-                                          )),
-                                    );
-                                  }
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-
-                        //managerName
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- اسم المشرف :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            switchedTextFormField(
-                              context: context,
-                              cubit: cubit,
-                              controller: managerNameController,
-                            ),
-                          ],
-                        ),
-
-                        // managerPhone
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- رقم المشرف :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            switchedTextFormField(
-                              context: context,
-                              cubit: cubit,
-                              controller: managerPhoneController,
-                            ),
-                          ],
-                        ),
-
-                        // statue
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '- الحالة :',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                controller: statueController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.zero,
-                                  hintStyle:
-                                  Theme.of(context).textTheme.bodyText1,
-                                ),
-                                readOnly: true,
-                                enableInteractiveSelection:
-                                cubit.showEdit == true ? true : false,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                textAlign: TextAlign.center,
-                                onTap: () {
-                                  if (cubit.showEdit == true) {
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (context) => buildDialog(
-                                          context: context,
-                                          title: 'اختر الحالة',
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: stateList
-                                                .map((e) => RadioListTile(
-                                              activeColor:
-                                              ThemeCubit.get(context)
-                                                  .darkTheme
-                                                  ? mainTextColor
-                                                  : backGroundDark,
-                                              tileColor: backGroundDark,
-                                              title: Text(
-                                                e.text,
-                                              ),
-                                              groupValue:
-                                              cubit.currentBuildingStateVal,
-                                              value: e.index,
-                                              onChanged: (int? val) {
-                                                cubit.selectBuildingState(
-                                                    val ?? e.index);
-                                                statueController.text =
-                                                    cubit
-                                                        .currentBuildingStateText;
-                                                if (val == 0) {
-                                                  item.availability = true;
-                                                } else {
-                                                  item.availability = false;
-                                                }
-                                                Navigator.pop(context);
-                                              },
-                                            ))
-                                                .toList(),
-                                          )),
-                                    );
-                                  }
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-            ],
-          ),
+              ),
+          ],
         ),
       );
     }

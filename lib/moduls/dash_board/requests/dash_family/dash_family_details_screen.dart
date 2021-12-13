@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,15 +23,29 @@ class DashFamilyDetailsScreen extends StatelessWidget {
 
 
   var managerController = TextEditingController();
-  var now = new DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PutReplayReportLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetAllOrdersSuccessStates){
+          Navigator.pop(context);
+          showToast(message: 'تم الرد بنجاح', state: ToastStates.SUCCESS);
+        }
+      },
       builder: (context, state) {
+        if(familyItem!.reply != 'empty' && familyItem!.reply.isEmpty != true){
+          managerController.text = familyItem!.reply;
+        }
+        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(familyItem!.createdAt);
+        String date = tempDate.toString().substring(0, 10);
+
         var cubit = DashBoardCubit.get(context);
-        var replyDate = DateFormat.yMMMd().format(now);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
           child: Scaffold(
@@ -69,10 +84,10 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
+                                child: SelectableText(
                                   '${familyItem!.idDB}',
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                             ],
@@ -93,8 +108,8 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  '${familyItem!.user.username}',
+                                child: SelectableText(
+                                  '${familyItem!.user!.username}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -117,8 +132,8 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  '${familyItem!.user.id}',
+                                child: SelectableText(
+                                  '${familyItem!.user!.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -141,8 +156,8 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  '${familyItem!.user.roomnumber.toString()}',
+                                child: SelectableText(
+                                  '${familyItem!.user!.roomnumber}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -165,8 +180,8 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  '${familyItem!.user.buildingName}',
+                                child: SelectableText(
+                                  '${familyItem!.user!.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -189,8 +204,8 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  '${familyItem!.createdAt}',
+                                child: SelectableText(
+                                  date,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -248,7 +263,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                     ),
                                     child: SingleChildScrollView(
                                       physics: BouncingScrollPhysics(),
-                                      child: Text(
+                                      child: SelectableText(
                                         '${familyItem!.reason}',
                                         style: Theme.of(context).textTheme.bodyText1,
                                       ),
@@ -265,9 +280,18 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                         height: 180.0,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(8.0,),
-                                          image: DecorationImage(
-                                            image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/New_Norwegian_ID_Card_%282021%29_%28Front%29.png/640px-New_Norwegian_ID_Card_%282021%29_%28Front%29.png'),
-                                            fit: BoxFit.fitWidth,
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: familyItem!.reportImg,
+                                          fit: BoxFit.fill,
+                                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>  Container(
+                                            alignment: Alignment.center,
+                                            height: 80.0,
+                                            child: Icon(Icons.error,
+                                              color: ThemeCubit.get(context).darkTheme
+                                                  ? mainTextColor
+                                                  : mainColors,),
                                           ),
                                         ),
                                       ),
@@ -304,9 +328,12 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: () {
-                                    showToast(
-                                        message: '${replyDate}',
-                                        state: ToastStates.SUCCESS);
+                                    cubit.putFamilyReport(
+                                      idDB: familyItem!.idDB,
+                                      isReplied: true,
+                                      reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
+                                      // isAccepted: true,
+                                    );
                                   },
                                   text: 'اوافق',
                                   btnColor: Colors.green,
@@ -318,9 +345,12 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: () {
-                                    showToast(
-                                        message: '${replyDate}',
-                                        state: ToastStates.ERROR);
+                                    cubit.putFamilyReport(
+                                      idDB: familyItem!.idDB,
+                                      isReplied: true,
+                                      reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
+                                      // isAccepted: false,
+                                    );
                                   },
                                   text: 'ارفض',
                                   btnColor: Colors.red,

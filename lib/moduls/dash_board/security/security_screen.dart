@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/model/get_dash_security_model.dart';
 import 'package:university_housing/model/security_model.dart';
-import 'package:university_housing/model/students_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
+import 'package:university_housing/moduls/dash_board/security/security_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -15,153 +16,8 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class SecurityScreen extends StatelessWidget {
   SecurityScreen({Key? key}) : super(key: key);
 
-  var dateController = TextEditingController();
   var buildingController = TextEditingController();
 
-  final List<AlertDialogModel> _buildingList = [
-    AlertDialogModel(
-      text: "عماره الزهراء",
-      index: 0,
-    ),
-    AlertDialogModel(
-      text: "سكن ال 36",
-      index: 1,
-    ),
-    AlertDialogModel(
-      text: "اسكان مميز(أ)",
-      index: 2,
-    ),
-  ];
-
-
-  final List<SecurityModel> list = [
-    SecurityModel(
-      id: '42018122',
-      name: 'عبدالرحمن محمد فؤاد',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '3:00 PM',
-      notes: 'لا يوجد',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42018122',
-      name: 'عبدالرحمن محمد فؤاد',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '3:00 PM',
-      notes: 'لا يوجد',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-    SecurityModel(
-      id: '42020102',
-      name: 'عمرو سعيد حسن',
-      enterDate: 'nov 6,2021',
-      enterTime: '9:00 AM',
-      exitDate: 'nov 6,2021',
-      exitTime: '10:00 PM',
-      notes: 'متأخر جدا',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -202,72 +58,6 @@ class SecurityScreen extends StatelessWidget {
                     defaultDashBoardTitleBox(
                         img: 'assets/images/security.png',
                         title: 'إداره الأمن'
-                    ),
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'تاريخ التقرير :',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1,
-                        ),
-                        SizedBox(width: 20.0,),
-                        Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: 40.0,
-                            padding: EdgeInsetsDirectional.only(top: 12.0),
-                            decoration: BoxDecoration(
-                              color:
-                              ThemeCubit
-                                  .get(context)
-                                  .darkTheme ? finesColorDark : Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                8.0,
-                              ),
-                              border: Border.all(color: Colors.grey, width: 1),
-                            ),
-                            child: TextFormField(
-                              keyboardType: TextInputType.datetime,
-                              controller: dateController,
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Nov 3, 2021',
-                                hintStyle: TextStyle(
-                                  fontSize: 16.0,
-                                    color: Colors.grey
-                                ),
-                              ),
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText1,
-                              textAlign: TextAlign.center,
-                              onTap: () {
-                                showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime.parse('2030-12-12')
-                                ).then((value) {
-                                  if (value == null) {
-                                    showToast(message: 'برجاء تحديد التاريخ',
-                                        state: ToastStates.WARNING);
-                                  } else {
-                                    dateController.text =
-                                        DateFormat.yMMMd().format(value);
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                     SizedBox(
                       height: 12.0,
@@ -320,30 +110,32 @@ class SecurityScreen extends StatelessWidget {
                                       buildDialog(
                                           context: context,
                                           title: 'اختر المبنى',
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: _buildingList.map((e) =>
-                                                RadioListTile(
-                                                  activeColor: ThemeCubit
-                                                      .get(context)
-                                                      .darkTheme
-                                                      ? mainTextColor
-                                                      : backGroundDark,
-                                                  tileColor: backGroundDark,
-                                                  title: Text(
-                                                    e.text,
-                                                  ),
-                                                  groupValue: cubit
-                                                      .currentSecurityBuildingVal,
-                                                  value: e.index,
-                                                  onChanged: (int? val) {
-                                                    cubit.selectSecurityBuilding(
-                                                        val ?? e.index);
-                                                    buildingController.text =
-                                                        e.text;
-                                                    Navigator.pop(context);
-                                                  },
-                                                )).toList(),
+                                          child: SingleChildScrollView(
+                                            physics: BouncingScrollPhysics(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: cubit.buildingsName.map((e) =>
+                                                  RadioListTile(
+                                                    activeColor: ThemeCubit
+                                                        .get(context)
+                                                        .darkTheme
+                                                        ? mainTextColor
+                                                        : backGroundDark,
+                                                    tileColor: backGroundDark,
+                                                    title: Text(
+                                                      e.text,
+                                                    ),
+                                                    groupValue: cubit
+                                                        .currentSecurityBuildingVal,
+                                                    value: e.index,
+                                                    onChanged: (int? val) {
+                                                      cubit.selectSecurityBuilding(val ?? e.index , e.text);
+                                                      buildingController.text =
+                                                          e.text;
+                                                      Navigator.pop(context);
+                                                    },
+                                                  )).toList(),
+                                            ),
                                           )
                                       ),
                                 );
@@ -364,28 +156,37 @@ class SecurityScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    if(!dateController.text.isEmpty && !buildingController.text.isEmpty)
-                    ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) =>
-                          securityItem(
-                            item: list[index],
-                            allList: list,
-                            cubit: cubit,
-                            context: context,
-                            index: index,
-                          ),
-                      separatorBuilder: (context, index) =>
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10.0),
-                            width: double.infinity,
-                            height: 1.0,
-                            color: separator,
-                          ),
-                      itemCount: list.length,
+                    Builder(
+                        builder:(context){
+                          if(cubit.allAttendance.length == 0){
+                            return Container(
+                                width:double.infinity,
+                                height: 300.0,
+                                child: Center(child: CircularProgressIndicator()));
+                          }else{
+                            return ListView.separated(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) =>
+                                  securityItem(
+                                    item: cubit.allAttendance[index],
+                                    cubit: cubit,
+                                    context: context,
+                                    index: index,
+                                  ),
+                              separatorBuilder: (context, index) => Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10.0),
+                                    width: double.infinity,
+                                    height: 1.0,
+                                    color: separator,
+                                  ),
+                              itemCount: cubit.allAttendance.length,
+                            );
+                          }
+                        }
                     ),
+
                   ],
                 ),
               ),
@@ -400,24 +201,19 @@ class SecurityScreen extends StatelessWidget {
 Widget securityItem({
   required context,
   required DashBoardCubit cubit,
-  required SecurityModel item,
+  required GetDashSecurityModel item,
   required int index,
-  required List<SecurityModel> allList,
 }) {
   var idController = TextEditingController();
   var nameController = TextEditingController();
-  var exitDateController = TextEditingController();
-  var exitTimeController = TextEditingController();
-  var enterDateController = TextEditingController();
-  var enterTimeController = TextEditingController();
-  var notesController = TextEditingController();
-  idController.text = item.id!;
-  nameController.text = item.name!;
-  exitDateController.text = item.exitDate!;
-  exitTimeController.text = item.exitTime!;
-  enterDateController.text = item.enterDate!;
-  enterTimeController.text = item.enterTime!;
-  notesController.text = item.notes!;
+  var roomController = TextEditingController();
+  var buildingController = TextEditingController();
+  var detailsController = TextEditingController();
+  idController.text = item.id.toString();
+  nameController.text = item.username;
+  roomController.text = item.roomnumber.toString();
+  buildingController.text = item.buildingName;
+  detailsController.text = item.exitAndEnters.length.toString();
   return Card(
     color: ThemeCubit
         .get(context)
@@ -429,7 +225,7 @@ Widget securityItem({
           children: [
             Expanded(
               child: Text(
-                item.name!,
+                item.username,
                 style: Theme
                     .of(context)
                     .textTheme
@@ -440,7 +236,7 @@ Widget securityItem({
             ),
             Expanded(
               child: Text(
-                item.id!,
+                item.id.toString(),
                 style: Theme
                     .of(context)
                     .textTheme
@@ -490,36 +286,36 @@ Widget securityItem({
                   ),
                 ),
               ),
-            if (cubit.showSecurity_details == true &&
-                cubit.currentSecurityIndex == index)
-              Container(
-                width: 50.0,
-                height: 30.0,
-                child: IconButton(
-                  onPressed: () {
-                    if (cubit.showSecurityEdit == true) {
-                        item.id = idController.text;
-                        item.name = nameController.text;
-                        item.exitDate = exitDateController.text;
-                        item.exitTime = exitTimeController.text;
-                        item.enterDate = enterDateController.text;
-                        item.enterTime = enterTimeController.text;
-                        item.notes = notesController.text;
-                    }
-                    cubit.changeSecurityEditIcon(!cubit.showSecurityEdit);
-                  },
-                  icon: Icon(
-                    cubit.showSecurityEdit == false ? Icons.edit : Icons.done,
-                    size: 20.0,
-                    color: ThemeCubit
-                        .get(context)
-                        .darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  alignment: AlignmentDirectional.center,
-                ),
-              ),
+            // if (cubit.showSecurity_details == true &&
+            //     cubit.currentSecurityIndex == index)
+              // Container(
+              //   width: 50.0,
+              //   height: 30.0,
+              //   child: IconButton(
+              //     onPressed: () {
+              //       if (cubit.showSecurityEdit == true) {
+              //           item.id = idController.text;
+              //           item.name = nameController.text;
+              //           item.exitDate = exitDateController.text;
+              //           item.exitTime = exitTimeController.text;
+              //           item.enterDate = enterDateController.text;
+              //           item.enterTime = enterTimeController.text;
+              //           item.notes = notesController.text;
+              //       }
+              //       cubit.changeSecurityEditIcon(!cubit.showSecurityEdit);
+              //     },
+              //     icon: Icon(
+              //       cubit.showSecurityEdit == false ? Icons.edit : Icons.done,
+              //       size: 20.0,
+              //       color: ThemeCubit
+              //           .get(context)
+              //           .darkTheme
+              //           ? mainTextColor
+              //           : mainColors,
+              //     ),
+              //     alignment: AlignmentDirectional.center,
+              //   ),
+              // ),
           ],
         ),
         if (cubit.showSecurity_details == true &&
@@ -599,12 +395,12 @@ Widget securityItem({
                   ),
 
 
-                  // exitDate
+                  // building
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '- تاريخ الخروج :',
+                          '- اسم المبنى :',
                           style: Theme
                               .of(context)
                               .textTheme
@@ -614,7 +410,7 @@ Widget securityItem({
                       switchedTextFormField(
                         context: context,
                         cubit: cubit,
-                        controller: exitDateController,
+                        controller: buildingController,
                       ),
                     ],
                   ),
@@ -623,12 +419,12 @@ Widget securityItem({
                   ),
 
 
-                  // exitTime
+                  // room
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '- وقت الخروج :',
+                          '- رقم الغرفة :',
                           style: Theme
                               .of(context)
                               .textTheme
@@ -638,7 +434,7 @@ Widget securityItem({
                       switchedTextFormField(
                         context: context,
                         cubit: cubit,
-                        controller: exitTimeController,
+                        controller: roomController,
                       ),
                     ],
                   ),
@@ -647,70 +443,38 @@ Widget securityItem({
                   ),
 
 
-                  // enterDate
+                  // details
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          '- تاريخ الدخول :',
+                          '- التفاصيل :',
                           style: Theme
                               .of(context)
                               .textTheme
                               .bodyText1,
                         ),
                       ),
-                      switchedTextFormField(
-                        context: context,
-                        cubit: cubit,
-                        controller: enterDateController,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-
-
-                  // enterTime
-                  Row(
-                    children: [
                       Expanded(
-                        child: Text(
-                          '- وقت الدخول :',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1,
+                        child: TextFormField(
+                          controller: detailsController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                            hintStyle: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          readOnly: true,
+                          enableInteractiveSelection:false,
+                          style: Theme.of(context).textTheme.bodyText1,
+                          textAlign: TextAlign.center,
+                          onTap: (){
+                            if(item.exitAndEnters.length == 0){
+                              showToast(message: 'لا يوجد تفاصيل حاليا', state: ToastStates.WARNING);
+                            }else{
+                              navigateTo(context, SecurityDetailsScreen(item: item,));
+                            }
+                          },
                         ),
-                      ),
-                      switchedTextFormField(
-                        context: context,
-                        cubit: cubit,
-                        controller: enterTimeController,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-
-
-                  // notes
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '- ملاحظات :',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1,
-                        ),
-                      ),
-                      switchedTextFormField(
-                        context: context,
-                        cubit: cubit,
-                        controller: notesController,
                       ),
                     ],
                   ),

@@ -12,7 +12,6 @@ import 'package:university_housing/moduls/profile/edit_profile_screen.dart';
 import 'package:university_housing/moduls/profile/profile_screen.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
-import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -773,7 +772,7 @@ Widget dashTextFormField({
           border: InputBorder.none,
           hintText: hint,
           hintStyle: Theme.of(context).textTheme.bodyText1,
-          contentPadding: const EdgeInsetsDirectional.all(10.0),
+          contentPadding: const EdgeInsetsDirectional.all(5.0),
         ),
         style: Theme.of(context).textTheme.bodyText1,
       ),
@@ -829,8 +828,12 @@ Widget switchedTextFormField({
   required context,
   required cubit,
   required controller,
+  bool center = true,
+  TextInputType type = TextInputType.text,
+  int flex = 1,
 }) =>
     Expanded(
+      flex: flex,
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
@@ -838,15 +841,16 @@ Widget switchedTextFormField({
           contentPadding: EdgeInsets.zero,
           hintStyle: Theme.of(context).textTheme.bodyText1,
         ),
-        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true
+        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
             ? false
             : true,
         enableInteractiveSelection:
-            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true
+            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
                 ? true
                 : false,
         style: Theme.of(context).textTheme.bodyText1,
-        textAlign: TextAlign.center,
+        textAlign: center ? TextAlign.center : TextAlign.start,
+        keyboardType: type,
       ),
     );
 

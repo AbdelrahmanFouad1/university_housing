@@ -27,13 +27,29 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
   Complaints? complaintsItem;
 
   var managerController = TextEditingController();
-  var now = new DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PutReplayMissingLoadingStates || state is PutReplayDamagedLoadingStates || state is PutReplayComplaintsLoadingStates ){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetAllOrdersSuccessStates){
+          Navigator.pop(context);
+          showToast(message: 'تم الرد بنجاح', state: ToastStates.SUCCESS);
+        }
+      },
       builder: (context, state) {
+
+        if(type=='missing' && missingItem!.reply != 'empty' || type=='damaged' && damagedItem!.reply!= 'empty' || type=='complaints' && complaintsItem!.reply!= 'empty' ){
+          managerController.text = type == 'missing'? '${missingItem!.reply}': type == 'damaged'? '${damagedItem!.reply}':'${complaintsItem!.reply}';
+        }
+
+        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(type == 'missing'? '${missingItem!.createdAt}': type == 'damaged'? '${damagedItem!.createdAt}':'${complaintsItem!.createdAt}',);
+        String date = tempDate.toString().substring(0, 10);
         var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
@@ -98,11 +114,10 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
+                                child: SelectableText(
                                   type == 'missing'? '${missingItem!.idDB}': type == 'damaged'? '${damagedItem!.idDB}':'${complaintsItem!.idDB}',
-
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                             ],
@@ -123,9 +138,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'missing'? '${missingItem!.user.username}': type == 'damaged'? '${damagedItem!.user.username}':'${complaintsItem!.user.username}',
-
+                                child: SelectableText(
+                                  type == 'missing'? '${missingItem!.user!.username}': type == 'damaged'? '${damagedItem!.user!.username}':'${complaintsItem!.user!.username}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -149,8 +163,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'missing'? '${missingItem!.user.id}': type == 'damaged'? '${damagedItem!.user.id}':'${complaintsItem!.user.id}',
+                                child: SelectableText(
+                                  type == 'missing'? '${missingItem!.user!.id}': type == 'damaged'? '${damagedItem!.user!.id}':'${complaintsItem!.user!.id}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -175,8 +189,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'missing'? '${missingItem!.user.roomnumber}': type == 'damaged'? '${damagedItem!.user.roomnumber}':'${complaintsItem!.user.roomnumber}',
+                                child: SelectableText(
+                                  type == 'missing'? '${missingItem!.user!.roomnumber }': type == 'damaged'? '${damagedItem!.user!.roomnumber}':'${complaintsItem!.user!.roomnumber}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -201,8 +215,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'missing'? '${missingItem!.user.buildingName}': type == 'damaged'? '${damagedItem!.user.buildingName}':'${complaintsItem!.user.buildingName}',
+                                child: SelectableText(
+                                  type == 'missing'? '${missingItem!.user!.buildingName}': type == 'damaged'? '${damagedItem!.user!.buildingName}':'${complaintsItem!.user!.buildingName}',
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -227,8 +241,8 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  type == 'missing'? '${missingItem!.createdAt}': type == 'damaged'? '${damagedItem!.createdAt}':'${complaintsItem!.createdAt}',
+                                child: SelectableText(
+                                    date,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -274,26 +288,29 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                     function: (){
                                       if(type == 'missing'){
-                                        missingItem!.isReplied = true;
                                         // todo isAccepted not found in api
                                         // missingItem!.isAccepted = true;
-                                        missingItem!.reply = managerController.text;
-                                        missingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message:'${missingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putMissing(
+                                          idDB: missingItem!.idDB,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                          isReplied: true,
+                                        );
                                       } else if(type == 'damaged'){
-                                        damagedItem!.isReplied = true;
                                         // todo isAccepted not found in api
                                         // damagedItem!.isAccepted = true;
-                                        damagedItem!.reply = managerController.text;
-                                        damagedItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message:'${damagedItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putDamaged(
+                                          idDB: damagedItem!.idDB,
+                                          isReplied: true,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                        );
                                       }else{
-                                        complaintsItem!.isReplied = true;
                                         // todo isAccepted not found in api
                                         // complaintsItem!.isAccepted = true;
-                                        complaintsItem!.reply = managerController.text;
-                                        complaintsItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                        showToast(message:'${complaintsItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                        cubit.putComplaints(
+                                          idDB: complaintsItem!.idDB,
+                                          isReplied: true,
+                                          reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                        );
                                       }
                                     },
                                     text: 'اوافق',
@@ -305,26 +322,29 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                   function: (){
                                     if(type == 'missing'){
-                                      missingItem!.isReplied = true;
                                       // todo isAccepted not found in api
                                       // missingItem!.isAccepted = false;
-                                      missingItem!.reply = managerController.text;
-                                      missingItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message:'${missingItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      cubit.putMissing(
+                                        idDB: missingItem!.idDB,
+                                        reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                        isReplied: true,
+                                      );
                                     } else if(type == 'damaged'){
-                                      damagedItem!.isReplied = true;
                                       // todo isAccepted not found in api
                                       // damagedItem!.isAccepted = false;
-                                      damagedItem!.reply = managerController.text;
-                                      damagedItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message:'${damagedItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      cubit.putDamaged(
+                                        idDB: damagedItem!.idDB,
+                                        isReplied: true,
+                                        reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                      );
                                     }else{
-                                      complaintsItem!.isReplied = true;
                                       // todo isAccepted not found in api
                                       // complaintsItem!.isAccepted = false;
-                                      complaintsItem!.reply = managerController.text;
-                                      complaintsItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                      showToast(message:'${complaintsItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                      cubit.putComplaints(
+                                        idDB: complaintsItem!.idDB,
+                                        isReplied: true,
+                                        reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                      );
                                     }
                                   },
                                   text: 'ارفض',

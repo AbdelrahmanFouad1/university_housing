@@ -21,13 +21,28 @@ class DashQueriesDetailsScreen extends StatelessWidget {
   Enquiry? enquiryItem;
 
   var managerController = TextEditingController();
-  var now = new DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PutReplayEnquiryLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetAllOrdersSuccessStates){
+          Navigator.pop(context);
+          showToast(message: 'تم الرد بنجاح', state: ToastStates.SUCCESS);
+        }
+      },
       builder: (context, state) {
+        if(enquiryItem!.enquiryAnswer != 'empty' && enquiryItem!.enquiryAnswer.isEmpty != true){
+          managerController.text = enquiryItem!.enquiryAnswer;
+        }
+        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(enquiryItem!.createdAt);
+        String date = tempDate.toString().substring(0, 10);
+
         var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
@@ -76,15 +91,15 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                                 flex: 1,
                                 child: Text(
                                   'رقم الأستعلام :',
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
+                                child: SelectableText(
                                   enquiryItem!.idDB,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                             ],
@@ -105,8 +120,8 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  enquiryItem!.user.username,
+                                child: SelectableText(
+                                  enquiryItem!.user!.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -130,8 +145,8 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  enquiryItem!.user.id.toString(),
+                                child: SelectableText(
+                                  enquiryItem!.user!.id.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -156,8 +171,8 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  enquiryItem!.user.roomnumber.toString(),
+                                child: SelectableText(
+                                  enquiryItem!.user!.roomnumber.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -182,8 +197,8 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  enquiryItem!.user.buildingName,
+                                child: SelectableText(
+                                  enquiryItem!.user!.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -203,13 +218,13 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                                 flex: 1,
                                 child: Text(
                                   'تاريخ الأستعلام :',
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text(
-                                  enquiryItem!.createdAt,
+                                child: SelectableText(
+                                  date,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -251,10 +266,11 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               if(managerController.text.isEmpty){
                                 showToast(message:'يجب الرد علي الأستعلام أولا' ,state: ToastStates.ERROR);
                               }else{
-                                enquiryItem!.isReplied = true;
-                                enquiryItem!.enquiryAnswer = managerController.text;
-                                enquiryItem!.updatedAt = DateFormat.yMMMd().format(now) ;
-                                showToast(message:'${enquiryItem!.enquiryAnswer}'+'\n'+'${enquiryItem!.updatedAt}' ,state: ToastStates.SUCCESS);
+                                cubit.putEnquiry(
+                                  isReplied: true,
+                                  idDB: enquiryItem!.idDB,
+                                  enquiryAnswer: managerController.text
+                                );
                               }
                             },
                             text: 'تأكيد الرد',

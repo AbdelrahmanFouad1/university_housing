@@ -101,14 +101,16 @@ Widget ReportItem(
       children: [
         Expanded(
           child: Text(
-            '${item.user.username}',
-            style: Theme.of(context).textTheme.bodyText1,
+            '${item.user!.username}',
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Expanded(
           child: Text(
-            '${item.user.id}',
-            style: Theme.of(context).textTheme.bodyText1,
+            '${item.user!.id}',
+            style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),

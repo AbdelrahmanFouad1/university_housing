@@ -42,5 +42,11 @@ const CREATE_NEWS = 'news/createnews';
 
 const ALL_ORDERS = 'orders/allOrders';
 
+const ALL_USERS = 'users';
+
+const ALL_ATTENDANCE = 'users/enterANDexitUsers/security';
+
+const POST_STUDENT = 'users/createUsers';
+
 
 

@@ -5,11 +5,15 @@ import 'package:university_housing/moduls/dash_board/requests/dash_family/dash_f
 import 'package:university_housing/moduls/dash_board/requests/dash_hosts/dash_hosts_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_queries/dash_queries_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/dash_rooms_requestes/dash_rooms_requests_screen.dart';
+import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
+import 'package:university_housing/moduls/dash_board/students/waiting_students_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
-class RequestsHomeScreen extends StatelessWidget {
-  const RequestsHomeScreen({Key? key}) : super(key: key);
+
+import 'add_student_screen.dart';
+class StudentsHomeScreen extends StatelessWidget {
+  const StudentsHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class RequestsHomeScreen extends StatelessWidget {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
-              appBar: dashAppBar(title: 'طلبات الساكنين', context: context),
+              appBar: dashAppBar(title: 'إدارة الساكنين', context: context),
               body: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Padding(
@@ -35,57 +39,61 @@ class RequestsHomeScreen extends StatelessWidget {
                       }else{
                         return Column(
                           children: [
-                            SizedBox(height: 12.0,),
+                            SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
-                                navigateTo(context, DashRoomsRequestsScreen());
+                                cubit.getAllUsers(
+                                    query: {
+                                      if(cubit.termNum == 1)
+                                        'firstTerm':true,
+                                      if(cubit.termNum == 2)
+                                        'secondTerm':true,
+                                      if(cubit.termNum == 3)
+                                        'thirdTerm':true,
+                                      if(cubit.isStudentKind)
+                                        'isStudent':true,
+                                      if(cubit.isStudentKind == false)
+                                        'isEmployee':true,
+                                    }
+                                );
+                                navigateTo(context, StudentsScreen());
                               },
                               child: defaultDashBoardTitleBox(
-                                  img: 'assets/images/home.png',
-                                  title: 'طلبات التسكين'
-                              ),
-                            ),
-                            SizedBox(height: 12.0,),
-                            InkWell(
-                              onTap: (){
-                                navigateTo(context, DashComplimentsScreen());
-                              },
-                              child: defaultDashBoardTitleBox(
-                                  title: 'الشكوى',
+                                  title: 'مقيدين بالسكن',
                                   svg: true,
-                                  svgImage: 'assets/images/review.svg'
+                                  svgImage: 'assets/images/check.svg'
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
-                                navigateTo(context, DashQueriesScreen());
+                                cubit.getAllUsers(
+                                    query: {
+                                      'firstTerm':false,
+                                      'secondTerm':false,
+                                      'thirdTerm':false,
+                                      if(cubit.waitingIsStudentKind)
+                                        'isStudent':true,
+                                      if(cubit.waitingIsStudentKind == false)
+                                        'isEmployee':true,
+                                    }
+                                );
+                                navigateTo(context, WaitingStudentsScreen());
                               },
                               child: defaultDashBoardTitleBox(
-                                svgImage:  'assets/images/research.svg',
-                                title: 'الاستعلامات',
-                                svg: true,
+                                  title: 'غير مقيدين بالسكن',
+                                  svg: true,
+                                  svgImage: 'assets/images/warn.svg'
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
-                                navigateTo(context, DashHostsScreen());
+                                navigateTo(context, AddStudent());
                               },
                               child: defaultDashBoardTitleBox(
-                                  svgImage: 'assets/images/follow.svg',
-                                  title: 'طلبات الإستضافة',
-                                  svg: true
-                              ),
-                            ),
-                            SizedBox(height: 12.0,),
-                            InkWell(
-                              onTap: (){
-                                navigateTo(context, DashFamilyScreen());
-                              },
-                              child: defaultDashBoardTitleBox(
-                                svgImage:  'assets/images/family.svg',
-                                title: 'أقرارات ولي الأمر',
+                                svgImage:  'assets/images/follow.svg',
+                                title: 'إضافة ساكن جديد',
                                 svg: true,
                               ),
                             ),
