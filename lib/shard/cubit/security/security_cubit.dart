@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/model/profile_model.dart';
+import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/security/security_states.dart';
 import 'package:university_housing/shard/network/end_point.dart';
@@ -23,9 +24,7 @@ class SecurityCubit extends Cubit<SecurityStates>{
       token: tokeen ?? '',
     ).then((value) {
       if (value != null) {
-        // printFullText(value.data.toString());
         profileModel = ProfileModel.fromJson(value.data);
-
         emit(GetProfileSuccessStates());
       }
     }).catchError((error) {
@@ -97,6 +96,44 @@ class SecurityCubit extends Cubit<SecurityStates>{
     }).catchError((error) {
       print('-----------user security-----------${error.toString()}');
       emit(GetUserSecurityErrorStates(error.toString()));
+    });
+  }
+
+  // todo post el enter baaaaaas  3wza ta3del
+  void postAttendance({
+    required String idDB,
+    String? enterAt,
+    String? enterDate,
+    String? exitAt,
+    String? exitDate,
+    String? Notes,
+  }) {
+    emit(postAttendanceLoadingStates());
+
+    DioHelper.postData(
+      url: 'users/${idDB}/security',
+      token: tokeen ?? '',
+      data: {
+        if(enterAt!=null)
+          'enterAt': enterAt,
+        if(enterDate!=null)
+          'enterDate': enterDate,
+        if(exitAt!=null)
+          'exitAt': exitAt,
+        if(exitDate!=null)
+          'exitDate': exitDate,
+        if(Notes!=null)
+          'Notes': Notes,
+      },
+    ).then((value) {
+      if (value != null) {
+        print(value.statusMessage);
+        emit(postAttendanceSuccessStates());
+      }
+    }).catchError((error) {
+      print(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(postAttendanceErrorStates());
     });
   }
 

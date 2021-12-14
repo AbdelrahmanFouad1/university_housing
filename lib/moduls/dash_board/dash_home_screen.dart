@@ -16,6 +16,7 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 import 'news/news_screen.dart';
+
 class DashHomeScreen extends StatelessWidget {
   const DashHomeScreen({Key? key}) : super(key: key);
 
@@ -28,19 +29,20 @@ class DashHomeScreen extends StatelessWidget {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            appBar: dashAppBar(title: 'إدارة الإسكان الجامعى', context: context,pop: false),
+            appBar: dashAppBar(
+                title: 'إدارة الإسكان الجامعى', context: context, pop: false),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Builder(
-                  builder: (context){
-                    if(state is GetProfileLoadingStates){
+                  builder: (context) {
+                    if (state is GetProfileLoadingStates) {
                       return Container(
-                          width:double.infinity,
+                          width: double.infinity,
                           height: 300.0,
                           child: Center(child: CircularProgressIndicator()));
-                    }else{
+                    } else {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -73,18 +75,23 @@ class DashHomeScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     cubit.profileModel!.id.toString(),
-                                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.0,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                        ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               navigateTo(context, ChangePasswordScreen());
                             },
                             child: Text(
@@ -95,15 +102,18 @@ class DashHomeScreen extends StatelessWidget {
                                   .copyWith(fontSize: 12.0, color: Colors.grey),
                             ),
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               showDialog<void>(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  backgroundColor: ThemeCubit.get(context).darkTheme
-                                      ? mainColors
-                                      : Colors.white,
+                                  backgroundColor:
+                                      ThemeCubit.get(context).darkTheme
+                                          ? mainColors
+                                          : Colors.white,
                                   content: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: Padding(
@@ -116,11 +126,15 @@ class DashHomeScreen extends StatelessWidget {
                                             height: 25.0,
                                             alignment: Alignment.center,
                                           ),
-                                          const SizedBox(width: 10.0,),
+                                          const SizedBox(
+                                            width: 10.0,
+                                          ),
                                           Text(
                                             'تأكيد الخروج من الحساب ؟',
                                             textDirection: TextDirection.rtl,
-                                            style: Theme.of(context).textTheme.subtitle1,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1,
                                           ),
                                         ],
                                       ),
@@ -133,37 +147,50 @@ class DashHomeScreen extends StatelessWidget {
                                       child: Text(
                                         'الغاء',
                                         textDirection: TextDirection.rtl,
-                                        style: Theme.of(context).textTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1,
                                       ),
                                     ),
                                     TextButton(
-                                      onPressed: () => Navigator.pop(context),
+                                      onPressed: () {
+                                        CacheHelper.removeData(key: 'token');
+                                        CacheHelper.removeData(
+                                            key: 'isStudent');
+                                        CacheHelper.removeData(
+                                            key: 'isSecurity');
+                                        CacheHelper.removeData(
+                                            key: 'isHousingManager');
+                                        CacheHelper.removeData(
+                                            key: 'isStudentAffairs');
+                                        CacheHelper.removeData(
+                                            key: 'isresident');
+                                        navigateAndFinish(
+                                            context, LoginScreen());
+                                      },
                                       child: Text(
                                         'تأكيد',
                                         textDirection: TextDirection.rtl,
-                                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.red),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(color: Colors.red),
                                       ),
                                     ),
                                   ],
                                 ),
                               );
-                              CacheHelper.removeData(key: 'token');
-                              CacheHelper.removeData(key: 'isStudent');
-                              CacheHelper.removeData(key: 'isSecurity');
-                              CacheHelper.removeData(key: 'isHousingManager');
-                              CacheHelper.removeData(key: 'isStudentAffairs');
-                              CacheHelper.removeData(key: 'isresident');
-                              navigateAndFinish(context, LoginScreen());
                             },
                             child: Text(
                               'تسجيل خروج',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
-                                  .copyWith(fontWeight: FontWeight.bold , color: Colors.red),
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
                             ),
                           ),
-
                           const SizedBox(
                             height: 22.0,
                           ),
@@ -175,67 +202,68 @@ class DashHomeScreen extends StatelessWidget {
                           const SizedBox(
                             height: 22.0,
                           ),
-
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               cubit.getRoomsNum();
                               navigateTo(context, const RoomsHomeScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/home.png',
-                                title: 'إداره الغرف'
-                            ),
+                                title: 'إداره الغرف'),
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               navigateTo(context, StudentsHomeScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/team.png',
-                                title: 'الساكنين'
-                            ),
+                                title: 'الساكنين'),
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               cubit.getAllAttendance();
                               cubit.getAvailableNowData();
                               navigateTo(context, SecurityScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/security.png',
-                                title: 'إداره الأمن'
-                            ),
+                                title: 'إداره الأمن'),
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               cubit.getAllOrders();
                               navigateTo(context, const RequestsHomeScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/checklist.png',
-                                title: 'طلبات الساكنين'
-                            ),
+                                title: 'طلبات الساكنين'),
                           ),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               cubit.getNews();
                               navigateTo(context, NewsScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/newspaper.png',
-                                title: 'أخبار المعهد'
-                            ),
+                                title: 'أخبار المعهد'),
                           ),
                         ],
                       );
                     }
                   },
                 ),
-
               ),
             ),
           ),
