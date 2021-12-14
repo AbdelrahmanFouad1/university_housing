@@ -24,6 +24,12 @@ class GetUserSecurityErrorStates extends SecurityStates {
   GetUserSecurityErrorStates(this.error);
 }
 
+//post attendance
+class postAttendanceLoadingStates extends SecurityStates {}
+class postAttendanceSuccessStates extends SecurityStates {}
+class postAttendanceErrorStates extends SecurityStates {}
+
+
 
 
 

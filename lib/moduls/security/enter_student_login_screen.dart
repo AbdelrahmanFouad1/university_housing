@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
 import 'package:university_housing/moduls/security/success/success_exit_student_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -22,7 +23,8 @@ class EnterStudentDetailsScreen extends StatelessWidget {
   var notesController = TextEditingController();
   bool show_warning = false ;
 
-  EnterStudentDetailsScreen({Key? key}) : super(key: key);
+  EnterStudentDetailsScreen({Key? key, required this.item}) : super(key: key);
+  MainSecurityModel item;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,15 @@ class EnterStudentDetailsScreen extends StatelessWidget {
             show_warning = true;
           }else{
             show_warning = false;
+          }
+
+          if (state is postAttendanceSuccessStates || state is postAttendanceErrorStates) {
+            Navigator.pop(context);
+          }
+          if (state is postAttendanceLoadingStates) {
+            showDialog<void>(
+                context: context,
+                builder: (context) => waitingDialog(context: context));
           }
         },
         builder: (BuildContext context, Object? state) {
@@ -92,11 +103,11 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'عبدالرحمن محمد فؤاد',
+                                  item.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                                 Text(
-                                  '42018122',
+                                  item.id.toString(),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -374,9 +385,21 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                             if (exitDateController.text == ''||exitTimeController.text == '') {
                               showToast(message: 'برجاء أدخال تاريخ و وقت الخروج', state: ToastStates.ERROR);
                             }else if(enterDateController.text != '' && enterTimeController.text != ''){
-                              navigateTo(context, const SuccessEnterStudentScreen());
+                              cubit.postAttendance(
+                                idDB: item.idDB,
+                                enterDate: enterDateController.text,
+                                enterAt:enterTimeController.text,
+                                Notes: notesController.text,
+                              );
+                              // navigateTo(context, const SuccessEnterStudentScreen());
                             }else{
-                              navigateTo(context, const SuccessExitStudentScreen());
+                              cubit.postAttendance(
+                                idDB: item.idDB,
+                                exitDate: exitDateController.text,
+                                exitAt: enterTimeController.text,
+                                Notes: notesController.text,
+                              );
+                              // navigateTo(context, const SuccessExitStudentScreen());
                             }
                           },
                           text: 'تأكيد',
