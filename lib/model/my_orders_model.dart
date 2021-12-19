@@ -185,9 +185,11 @@ class LeftRequestsordersModel{
 }
 
 class BookingsordersModel{
-  late bool isreply;
+  // late bool isreply;
+  late String idDB;
 
   BookingsordersModel.fromJson(Map<String, dynamic> json) {
-    isreply = json['isreply'];
+    // isreply = json['isAccepted'];
+    idDB = json['_id'];
   }
 }

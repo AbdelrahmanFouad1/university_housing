@@ -54,7 +54,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
         DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(type == 'book'? '${bookingItem!.createdAt}': type == 'change'? '${changeItem!.createdAt}':'${leftItem!.createdAt}',);
         String date = tempDate.toString().substring(0, 10);
 
+        managerController.text = type=='book'? bookingItem!.reply : type=='change'? changeItem!.reply :leftItem!.reply ;
         var cubit = DashBoardCubit.get(context);
+
         return Directionality(
           textDirection: ui.TextDirection.rtl,
           child: Scaffold(
@@ -611,6 +613,37 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                           ),
 
 
+                          // if student want exit
+                          if(type == 'exit')
+                            Column(
+                              children: [
+                                //reason
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'سبب الإخلاء :',
+                                        style: Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: SelectableText(
+                                        leftItem!.reason.isNotEmpty? '${leftItem!.reason}' : 'لا يوجد سبب',
+                                        style: Theme.of(context).textTheme.bodyText1,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+
+
 
 
                           //managerReply
@@ -639,35 +672,17 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           isWaiting: false,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                         );
-                                        cubit.putStudent(
-                                            idDB: bookingItem!.user!.idDB,
-                                            id: bookingItem!.user!.id,
-                                            username: bookingItem!.user!.username,
-                                            isStudent: bookingItem!.user!.isStudent,
-                                            isEmployee: bookingItem!.user!.isEmployee,
-                                            firstTerm: bookingItem!.firstTerm,
-                                            secondTerm: bookingItem!.secondTerm,
-                                            thirdTerm: bookingItem!.thirdTerm,
-                                            NationalID: bookingItem!.NationalID,
-                                            address: bookingItem!.address,
-                                            buildingName: bookingItem!.buildingName,
-                                            buildingType: bookingItem!.buildingType,
-                                            roomnumber: bookingItem!.roomnumber,
-                                            Section: bookingItem!.Section,
-                                            isPaid: false,
-                                            paidAt: '',
-                                            cardPhoto: bookingItem!.cardPhoto,
-                                        );
+                                        cubit.ifAcceptedBooking(bookingItem: bookingItem!);
                                       } else if(type == 'change'){
-                                        // todo isAccepted not found in api
                                         cubit.putReplayChange(
                                           idDB: changeItem!.idDB,
+                                            isAccepted: true,
                                             reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                           isReplied: true
                                         );
                                       }else{
-                                        // todo isAccepted not found in api
                                         cubit.putReplayExit(
+                                            isAccepted: true,
                                             idDB: leftItem!.idDB,
                                             reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                             isReplied: true
@@ -691,15 +706,15 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                         reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                       );
                                     } else if(type == 'change'){
-                                      // todo isAccepted not found in api
                                       cubit.putReplayChange(
+                                          isAccepted: false,
                                           idDB: changeItem!.idDB,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                           isReplied: true
                                       );
                                     }else{
-                                      // todo isAccepted not found in api
                                       cubit.putReplayExit(
+                                          isAccepted: false,
                                           idDB: leftItem!.idDB,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                           isReplied: true

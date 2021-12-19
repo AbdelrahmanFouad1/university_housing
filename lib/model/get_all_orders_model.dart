@@ -78,6 +78,7 @@ class GetAllOrdersModel{
 
 class Missing{
   late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
   late String missingthing;
@@ -87,6 +88,7 @@ class Missing{
 
   Missing.fromJson(Map<String, dynamic> json) {
     isReplied = json['isReplied'] ?? false;
+    isAccepted = json['isAccepted'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     missingthing = json['missingthing']?? 'empty';
@@ -102,6 +104,7 @@ class Missing{
 
 class Complaints{
   late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
   late String complaint;
@@ -111,6 +114,7 @@ class Complaints{
 
   Complaints.fromJson(Map<String, dynamic> json) {
     isReplied = json['isReplied'] ?? false;
+    isAccepted = json['isAccepted'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     complaint = json['complaint']?? 'empty';
@@ -125,6 +129,7 @@ class Complaints{
 
 class Damaged{
   late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
   late String damagedthing;
@@ -134,6 +139,7 @@ class Damaged{
 
   Damaged.fromJson(Map<String, dynamic> json) {
     isReplied = json['isReplied'] ?? false;
+    isAccepted = json['isAccepted'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     damagedthing = json['damagedthing']?? 'empty';
@@ -171,6 +177,7 @@ class Enquiry{
 
 class ChangeRoom{
   late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
   late num numofnextroom;
@@ -180,7 +187,8 @@ class ChangeRoom{
   User? user;
 
   ChangeRoom.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isReplied'] ?? false;
+    isReplied = json['isreply'] ?? false;
+    isAccepted = json['isAccepted'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     numofnextroom = json['numofnextroom'] ?? 0;
@@ -194,6 +202,7 @@ class ChangeRoom{
   }
 }
 
+// todo isAccepted not exist
 class FamilyOrders{
   late bool isReplied;
   late String reply;
@@ -220,10 +229,11 @@ class FamilyOrders{
 }
 
 // todo missing isReplied
-// todo missing isStudent
-// todo missing num of hosting days
+// todo missing guest id
 class GuestOrders{
   late bool isReplied;
+  late bool isAccepted;
+  late bool isStudent;
   late String reply;
   late String idDB;
   late String HostDate;
@@ -237,6 +247,8 @@ class GuestOrders{
 
   GuestOrders.fromJson(Map<String, dynamic> json) {
     isReplied = json['isReplied'] ?? false;
+    isAccepted = json['isAccepted'] ?? false;
+    isStudent = json['isStudent'] ?? false;
     HostDate = json['HostDate']?? 'empty';
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty' ;
@@ -254,6 +266,7 @@ class GuestOrders{
 
 class LeftOrders{
   late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
   late String reason;
@@ -262,7 +275,8 @@ class LeftOrders{
   User? user;
 
   LeftOrders.fromJson(Map<String, dynamic> json) {
-      isReplied = json['isReplied'] ?? false;
+      isReplied = json['isreply'] ?? false;
+      isAccepted = json['isAccepted'] ?? false;
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty';
     reason = json['reason']?? 'empty';

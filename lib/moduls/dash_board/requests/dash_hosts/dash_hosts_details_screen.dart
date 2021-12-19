@@ -22,7 +22,6 @@ class DashHostsDetailsScreen extends StatelessWidget {
   GuestOrders? guestItem;
 
   var managerController = TextEditingController();
-  bool isStudent =  false ;
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +227,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                             ],
                           ),
 
-                          //Student
+                          //request
                           SizedBox(
                             height: 10.0,
                           ),
@@ -243,8 +242,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                             height: 10.0,
                           ),
 
-                          //todo want to edit
-                          if (isStudent == true)
+                          if ( guestItem!.isStudent == true)
                             Container(
                               width: double.infinity,
                               height: 200.0,
@@ -293,6 +291,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       height: 10.0,
                                     ),
 
+                                    // todo missing guest id
                                     // student id
                                     Row(
                                       children: [
@@ -350,7 +349,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: SelectableText(
-                                            '3',
+                                            guestItem!.DurationOfHosting.toString(),
                                             style: Theme.of(context).textTheme.bodyText1,
                                             textAlign: TextAlign.center,
                                           ),
@@ -365,7 +364,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          if (isStudent == false)
+                          if (guestItem!.isStudent == false)
                             Container(
                             width: double.infinity,
                             height: 400.0,
@@ -471,7 +470,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: SelectableText(
-                                          '3',
+                                          guestItem!.DurationOfHosting.toString(),
                                           style: Theme.of(context).textTheme.bodyText1,
                                           textAlign: TextAlign.center,
                                         ),
@@ -542,8 +541,8 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                     cubit.putHosting(
                                       idDB: guestItem!.idDB,
                                       isReplied: true,
+                                      isAccepted: true,
                                       reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
-                                      // isAccepted: true,
                                     );
                                   },
                                   text: 'اوافق',
@@ -559,8 +558,8 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                     cubit.putHosting(
                                       idDB: guestItem!.idDB,
                                       isReplied: true,
+                                      isAccepted: false,
                                       reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
-                                      // isAccepted: false,
                                     );
                                   },
                                   text: 'ارفض',

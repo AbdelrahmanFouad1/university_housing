@@ -146,22 +146,17 @@ class AppCubit extends Cubit<AppStates> {
     emit(ChangeStudentState());
   }
 
-  File? idImage;
   var picker = ImagePicker();
+  File? idImage;
+
 
   Future<void> pikeIdImage() async {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      idImage = File(pickedFile.path);
-      print(pickedFile.path);
+    ).then((value){
+      idImage = File(value!.path);
       emit(ImagePickedSuccessState());
-    } else {
-      print('No image selected.');
-      emit(ImagePickedErrorState());
-    }
+    });
   }
 
   Future<void> removePikePostImage() async {
@@ -169,23 +164,30 @@ class AppCubit extends Cubit<AppStates> {
     emit(RemovePikeIdImageState());
   }
 
-  void postStudentGuest({
+
+  Future<void> postStudentGuest({
     required String name,
     required String date,
     required String durationOfHosting,
-    required String studentId,
-  }) {
+    required File studentIdCard,
+    required bool isStudent,
+  }) async {
     emit(PostGuestLoadingStates());
 
     DioHelper.postData(
       url: ORDER_GUEST,
       token: tokeen ?? '',
-      data: {
-        'NameofGuest': name,
-        'HostDate': date,
-        'DurationOfHosting': durationOfHosting,
-        'studentId': studentId,
-      },
+      data: FormData.fromMap(
+        {
+          'NameofGuest': name,
+          'HostDate': date,
+          'DurationOfHosting': durationOfHosting,
+          'guestIsIDCard':  await MultipartFile.fromFile(
+            studentIdCard.path,
+            filename: Uri.file(studentIdCard.path).pathSegments.last),
+          'isStudent': isStudent,
+        },
+      )
     ).then(
       (value) {
         emit(PostGuestSuccessStates());
@@ -320,21 +322,18 @@ class AppCubit extends Cubit<AppStates> {
   List<CommentsModel>? commentModel = [];
 
   void getQueriesData() {
+    commentModel = [];
     emit(GetQueriesLoadingStates());
-
     DioHelper.getData(
       url: ORDERS_ENQUIRES,
     ).then((value) {
       if (value != null) {
-        // printFullText(value.data.toString());
         value.data.forEach((element) {
           commentModel!.add(CommentsModel.fromJson(element));
         });
-        getProfileData();
         emit(GetQueriesSuccessStates());
       }
     }).catchError((error) {
-      getProfileData();
       print(error.toString());
       emit(GetQueriesErrorStates(error.toString()));
     });
@@ -547,24 +546,31 @@ class AppCubit extends Cubit<AppStates> {
   int currVal = 0;
   String currText = '';
 
-  void changeFloor(int currentNum, String currentFloor) {
+  void changeFloor(int currentNum, String currentFloor ) {
     currVal = currentNum;
     currText = currentFloor;
+    // todo اجيب ازاي id المبني الي ساكن فيه
+    // getFloorAndRooms();
     emit(ChangeFloorState());
   }
 
   int currRoomVal = 0;
   String currRoomText = '';
+  String currRoomIdDB = '';
 
-  void changeRoom(int currentNum, String currentFloor) {
+  void changeRoom(int currentNum, String currentFloor ,String idDB) {
     currRoomVal = currentNum;
     currRoomText = currentFloor;
+    currRoomIdDB = idDB;
     emit(ChangeRoomState());
   }
 
   void postChangeRoom({
     required int room,
     required int floor,
+    //todo محتاجه ازودهم هنا + حجز الغرف
+    // required String roomIdDB,
+    // required String BuildingIdDB,
   }) {
     emit(PostChangeRoomLoadingStates());
 
@@ -638,12 +644,15 @@ class AppCubit extends Cubit<AppStates> {
 
   int currentRoomVal = -1;
   String currentRoomText = '';
+  String currentRoomIdDB = '';
 
-  void selectRoom(int currentNum, String currentFloor) {
+  void selectRoom(int currentNum, String currentFloor ,String idDB) {
     currentRoomVal = currentNum;
     currentRoomText = currentFloor;
+    currentRoomIdDB = idDB;
     emit(SelectRoomState());
   }
+
 
   //Leaving Room Screen
   bool isReason = true;
@@ -673,6 +682,7 @@ class AppCubit extends Cubit<AppStates> {
       emit(PostLeavingErrorStates(error));
     });
   }
+
 
 //  receipt screen
   File? receiptImage;
@@ -750,7 +760,7 @@ class AppCubit extends Cubit<AppStates> {
     DioHelper.getData(
       url: GET_BUILDINGS,
       query: {
-        // 'gender':'true',
+        'gender':profileModel!.gender,
         'availability': 'true'
       },
     ).then((value) {
@@ -771,38 +781,30 @@ class AppCubit extends Cubit<AppStates> {
     SelectFloorModel(text: 'الرابع', index: 4),
   ];
 
-  List<int> roomsList= [];
-  List<SelectRoomModel> groupRooms = [];
+  List<RoomData> roomsList= [];
   int selectedBuildingItem = -1;
+
 
   void getFloorAndRooms(int index) {
      roomsList= [];
-     groupRooms = [];
     buildings!.Buildings[index].rooms.forEach((element) {
       if(currentFloorVal == 1){
-        if(element.floor == 1){
-          roomsList.add(element.roomnumber);
+        if(element.floor == 1 && element.userresidentName.isEmpty){
+          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
         }
       }else if(currentFloorVal == 2){
-        if(element.floor == 2){
-          roomsList.add(element.roomnumber);
+        if(element.floor == 2 && element.userresidentName.isEmpty){
+          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else if(currentFloorVal == 3){
-        if(element.floor == 3){
-          roomsList.add(element.roomnumber);
+        if(element.floor == 3 && element.userresidentName.isEmpty){
+          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else{
-        if(element.floor == 4){
-          roomsList.add(element.roomnumber);
+        if(element.floor == 4 && element.userresidentName.isEmpty){
+          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }
-    });
-
-    roomsList.forEach((element) {
-      groupRooms.add(SelectRoomModel(
-          text: element.toString(),
-          index: element)
-      );
     });
 
     emit(GetFloorAndRoomSuccessStates());
@@ -897,6 +899,7 @@ class AppCubit extends Cubit<AppStates> {
         emit(GetReviewsSuccessStates());
       }
     }).catchError((error) {
+      print(error.toString());
       emit(GetReviewsErrorStates(error.toString()));
     });
   }
@@ -931,5 +934,14 @@ class AppCubit extends Cubit<AppStates> {
 }
 
 
+class RoomData{
+late String idDB;
+late int roomNum;
+late int index;
 
-
+RoomData({
+  required this.idDB,
+  required this.roomNum,
+  required this.index,
+});
+}

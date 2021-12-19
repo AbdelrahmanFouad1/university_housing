@@ -20,13 +20,15 @@ import 'follow_requests_guest_screen.dart';
 import 'follow_requests_left_room_screen.dart';
 
 class FollowRequestsScreen extends StatelessWidget {
-  const FollowRequestsScreen({Key? key}) : super(key: key);
-
+  FollowRequestsScreen({Key? key}) : super(key: key);
+  bool empty = false;
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        // if(state is GetOrderSuccessStates)
+        // validation(context,empty);
+      },
       builder: (context, state) {
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -62,102 +64,134 @@ class FollowRequestsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '* يجب مراعاه الارشادات التاليه',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 14.0,
+            body: Builder(
+              builder: (context){
+                if(state is GetOrderSuccessStates){
+                  if(empty){
+                    return SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            child: SvgPicture.asset(
+                              'assets/images/no_data.svg',
+                              height: 300.0,
+                            ),
                           ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      children: [
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(3.0),
-                            color: Colors.green,
+                          Text(
+                            '" لا يوجد إشعارات حاليا "',
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'تمت الموافقه علي طلبكم',
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                          SizedBox(height: 20.0,),
+                        ],
+                      ),
+                    );
+                  }else{
+                    return SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '* يجب مراعاه الارشادات التاليه',
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadiusDirectional.circular(3.0),
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'تمت الموافقه علي طلبكم',
+                                  style:
+                                  Theme.of(context).textTheme.bodyText2!.copyWith(
                                     fontSize: 10.0,
                                   ),
-                        ),
-                        const SizedBox(
-                          width: 14.0,
-                        ),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(3.0),
-                            color: Colors.amber,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'جاري الرد علي طلبكم',
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                ),
+                                const SizedBox(
+                                  width: 14.0,
+                                ),
+                                Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadiusDirectional.circular(3.0),
+                                    color: Colors.amber,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'جاري الرد علي طلبكم',
+                                  style:
+                                  Theme.of(context).textTheme.bodyText2!.copyWith(
                                     fontSize: 10.0,
                                   ),
-                        ),
-                        const SizedBox(
-                          width: 14.0,
-                        ),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(3.0),
-                            color: Colors.red,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          'تم رفض طلبكم',
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                ),
+                                const SizedBox(
+                                  width: 14.0,
+                                ),
+                                Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadiusDirectional.circular(3.0),
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'تم رفض طلبكم',
+                                  style:
+                                  Theme.of(context).textTheme.bodyText2!.copyWith(
                                     fontSize: 10.0,
                                   ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            Container(
+                              width: double.infinity,
+                              height: 1.0,
+                              color: separator,
+                            ),
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            Conditional.single(
+                              context: context,
+                              conditionBuilder: (BuildContext context) => AppCubit.get(context).myOrdersModel != null ,
+                              widgetBuilder: (BuildContext context) => buildOrderScreen(context),
+                              fallbackBuilder: (BuildContext context) => buildOrderShimmerScreen(context),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 8.0),
-                    Container(
-                      width: double.infinity,
-                      height: 1.0,
-                      color: separator,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    Conditional.single(
-                      context: context,
-                      conditionBuilder: (BuildContext context) => AppCubit.get(context).myOrdersModel != null ,
-                      widgetBuilder: (BuildContext context) => buildOrderScreen(context),
-                      fallbackBuilder: (BuildContext context) => buildOrderShimmerScreen(context),
-                    ),
-                  ],
-                ),
-              ),
+                      ),
+                    );
+                  }
+                }else{
+                  return Center(child: CircularProgressIndicator(),);
+                }
+              },
             ),
           ),
         );
@@ -418,8 +452,7 @@ Widget buildOrderScreen(context) => Column(
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) =>
-                        buildBookingsRoomItem(context, AppCubit.get(context).myOrdersModel!.Bookingsorders[index]),
+                    itemBuilder: (context, index) => buildBookingsRoomItem(context, AppCubit.get(context).myOrdersModel!.Bookingsorders[index]),
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 8.0,
                     ),
@@ -820,7 +853,9 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state:  model.isreply ? StatusStates.WAITING :  StatusStates.ACCEPT,
+        //todo isreplay not exist
+        // state:  model.isreply ? StatusStates.WAITING :  StatusStates.ACCEPT,
+        state: StatusStates.WAITING ,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -933,3 +968,16 @@ Widget buildRequestShimmerItem(context) => Padding(
         highlightColor: highlightColor,
       ),
 );
+
+// void validation (context , empty) {
+//   if(AppCubit.get(context).myOrdersModel!.Bookingsorders.isEmpty &&
+//       AppCubit.get(context).myOrdersModel!.Complaintsorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.Damagedthingsorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.Endorsementorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.leftRequestsorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.Missingthingsorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.isEmpty&&
+//       AppCubit.get(context).myOrdersModel!.Guestorders.isEmpty){
+//       empty = true;
+//   }
+// }

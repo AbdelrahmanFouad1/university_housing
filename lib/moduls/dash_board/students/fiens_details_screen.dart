@@ -24,7 +24,7 @@ class FinesDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
       listener: (context, state) {
-        if(state is postFinesLoadingStates ){
+        if(state is PutFinesLoadingStates ){
           showDialog<void>(
               context: context,
               builder: (context)=> waitingDialog(context: context)
@@ -32,9 +32,6 @@ class FinesDetailsScreen extends StatelessWidget {
         }else if(state is GetAllUsersSuccessStates ){
           Navigator.pop(context);
           showToast(message: 'تم التعديل بنجاح', state: ToastStates.SUCCESS);
-        }else if(state is DeleteStudentSuccess){
-          Navigator.pop(context);
-          showToast(message: 'تم الحذف بنجاح', state: ToastStates.SUCCESS);
         }
 
       },
@@ -107,7 +104,7 @@ class FinesDetailsScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     if(item.fines.length!=0)
-                    Row(
+                      Row(
                       children: [
                         Expanded(
                           child: Text(
@@ -142,6 +139,7 @@ class FinesDetailsScreen extends StatelessWidget {
                             .bodyText1!
                             .copyWith(fontSize: 20.0),
                       ),
+
                     Container(
                       decoration: item.fines.length!= 0 ? BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0,),
@@ -153,6 +151,7 @@ class FinesDetailsScreen extends StatelessWidget {
                         padding: EdgeInsets.all(10.0),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => finesItem(
+                          user: item,
                           item: item.fines[index],
                           cubit: cubit,
                           context: context,
@@ -195,6 +194,7 @@ Widget finesItem({
   required context,
   required DashBoardCubit cubit,
   required Fines item,
+  required Users user,
   required int index,
 }) {
   var reasonController = TextEditingController();
@@ -230,7 +230,7 @@ Widget finesItem({
             onPressed: () {
               if (cubit.showFinesEdit == false) {
                   cubit.putFines(
-                      // idDB: '6172aba7b7076c04bce96a05',
+                    studentIdDB: user.idDB,
                       idDB: item.idDB,
                       fineReason: reasonController.text,
                       fineValue: num.parse(costController.text),

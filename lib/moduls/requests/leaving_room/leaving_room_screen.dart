@@ -274,7 +274,7 @@ class LeavingRoomScreen extends StatelessWidget {
                                 controller: reasonController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
-                                  hintText: 'برجاء احخال سبب المغادرة',
+                                  hintText: 'برجاء ادخال سبب المغادرة',
                                   contentPadding:EdgeInsets.symmetric(horizontal:14.0),
                                   hintStyle: TextStyle(
                                     fontSize: 15.0,

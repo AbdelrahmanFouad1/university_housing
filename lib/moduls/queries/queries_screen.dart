@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,15 @@ class QueriesScreen extends StatelessWidget {
         }else if(state is PostQueriesErrorStates){
           showToast(message: 'لم يتم تقديم الطلب, الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
           AppCubit.get(context).getProfileData();
+        }
+
+        if(state is PostQueriesLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is PostQueriesSuccessStates){
+          Navigator.pop(context);
         }
       },
       builder:  (context,state){
@@ -73,7 +83,7 @@ class QueriesScreen extends StatelessWidget {
                             AppCubit.get(context).postQueries(
                                 queries: queriesController.text
                             );
-                            // AppCubit.get(context).getQueriesData();
+                            AppCubit.get(context).getQueriesData();
                           },
                           text: 'تقديم الطلب',
                           radius: 8.0,
@@ -93,10 +103,14 @@ class QueriesScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
+
                     const SizedBox(
                       height: 8.0,
                     ),
 
+                    if(state is GetQueriesLoadingStates)
+                      Center(child: CircularProgressIndicator(),),
+                    if(state is GetQueriesSuccessStates)
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
@@ -138,12 +152,33 @@ class QueriesScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                 CircleAvatar(
+                if(model.user!.image != null)
+                  CircleAvatar(
                   radius: 25.0,
-                  backgroundImage: NetworkImage(
-                    model.user!.image!,
-                  ),
+                    backgroundColor: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
+                    backgroundImage: NetworkImage(
+                      model.user!.image!,
+                    ),
                 ),
+                if(model.user!.image == null)
+                  CircleAvatar(
+                    radius: 25.0,
+                    backgroundColor: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80.0,
+                      child: Icon(Icons.error,
+                        color: ThemeCubit.get(context).darkTheme
+                            ? mainColors
+                            : mainTextColor,
+                      ),
+                    ),
+                  ),
+
                 const SizedBox(width: 10.0,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

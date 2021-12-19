@@ -408,22 +408,15 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 //  News Screen
 
+  var picker = ImagePicker();
   File? newsImage;
-  var newsPicker = ImagePicker();
 
   Future<void> pikeNewsImage() async {
-    final pickedFile = await newsPicker.getImage(
-      source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      newsImage = File(pickedFile.path);
-      print(pickedFile.path);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery,).then((value) {
+      newsImage = File(value!.path);
       emit(NewsImagePickedSuccessState());
-    } else {
-      print('No image selected.');
-      emit(NewsImagePickedErrorState());
-    }
+
+    });
   }
 
   Future<void> removeNewsImage() async {
@@ -449,21 +442,25 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     });
   }
 
-  void postNews({
+  Future<void> postNews({
    required String title,
    required String text,
-   required String image,
-}) {
+   required File image,
+}) async {
     emit(PostNewsLoadingStates());
 
     DioHelper.postData(
       url: CREATE_NEWS,
       token: tokeen ?? '',
-      data: {
-        'title': title,
-        'text': text,
-        'image': image,
-      },
+      data: FormData.fromMap(
+        {
+          'title': title,
+          'text': text,
+          'image': await MultipartFile.fromFile(
+                   image.path,
+                   filename: Uri.file(image.path).pathSegments.last),
+        }
+      )
     ).then((value) {
       if (value != null) {
         print(value.statusMessage);
@@ -779,6 +776,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
   void putFines({
+    required String studentIdDB,
     required String idDB,
     required String fineReason,
     required num fineValue,
@@ -787,17 +785,32 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutFinesLoadingStates());
     DioHelper.putData(
-      url: 'users/${idDB}/updatefine',
+      url: 'users/${studentIdDB}/updatefine',
       token: tokeen ?? '',
       data: {
         'fineReason': fineReason,
         'fineValue': fineValue,
         'isFine': isFine,
-        // if(costRoom!=null)
-        // 'CostRoom': costRoom,
+        '_id': idDB,
+        if(costRoom!=null)
+        'CostRoom': costRoom,
       },
     ).then((value) {
       emit(PutFinesSuccessStates());
+      getAllUsers(
+          query: {
+            if(termNum == 1)
+              'firstTerm':true,
+            if(termNum == 2)
+              'secondTerm':true,
+            if(termNum == 3)
+              'thirdTerm':true,
+            if(isStudentKind)
+              'isStudent':true,
+            if(isStudentKind == false)
+              'isEmployee':true,
+          }
+      );
     },
     ).catchError((error) {
       print('errrrrrrrror '+error.toString());
@@ -931,6 +944,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
 
+
 // requests
 
   GetAllOrdersModel? allOrders;
@@ -982,7 +996,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void putReplayChange({
     required String idDB,
     required String reply,
-    // required bool isAccepted,
+    required bool isAccepted,
     required bool isReplied,
   }) {
     emit(PutReplayChangeLoadingStates());
@@ -991,8 +1005,8 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       token: tokeen ?? '',
       data: {
         'reply': reply,
-        // 'isAccepted': isAccepted,
-        'isReplied': isReplied,
+        'isAccepted': isAccepted,
+        'isreply': isReplied,
       },
     ).then((value) {
       emit(PutReplayChangeSuccessStates());
@@ -1008,7 +1022,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void putReplayExit({
     required String idDB,
     required String reply,
-    // required bool isAccepted,
+    required bool isAccepted,
     required bool isReplied,
   }) {
     emit(PutReplayExitLoadingStates());
@@ -1017,8 +1031,8 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       token: tokeen ?? '',
       data: {
         'reply': reply,
-        // 'isAccepted': isAccepted,
-        'isReplied': isReplied,
+        'isAccepted': isAccepted,
+        'isreply': isReplied,
       },
     ).then((value) {
       emit(PutReplayExitSuccessStates());
@@ -1060,7 +1074,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String idDB,
     required String reply,
     required bool isReplied,
-    // required bool isAccepted,
+    required bool isAccepted,
   }) {
     emit(PutReplayHostingLoadingStates());
     DioHelper.putData(
@@ -1069,7 +1083,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       data: {
         'reply': reply,
         'isReplied': isReplied,
-        // required bool isAccepted,
+        'isAccepted': isAccepted,
       },
     ).then((value) {
       emit(PutReplayHostingSuccessStates());
@@ -1112,7 +1126,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String idDB,
     required String reply,
     required bool isReplied,
-    // required bool isAccepted,
+    required bool isAccepted,
   }) {
     emit(PutReplayMissingLoadingStates());
     DioHelper.putData(
@@ -1121,7 +1135,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       data: {
         'reply': reply,
         'isReplied': isReplied,
-        // required bool isAccepted,
+        'isAccepted': isAccepted,
       },
     ).then((value) {
       emit(PutReplayMissingSuccessStates());
@@ -1138,7 +1152,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String idDB,
     required String reply,
     required bool isReplied,
-    // required bool isAccepted,
+    required bool isAccepted,
   }) {
     emit(PutReplayDamagedLoadingStates());
     DioHelper.putData(
@@ -1147,7 +1161,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       data: {
         'reply': reply,
         'isReplied': isReplied,
-        // required bool isAccepted,
+        'isAccepted': isAccepted,
       },
     ).then((value) {
       emit(PutReplayDamagedSuccessStates());
@@ -1165,7 +1179,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String idDB,
     required String reply,
     required bool isReplied,
-    // required bool isAccepted,
+    required bool isAccepted,
   }) {
     emit(PutReplayComplaintsLoadingStates());
     DioHelper.putData(
@@ -1174,7 +1188,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       data: {
         'reply': reply,
         'isReplied': isReplied,
-        // required bool isAccepted,
+        'isAccepted': isAccepted,
       },
     ).then((value) {
       emit(PutReplayComplaintsSuccessStates());
@@ -1188,6 +1202,43 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
+
+  void ifAcceptedBooking({
+  required BookingOrders bookingItem,
+}){
+    putStudent(
+      idDB: bookingItem.user!.idDB,
+      id: bookingItem.user!.id,
+      username: bookingItem.user!.username,
+      isStudent: bookingItem.user!.isStudent,
+      isEmployee: bookingItem.user!.isEmployee,
+      firstTerm: bookingItem.firstTerm,
+      secondTerm: bookingItem.secondTerm,
+      thirdTerm: bookingItem.thirdTerm,
+      NationalID: bookingItem.NationalID,
+      address: bookingItem.address,
+      buildingName: bookingItem.buildingName,
+      buildingType: bookingItem.buildingType,
+      roomnumber: bookingItem.roomnumber,
+      Section: bookingItem.Section,
+      isPaid: false,
+      paidAt: '',
+      cardPhoto: bookingItem.cardPhoto,
+    );
+    //todo henna mo4klt el roooom
+    // putRoom(
+    //     slug: slug,
+    //     idDB: idDB,
+    //     availability: availability,
+    //     type: type,
+    //     roomfor: roomfor,
+    //     floor: floor,
+    //     roomnumber: roomnumber,
+    //     roomcode: roomcode,
+    //     userresidentId: userresidentId,
+    //     userresidentName: userresidentName
+    // );
+  }
 
 
 

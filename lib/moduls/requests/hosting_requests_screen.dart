@@ -14,7 +14,7 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class HostingRequestsScreen extends StatelessWidget {
 
-
+  //todo غالبا ال id بتاع الطالب هيتشال
   var studentNameController = TextEditingController();
   var studentIdController = TextEditingController();
   var studentDateController = TextEditingController();
@@ -518,9 +518,10 @@ class HostingRequestsScreen extends StatelessWidget {
     }else{
       AppCubit.get(context).postStudentGuest(
         name: studentNameController.text,
-        studentId: studentIdController.text,
+        isStudent:AppCubit.get(context).isStudent,
         date: studentDateController.text,
         durationOfHosting: studentNumOfDayController.text,
+        studentIdCard: AppCubit.get(context).idImage!,
       );
     }
   }

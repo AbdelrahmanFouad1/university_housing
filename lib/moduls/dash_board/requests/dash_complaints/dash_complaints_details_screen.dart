@@ -288,26 +288,23 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                     function: (){
                                       if(type == 'missing'){
-                                        // todo isAccepted not found in api
-                                        // missingItem!.isAccepted = true;
                                         cubit.putMissing(
+                                          isAccepted: missingItem!.isAccepted = true,
                                           idDB: missingItem!.idDB,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                           isReplied: true,
                                         );
                                       } else if(type == 'damaged'){
-                                        // todo isAccepted not found in api
-                                        // damagedItem!.isAccepted = true;
                                         cubit.putDamaged(
+                                          isAccepted:damagedItem!.isAccepted = true,
                                           idDB: damagedItem!.idDB,
                                           isReplied: true,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                         );
                                       }else{
-                                        // todo isAccepted not found in api
-                                        // complaintsItem!.isAccepted = true;
                                         cubit.putComplaints(
                                           idDB: complaintsItem!.idDB,
+                                          isAccepted: complaintsItem!.isAccepted = true,
                                           isReplied: true,
                                           reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                         );
@@ -322,25 +319,22 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                                 child: defaultButton(
                                   function: (){
                                     if(type == 'missing'){
-                                      // todo isAccepted not found in api
-                                      // missingItem!.isAccepted = false;
                                       cubit.putMissing(
+                                        isAccepted: missingItem!.isAccepted = false,
                                         idDB: missingItem!.idDB,
                                         reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                         isReplied: true,
                                       );
                                     } else if(type == 'damaged'){
-                                      // todo isAccepted not found in api
-                                      // damagedItem!.isAccepted = false;
                                       cubit.putDamaged(
+                                        isAccepted: damagedItem!.isAccepted = false,
                                         idDB: damagedItem!.idDB,
                                         isReplied: true,
                                         reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                       );
                                     }else{
-                                      // todo isAccepted not found in api
-                                      // complaintsItem!.isAccepted = false;
                                       cubit.putComplaints(
+                                        isAccepted: complaintsItem!.isAccepted = false,
                                         idDB: complaintsItem!.idDB,
                                         isReplied: true,
                                         reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,

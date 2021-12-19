@@ -188,11 +188,13 @@ void validation({
     showToast(message: 'أدخل عنوان الخبر', state: ToastStates.ERROR);
   }else if(body.isEmpty){
     showToast(message: 'أدخل الموضوع', state: ToastStates.ERROR);
+  }else if(cubit.newsImage == null){
+    showToast(message: 'أدخل الصورة', state: ToastStates.ERROR);
   }else{
     cubit.postNews(
       title: title,
       text: body,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BBC_News_%282008%29.svg/1200px-BBC_News_%282008%29.svg.png'
+      image: cubit.newsImage!,
     );
   }
 }

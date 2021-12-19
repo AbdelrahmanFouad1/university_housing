@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,20 +66,33 @@ class EditProfileScreen extends StatelessWidget {
                         child: Stack(
                           alignment: AlignmentDirectional.bottomStart,
                           children: [
-                            Builder(
-                              builder: (context) {
-                                if(cubit.profileImage == null){
-                                  return CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: NetworkImage(
-                                      AppCubit.get(context).profileModel!.image,
-                                    ),
-                                  );
-                                }else{
-                                  return cubit.img;
-                                }
-                              },
+                            if(AppCubit.get(context).profileModel!.image != null)
+                              CircleAvatar(
+                              radius: 60,
+                              backgroundColor: ThemeCubit.get(context).darkTheme
+                                  ? mainTextColor
+                                  : mainColors,
+                              backgroundImage: NetworkImage(
+                            '${AppCubit.get(context).profileModel!.image}',
+                               ),
                             ),
+                            if(AppCubit.get(context).profileModel!.image == null)
+                              CircleAvatar(
+                                radius: 60,
+                                backgroundColor: ThemeCubit.get(context).darkTheme
+                                    ? mainTextColor
+                                    : mainColors,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 80.0,
+                                  child: Icon(Icons.error,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainColors
+                                        : mainTextColor,
+                                  ),
+                                ),
+                              ),
+
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: CircleAvatar(
@@ -109,11 +123,11 @@ class EditProfileScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
+                              AppCubit.get(context).getOrderData();
                               navigateTo(
                                 context,
                                 FollowRequestsScreen(),
                               );
-                              AppCubit.get(context).getOrderData();
                             },
                             child: Row(
                               children: [
@@ -372,7 +386,6 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
                               navigateAndFinish(context, LoginScreen());
-
                             },
                             btnColor: Colors.red,
                             fontSize: 20,

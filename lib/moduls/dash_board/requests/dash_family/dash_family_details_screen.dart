@@ -328,9 +328,11 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: () {
+                                    // todo isAccepted not exist
                                     cubit.putFamilyReport(
                                       idDB: familyItem!.idDB,
                                       isReplied: true,
+                                      // isAccepted : true
                                       reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
                                       // isAccepted: true,
                                     );
@@ -345,9 +347,11 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 child: defaultButton(
                                   function: () {
+                                    // todo isAccepted not exist
                                     cubit.putFamilyReport(
                                       idDB: familyItem!.idDB,
                                       isReplied: true,
+                                      // isAccepted : false
                                       reply: managerController.text.isEmpty ? 'لا يوجد' : managerController.text,
                                       // isAccepted: false,
                                     );
