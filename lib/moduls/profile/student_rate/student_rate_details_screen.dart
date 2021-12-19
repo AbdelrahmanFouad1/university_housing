@@ -89,10 +89,33 @@ class StudentRateDetailsScreen extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 30.0,
-                                    backgroundImage: NetworkImage(image),
-                                  ),
+                                  if(image != null)
+                                    CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      backgroundImage: NetworkImage(
+                                        image,
+                                      ),
+                                    ),
+                                  if(image == null)
+                                    CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundColor: ThemeCubit.get(context).darkTheme
+                                          ? mainTextColor
+                                          : mainColors,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 80.0,
+                                        child: Icon(Icons.error,
+                                          color: ThemeCubit.get(context).darkTheme
+                                              ? mainColors
+                                              : mainTextColor,
+                                        ),
+                                      ),
+                                    ),
+
                                   const SizedBox(
                                     width: 10.0,
                                   ),

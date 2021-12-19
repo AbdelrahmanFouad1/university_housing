@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:university_housing/model/my_orders_model.dart';
 import 'package:university_housing/moduls/profile/technical_support_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -117,11 +115,11 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
                           flex: 1,
                           child: Text(
                             'رقم الطلب : ',
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Text(
                             model.idDB,
                             textAlign: TextAlign.center,
@@ -142,11 +140,11 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
                           flex: 1,
                           child: Text(
                             'رقم الغرفه التي تريد الانتقال اليها : ',
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Text(
                            "${model.numofnextroom}",
                             textAlign: TextAlign.center,
@@ -165,11 +163,11 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
                           flex: 1,
                           child: Text(
                             'رقم الدور الذى تريد الانتقال الية : ',
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Text(
                             "${model.floornumberofnextroom}",
                             textAlign: TextAlign.center,
@@ -239,11 +237,11 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
                 flex: 1,
                 child: Text(
                   'الرد علي الطلب : ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   model.reply,
                   textAlign: TextAlign.center,
@@ -260,11 +258,11 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
                 flex: 1,
                 child: Text(
                   'الرد علي الطلب : ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   'لم يتم الرد',
                   textAlign: TextAlign.center,

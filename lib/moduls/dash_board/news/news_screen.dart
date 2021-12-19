@@ -147,6 +147,7 @@ Widget buildNewsItem({
         children: [
           Container(
             width: 120.0,
+            height: 100.0,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: CachedNetworkImage(
@@ -160,6 +161,7 @@ Widget buildNewsItem({
                           ? mainTextColor
                           : mainColors,),
                 ),
+                fit:BoxFit.cover,
               ),
             ),
           ),

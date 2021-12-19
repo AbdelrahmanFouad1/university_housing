@@ -39,10 +39,12 @@ class NewsDetailsScreen extends StatelessWidget {
             alignment: Alignment.topLeft,
             children:  [
                Image(
-                // height: 200.0,
+                 width: double.infinity,
+                height: 300.0,
                 image: NetworkImage(
                   '${model.image}',
                 ),
+                 fit: BoxFit.cover,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 42,left: 18),

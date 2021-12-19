@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/requests/change_room/success_change_room_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
@@ -13,76 +12,6 @@ class ChangeRoomScreen extends StatelessWidget {
   var floorController = TextEditingController();
   var roomController = TextEditingController();
 
-
-  final List<ChangeFloorModel> _group = [
-    ChangeFloorModel(
-      text: "1",
-      index: 1,
-    ),
-    ChangeFloorModel(
-      text: "2",
-      index: 2,
-    ),
-    ChangeFloorModel(
-      text: "3",
-      index: 3,
-    ),
-    ChangeFloorModel(
-      text: "4",
-      index: 4,
-    ),
-    ChangeFloorModel(
-      text: "5",
-      index: 5,
-    ),
-  ];
-
-  final List<ChangeRoomModel> _groupRoom = [
-    ChangeRoomModel(
-      text: "201",
-      index: 1,
-    ),
-    ChangeRoomModel(
-      text: "202",
-      index: 2,
-    ),
-    ChangeRoomModel(
-      text: "203",
-      index: 3,
-    ),
-    ChangeRoomModel(
-      text: "204",
-      index: 4,
-    ),
-    ChangeRoomModel(
-      text: "205",
-      index: 5,
-    ),
-    ChangeRoomModel(
-      text: "306",
-      index: 6,
-    ),
-    ChangeRoomModel(
-      text: "307",
-      index: 7,
-    ),
-    ChangeRoomModel(
-      text: "308",
-      index: 8,
-    ),
-    ChangeRoomModel(
-      text: "409",
-      index: 9,
-    ),
-    ChangeRoomModel(
-      text: "510",
-      index: 10,
-    ),
-    ChangeRoomModel(
-      text: "511",
-      index: 11,
-    ),
-  ];
 
   ChangeRoomScreen({Key? key}) : super(key: key);
 
@@ -144,7 +73,7 @@ class ChangeRoomScreen extends StatelessWidget {
                                   title: 'اختر رقم الدور',
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: _group.map((e) => RadioListTile(
+                                    children: cubit.groupFloor.map((e) => RadioListTile(
                                       activeColor:ThemeCubit.get(context).darkTheme? mainTextColor: backGroundDark,
                                       tileColor: backGroundDark,
                                       title: Text(
@@ -202,15 +131,23 @@ class ChangeRoomScreen extends StatelessWidget {
                                 title: 'اختر رقم الغرفه',
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: _groupRoom.map((e) => RadioListTile(
+                                  children: cubit.roomsList.length==0? [
+                                    Container(
+                                      padding: EdgeInsetsDirectional.all(10.0),
+                                      child: Text(
+                                          'لا يوجد غرف في هذا الدور حاليا !!',
+                                        style: Theme.of(context).textTheme.subtitle2,
+                                      ),
+                                    ),
+                                  ]: cubit.roomsList.map((e) => RadioListTile(
                                     title: Text(
-                                      e.text,
+                                      e.roomNum.toString(),
                                       style: Theme.of(context).textTheme.bodyText1!,
                                     ),
                                     groupValue: cubit.currentRoomVal,
                                     value: e.index,
                                     onChanged: (int? val) {
-                                      cubit.selectRoom(val!, e.text);
+                                      cubit.selectRoom(val!, e.roomNum.toString() ,e.idDB);
                                       roomController.text = cubit.currentRoomText;
                                       cubit.ShowAllDetails(true);
                                       Navigator.pop(context);

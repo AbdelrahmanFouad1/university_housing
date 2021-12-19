@@ -116,11 +116,11 @@ class FollowRequestsDamagedScreen extends StatelessWidget {
                           flex: 1,
                           child: Text(
                             'رقم الطلب : ',
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Text(
                             model.idDB,
                             textAlign: TextAlign.center,
@@ -141,11 +141,11 @@ class FollowRequestsDamagedScreen extends StatelessWidget {
                           flex: 1,
                           child: Text(
                             'الشكوى : ',
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: Text(
                             model.damagedthing,
                             textAlign: TextAlign.center,
@@ -215,11 +215,11 @@ class FollowRequestsDamagedScreen extends StatelessWidget {
                 flex: 1,
                 child: Text(
                   'الرد علي الطلب : ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   model.reply,
                   textAlign: TextAlign.center,
@@ -236,11 +236,11 @@ class FollowRequestsDamagedScreen extends StatelessWidget {
                 flex: 1,
                 child: Text(
                   'الرد علي الطلب : ',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   'لم يتم الرد',
                   textAlign: TextAlign.center,

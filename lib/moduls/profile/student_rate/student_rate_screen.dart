@@ -1,10 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:university_housing/model/get_buildings_model.dart';
 import 'package:university_housing/model/get_reviews_model.dart';
 import 'package:university_housing/moduls/profile/student_rate/student_rate_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -22,7 +21,16 @@ class StudentRateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is PostQueriesLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetQueriesSuccessStates){
+          Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Directionality(
@@ -112,22 +120,23 @@ class StudentRateScreen extends StatelessWidget {
                               width: 80.0,
                               height: 30.0,
                               function: () {
-                                // if (cubit.profileModel!.isresident == false) {
-                                //   showToast(
-                                //       message: 'غير مصرح لك إضافة تقييم حاليا',
-                                //       state: ToastStates.WARNING);
-                                // }else{}
-                                if(commentController.text.isEmpty){
-                                  showToast(message: 'أدخل التقييم اولا', state: ToastStates.ERROR);
-                                }else if(rate == 0){
-                                  showToast(message: 'أدخل عدد النجوم', state: ToastStates.ERROR);
+                                if (cubit.profileModel!.isresident == false) {
+                                  showToast(
+                                      message: 'غير مصرح لك إضافة تقييم حاليا',
+                                      state: ToastStates.WARNING);
                                 }else{
-                                  cubit.postReviews(
-                                      comment: commentController.text,
-                                      rate: rate
-                                  );
-                                  commentController.text = '';
-                                  rate = 0;
+                                  if(commentController.text.isEmpty){
+                                    showToast(message: 'أدخل التقييم اولا', state: ToastStates.ERROR);
+                                  }else if(rate == 0){
+                                    showToast(message: 'أدخل عدد النجوم', state: ToastStates.ERROR);
+                                  }else{
+                                    cubit.postReviews(
+                                        comment: commentController.text,
+                                        rate: rate
+                                    );
+                                    commentController.text = '';
+                                    rate = 0;
+                                  }
                                 }
                               }),
                         ),
@@ -137,8 +146,9 @@ class StudentRateScreen extends StatelessWidget {
                     const SizedBox(
                       height: 50.0,
                     ),
+                    if(cubit.reviews.length!=0)
                     Container(
-                      height: 200.0,
+                      height: 180.0,
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -150,6 +160,14 @@ class StudentRateScreen extends StatelessWidget {
                         itemCount: cubit.reviews.length,
                       ),
                     ),
+                    if(cubit.reviews.length==0)
+                      Center(
+                        child: Text(
+                          'لا يوجد تقييمات سابقة حاليا !!',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+
                   ],
                 ),
               ),
@@ -166,115 +184,133 @@ Widget buildEvaluationItem(
   context,
   Reviews review,
 ) =>
-    Stack(
-      children: [
-        Container(
-          width: 300.0,
-          height: 180.0,
-          decoration: BoxDecoration(
-            color: evaluation,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+    Container(
+      width: 300.0,
+      decoration: BoxDecoration(
+        color: evaluation,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if(review.user.image != null)
+                    CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                      backgroundImage: NetworkImage(
+                        review.user.image,
+                      ),
+                    ),
+                  if(review.user.image == null)
+                    CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 80.0,
+                        child: Icon(Icons.error,
+                          color: ThemeCubit.get(context).darkTheme
+                              ? mainColors
+                              : mainTextColor,
+                        ),
+                      ),
+                    ),
+
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: 25.0,
-                        backgroundImage: NetworkImage(review.user.image),
+                      Text(
+                        review.user.username,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: mainColors,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            review.user.username,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: mainColors,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            review.user.id.toString(),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: mainColors,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RatingBar.builder(
-                          textDirection: TextDirection.ltr,
-                          allowHalfRating: false,
-                          initialRating: double.parse(review.rating.toString()),
-                          itemSize: 10.0,
-                          direction: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          ignoreGestures: true,
-                          onRatingUpdate: (rating) {
-                            // print(rating);
-                          },
+                      Text(
+                        review.user.id.toString(),
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: mainColors,
                         ),
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  width: 280.0,
-                  child: Text(
-                    review.comment,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: mainColors,
-                    ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Spacer(),
-                InkWell(
-                  onTap: () {
-                    navigateTo(context, StudentRateDetailsScreen(
-                      image: review.user.image,
-                      id: review.user.id.toString(),
-                      comment: review.comment,
-                      name: review.user.username,
-                      rate: review.rating.toString(),
-                    ));
-                  },
-                  child: Container(
-                    width: 280.0,
-                    child: Text(
-                      'المزيد',
-                      style: TextStyle(
-                        color: mainColors,
-                        fontSize: 14.0,
-                        decoration: TextDecoration.underline,
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RatingBar.builder(
+                      textDirection: TextDirection.ltr,
+                      allowHalfRating: false,
+                      initialRating: double.parse(review.rating.toString()),
+                      itemSize: 10.0,
+                      direction: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
                       ),
-                      textAlign: TextAlign.end,
+                      ignoreGestures: true,
+                      onRatingUpdate: (rating) {
+                        // print(rating);
+                      },
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              width: 280.0,
+              child: Text(
+                review.comment,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: mainColors,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {
+                navigateTo(context, StudentRateDetailsScreen(
+                  image: review.user.image,
+                  id: review.user.id.toString(),
+                  comment: review.comment,
+                  name: review.user.username,
+                  rate: review.rating.toString(),
+                ));
+              },
+              child: Container(
+                width: 280.0,
+                child: Text(
+                  'المزيد',
+                  style: TextStyle(
+                    color: mainColors,
+                    fontSize: 14.0,
+                    decoration: TextDecoration.underline,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );

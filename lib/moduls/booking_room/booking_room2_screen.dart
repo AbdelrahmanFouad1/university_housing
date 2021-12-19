@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,8 +121,6 @@ class BookingRoom2Screen extends StatelessWidget {
                     const SizedBox(height: 16.0,),
 
 
-
-                    // todo المفروض احدد عماير البنات من الولاد
                     // houses
                     Container(
                       height: 150.0,
@@ -235,15 +234,15 @@ class BookingRoom2Screen extends StatelessWidget {
                                     }else{
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: cubit.groupRooms.map((e) => RadioListTile(
+                                        children: cubit.roomsList.map((e) => RadioListTile(
                                           title: Text(
-                                            e.text,
+                                            e.roomNum.toString(),
                                             style: Theme.of(context).textTheme.bodyText1!,
                                           ),
                                           groupValue: cubit.currentRoomVal,
                                           value: e.index,
                                           onChanged: (int? val) {
-                                            cubit.selectRoom(val!, e.text);
+                                            cubit.selectRoom(val!, e.roomNum.toString() ,e.idDB);
                                             roomController.text = cubit.currentRoomText;
                                             cubit.ShowAllDetails(true);
                                             Navigator.pop(context);
@@ -477,7 +476,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                   cardPhoto: cardPhoto,
                                   buildingName: buildings!.Buildings[currentIndex].buildingName,
                                   roomnumber: int.parse(roomController.text),
-                                  floor: int.parse(floorController.text),
+                                  floor: floorController.text == 'الأول' ? 1 : floorController.text == 'الثاني' ? 2 :floorController.text == 'الثالث' ? 3 : 4 ,
                               );
                               navigateTo(context, const ChoosePaymentMethodScreen());
                             }else{
@@ -558,13 +557,22 @@ Widget houseItem ({
             decoration: BoxDecoration(
              borderRadius: BorderRadius.circular(5.0),
              border: Border.all(color: Colors.grey, width: 1),
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://graduation-projec.herokuapp.com${buildings!.Buildings[index].image}',
-                ),
-                fit: BoxFit.cover
-              ),
            ),
+            child: CachedNetworkImage(
+              imageUrl: 'https://graduation-projec.herokuapp.com${buildings!.Buildings[index].image}',
+              placeholder: (context, url) =>
+                  Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Container(
+                alignment: Alignment.center,
+                height: 80.0,
+                child: Icon(
+                  Icons.error,
+                  color: ThemeCubit.get(context).darkTheme
+                      ? mainTextColor
+                      : mainColors,
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),

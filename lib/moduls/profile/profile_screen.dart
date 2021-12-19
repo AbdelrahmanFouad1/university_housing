@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,13 +84,35 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
+                if(AppCubit.get(context).profileModel!.image != null)
                  CircleAvatar(
                   radius: 60,
+                  backgroundColor: ThemeCubit.get(context).darkTheme
+                      ? mainTextColor
+                      : mainColors,
                   backgroundImage: NetworkImage(
-                    AppCubit.get(context).profileModel!.image,
+                      '${AppCubit.get(context).profileModel!.image}',
                   ),
                 ),
-                const SizedBox(
+                if(AppCubit.get(context).profileModel!.image == null)
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: ThemeCubit.get(context).darkTheme
+                        ? mainTextColor
+                        : mainColors,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80.0,
+                      child: Icon(Icons.error,
+                        color: ThemeCubit.get(context).darkTheme
+                            ? mainColors
+                            : mainTextColor,
+                      ),
+                    ),
+                  ),
+
+
+                  const SizedBox(
                   width: 12.0,
                 ),
                 Column(

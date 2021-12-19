@@ -59,6 +59,7 @@ dependencies:
 
   cached_network_image: ^3.2.0
 
+
   #link
   link_text: ^0.2.0
   webview_flutter: ^2.0.0

@@ -112,7 +112,7 @@ class BookingDoneScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: (){
-                        navigateTo(context, const FollowRequestsScreen());
+                        navigateTo(context, FollowRequestsScreen());
                       },
                       child: Container(
                         width: 100.0,
