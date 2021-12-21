@@ -143,7 +143,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(postRoomLoadingStates());
     DioHelper.postData(
-      url: 'buildings/addroom/${slug}',
+      url: 'buildings/addroom/$slug',
       token: tokeen ?? '',
       data: {
         'availability': availability,
@@ -288,7 +288,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void deleteBuilding(id) {
     emit(DeleteBuildingLoadingStates());
     DioHelper.deleteData(
-      url: 'buildings/${id}',
+      url: 'buildings/$id',
       token: tokeen ?? '',
     ).then((value) {
         emit(DeleteBuildingSuccess());
@@ -317,7 +317,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(PutRoomLoadingStates());
 
     DioHelper.putData(
-      url: 'buildings/${slug}/updateroom',
+      url: 'buildings/$slug/updateroom',
       token: tokeen ?? '',
       data: {
         '_id': idDB,
@@ -357,7 +357,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutBuildingLoadingStates());
     DioHelper.putData(
-      url: 'buildings/${slug}/updatebuilding',
+      url: 'buildings/$slug/updatebuilding',
       token: tokeen ?? '',
       data: {
         'buildingLevels': buildingLevels,
@@ -479,7 +479,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(DelNewsLoadingStates());
 
     DioHelper.deleteData(
-      url: 'news/${id}',
+      url: 'news/$id',
       token: tokeen ?? '',
     ).then((value) {
       if (value != null) {
@@ -651,7 +651,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutStudentLoadingStates());
     DioHelper.putData(
-      url: 'users/${idDB}',
+      url: 'users/$idDB',
       token: tokeen ?? '',
       data: {
         'id': id,
@@ -683,7 +683,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void deleteStudent(id , bool isWaiting) {
     emit(DeleteStudentLoadingStates());
     DioHelper.deleteData(
-      url: 'users/${id}',
+      url: 'users/$id',
       token: tokeen ?? '',
     ).then((value) {
       emit(DeleteStudentSuccess());
@@ -785,7 +785,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutFinesLoadingStates());
     DioHelper.putData(
-      url: 'users/${studentIdDB}/updatefine',
+      url: 'users/$studentIdDB/updatefine',
       token: tokeen ?? '',
       data: {
         'fineReason': fineReason,
@@ -828,7 +828,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(postFinesLoadingStates());
 
     DioHelper.postData(
-      url: 'users/${idDB}/addfine',
+      url: 'users/$idDB/addfine',
       token: tokeen ?? '',
       data: {
         'fineReason': fineReason,
@@ -974,7 +974,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayRoomLoadingStates());
     DioHelper.putData(
-      url: 'users/bookingrequests/${idDB}/accept',
+      url: 'users/bookingrequests/$idDB/accept',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1001,7 +1001,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayChangeLoadingStates());
     DioHelper.putData(
-      url: 'orders/requesttochangroom/${idDB}/replied',
+      url: 'orders/requesttochangroom/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1027,7 +1027,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayExitLoadingStates());
     DioHelper.putData(
-      url: 'orders/requesttoleft/${idDB}/replied',
+      url: 'orders/requesttoleft/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1052,7 +1052,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayEnquiryLoadingStates());
     DioHelper.putData(
-      url: 'orders/enquiry/${idDB}/replied',
+      url: 'orders/enquiry/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'enquiryAnswer': enquiryAnswer,
@@ -1078,7 +1078,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayHostingLoadingStates());
     DioHelper.putData(
-      url: 'orders/replytorequesttoaddguests/${idDB}/replied',
+      url: 'orders/replytorequesttoaddguests/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1104,7 +1104,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayReportLoadingStates());
     DioHelper.putData(
-      url: 'orders/endorsement/${idDB}/replied',
+      url: 'orders/endorsement/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1130,7 +1130,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayMissingLoadingStates());
     DioHelper.putData(
-      url: 'orders/addmissingthing/${idDB}/replied',
+      url: 'orders/addmissingthing/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1156,7 +1156,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayDamagedLoadingStates());
     DioHelper.putData(
-      url: 'orders/damagedthings/${idDB}/replied',
+      url: 'orders/damagedthings/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,
@@ -1183,7 +1183,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }) {
     emit(PutReplayComplaintsLoadingStates());
     DioHelper.putData(
-      url: 'orders/complaint/${idDB}/replied',
+      url: 'orders/complaint/$idDB/replied',
       token: tokeen ?? '',
       data: {
         'reply': reply,

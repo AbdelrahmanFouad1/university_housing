@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class BookingRoom2Screen extends StatelessWidget {
   String phone;
   String address;
   String NationalID;
-  String cardPhoto;
+  File cardPhoto;
   bool firstTerm;
   bool secondTerm;
   bool thirdTerm;
@@ -122,10 +124,10 @@ class BookingRoom2Screen extends StatelessWidget {
 
 
                     // houses
-                    Container(
+                    SizedBox(
                       height: 150.0,
                       child: ListView.separated(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
                             currentIndex = index;
@@ -137,7 +139,7 @@ class BookingRoom2Screen extends StatelessWidget {
                               roomController: roomController
                           );
                           },
-                          separatorBuilder: (context,index)=> SizedBox(width: 10.0,),
+                          separatorBuilder: (context,index)=> const SizedBox(width: 10.0,),
                           itemCount: buildings!.Buildings.length,
                       ),
                     ),
@@ -244,7 +246,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                           onChanged: (int? val) {
                                             cubit.selectRoom(val!, e.roomNum.toString() ,e.idDB);
                                             roomController.text = cubit.currentRoomText;
-                                            cubit.ShowAllDetails(true);
+                                            cubit.showAllDetails(true);
                                             Navigator.pop(context);
                                           },
                                         )).toList(),
@@ -415,7 +417,7 @@ class BookingRoom2Screen extends StatelessWidget {
                     const SizedBox(height: 16.0,),
 
                     //check box
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height:cubit.showAll== true ? 40.0 : 0.0,
                       child: Row(
@@ -478,7 +480,9 @@ class BookingRoom2Screen extends StatelessWidget {
                                   roomnumber: int.parse(roomController.text),
                                   floor: floorController.text == 'الأول' ? 1 : floorController.text == 'الثاني' ? 2 :floorController.text == 'الثالث' ? 3 : 4 ,
                               );
-                              navigateTo(context, const ChoosePaymentMethodScreen());
+                              if(state is PostBookingSuccessStates){
+                                navigateTo(context, const ChoosePaymentMethodScreen());
+                              }
                             }else{
                               showToast(message: 'برجاء الموافقه علي الشروط', state: ToastStates.WARNING);
                             }
@@ -533,7 +537,7 @@ Widget houseItem ({
   onTap: (){
     cubit.changeHouseColor(index);
     cubit.IsDouble(buildings!.Buildings[index].buildingLevels == true ? false : true);
-    cubit.ShowAllDetails(false);
+    cubit.showAllDetails(false);
     floorController.text = '';
     roomController.text = '';
     cubit.selectedBuildingItem = index;
@@ -553,7 +557,7 @@ Widget houseItem ({
           Container(
             width: 90.0,
             height: 90.0,
-            margin: EdgeInsetsDirectional.all(5.0),
+            margin: const EdgeInsetsDirectional.all(5.0),
             decoration: BoxDecoration(
              borderRadius: BorderRadius.circular(5.0),
              border: Border.all(color: Colors.grey, width: 1),
@@ -561,7 +565,7 @@ Widget houseItem ({
             child: CachedNetworkImage(
               imageUrl: 'https://graduation-projec.herokuapp.com${buildings!.Buildings[index].image}',
               placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
+                  const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => Container(
                 alignment: Alignment.center,
                 height: 80.0,
@@ -577,7 +581,7 @@ Widget houseItem ({
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
-              '${buildings!.Buildings[index].buildingName}',
+              buildings!.Buildings[index].buildingName,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(

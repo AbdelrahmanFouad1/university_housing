@@ -192,7 +192,7 @@ class FollowGuestRoomScreen extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            model.HostDate,
+                            model.DurationOfHosting.toString(),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
@@ -202,8 +202,9 @@ class FollowGuestRoomScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    if(model.studentId != null)
-                      Column(
+                    if(model.studentId !=null)
+                      if(model.studentId!.isNotEmpty)
+                        Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,8 +231,9 @@ class FollowGuestRoomScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if(model.relation != null)
-                      Column(
+                    if(model.relation !=null)
+                      if(model.relation!.isNotEmpty)
+                        Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,

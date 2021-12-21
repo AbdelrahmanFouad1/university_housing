@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,7 +52,7 @@ class EditProfileScreen extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -66,33 +64,53 @@ class EditProfileScreen extends StatelessWidget {
                         child: Stack(
                           alignment: AlignmentDirectional.bottomStart,
                           children: [
-                            if(AppCubit.get(context).profileModel!.image != null)
-                              CircleAvatar(
-                              radius: 60,
-                              backgroundColor: ThemeCubit.get(context).darkTheme
-                                  ? mainTextColor
-                                  : mainColors,
-                              backgroundImage: NetworkImage(
-                            '${AppCubit.get(context).profileModel!.image}',
-                               ),
-                            ),
-                            if(AppCubit.get(context).profileModel!.image == null)
-                              CircleAvatar(
-                                radius: 60,
-                                backgroundColor: ThemeCubit.get(context).darkTheme
-                                    ? mainTextColor
-                                    : mainColors,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 80.0,
-                                  child: Icon(Icons.error,
-                                    color: ThemeCubit.get(context).darkTheme
-                                        ? mainColors
-                                        : mainTextColor,
-                                  ),
-                                ),
-                              ),
 
+                              Builder(builder: (context){
+                                if(cubit.profileImage !=null){
+                                  return CircleAvatar(
+                                    radius: 60,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          150.0,
+                                        ),
+                                        image: DecorationImage(
+                                          image: FileImage(cubit.profileImage!),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }else if(cubit.profileModel!.image != null){
+                                  return CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
+                                    backgroundImage:  NetworkImage(
+                                      AppCubit.get(context).profileModel!.image,
+                                    ),
+                                  );
+                                }else{
+                                  return CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: ThemeCubit.get(context).darkTheme
+                                        ? mainTextColor
+                                        : mainColors,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 80.0,
+                                      child: Icon(Icons.error,
+                                        color: ThemeCubit.get(context).darkTheme
+                                            ? mainColors
+                                            : mainTextColor,
+                                      ),
+                                    ),
+                                  );
+                              }
+                              }),
+
+                            // todo test el image
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: CircleAvatar(
@@ -102,10 +120,10 @@ class EditProfileScreen extends StatelessWidget {
                                   iconSize: 20.0,
                                   icon: cubit.icon,
                                   onPressed: () {
-                                    if (cubit.profileImage != null) {
-                                      cubit.updateImg();
+                                    if (cubit.profileImage == null) {
+                                        cubit.pikeProfileImage();
                                     } else {
-                                      cubit.pikeProfileIdImage();
+                                      cubit.uploadImage(image: cubit.profileImage!);
                                     }
                                   },
                                 ),
@@ -236,7 +254,7 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              navigateTo(context, TermsAndConditionsScreen());
+                              navigateTo(context, const TermsAndConditionsScreen());
                             },
                             child: Row(
                               children: [
@@ -255,7 +273,7 @@ class EditProfileScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     navigateTo(
-                                        context, TechnicalSupportScreen());
+                                        context, const TechnicalSupportScreen());
                                   },
                                 ),
                               ],
@@ -271,7 +289,7 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              navigateTo(context, TechnicalSupportScreen());
+                              navigateTo(context, const TechnicalSupportScreen());
                             },
                             child: Row(
                               children: [
@@ -290,7 +308,7 @@ class EditProfileScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     navigateTo(
-                                        context, TechnicalSupportScreen());
+                                        context, const TechnicalSupportScreen());
                                   },
                                 ),
                               ],
