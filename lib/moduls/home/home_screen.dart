@@ -17,6 +17,7 @@ import 'package:university_housing/moduls/requests/choose_request_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
+import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
@@ -159,20 +160,20 @@ class HomeScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           8.0,
         ),
-        border: Border.all(color: Colors.grey,width: 1.0)
+        // border: Border.all(color: Colors.grey,width: 1.0)
     ),
-    padding: EdgeInsetsDirectional.all(4.0),
+    padding: const EdgeInsetsDirectional.all(4.0),
     child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: 120.0,
               height: 70.0,
               child: CachedNetworkImage(
                 imageUrl: '${model.image}',
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
+                    const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Container(
                   alignment: Alignment.center,
                   height: 60.0,
@@ -188,8 +189,8 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: Container(
-                  height: 60.0,
+                child: SizedBox(
+                  height: 70.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,8 +202,8 @@ class HomeScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
 
-                      Spacer(),
-                      Container(
+                      const Spacer(),
+                      SizedBox(
                         width: double.infinity,
                         child: InkWell(
                           child: Text(
@@ -246,7 +247,7 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(6.0),
-              child: Container(
+              child: SizedBox(
                 height: 70.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -261,7 +262,7 @@ class HomeScreen extends StatelessWidget {
                         baseColor: baseColor,
                         highlightColor: highlightColor,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Shimmer.fromColors(
                         child: Container(
                           height: 14.0,
@@ -306,7 +307,7 @@ class HomeScreen extends StatelessWidget {
                 if (isRegister) {
                   return Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 120.0,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
@@ -322,7 +323,7 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(
                         height: 12.0,
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Text(
                           'غرامات الطالب',
@@ -335,8 +336,8 @@ class HomeScreen extends StatelessWidget {
                 } else {
                   return InkWell(
                     onTap: () {
-                      if (AppCubit.get(context).profileModel!.isWaiting) {
-                        navigateTo(context, ChoosePaymentMethodScreen());
+                      if (CacheHelper.getData(key: 'waiting')) {
+                        navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());
                       }
@@ -354,7 +355,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 12.0,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Text(
                 'اخبار عن السكن',
@@ -367,9 +368,9 @@ class HomeScreen extends StatelessWidget {
             Builder(
               builder: (context) {
                 if(AppCubit.get(context).newsModel != null){
-                  if (AppCubit.get(context).newsModel!.news.length == 0) {
+                  if (AppCubit.get(context).newsModel!.news.isEmpty) {
                     return Container(
-                      margin: EdgeInsets.only(top: 50.0),
+                      margin: const EdgeInsets.only(top: 50.0),
                       child: Text(
                         'لا يوجد أخبار حاليا !!',
                         style: Theme.of(context).textTheme.headline6,
@@ -396,7 +397,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   }
-                } else return buildNewsShimmerItem(context);
+                } else {
+                  return buildNewsShimmerItem(context);
+                }
               },
             ),
           ],
@@ -470,7 +473,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 140.0,
                     height: double.infinity,
                     child: ListView.separated(
@@ -494,7 +497,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10.0,
                         ),
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Text(
                             'اخبار عن السكن',
@@ -528,7 +531,7 @@ class HomeScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (AppCubit.get(context).profileModel!.isWaiting) {
-                        navigateTo(context, ChoosePaymentMethodScreen());
+                        navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());
                       }
@@ -550,7 +553,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Text(
                             'اخبار عن السكن',
@@ -563,9 +566,9 @@ class HomeScreen extends StatelessWidget {
                         Builder(
                           builder: (context) {
                             if(AppCubit.get(context).newsModel != null){
-                              if (AppCubit.get(context).newsModel!.news.length == 0) {
+                              if (AppCubit.get(context).newsModel!.news.isEmpty) {
                                 return Container(
-                                  margin: EdgeInsets.only(top: 50.0),
+                                  margin: const EdgeInsets.only(top: 50.0),
                                   child: Text(
                                     'لا يوجد أخبار حاليا !!',
                                     style: Theme.of(context).textTheme.headline6,
@@ -592,7 +595,9 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                            } else return buildNewsShimmerItem(context);
+                            } else {
+                              return buildNewsShimmerItem(context);
+                            }
                           },
                         ),
                       ],

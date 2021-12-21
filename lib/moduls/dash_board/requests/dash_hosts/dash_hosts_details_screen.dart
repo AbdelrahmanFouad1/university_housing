@@ -41,7 +41,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
         if(guestItem!.reply != 'empty' && guestItem!.reply.isEmpty != true){
           managerController.text = guestItem!.reply;
         }
-        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(guestItem!.createdAt);
+        DateTime tempDate = DateFormat("yyyy-MM-dd").parse(guestItem!.createdAt);
         String date = tempDate.toString().substring(0, 10);
         var cubit = DashBoardCubit.get(context);
 
@@ -52,7 +52,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
               title: 'الإستضافة',
               context: context,
               action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 width: 30.0,
                 child: IconButton(
                   icon: Icon(
@@ -68,7 +68,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -84,7 +84,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                         children: [
 
                           //code
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -108,7 +108,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -132,7 +132,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -156,7 +156,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -180,7 +180,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -204,7 +204,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //requestDate
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -228,7 +228,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //request
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Text(
@@ -238,134 +238,11 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                 .bodyText1!
                                 .copyWith(fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
 
-                          if ( guestItem!.isStudent == true)
-                            Container(
-                              width: double.infinity,
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                color:
-                                ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(color: Colors.grey, width: 1),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ThemeCubit.get(context).darkTheme
-                                        ? Colors.black.withOpacity(0.5)
-                                        : Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(5, 5), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // student name
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            'اسم الطالب :',
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: SelectableText(
-                                              guestItem!.NameofGuest,
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-
-                                    // todo missing guest id
-                                    // student id
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            'رقم الطالب :',
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: SelectableText(
-                                            '42020369',
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-
-                                    //HostDate
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            'تاريخ الأقامة :',
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: SelectableText(
-                                              guestItem!.HostDate,
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-
-                                    //DurationOfHosting
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'عدد أيام الأقامة :',
-                                          style: Theme.of(context).textTheme.bodyText1,
-                                        ),
-                                        Expanded(
-                                          child: SelectableText(
-                                            guestItem!.DurationOfHosting.toString(),
-                                            style: Theme.of(context).textTheme.bodyText1,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (guestItem!.isStudent == false)
-                            Container(
+                          Container(
                             width: double.infinity,
                             height: 400.0,
                             decoration: BoxDecoration(
@@ -409,12 +286,13 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
 
                                   // relation
-                                  Row(
+                                  if(guestItem!.isStudent == false)
+                                    Row(
                                     children: [
                                       Expanded(
                                         flex: 1,
@@ -433,9 +311,32 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
+
+                                  if(guestItem!.isStudent)
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            'رقم الطالب :',
+                                            style: Theme.of(context).textTheme.bodyText1,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: SelectableText(
+                                            guestItem!.guestId,
+                                            style: Theme.of(context).textTheme.bodyText1,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+
+                                  const SizedBox(
+                                      height: 10.0,
+                                    ),
 
                                   //HostDate
                                   Row(
@@ -457,7 +358,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
 
@@ -477,7 +378,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 16.0,
                                   ),
 
@@ -487,13 +388,14 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                       Container(
                                         width: double.infinity,
                                         height: 180.0,
+                                        padding: const EdgeInsetsDirectional.all(4.0),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(8.0,),
                                         ),
                                         child: CachedNetworkImage(
                                           imageUrl: guestItem!.guestIsIDCard,
                                           fit: BoxFit.fill,
-                                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                          placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>  Container(
                                             alignment: Alignment.center,
                                             height: 80.0,
@@ -521,7 +423,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                           ),
 
                           //managerReply
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -530,7 +432,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                             hint: 'الرد ...',
                             context: context,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Row(
@@ -549,7 +451,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                   btnColor: Colors.green,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10.0,
                               ),
                               Expanded(

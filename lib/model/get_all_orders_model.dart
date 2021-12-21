@@ -237,6 +237,7 @@ class GuestOrders{
   late String reply;
   late String idDB;
   late String HostDate;
+  late String guestId;
   late String NameofGuest;
   late String guestIsIDCard;
   late String relation;
@@ -252,6 +253,7 @@ class GuestOrders{
     HostDate = json['HostDate']?? 'empty';
     reply = json['reply']?? 'empty';
     idDB = json['_id']?? 'empty' ;
+    guestId = json['studentId']?? 'empty' ;
     NameofGuest = json['NameofGuest']?? 'empty';
     guestIsIDCard = json['guestIsIDCard'] ?? 'empty';
     relation = json['relation'] ?? 'empty';

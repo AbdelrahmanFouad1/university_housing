@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,13 +39,25 @@ class NewsDetailsScreen extends StatelessWidget {
           Stack(
             alignment: Alignment.topLeft,
             children:  [
-               Image(
-                 width: double.infinity,
+              SizedBox(
                 height: 300.0,
-                image: NetworkImage(
-                  '${model.image}',
+                width: double.infinity,
+                child: CachedNetworkImage(
+                  imageUrl: '${model.image}',
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Container(
+                    alignment: Alignment.center,
+                    height: 60.0,
+                    child: Icon(
+                      Icons.error,
+                      color: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                    ),
+                  ),
                 ),
-                 fit: BoxFit.cover,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 42,left: 18),

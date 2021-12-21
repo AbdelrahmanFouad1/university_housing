@@ -627,7 +627,7 @@ class BookingRoom1Screen extends StatelessWidget {
         firstTerm: cubit.term == 1? true:false,
         secondTerm: cubit.term == 2? true:false,
         thirdTerm: cubit.term == 3? true:false,
-        cardPhoto: nationalImage.toString(),
+        cardPhoto: nationalImage,
       ));
     }
   }

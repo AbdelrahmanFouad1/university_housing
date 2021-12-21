@@ -149,7 +149,7 @@ class ChangeRoomScreen extends StatelessWidget {
                                     onChanged: (int? val) {
                                       cubit.selectRoom(val!, e.roomNum.toString() ,e.idDB);
                                       roomController.text = cubit.currentRoomText;
-                                      cubit.ShowAllDetails(true);
+                                      cubit.showAllDetails(true);
                                       Navigator.pop(context);
                                     },
                                   )).toList(),

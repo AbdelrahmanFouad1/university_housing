@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -317,13 +316,34 @@ class LeavingRoomScreen extends StatelessWidget {
   }
   Widget buildProfileItem(context) => Row(
     children: [
-      CircleAvatar(
+      if(AppCubit.get(context).profileModel!.image !=null)
+        CircleAvatar(
         radius: 40.0,
+        backgroundColor: ThemeCubit.get(context).darkTheme
+            ? mainTextColor
+            : mainColors,
         backgroundImage: NetworkImage(
           AppCubit.get(context).profileModel!.image,
         ),
       ),
-      const SizedBox(
+      if(AppCubit.get(context).profileModel!.image ==null)
+        CircleAvatar(
+          radius: 40,
+          backgroundColor: ThemeCubit.get(context).darkTheme
+              ? mainTextColor
+              : mainColors,
+          child: Container(
+            alignment: Alignment.center,
+            height: 80.0,
+            child: Icon(Icons.error,
+              color: ThemeCubit.get(context).darkTheme
+                  ? mainColors
+                  : mainTextColor,
+            ),
+          ),
+        ),
+
+        const SizedBox(
         width: 12.0,
       ),
       Column(

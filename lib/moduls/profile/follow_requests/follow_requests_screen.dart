@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -21,14 +20,10 @@ import 'follow_requests_left_room_screen.dart';
 
 class FollowRequestsScreen extends StatelessWidget {
   FollowRequestsScreen({Key? key}) : super(key: key);
-  bool empty = false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {
-        // if(state is GetOrderSuccessStates)
-        // validation(context,empty);
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -67,14 +62,14 @@ class FollowRequestsScreen extends StatelessWidget {
             body: Builder(
               builder: (context){
                 if(state is GetOrderSuccessStates){
-                  if(empty){
+                  if(validation(context)){
                     return SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: SvgPicture.asset(
                               'assets/images/no_data.svg',
@@ -82,10 +77,10 @@ class FollowRequestsScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '" لا يوجد إشعارات حاليا "',
+                            '" لا يوجد طلبات حاليا "',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
-                          SizedBox(height: 20.0,),
+                          const SizedBox(height: 20.0,),
                         ],
                       ),
                     );
@@ -189,7 +184,7 @@ class FollowRequestsScreen extends StatelessWidget {
                     );
                   }
                 }else{
-                  return Center(child: CircularProgressIndicator(),);
+                  return const Center(child: CircularProgressIndicator(),);
                 }
               },
             ),
@@ -215,7 +210,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'شكوى عامة'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.Complaintsorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -248,7 +243,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'تبديل التالف'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.Damagedthingsorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -281,7 +276,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'المفقودات'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.Missingthingsorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -314,7 +309,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'طلب تغير الغرفة'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -347,7 +342,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'أقرارات ولى الأمر'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.Endorsementorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -380,7 +375,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'طلبات الاستضافة'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height:AppCubit.get(context).myOrdersModel!.Guestorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -414,7 +409,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'طلب إخلاء السكن'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height: AppCubit.get(context).myOrdersModel!.leftRequestsorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -447,7 +442,7 @@ Widget buildOrderScreen(context) => Column(
                     svg: true,
                     title: 'طلب الألتحاق بالسكن'),
                 const SizedBox(height: 15.0),
-                Container(
+                SizedBox(
                   height: AppCubit.get(context).myOrdersModel!.Bookingsorders.length == 1 ? 105 : 210,
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -474,7 +469,8 @@ Widget buildComplaintsItem(context, ComplaintsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        //todo تغيير الالواااان
+        state: model.isReplied ? StatusStates.ACCEPT : StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -486,7 +482,7 @@ Widget buildComplaintsItem(context, ComplaintsordersModel model) => Padding(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         model.complaint ,
@@ -538,7 +534,7 @@ Widget buildDamagedItem(context, DamagedthingsordersModel model) => Padding(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         model.damagedthing,
@@ -590,7 +586,7 @@ Widget buildMissingItem(context, MissingthingsordersModel model) => Padding(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         model.missingthing,
@@ -642,7 +638,7 @@ Widget buildRequestChangeRoomItem(context,RequestsTochangeRoomordersModel  model
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                        'رقم الغرفة: ${model.numofnextroom}',
@@ -651,7 +647,7 @@ Widget buildRequestChangeRoomItem(context,RequestsTochangeRoomordersModel  model
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                        'رقم الدور: ${model.floornumberofnextroom}',
@@ -703,7 +699,7 @@ Widget buildEndorsementItem(context,EndorsementordersModel  model) => Padding(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         model.reason,
@@ -755,7 +751,7 @@ Widget buildGuestItem(context,GuestordersModel  model) => Padding(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         'الأسم: ${model.NameofGuest}',
@@ -764,7 +760,7 @@ Widget buildGuestItem(context,GuestordersModel  model) => Padding(
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child:  Text(
                         'تاريخ الأقامة: ${model.HostDate}',
@@ -814,7 +810,7 @@ Widget buildLeftRoomItem(context, LeftRequestsordersModel model) => Padding(
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child:  Text(
                       'سبب الأخلاء: ${model.reason}',
@@ -865,7 +861,7 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child:  Text(
                       'السبب',
@@ -911,7 +907,7 @@ Widget buildOrderShimmerScreen(context) => Column(
       highlightColor: highlightColor,
     ),
     const SizedBox(height: 15.0),
-    Container(
+    SizedBox(
       height: 215,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
@@ -937,7 +933,7 @@ Widget buildOrderShimmerScreen(context) => Column(
       highlightColor: highlightColor,
     ),
     const SizedBox(height: 15.0),
-    Container(
+    SizedBox(
       height: 215,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
@@ -969,15 +965,16 @@ Widget buildRequestShimmerItem(context) => Padding(
       ),
 );
 
-// void validation (context , empty) {
-//   if(AppCubit.get(context).myOrdersModel!.Bookingsorders.isEmpty &&
-//       AppCubit.get(context).myOrdersModel!.Complaintsorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.Damagedthingsorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.Endorsementorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.leftRequestsorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.Missingthingsorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.isEmpty&&
-//       AppCubit.get(context).myOrdersModel!.Guestorders.isEmpty){
-//       empty = true;
-//   }
-// }
+validation (context) {
+  if(AppCubit.get(context).myOrdersModel!.Bookingsorders.isEmpty &&
+      AppCubit.get(context).myOrdersModel!.Complaintsorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.Damagedthingsorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.Endorsementorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.leftRequestsorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.Missingthingsorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.RequestsTochangeRoomorders.isEmpty&&
+      AppCubit.get(context).myOrdersModel!.Guestorders.isEmpty){
+    return true;
+  }
+  return false;
+}

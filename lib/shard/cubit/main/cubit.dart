@@ -151,9 +151,7 @@ class AppCubit extends Cubit<AppStates> {
 
 
   Future<void> pikeIdImage() async {
-    final pickedFile = await picker.getImage(
-      source: ImageSource.gallery,
-    ).then((value){
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery).then((value){
       idImage = File(value!.path);
       emit(ImagePickedSuccessState());
     });
@@ -168,6 +166,8 @@ class AppCubit extends Cubit<AppStates> {
   Future<void> postStudentGuest({
     required String name,
     required String date,
+    required String guestID,
+    required String relation,
     required String durationOfHosting,
     required File studentIdCard,
     required bool isStudent,
@@ -182,14 +182,17 @@ class AppCubit extends Cubit<AppStates> {
           'NameofGuest': name,
           'HostDate': date,
           'DurationOfHosting': durationOfHosting,
+          'isStudent': isStudent,
+          'studentId': guestID,
+          'relation': relation,
           'guestIsIDCard':  await MultipartFile.fromFile(
             studentIdCard.path,
             filename: Uri.file(studentIdCard.path).pathSegments.last),
-          'isStudent': isStudent,
         },
       )
     ).then(
       (value) {
+        showToast(message: 'تم رفع الطلب بنجاح', state: ToastStates.SUCCESS);
         emit(PostGuestSuccessStates());
       },
     ).catchError((error) {
@@ -198,50 +201,18 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void postGuest({
-    required String name,
-    required String date,
-    required String durationOfHosting,
-    required String guestIsIDCard,
-    required String relation,
-  }) {
-    emit(PostGuestLoadingStates());
-
-    DioHelper.postData(
-      url: ORDER_GUEST,
-      token: tokeen ?? '',
-      data: {
-        'NameofGuest': name,
-        'HostDate': date,
-        'DurationOfHosting': durationOfHosting,
-        'guestIsIDCard': guestIsIDCard,
-        'relation': relation,
-      },
-    ).then(
-      (value) {
-        emit(PostGuestSuccessStates());
-      },
-    ).catchError((error) {
-      print(error.toString());
-      emit(PostGuestErrorStates(error));
-    });
-  }
+  
 
   // Booking Room 1
   File? nationalIdImage;
 
   Future<void> pikeNationalIdImage() async {
-    final pickedFile = await picker.getImage(
+    final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      nationalIdImage = File(pickedFile.path);
+    ).then((value){
+      nationalIdImage = File(value!.path);
       emit(NationalIdImageSuccessState());
-    } else {
-      print('No image selected.');
-      emit(NationalIdImageErrorState());
-    }
+    });
   }
 
   Future<void> removeNationalIdImage() async {
@@ -251,22 +222,13 @@ class AppCubit extends Cubit<AppStates> {
 
   // family Report
   File? familyImage;
-  var familyPicker = ImagePicker();
 
   Future<void> pikeFamilyImage() async {
-    final pickedFile = await familyPicker.getImage(
-      source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      familyImage = File(pickedFile.path);
-      print(pickedFile.path);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery,).then((value){
+      familyImage = File(value!.path);
       emit(ImagePickedSuccessState());
-    } else {
-      print('No image selected.');
-      getProfileData();
-      emit(ImagePickedErrorState());
-    }
+
+    });
   }
 
   Future<void> removePikeImage() async {
@@ -274,19 +236,23 @@ class AppCubit extends Cubit<AppStates> {
     emit(ImageRemoveSuccessState());
   }
 
-  void postReports({
+  Future<void> postReports({
     required String reason,
-    required String image,
-  }) {
+    required File image,
+  }) async {
     emit(PostReportLoadingStates());
 
     DioHelper.postData(
       url: ORDERS_REPORT,
       token: tokeen ?? '',
-      data: {
-        'reason': reason,
-        'parentIsendorsement': image,
-      },
+      data: FormData.fromMap(
+          {
+            'reason': reason,
+            'parentIsendorsement': await MultipartFile.fromFile(
+              image.path,
+              filename: Uri.file(image.path).pathSegments.last),
+          }
+      )
     ).then(
       (value) {
         emit(PostReportSuccessStates());
@@ -348,7 +314,6 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   File? profileImage;
-  var profilePicker = ImagePicker();
   Icon icon = Icon(
     Icons.edit,
     color: mainColors,
@@ -356,187 +321,55 @@ class AppCubit extends Cubit<AppStates> {
 
   late CircleAvatar img;
 
-  Future<void> pikeProfileIdImage() async {
-    final pickedFile = await profilePicker.getImage(
+  Future<void> pikeProfileImage() async {
+    final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
-    );
-
-    if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
+    ).then((value){
+      profileImage = File(value!.path);
       icon = Icon(
         Icons.check_rounded,
         color: mainColors,
       );
-      img = CircleAvatar(
-        radius: 60,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              150.0,
-            ),
-            image: DecorationImage(
-              image:
-              FileImage(profileImage!),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      );
-      printFullText('lalalalala   '+ profileImage.toString());
-      uploadImage(profileImage!);
       emit(ImagePickedSuccessState());
-    } else {
+    }).catchError((error){
       emit(ImagePickedErrorState());
       showToast(state: ToastStates.WARNING, message: 'لم يتم أختيار الصوره');
-    }
-  }
-
-
-//  todo henaaaaaaaa
-// void updateImg() {
-//   emit(UpdateImgLoadingStates());
-//   DioHelper.putData(
-//     url: PUT_PROFILE,
-//     data: {
-//       'image': profileImage!.path.toString(),
-//     },
-//     token: tokeen
-//   ).then((value){
-//     showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
-//     emit(UpdateImgSuccessState());
-//     profileImage = null;
-//     icon = Icon(
-//       Icons.edit,
-//       color: mainColors,
-//     );
-//     getProfileData();
-//   }).catchError((error){
-//     print('Erooooooooooor ==> ' + error.toString());
-//     emit(UpdateImgErrorStates(error.toString()));
-//     showToast(message: 'لم يتم رفع الصوره , الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
-//   });
-//
-//   }
-
-  static late Dio dio;
-
-  FormData? formData;
-  Future<void> uploadImage(File file) async {
-    String fileName = file.path.split('/').last;
-    formData = FormData.fromMap({
-      "image":
-      await MultipartFile.fromFile(file.path, filename:fileName),
     });
-    dio = Dio(
-      BaseOptions(
-        baseUrl: BASE_URL,
-        receiveDataWhenStatusError: true,
-        connectTimeout: 50000,
-        receiveTimeout: 3000,
-        // headers: {
-        //   'Accept':'application/json, text/plain, */*',
-        //   'Content-Type':'application/json',
-        //   'Authorization':"**",
-        //   'User-Aagent':"4.1.0;android;6.0.1;default;A001",
-        //   "HZUID":"2",
-        // }
-      )
-    );
-
-    // final res = await dio.delete(
-    //   UPLOAD,
-    //   data: formData,
-    //   options: Options(
-    //
-    //     followRedirects: false,
-    //     // will not throw errors
-    //     validateStatus: (status) => true,
-    //   ),
-    // );
-    //
-    // printFullText(res.data.toString());
-
-
-    try{
-      await dio.post('upload', data: formData).then((value){
-        print(value.data.toString());
-      });
-    }on DioError catch(e){
-      var message =  e.response!.data['message'].toString();
-      printFullText(message);
-      showToast(message: message, state: ToastStates.ERROR);
-    }
 
   }
 
 
 
-
-
-  void updateImg() {
+  Future<void> uploadImage({
+  required File image,
+}) async {
+  emit(UpdateImgLoadingStates());
+  DioHelper.putData(
+    url: PUT_PROFILE,
+    token: tokeen,
+    data: FormData.fromMap(
+        {
+          'image': await MultipartFile.fromFile(
+              image.path,
+              filename: Uri.file(image.path).pathSegments.last),
+        }
+    )
+  ).then((value){
+    showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
+    emit(UpdateImgSuccessState());
+    profileImage = null;
     icon = Icon(
       Icons.edit,
       color: mainColors,
     );
-    profileImage = null;
-    emit(UpdateImgLoadingStates());
+    getProfileData();
+  }).catchError((error){
+    print('Erooooooooooor ==> ' + error.toString());
+    emit(UpdateImgErrorStates(error.toString()));
+    showToast(message: 'لم يتم رفع الصوره , الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+  });
 
-    // DioHelper.postData(
-    //     url: UPLOAD,
-    //     data2: formData,
-    //     // data: formData!,
-    //   token: tokeen
-    // ).then((value) {
-    //   if(value != null){
-    //     showToast(message: ' uploaded', state: ToastStates.SUCCESS);
-    //     emit(UpdateImgSuccessState());
-    //   }else{
-    //     print('nuuuuuuuuuuuuul');
-    //   }
-    //   // DioHelper.putData(
-    //   //   url: PUT_PROFILE,
-    //   //   data: {
-    //   //     'image': value!.data.toString(),
-    //   //   },
-    //   // ).then((value){
-    //   //   icon = Icon(
-    //   //     Icons.edit,
-    //   //     color: mainColors,
-    //   //   );
-    //   //   showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
-    //   //   emit(UpdateImgSuccessState());
-    //   //   profileImage = null;
-    //   // }).catchError((error){
-    //   //   print('Erooooooooooor ==> ' + error.toString());
-    //   //   emit(UpdateImgErrorStates(error.toString()));
-    //   //   showToast(message: 'لم يتم رفع الصوره , الرجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
-    //   // });
-    // });
-
-    // img = CircleAvatar(
-    //   radius: 60,
-    //   backgroundImage:
-    //       NetworkImage('https://cdn-icons-png.flaticon.com/512/149/149071.png'),
-    // );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -611,19 +444,19 @@ class AppCubit extends Cubit<AppStates> {
     emit(ChangeKindState());
   }
 
-  void changeHouseColor(int Selected) {
-    selectedHouse = Selected;
+  void changeHouseColor(int selected) {
+    selectedHouse = selected;
     showDetails = true;
     emit(SelectHouseSuccessState());
   }
 
-  void ShowAllDetails(bool ShowAll) {
-    showAll = ShowAll;
+  void showAllDetails(bool show) {
+    showAll = show;
     emit(ShowAllDetailsSuccessState());
   }
 
-  void IsDouble(bool IsDouble) {
-    isDouble = IsDouble;
+  void IsDouble(bool double) {
+    isDouble = double;
     emit(IsDoubleSuccessState());
   }
 
@@ -686,10 +519,9 @@ class AppCubit extends Cubit<AppStates> {
 
 //  receipt screen
   File? receiptImage;
-  var receiptPicker = ImagePicker();
 
   Future<void> pikeReceiptImage() async {
-    final pickedFile = await receiptPicker.getImage(
+    final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
 
@@ -789,19 +621,19 @@ class AppCubit extends Cubit<AppStates> {
      roomsList= [];
     buildings!.Buildings[index].rooms.forEach((element) {
       if(currentFloorVal == 1){
-        if(element.floor == 1 && element.userresidentName.isEmpty){
+        if(element.floor == 1 && element.userresidentName.isEmpty && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
         }
       }else if(currentFloorVal == 2){
-        if(element.floor == 2 && element.userresidentName.isEmpty){
+        if(element.floor == 2 && element.userresidentName.isEmpty && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else if(currentFloorVal == 3){
-        if(element.floor == 3 && element.userresidentName.isEmpty){
+        if(element.floor == 3 && element.userresidentName.isEmpty && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else{
-        if(element.floor == 4 && element.userresidentName.isEmpty){
+        if(element.floor == 4 && element.userresidentName.isEmpty && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }
@@ -811,7 +643,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
 
-  void postBookingRoom({
+  Future<void> postBookingRoom({
     required bool firstTerm,
     required bool secondTerm,
     required bool thirdTerm,
@@ -821,41 +653,46 @@ class AppCubit extends Cubit<AppStates> {
     required String phone,
     required String address,
     required String NationalID,
-    required String cardPhoto,
+    required File cardPhoto,
     required String buildingName,
     required int roomnumber,
     required int floor,
-  }) {
+  }) async {
     emit(PostBookingLoadingStates());
 
     DioHelper.postData(
       url: BOOKING_ROOM,
       token: tokeen ?? '',
-      data: {
-        'firstTerm': firstTerm,
-        'secondTerm': secondTerm,
-        'thirdTerm': thirdTerm,
-        'gender': gender,
-        'buildingType': buildingType,
-        'Section': Section,
-        'phone': phone,
-        'address': address,
-        'NationalID': NationalID,
-        'cardPhoto': cardPhoto,
-        'buildingName': buildingName,
-        'roomnumber': roomnumber,
-        'floor': floor,
-      },
+      data:FormData.fromMap(
+        {
+          'firstTerm': firstTerm,
+          'secondTerm': secondTerm,
+          'thirdTerm': thirdTerm,
+          'gender': gender,
+          'buildingType': buildingType,
+          'Section': Section,
+          'phone': phone,
+          'address': address,
+          'NationalID': NationalID,
+          'cardPhoto': await MultipartFile.fromFile(
+            cardPhoto.path,
+            filename: Uri.file(cardPhoto.path).pathSegments.last),
+          'buildingName': buildingName,
+          'roomnumber': roomnumber,
+          'floor': floor,
+        },
+      )
+
     ).then(
       (value) {
         emit(PostBookingSuccessStates());
-        showToast(message: 'done', state: ToastStates.SUCCESS);
-        print('Datttttttttta => ' + value!.data.toString());
+        CacheHelper.saveData(key: 'waiting',value: true);
+        showToast(message: 'تم رفع الطلب بنجاح', state: ToastStates.SUCCESS);
       },
     ).catchError((error) {
       print(error.toString());
       emit(PostBookingErrorStates(error));
-      showToast(message: 'error', state: ToastStates.ERROR);
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
     });
   }
 

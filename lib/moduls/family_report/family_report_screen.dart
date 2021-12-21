@@ -163,18 +163,24 @@ class FamilyReportScreen extends StatelessWidget {
                      const Spacer(),
                      defaultButton(
                        function: (){
-                         AppCubit.get(context).postReports(
+                         if(reasonController.text.isEmpty){
+                           showToast(message: 'برجاء ادخال السبب', state: ToastStates.ERROR);
+                         }else if(AppCubit.get(context).familyImage == null){
+                           showToast(message: 'برجاء ادخال الصوره', state: ToastStates.ERROR);
+                         }else{
+                           AppCubit.get(context).postReports(
                              reason: reasonController.text,
-                             image: AppCubit.get(context).familyImage.toString(),
-                         );
-                         // print(AppCubit.get(context).familyImage.toString());
+                             image: AppCubit.get(context).familyImage!,
+                           );
+                         }
+
                        },
                        text: 'تقديم الطلب',
                        width: double.infinity,
                        height: 47.0,
                        btnColor: mainColors,
                        marginSize: const EdgeInsets.symmetric(horizontal: 14.0),
-                       //
+
                      ),
                    ],
                  ),

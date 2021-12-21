@@ -51,7 +51,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
               title: 'الأستعلامات',
               context: context,
               action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 width: 30.0,
                 child: IconButton(
                   icon: Icon(
@@ -67,7 +67,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -82,7 +82,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           //code
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -106,7 +106,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                           ),
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -131,7 +131,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -157,7 +157,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
 
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -183,7 +183,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
 
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -209,7 +209,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
 
 
                           //queriesDate
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -235,21 +235,21 @@ class DashQueriesDetailsScreen extends StatelessWidget {
 
 
                           //StudentComplaint
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Text(
                             'السؤال',
                             style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           dashWhiteBoard(context,text: enquiryItem!.enquiry,),
 
 
                           //managerReply
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -258,7 +258,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
                               hint: 'الرد ...',
                               context: context,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           defaultButton(
