@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -10,6 +9,8 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashFamilyScreen extends StatelessWidget {
+  const DashFamilyScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +24,9 @@ class DashFamilyScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الأقرارات',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -49,7 +35,7 @@ class DashFamilyScreen extends StatelessWidget {
                       svgImage:  'assets/images/family.svg',
                       title: 'أقرارات ولي الأمر',
                       svg: true,),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -61,12 +47,12 @@ class DashFamilyScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ReportItem(context,item: cubit.allOrders!.familyOrders[index],cubit: cubit),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -101,7 +87,7 @@ Widget ReportItem(
       children: [
         Expanded(
           child: Text(
-            '${item.user!.username}',
+            item.user!.username,
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -114,7 +100,7 @@ Widget ReportItem(
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(

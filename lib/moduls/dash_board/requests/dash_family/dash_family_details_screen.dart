@@ -1,8 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -42,7 +40,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
         if(familyItem!.reply != 'empty' && familyItem!.reply.isEmpty != true){
           managerController.text = familyItem!.reply;
         }
-        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(familyItem!.createdAt);
+        DateTime tempDate = DateFormat("yyyy-MM-dd").parse(familyItem!.createdAt);
         String date = tempDate.toString().substring(0, 10);
 
         var cubit = DashBoardCubit.get(context);
@@ -54,7 +52,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
               context: context,
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -70,7 +68,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                         children: [
 
                           //code
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -85,7 +83,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  '${familyItem!.idDB}',
+                                  familyItem!.idDB,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
@@ -94,7 +92,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -109,7 +107,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  '${familyItem!.user!.username}',
+                                  familyItem!.user!.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -118,7 +116,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -142,7 +140,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -166,7 +164,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -181,7 +179,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  '${familyItem!.user!.buildingName}',
+                                  familyItem!.user!.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -190,7 +188,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //requestDate
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -214,7 +212,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //Student
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Text(
@@ -224,7 +222,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                 .bodyText1!
                                 .copyWith(fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
 
@@ -262,14 +260,14 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: SingleChildScrollView(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: const BouncingScrollPhysics(),
                                       child: SelectableText(
-                                        '${familyItem!.reason}',
+                                        familyItem!.reason,
                                         style: Theme.of(context).textTheme.bodyText1,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
                                   Stack(
@@ -284,7 +282,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                         child: CachedNetworkImage(
                                           imageUrl: familyItem!.reportImg,
                                           fit: BoxFit.fill,
-                                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>  Container(
                                             alignment: Alignment.center,
                                             height: 80.0,
@@ -311,7 +309,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                           ),
 
                           //managerReply
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -320,7 +318,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                             hint: 'الرد ...',
                             context: context,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Row(
@@ -341,7 +339,7 @@ class DashFamilyDetailsScreen extends StatelessWidget {
                                   btnColor: Colors.green,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10.0,
                               ),
                               Expanded(

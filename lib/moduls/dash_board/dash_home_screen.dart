@@ -6,7 +6,6 @@ import 'package:university_housing/moduls/dash_board/requests/requests_home_scre
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_home_screen.dart';
-import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
@@ -38,7 +37,7 @@ class DashHomeScreen extends StatelessWidget {
                 child: Builder(
                   builder: (context) {
                     if (state is GetProfileLoadingStates) {
-                      return Container(
+                      return const SizedBox(
                           width: double.infinity,
                           height: 300.0,
                           child: Center(child: CircularProgressIndicator()));
@@ -216,7 +215,7 @@ class DashHomeScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              navigateTo(context, StudentsHomeScreen());
+                              navigateTo(context, const StudentsHomeScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/team.png',
@@ -253,7 +252,7 @@ class DashHomeScreen extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               cubit.getNews();
-                              navigateTo(context, NewsScreen());
+                              navigateTo(context, const NewsScreen());
                             },
                             child: defaultDashBoardTitleBox(
                                 img: 'assets/images/newspaper.png',

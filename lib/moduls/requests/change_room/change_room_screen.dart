@@ -131,9 +131,9 @@ class ChangeRoomScreen extends StatelessWidget {
                                 title: 'اختر رقم الغرفه',
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: cubit.roomsList.length==0? [
+                                  children: cubit.roomsList.isEmpty? [
                                     Container(
-                                      padding: EdgeInsetsDirectional.all(10.0),
+                                      padding: const EdgeInsetsDirectional.all(10.0),
                                       child: Text(
                                           'لا يوجد غرف في هذا الدور حاليا !!',
                                         style: Theme.of(context).textTheme.subtitle2,
@@ -181,8 +181,6 @@ class ChangeRoomScreen extends StatelessWidget {
                           int floor =int.parse(floorController.text);
                           int room =int.parse(roomController.text);
                           AppCubit.get(context).postChangeRoom(room: room, floor: floor);
-                          print(floor);
-                          print(room);
                         }
                       },
                       text: 'تقديم الطلب',

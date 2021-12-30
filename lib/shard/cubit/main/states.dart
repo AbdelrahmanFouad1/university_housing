@@ -178,6 +178,13 @@ class PostBookingErrorStates extends AppStates {
   PostBookingErrorStates(this.error);
 }
 
+class PostVoucherLoadingStates extends AppStates {}
+class PostVoucherSuccessStates extends AppStates {}
+class PostVoucherErrorStates extends AppStates {
+  final String error;
+  PostVoucherErrorStates(this.error);
+}
+
 
 // get buildings from api
 class GetBuildingDataLoadingStates extends AppStates {}

@@ -27,7 +27,7 @@ class FinesScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class FinesScreen extends StatelessWidget {
                         height: 15.0,
                       ),
 
-                      if(AppCubit.get(context).profileModel!.fines.length !=0)
+                      if(AppCubit.get(context).profileModel!.fines.isNotEmpty)
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -75,9 +75,9 @@ class FinesScreen extends StatelessWidget {
                         itemCount:
                         AppCubit.get(context).profileModel != null ? AppCubit.get(context).profileModel!.fines.length : 8,
                       ),
-                      if(AppCubit.get(context).profileModel!.fines.length ==0)
+                      if(AppCubit.get(context).profileModel!.fines.isEmpty)
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 100.0),
+                          margin: const EdgeInsets.symmetric(vertical: 100.0),
                           alignment: Alignment.center,
                           child: Text(
                             'لا يوجد غرامات حاليا !!',

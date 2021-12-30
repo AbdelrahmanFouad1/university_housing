@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/model/get_buildings_model.dart';
 import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
 import 'package:university_housing/moduls/login/login_screen.dart';
@@ -36,7 +34,7 @@ class MainSecurityScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Builder(
                 builder: (context){
-                  if(state is GetProfileSuccessStates){
+                  if(state is GetProfileSuccessStates || state is GetUserSecuritySuccessStates){
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -208,9 +206,9 @@ class MainSecurityScreen extends StatelessWidget {
                             context: context,
                             conditionBuilder: (context) => state is GetUserSecurityLoadingStates,
                             widgetBuilder: (context) =>  Container(
-                                margin:EdgeInsets.all(40.0) ,
+                                margin:const EdgeInsets.all(40.0) ,
                                 alignment: Alignment.center,
-                                child: CircularProgressIndicator()
+                                child: const CircularProgressIndicator()
                             ),
                             fallbackBuilder: (context) => ListView.separated(
                               shrinkWrap: true,
@@ -230,7 +228,7 @@ class MainSecurityScreen extends StatelessWidget {
                       ),
                     );
                   }else{
-                    return Container( alignment: Alignment.center,margin: EdgeInsetsDirectional.all(100.0),child: CircularProgressIndicator(),);
+                    return Container( alignment: Alignment.center,margin: const EdgeInsetsDirectional.all(100.0),child: const CircularProgressIndicator(),);
                   }
                 },
               ),

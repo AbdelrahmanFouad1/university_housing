@@ -22,13 +22,13 @@ class RoomsHomeScreen extends StatelessWidget {
           child: Scaffold(
             appBar: dashAppBar(title: 'إدارة الغرف', context: context),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Builder(
                   builder: (context){
-                    if (state is GetAllRoomsLoadingStates){
-                      return Container(
+                    if (cubit.allRooms == null){
+                      return const SizedBox(
                           width:double.infinity,
                           height: 500.0,
                           child: Center(child: CircularProgressIndicator()));
@@ -72,7 +72,7 @@ class RoomsHomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: 20.0,),
+                          const SizedBox(height: 20.0,),
 
                           Row(
                             children: [
@@ -111,7 +111,7 @@ class RoomsHomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: 30.0,),
+                          const SizedBox(height: 30.0,),
 
                           Container(
                             width: double.infinity,
@@ -119,7 +119,7 @@ class RoomsHomeScreen extends StatelessWidget {
                             color: separator,
                           ),
 
-                          SizedBox(height: 30.0,),
+                          const SizedBox(height: 30.0,),
                           InkWell(
                             onTap: (){
                               cubit.getAvailableNowData();
@@ -130,7 +130,7 @@ class RoomsHomeScreen extends StatelessWidget {
                                 title: 'الموجود حاليا'
                             ),
                           ),
-                          SizedBox(height: 12.0,),
+                          const SizedBox(height: 12.0,),
                           InkWell(
                             onTap: (){
                               navigateTo(context, AddBuilding());
@@ -140,7 +140,7 @@ class RoomsHomeScreen extends StatelessWidget {
                                 title: 'إضافة مبنى'
                             ),
                           ),
-                          SizedBox(height: 12.0,),
+                          const SizedBox(height: 12.0,),
                           InkWell(
                             onTap: (){
                               navigateTo(context, AddRoom());

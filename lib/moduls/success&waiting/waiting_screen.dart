@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/shard/style/color.dart';
 
 class WaitingScreen extends StatelessWidget {
   const WaitingScreen({Key? key}) : super(key: key);

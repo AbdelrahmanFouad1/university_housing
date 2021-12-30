@@ -13,13 +13,14 @@ import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
+import 'follow_requests_book_room_screen.dart';
 import 'follow_requests_change_room_screen.dart';
 import 'follow_requests_endorsement_screen.dart';
 import 'follow_requests_guest_screen.dart';
 import 'follow_requests_left_room_screen.dart';
 
 class FollowRequestsScreen extends StatelessWidget {
-  FollowRequestsScreen({Key? key}) : super(key: key);
+  const FollowRequestsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
@@ -469,8 +470,7 @@ Widget buildComplaintsItem(context, ComplaintsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        //todo تغيير الالواااان
-        state: model.isReplied ? StatusStates.ACCEPT : StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -522,7 +522,7 @@ Widget buildDamagedItem(context, DamagedthingsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -574,7 +574,7 @@ Widget buildMissingItem(context, MissingthingsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -626,7 +626,7 @@ Widget buildRequestChangeRoomItem(context,RequestsTochangeRoomordersModel  model
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.isreply ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -687,7 +687,7 @@ Widget buildEndorsementItem(context,EndorsementordersModel  model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.isReplied ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -739,7 +739,7 @@ Widget buildGuestItem(context,GuestordersModel  model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state: model.reply == '' ? StatusStates.WAITING :  StatusStates.ACCEPT,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -800,7 +800,7 @@ Widget buildLeftRoomItem(context, LeftRequestsordersModel model) => Padding(
       child: buildEnquiry(
         context,
         height: 100.0,
-        state:  model.isreply ? StatusStates.ACCEPT :  StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -850,8 +850,7 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
         context,
         height: 100.0,
         //todo isreplay not exist
-        // state:  model.isreply ? StatusStates.WAITING :  StatusStates.ACCEPT,
-        state: StatusStates.WAITING ,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -864,7 +863,7 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
                   SizedBox(
                     width: double.infinity,
                     child:  Text(
-                      'السبب',
+                      'رقم الغرفة: ${model.roomnumber}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText1,
@@ -874,10 +873,10 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
               ),
               InkWell(
                 onTap: (){
-                  // navigateTo(
-                  //     context,
-                  //   FollowRequestsDetailsScreen(bookingsordersModel: model,),
-                  // );
+                  navigateTo(
+                      context,
+                    FollowRequestsDetailsScreen(model:model),
+                  );
                 },
                 child: Text(
                   'عرض التفاصيل',

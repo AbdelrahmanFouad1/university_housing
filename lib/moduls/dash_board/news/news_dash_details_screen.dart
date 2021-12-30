@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/model/news_model.dart';
-import 'package:university_housing/moduls/home/home_screen.dart';
-import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
-import 'package:university_housing/shard/cubit/main/cubit.dart';
-import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
@@ -26,7 +22,7 @@ class NewsDashDetailsScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: Scaffold(
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Stack(
@@ -38,7 +34,7 @@ class NewsDashDetailsScreen extends StatelessWidget {
 
                           CachedNetworkImage(
                             imageUrl: '${model.image}',
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>  Container(
                                 alignment: Alignment.center,
                                 height: 200.0,

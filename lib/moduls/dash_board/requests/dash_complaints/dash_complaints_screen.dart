@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -10,7 +9,7 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 import 'dash_complaints_details_screen.dart';
 
 class DashComplimentsScreen extends StatelessWidget {
-
+  const DashComplimentsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +23,9 @@ class DashComplimentsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الشكوى',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -52,7 +36,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         svgImage:'assets/images/locate.svg',
                         svg: true,
                         title: 'المفقودات'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -64,7 +48,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => MissingItem(
@@ -74,7 +58,7 @@ class DashComplimentsScreen extends StatelessWidget {
                             index: index,
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -84,7 +68,7 @@ class DashComplimentsScreen extends StatelessWidget {
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
@@ -93,7 +77,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         svgImage:'assets/images/broken-plate.svg',
                         svg: true,
                         title: 'تبديل التالف'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -105,7 +89,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => DamagedItem(
@@ -115,7 +99,7 @@ class DashComplimentsScreen extends StatelessWidget {
                             index: index,
                             ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -125,7 +109,7 @@ class DashComplimentsScreen extends StatelessWidget {
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
@@ -135,7 +119,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         svgImage:'assets/images/review.svg',
                         svg: true,
                         title: 'شكوى عامة'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -147,7 +131,7 @@ class DashComplimentsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ComplaintsItem(
@@ -157,7 +141,7 @@ class DashComplimentsScreen extends StatelessWidget {
                             index: index,
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -208,7 +192,7 @@ Widget MissingItem({
 
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(
@@ -264,7 +248,7 @@ Widget DamagedItem({
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(
@@ -322,7 +306,7 @@ Widget ComplaintsItem({
 
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(

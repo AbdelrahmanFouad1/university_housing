@@ -11,6 +11,7 @@ import 'package:university_housing/model/get_reviews_model.dart';
 import 'package:university_housing/model/my_orders_model.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
+import 'package:university_housing/moduls/booking_room/booking_done_screen.dart';
 import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -340,29 +341,28 @@ class AppCubit extends Cubit<AppStates> {
 
 
 
-  Future<void> uploadImage({
-  required File image,
-}) async {
+  Future<void> uploadImage() async {
   emit(UpdateImgLoadingStates());
-  DioHelper.putData(
+  DioHelper.patchData(
     url: PUT_PROFILE,
     token: tokeen,
     data: FormData.fromMap(
         {
           'image': await MultipartFile.fromFile(
-              image.path,
-              filename: Uri.file(image.path).pathSegments.last),
+              profileImage!.path,
+              filename: Uri.file(profileImage!.path).pathSegments.last),
         }
     )
   ).then((value){
     showToast(state: ToastStates.SUCCESS, message: 'تم رفع الصوره بنجاح');
-    emit(UpdateImgSuccessState());
     profileImage = null;
     icon = Icon(
       Icons.edit,
       color: mainColors,
     );
     getProfileData();
+    emit(UpdateImgSuccessState());
+
   }).catchError((error){
     print('Erooooooooooor ==> ' + error.toString());
     emit(UpdateImgErrorStates(error.toString()));
@@ -550,7 +550,6 @@ class AppCubit extends Cubit<AppStates> {
       url: ORDER_MYORDER,
       token: tokeen ?? '',
     ).then((value) {
-      // printFullText(value.data.toString());
       myOrdersModel = MyOrdersModel.fromJson(value!.data);
       emit(GetOrderSuccessStates());
     }).catchError((error) {
@@ -693,6 +692,38 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
       emit(PostBookingErrorStates(error));
       showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+    });
+  }
+
+
+  Future<void> postVoucher({
+    required String sector,
+    required File voucherImage,
+    required context,
+  }) async {
+    emit(PostVoucherLoadingStates());
+
+    DioHelper.postData(
+        url: VOUCHERS,
+        token: tokeen ?? '',
+        data: FormData.fromMap(
+            {
+              'sector': sector,
+              'voucherImage': await MultipartFile.fromFile(
+                  voucherImage.path,
+                  filename: Uri.file(voucherImage.path).pathSegments.last),
+            }
+        )
+    ).then((value) {
+      if (value != null) {
+        print(value.statusMessage);
+        emit(PostVoucherSuccessStates());
+        navigateTo(context, const BookingDoneScreen());
+      }
+    }).catchError((error) {
+      print(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PostVoucherErrorStates(error.toString()));
     });
   }
 

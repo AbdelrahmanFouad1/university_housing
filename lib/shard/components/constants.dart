@@ -4,6 +4,8 @@ String token ='';
 
 String idDB ='';
 
+String totalCost ='1580';
+
 GetBuildingsModel? buildings;
 
 void printFullText(String text)

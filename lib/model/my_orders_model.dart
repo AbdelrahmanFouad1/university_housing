@@ -57,10 +57,10 @@ class EnquiryordersModel{
   late String enquiry;
 
   EnquiryordersModel.fromJson(Map<String, dynamic> json) {
-    enquiryAnswer = json['enquiryAnswer'];
+    enquiryAnswer = json['enquiryAnswer']??'empty';
     isReplied = json['isReplied'];
     idDB = json['_id'];
-    enquiry = json['enquiry'];
+    enquiry = json['enquiry']??'empty';
   }
 }
 
@@ -69,55 +69,63 @@ class ComplaintsordersModel{
   late bool isReplied;
   late String idDB;
   late String complaint;
+  late bool isAccepted;
 
   ComplaintsordersModel.fromJson(Map<String, dynamic> json) {
-    reply = json['reply'];
-    isReplied = json['isReplied'];
+    reply = json['reply']??'empty';
+    isReplied = json['isReplied']??false;
+    isAccepted = json['isAccepted']??false;
     idDB = json['_id'];
-    complaint = json['complaint'];
+    complaint = json['complaint']??'empty';
   }
 }
 
 class DamagedthingsordersModel{
   late String reply;
   late bool isReplied;
+  late bool isAccepted;
   late String idDB;
   late String damagedthing;
 
   DamagedthingsordersModel.fromJson(Map<String, dynamic> json) {
-    reply = json['reply'];
-    isReplied = json['isReplied'];
+    reply = json['reply']??'empty';
+    isReplied = json['isReplied']??false;
+    isAccepted = json['isAccepted']??false;
     idDB = json['_id'];
-    damagedthing = json['damagedthing'];
+    damagedthing = json['damagedthing']??'empty';
   }
 }
 
 class MissingthingsordersModel{
   late String reply;
   late bool isReplied;
+  late bool isAccepted;
   late String idDB;
   late String missingthing;
 
   MissingthingsordersModel.fromJson(Map<String, dynamic> json) {
-    reply = json['reply'];
-    isReplied = json['isReplied'];
+    reply = json['reply']??'empty';
+    isReplied = json['isReplied']??false;
+    isAccepted = json['isAccepted']??false;
     idDB = json['_id'];
-    missingthing = json['missingthing'];
+    missingthing = json['missingthing']??'empty';
   }
 }
 
 class RequestsTochangeRoomordersModel{
   late int numofnextroom;
   late int floornumberofnextroom;
-  late bool isreply;
+  late bool isReplied;
+  late bool isAccepted;
   late String reply;
   late String idDB;
 
   RequestsTochangeRoomordersModel.fromJson(Map<String, dynamic> json) {
     numofnextroom = json['numofnextroom'];
     floornumberofnextroom = json['floornumberofnextroom'];
-    isreply = json['isreply'];
-    reply = json['reply'];
+    isReplied = json['isreply']??false;
+    isAccepted = json['isAccepted']??false;
+    reply = json['reply']??'empty';
     idDB = json['_id'];
   }
 }
@@ -125,16 +133,18 @@ class RequestsTochangeRoomordersModel{
 class EndorsementordersModel{
   late String reply;
   late bool isReplied;
+  late bool isAccepted;
   late String idDB;
   late String reason;
   late String parentIsendorsement;
 
   EndorsementordersModel.fromJson(Map<String, dynamic> json) {
-    reply = json['reply'];
-    isReplied = json['isReplied'];
+    reply = json['reply']??'empty';
+    isReplied = json['isReplied']??false;
+    isAccepted = json['isAccepted']??false;
     idDB = json['_id'];
-    reason = json['reason'];
-    parentIsendorsement = json['parentIsendorsement'];
+    reason = json['reason']??'empty';
+    parentIsendorsement = json['parentIsendorsement']??'empty';
   }
 }
 
@@ -144,16 +154,21 @@ class GuestordersModel{
   late String reply;
   late String idDB;
   late String NameofGuest;
+  late bool isAccepted;
+  //todo test
+  late bool isReplied;
    String? studentId;
    String? guestIsIDCard;
    String? relation;
 
   GuestordersModel.fromJson(Map<String, dynamic> json) {
-    HostDate = json['HostDate'];
+    HostDate = json['HostDate']??'empty';
+    isReplied = json['isReplied']?? false;
     DurationOfHosting = json['DurationOfHosting'];
-    reply = json['reply'];
+    isAccepted = json['isAccepted']??false;
+    reply = json['reply']??'empty';
     idDB = json['_id'];
-    NameofGuest = json['NameofGuest'];
+    NameofGuest = json['NameofGuest']??'empty';
 
     if (json['studentId'] != null) {
       studentId = json['studentId'];
@@ -171,25 +186,44 @@ class GuestordersModel{
 }
 
 class LeftRequestsordersModel{
-  late bool isreply;
+  late bool isReplied;
   late String reply;
   late String idDB;
   late String reason;
+  late bool isAccepted;
 
   LeftRequestsordersModel.fromJson(Map<String, dynamic> json) {
-    isreply = json['isreply'];
+    isReplied = json['isreply']??false;
+    isAccepted = json['isAccepted']??false;
     reply = json['reply'];
     idDB = json['_id'];
     reason = json['reason'];
   }
 }
 
+//todo add isreply + reply
 class BookingsordersModel{
-  // late bool isreply;
+  late bool isReplied;
+  late String reply;
   late String idDB;
+  late bool firstTerm;
+  late bool secondTerm;
+  late bool thirdTerm;
+  late String buildingName;
+  late bool buildingType;
+  late int roomnumber;
+  late bool isAccepted;
 
   BookingsordersModel.fromJson(Map<String, dynamic> json) {
-    // isreply = json['isAccepted'];
+    isReplied = json['isreply'] ?? false;
+    reply = json['reply'] ?? 'empty';
     idDB = json['_id'];
+    firstTerm = json['firstTerm'];
+    secondTerm = json['secondTerm'];
+    thirdTerm = json['thirdTerm'];
+    buildingName = json['buildingName']??'empty';
+    buildingType = json['buildingType']??'empty';
+    roomnumber = json['roomnumber'];
+    isAccepted = json['isAccepted']??false;
   }
 }

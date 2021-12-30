@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -622,7 +620,7 @@ class BookingRoom1Screen extends StatelessWidget {
         section: sectionController.text,
         phone: phoneController.text,
         address: addressController.text,
-        NationalID: nationalIDController.text,
+        nationalID: nationalIDController.text,
         gender: cubit.isBoy,
         firstTerm: cubit.term == 1? true:false,
         secondTerm: cubit.term == 2? true:false,

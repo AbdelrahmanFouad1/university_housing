@@ -1,9 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
 import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -90,24 +88,9 @@ class WaitingStudentsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الساكنين',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -116,7 +99,7 @@ class WaitingStudentsScreen extends StatelessWidget {
                         svgImage:  'assets/images/warn.svg',
                         svg: true,
                         title: 'غير مقيدين بالسكن'),
-                    SizedBox(
+                    const SizedBox(
                       height: 12.0,
                     ),
                     Padding(
@@ -162,7 +145,7 @@ class WaitingStudentsScreen extends StatelessWidget {
                           Expanded(
                             child: Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 10.0,
                                 ),
                                 SizedBox(
@@ -198,7 +181,7 @@ class WaitingStudentsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -206,20 +189,20 @@ class WaitingStudentsScreen extends StatelessWidget {
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
                     Builder(
                         builder: (context){
                           if(state is GetAllUsersLoadingStates){
-                            return Container(
+                            return const SizedBox(
                                 width:double.infinity,
                                 height: 300.0,
                                 child: Center(child: CircularProgressIndicator()));
                           }else{
                             return ListView.separated(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) => studentItem(
@@ -233,7 +216,7 @@ class WaitingStudentsScreen extends StatelessWidget {
                                   index: index
                               ),
                               separatorBuilder: (context, index) => Container(
-                                margin: EdgeInsets.symmetric(vertical: 10.0),
+                                margin: const EdgeInsets.symmetric(vertical: 10.0),
                                 width: double.infinity,
                                 height: 1.0,
                                 color: separator,
@@ -320,7 +303,7 @@ Widget studentItem({
                     ),
                     if (cubit.showStudent_details == false ||
                         cubit.currentStudentIndex != index)
-                      Container(
+                      SizedBox(
                         width: 30.0,
                         height: 30.0,
                         child: IconButton(
@@ -339,14 +322,15 @@ Widget studentItem({
                       ),
                     if (cubit.showStudent_details == true &&
                         cubit.currentStudentIndex == index)
-                      Container(
+                      SizedBox(
                         width: 30.0,
                         height: 30.0,
                         child: IconButton(
                           onPressed: () {
                             cubit.showStudentDetails(!cubit.showStudent_details, index);
-                            if(cubit.showStudentEdit)
+                            if(cubit.showStudentEdit) {
                               cubit.changeStudentEditIcon(!cubit.showStudentEdit);
+                            }
                           },
                           alignment: Alignment.center,
                           icon: Icon(
@@ -359,7 +343,7 @@ Widget studentItem({
                       ),
                     if (cubit.showStudent_details == true &&
                         cubit.currentStudentIndex == index)
-                      Container(
+                      SizedBox(
                         width: 50.0,
                         height: 30.0,
                         child: IconButton(
@@ -417,7 +401,7 @@ Widget studentItem({
                 ),
                 if (cubit.showStudent_details == true &&
                     cubit.currentStudentIndex == index)
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                 if (cubit.showStudent_details == true &&
@@ -457,7 +441,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -477,7 +461,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -497,7 +481,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -517,7 +501,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -583,7 +567,7 @@ Widget studentItem({
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -645,7 +629,7 @@ Widget studentItem({
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -665,7 +649,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -686,7 +670,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -707,7 +691,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -769,7 +753,7 @@ Widget studentItem({
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -842,7 +826,7 @@ Widget studentItem({
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -862,7 +846,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -882,7 +866,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -891,7 +875,7 @@ Widget studentItem({
                             'صورة البطاقه',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Stack(
@@ -906,7 +890,7 @@ Widget studentItem({
                                 child: CachedNetworkImage(
                                   imageUrl: item.cardPhoto,
                                   fit: BoxFit.fill,
-                                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                   errorWidget: (context, url, error) =>  Container(
                                     alignment: Alignment.center,
                                     height: 50.0,
@@ -927,7 +911,7 @@ Widget studentItem({
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
 
@@ -963,7 +947,7 @@ Widget studentItem({
             },
             child: Dismissible(
               direction: DismissDirection.startToEnd,
-              resizeDuration: Duration(milliseconds: 200),
+              resizeDuration: const Duration(milliseconds: 200),
               onDismissed: (direction) {
                 cubit.deleteStudent(item.idDB,true);
               },
@@ -972,9 +956,9 @@ Widget studentItem({
                   color: Colors.red,
                   borderRadius: BorderRadiusDirectional.circular(8.0),
                 ),
-                padding: EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5.0),
                 alignment: AlignmentDirectional.centerStart,
-                child: Icon(
+                child: const Icon(
                   Icons.delete_forever,
                   color: Colors.white,
                 ),
@@ -997,7 +981,7 @@ Widget studentItem({
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 30.0,
                     height: 30.0,
                     child: IconButton(

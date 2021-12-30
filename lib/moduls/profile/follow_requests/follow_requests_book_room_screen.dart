@@ -9,10 +9,11 @@ import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
-class FollowRequestsLostScreen extends StatelessWidget {
-  MissingthingsordersModel model;
+class FollowRequestsDetailsScreen extends StatelessWidget {
 
-  FollowRequestsLostScreen({
+ final BookingsordersModel model;
+
+ const FollowRequestsDetailsScreen({
     Key? key,
     required this.model,
   }) : super(key: key);
@@ -136,14 +137,83 @@ class FollowRequestsLostScreen extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            'الشكوى : ',
+                            'اسم المبنى : ',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         Expanded(
                           flex: 2,
                           child: Text(
-                            model.missingthing,
+                           model.buildingName,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'رقم الغرفه : ',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            model.roomnumber.toString(),
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'نوع المبنى : ',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            model.buildingType?'مميز':'عادي',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'الترم : ',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            model.firstTerm?'الأول':model.secondTerm?'الثاني':'الثالث',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyText1,
                           ),

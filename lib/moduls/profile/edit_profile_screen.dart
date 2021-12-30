@@ -21,7 +21,17 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is UpdateImgLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is GetProfileSuccessStates){
+          Navigator.pop(context);
+        }
+
+      },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Directionality(
@@ -110,7 +120,6 @@ class EditProfileScreen extends StatelessWidget {
                               }
                               }),
 
-                            // todo test el image
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: CircleAvatar(
@@ -123,7 +132,7 @@ class EditProfileScreen extends StatelessWidget {
                                     if (cubit.profileImage == null) {
                                         cubit.pikeProfileImage();
                                     } else {
-                                      cubit.uploadImage(image: cubit.profileImage!);
+                                      cubit.uploadImage();
                                     }
                                   },
                                 ),
@@ -144,7 +153,7 @@ class EditProfileScreen extends StatelessWidget {
                               AppCubit.get(context).getOrderData();
                               navigateTo(
                                 context,
-                                FollowRequestsScreen(),
+                                const FollowRequestsScreen(),
                               );
                             },
                             child: Row(
@@ -163,7 +172,7 @@ class EditProfileScreen extends StatelessWidget {
                                         : mainColors,
                                   ),
                                   onPressed: () {
-                                    navigateTo(context, FollowRequestsScreen());
+                                    navigateTo(context, const FollowRequestsScreen());
                                     AppCubit.get(context).getOrderData();
                                   },
                                 ),
@@ -403,6 +412,8 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isHousingManager');
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
+                              //todo ايه الهبل ده ؟ مهو لما اعمل لوجن تاني هيتعامل من الباديه
+                              CacheHelper.removeData(key: 'waiting');
                               navigateAndFinish(context, LoginScreen());
                             },
                             btnColor: Colors.red,

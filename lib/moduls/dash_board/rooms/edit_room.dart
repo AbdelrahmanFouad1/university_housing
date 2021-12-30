@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_buildings_model.dart';
@@ -54,12 +53,12 @@ class EditRooms extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
       listener: (context, state) {
-        if(state is PutRoomLoadingStates){
+        if(state is PutRoomLoadingStates || state is DeleteRoomLoadingStates){
           showDialog<void>(
               context: context,
               builder: (context)=> waitingDialog(context: context)
           );
-        }else if(state is PutRoomSuccessStates){
+        }else if(state is PutRoomSuccessStates || state is DeleteRoomSuccess){
           Navigator.pop(context);
         }
       },
@@ -72,7 +71,7 @@ class EditRooms extends StatelessWidget {
               title: 'إدارة الغرف',
               context: context,
               action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 width: 30.0,
                 child: IconButton(
                   icon: Icon(
@@ -88,14 +87,14 @@ class EditRooms extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     defaultDashBoardTitleBox(
                         img: 'assets/images/room.png', title: 'تعديل الغرف'),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     Container(
@@ -103,7 +102,7 @@ class EditRooms extends StatelessWidget {
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     ListView.separated(
@@ -115,11 +114,12 @@ class EditRooms extends StatelessWidget {
                           cubit: cubit,
                           context: context,
                           index: index,
+                          buildingItem: selectedBuilding,
                           stateList: _stateList,
                           levelList: _typeList,
                           genderList: _jobList),
                       separatorBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
                         width: double.infinity,
                         height: 1.0,
                         color: separator,
@@ -141,6 +141,7 @@ Widget roomItem({
   required BuildContext context,
   required DashBoardCubit cubit,
   required Rooms item,
+  required BuildingModel buildingItem,
   required int index,
   required List<AlertDialogModel> stateList,
   required List<AlertDialogModel> levelList,
@@ -178,7 +179,7 @@ Widget roomItem({
                   ),
                 ),
                 if (cubit.showRoom == false || cubit.currentRoomIndex != index)
-                  Container(
+                  SizedBox(
                     width: 30.0,
                     height: 30.0,
                     child: IconButton(
@@ -195,7 +196,7 @@ Widget roomItem({
                     ),
                   ),
                 if (cubit.showRoom == true && cubit.currentRoomIndex == index)
-                  Container(
+                  SizedBox(
                     width: 30.0,
                     height: 30.0,
                     child: IconButton(
@@ -213,7 +214,7 @@ Widget roomItem({
                     ),
                   ),
                 if (cubit.showRoom == true && cubit.currentRoomIndex == index)
-                  Container(
+                  SizedBox(
                     width: 50.0,
                     height: 30.0,
                     child: IconButton(
@@ -255,7 +256,7 @@ Widget roomItem({
               ],
             ),
             if (cubit.showRoom == true && cubit.currentRoomIndex == index)
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
             if (cubit.showRoom == true && cubit.currentRoomIndex == index)
@@ -297,7 +298,7 @@ Widget roomItem({
                       ),
 
                       //Room Num
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -317,7 +318,7 @@ Widget roomItem({
                       ),
 
                       //floor num
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -337,7 +338,7 @@ Widget roomItem({
                       ),
 
                       // statue
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -412,7 +413,7 @@ Widget roomItem({
                       ),
 
                       //level
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -488,7 +489,7 @@ Widget roomItem({
 
 
                       // gender
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -563,7 +564,7 @@ Widget roomItem({
 
 
                       //userName
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -583,7 +584,7 @@ Widget roomItem({
                       ),
 
                       //user id
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -612,19 +613,21 @@ Widget roomItem({
     } else {
       return Dismissible(
         direction: DismissDirection.startToEnd,
-        resizeDuration: Duration(milliseconds: 200),
+        resizeDuration: const Duration(milliseconds: 200),
         onDismissed: (direction) {
-          // todo remove room
-          // cubit.deleteBuilding(item.idDB);
+          cubit.deleteRoom(
+            buildingSlug: buildingItem.slug,
+            roomId: item.idDB,
+          );
         },
         background: Container(
           decoration: BoxDecoration(
             color: Colors.red,
             borderRadius: BorderRadiusDirectional.circular(8.0),
           ),
-          padding: EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
           alignment: AlignmentDirectional.centerStart,
-          child: Icon(
+          child: const Icon(
             Icons.delete_forever,
             color: Colors.white,
           ),
@@ -638,7 +641,7 @@ Widget roomItem({
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-            Container(
+            SizedBox(
                 width: 30.0,
                 height: 30.0,
                 child: IconButton(

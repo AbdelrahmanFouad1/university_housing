@@ -1,5 +1,4 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,14 +52,14 @@ class NotificationsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Builder(
                 builder: (context){
-                  if(cubit.notifications!.notificationsList.length == 0){
+                  if(cubit.notifications!.notificationsList.isEmpty){
                     return SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: SvgPicture.asset(
                               'assets/images/no_data.svg',
@@ -71,7 +70,7 @@ class NotificationsScreen extends StatelessWidget {
                               '" لا يوجد إشعارات حاليا "',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
-                          SizedBox(height: 20.0,),
+                          const SizedBox(height: 20.0,),
                         ],
                       ),
                     );
@@ -98,7 +97,7 @@ class NotificationsScreen extends StatelessWidget {
 
 Widget buildNotificationItem (context, isBus, NotificationsModel notifications) {
 
-  DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(notifications.updatedAt);
+  DateTime tempDate = DateFormat("yyyy-MM-dd").parse(notifications.updatedAt);
   String date = tempDate.toString().substring(0, 10);
 
   return Container(
@@ -134,7 +133,7 @@ Widget buildNotificationItem (context, isBus, NotificationsModel notifications) 
               ),
               const SizedBox(width: 12.0,),
               Text(
-                '${notifications.title}',
+                notifications.title,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w900,
@@ -150,7 +149,7 @@ Widget buildNotificationItem (context, isBus, NotificationsModel notifications) 
             width: double.infinity,
             alignment: Alignment.centerRight,
             child: Text(
-              '${notifications.body}',
+              notifications.body,
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 fontSize: 14.0,
               ),

@@ -12,8 +12,8 @@ class AddBuilding extends StatelessWidget {
   var codeController = TextEditingController();
   var nameController = TextEditingController();
   var addressController = TextEditingController();
-  var manager_nameController = TextEditingController();
-  var manager_phoneController = TextEditingController();
+  var managerNameController = TextEditingController();
+  var managerPhoneController = TextEditingController();
   var costController = TextEditingController();
 
   @override
@@ -21,7 +21,7 @@ class AddBuilding extends StatelessWidget {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
         listener: (context,state){
           if(state is postBuildingSuccessStates ){
-            navigateTo(context, AddingSuccessScreen());
+            navigateTo(context, const AddingSuccessScreen());
           }
           if(state is postBuildingLoadingStates ){
             showDialog<void>(
@@ -40,7 +40,7 @@ class AddBuilding extends StatelessWidget {
             child: Scaffold(
               appBar: dashAppBar(title: 'إدارة الغرف', context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -50,13 +50,13 @@ class AddBuilding extends StatelessWidget {
                           title: 'إضافة مبنى'
                       ),
 
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
                       Container(
                         width: double.infinity,
                         height:1.0,
                         color: separator,
                       ),
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
 
                       dashTextFormField(
                         context: context,
@@ -64,7 +64,7 @@ class AddBuilding extends StatelessWidget {
                         controller: codeController,
                         hint: 'كوود المبنى',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -73,7 +73,7 @@ class AddBuilding extends StatelessWidget {
                         controller: nameController,
                         hint: 'اسم المبنى',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -82,25 +82,25 @@ class AddBuilding extends StatelessWidget {
                         controller: addressController,
                         hint: 'العنوان',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
                         context: context,
                         type: TextInputType.text,
-                        controller: manager_nameController,
+                        controller: managerNameController,
                         hint: 'اسم مشرف المبنى',
                       ),
 
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       dashTextFormField(
                         context: context,
                         type: TextInputType.number,
-                        controller: manager_phoneController,
+                        controller: managerPhoneController,
                         hint: 'رقم المشرف',
                       ),
 
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       dashTextFormField(
                         context: context,
                         type: TextInputType.number,
@@ -109,7 +109,7 @@ class AddBuilding extends StatelessWidget {
                       ),
 
                       //level
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -156,7 +156,7 @@ class AddBuilding extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -197,7 +197,7 @@ class AddBuilding extends StatelessWidget {
 
 
                       //status
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -244,7 +244,7 @@ class AddBuilding extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -284,7 +284,7 @@ class AddBuilding extends StatelessWidget {
                       ),
 
                       //gender
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -331,7 +331,7 @@ class AddBuilding extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -371,7 +371,7 @@ class AddBuilding extends StatelessWidget {
                       ),
 
                       // button
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Container(
                         width: double.infinity,
                         height: 70.0 ,
@@ -380,11 +380,11 @@ class AddBuilding extends StatelessWidget {
                             function: () {
                               validation(
                                 name: nameController.text,
-                                managerPhone: manager_phoneController.text,
+                                managerPhone: managerPhoneController.text,
                                 address: addressController.text,
                                 context: context,
                                 code: codeController.text,
-                                managerName: manager_nameController.text,
+                                managerName: managerNameController.text,
                                 cost: costController.text,
                                 cubit: cubit,
                               );

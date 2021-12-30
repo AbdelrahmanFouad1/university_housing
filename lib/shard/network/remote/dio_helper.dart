@@ -59,7 +59,7 @@ class DioHelper{
     try{
       return await dio.get(
         url,
-        queryParameters: query??null,
+        queryParameters: query ,
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -89,6 +89,31 @@ class DioHelper{
         url,
         data: data,
         queryParameters: query,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ${token??''}'
+          },
+        ),
+      );
+    }on DioError catch(e){
+      var message =  e.response!.data['message'].toString();
+      showToast(message: message, state: ToastStates.ERROR);
+    }
+
+  }
+
+
+  static Future<Response?> patchData({
+    required String url,
+    required var data,
+    String? token,
+  })async
+  {
+    try{
+      return await dio.patch(
+        url,
+        data: data,
         options: Options(
           headers: {
             'Content-Type': 'application/json',

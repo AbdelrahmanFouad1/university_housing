@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -48,7 +47,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                       'شروط قبول الطلاب بالسكن الجامعي',
@@ -131,7 +130,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
 
 
                 const SizedBox(height: 50.0,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'النظام التأديبي للطلاب',

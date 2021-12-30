@@ -1,19 +1,12 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/main_security_model.dart';
-import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
-import 'package:university_housing/moduls/security/success/success_exit_student_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_states.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/iconly_broken.dart';
-import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class EnterStudentDetailsScreen extends StatelessWidget {
   var exitDateController = TextEditingController();
@@ -21,7 +14,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
   var enterDateController = TextEditingController();
   var enterTimeController = TextEditingController();
   var notesController = TextEditingController();
-  bool show_warning = false ;
+  bool showWarning = false ;
 
   EnterStudentDetailsScreen({Key? key, required this.item}) : super(key: key);
   MainSecurityModel item;
@@ -33,9 +26,9 @@ class EnterStudentDetailsScreen extends StatelessWidget {
       child: BlocConsumer<SecurityCubit, SecurityStates>(
         listener: (BuildContext context, state) {
           if( state is SecurityShowWarningState){
-            show_warning = true;
+            showWarning = true;
           }else{
-            show_warning = false;
+            showWarning = false;
           }
 
           if (state is postAttendanceSuccessStates || state is postAttendanceErrorStates) {
@@ -57,15 +50,15 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20.0,),
+                        const SizedBox(height: 20.0,),
 
                         //warning
-                        if(show_warning == true)
+                        if(showWarning == true)
                         Container(
                           width: double.infinity,
                           height: 40.0,
@@ -142,7 +135,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                           children: [
                             //Date
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 height: 40.0,
                                 child: TextFormField(
@@ -188,7 +181,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
 
                             // time
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 height: 40.0,
                                 child: TextFormField(
@@ -248,7 +241,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                           children: [
                             //Date
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 height: 40.0,
                                 child: TextFormField(
@@ -294,7 +287,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
 
                             // time
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 height: 40.0,
                                 child: TextFormField(
@@ -350,7 +343,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                         ),
 
                         //notes
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           height: 40.0,
                           child: TextFormField(

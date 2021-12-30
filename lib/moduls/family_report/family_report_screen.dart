@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,7 +34,7 @@ class FamilyReportScreen extends StatelessWidget {
              physics: const BouncingScrollPhysics(),
              child: Padding(
                padding: const EdgeInsets.all(16.0),
-               child: Container(
+               child: SizedBox(
                  height: 550.0,
                  child: Column(
                    children: [

@@ -20,7 +20,7 @@ class AddRoom extends StatelessWidget {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
         listener: (context,state){
           if(state is postRoomSuccessStates ){
-            navigateTo(context, AddingSuccessScreen());
+            navigateTo(context, const AddingSuccessScreen());
           }
           if(state is postRoomLoadingStates ){
             showDialog<void>(
@@ -39,7 +39,7 @@ class AddRoom extends StatelessWidget {
             child: Scaffold(
               appBar: dashAppBar(title: 'إدارة الغرف', context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -49,13 +49,13 @@ class AddRoom extends StatelessWidget {
                           title: 'إضافة غرفة'
                       ),
 
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
                       Container(
                         width: double.infinity,
                         height:1.0,
                         color: separator,
                       ),
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
 
                       dashTextFormField(
                         context: context,
@@ -63,7 +63,7 @@ class AddRoom extends StatelessWidget {
                         controller: codeController,
                         hint: 'كوود المبنى',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -72,7 +72,7 @@ class AddRoom extends StatelessWidget {
                         controller: roomCodeController,
                         hint: 'كوود الغرفة',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -81,7 +81,7 @@ class AddRoom extends StatelessWidget {
                         controller: roomNumberController,
                         hint: 'رقم الغرفة',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -90,7 +90,7 @@ class AddRoom extends StatelessWidget {
                         controller: floorNumberController,
                         hint: 'رقم الدور',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       // type
@@ -140,7 +140,7 @@ class AddRoom extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -180,7 +180,7 @@ class AddRoom extends StatelessWidget {
                       ),
 
                       // room for
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -227,7 +227,7 @@ class AddRoom extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -267,7 +267,7 @@ class AddRoom extends StatelessWidget {
                       ),
 
                       //status
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -314,7 +314,7 @@ class AddRoom extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -354,7 +354,7 @@ class AddRoom extends StatelessWidget {
                       ),
 
                       // button
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Container(
                         width: double.infinity,
                         height: 70.0 ,

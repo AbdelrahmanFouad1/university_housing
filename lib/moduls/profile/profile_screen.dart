@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -91,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                       ? mainTextColor
                       : mainColors,
                   backgroundImage: NetworkImage(
-                      '${AppCubit.get(context).profileModel!.image}',
+                      AppCubit.get(context).profileModel!.image,
                   ),
                 ),
                 if(AppCubit.get(context).profileModel!.image == null)
@@ -156,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'الغرامات',
@@ -227,7 +225,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'الغرامات',

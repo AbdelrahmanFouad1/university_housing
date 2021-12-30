@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
+import 'package:university_housing/model/get_all_vouchers_model.dart';
 import 'package:university_housing/model/get_buildings_model.dart';
 import 'package:university_housing/model/get_dash_security_model.dart';
 import 'package:university_housing/model/get_num_rooms_model.dart';
@@ -291,10 +292,10 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       url: 'buildings/$id',
       token: tokeen ?? '',
     ).then((value) {
-        emit(DeleteBuildingSuccess());
-        getAvailableNowData();
-        showToast(message: 'تم حذف المبنى بنجاح', state: ToastStates.SUCCESS);
-      },
+      emit(DeleteBuildingSuccess());
+      getAvailableNowData();
+      showToast(message: 'تم حذف المبنى بنجاح', state: ToastStates.SUCCESS);
+    },
     ).catchError((error) {
       print(error.toString());
       emit(DeleteBuildingError(error.toString()));
@@ -381,6 +382,28 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(PutBuildingErrorStates(error.toString()));
     });
   }
+
+  void deleteRoom({
+    required String roomId,
+    required String buildingSlug,
+  }) {
+    emit(DeleteRoomLoadingStates());
+    DioHelper.putData(
+        url: 'buildings/$buildingSlug/$roomId',
+        token: tokeen ?? '',
+        data: null
+    ).then((value) {
+      emit(DeleteRoomSuccess());
+      getAvailableNowData();
+      showToast(message: 'تم حذف الغرفة بنجاح', state: ToastStates.SUCCESS);
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(DeleteRoomError(error.toString()));
+      showToast(message: 'حدث خطأ ما, برجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+    });
+  }
+
 
 // rooms home screen
   late GetNumRoomsModel allRooms;
@@ -630,6 +653,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
   //todo add phone number
+  //todo file el image
   void putStudent({
     required String idDB,
     required int id,
@@ -650,7 +674,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String cardPhoto,
   }) {
     emit(PutStudentLoadingStates());
-    DioHelper.putData(
+    DioHelper.patchData(
       url: 'users/$idDB',
       token: tokeen ?? '',
       data: {
@@ -667,13 +691,17 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'isPaid': isPaid,
         'paidAt': paidAt,
         'cardPhoto': cardPhoto,
-
+        'firstTerm': firstTerm,
+        'secondTerm': secondTerm,
+        'thirdTerm': thirdTerm,
       },
     ).then((value) {
+      print(value!.statusMessage);
       emit(PutStudentSuccessStates());
       // getAllUsers();
     },
     ).catchError((error) {
+      print(error);
       showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
       emit(PutStudentErrorStates(error.toString()));
     });
@@ -687,7 +715,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       token: tokeen ?? '',
     ).then((value) {
       emit(DeleteStudentSuccess());
-      if(isWaiting)
+      if(isWaiting) {
         getAllUsers(query: {
         'firstTerm':false,
         'secondTerm':false,
@@ -697,7 +725,8 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         if(!waitingIsStudentKind)
         'isEmployee':true,
         });
-      if(!isWaiting)
+      }
+      if(!isWaiting) {
         getAllUsers(query: {
         if(termNum == 1)
           'firstTerm':true,
@@ -710,6 +739,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       if(!isStudentKind)
       'isEmployee':true,
       });
+      }
     },
     ).catchError((error) {
       print(error.toString());
@@ -859,21 +889,76 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     });
   }
 
+  void deleteFines({
+ required String fineid,
+ required String userid,
+}) {
+    emit(DeleteFinesLoadingStates());
+    DioHelper.putData(
+      url: 'users/$fineid/$userid/deletefine',
+      token: tokeen ?? '',
+      data: null,
+    ).then((value) {
+      // print(value!.statusMessage);
+      getAllUsers(query: {
+        if(termNum == 1)
+          'firstTerm':true,
+        if(termNum == 2)
+          'secondTerm':true,
+        if(termNum == 3)
+          'thirdTerm':true,
+        if(isStudentKind)
+          'isStudent':true,
+        if(!isStudentKind)
+          'isEmployee':true,
+      });
+      emit(DeleteFinesSuccess());
+    },
+    ).catchError((error) {
+      print(error.toString());
+      emit(DeleteFinesError(error.toString()));
+      showToast(message: 'حدث خطأ ما, برجاء المحاولة في وقت لاحق', state: ToastStates.ERROR);
+    });
+  }
 
+
+  List<GetAllVouchersModel> allVouchers = [];
+  void getAllVoucher({
+    required Map<String, dynamic> query,
+  }) {
+    print('---------- get all Vouchers ----------');
+    emit(GetAllVouchersLoadingStates());
+    DioHelper.getData(
+      url: VOUCHERS,
+      query: query,
+      token: tokeen ?? '',
+    ).then((value) {
+      if (value != null) {
+        value.data.forEach((element){
+          allVouchers.add(GetAllVouchersModel.fromJson(element)) ;
+        });
+        emit(GetAllVouchersSuccessStates());
+      }
+    }).catchError((error) {
+      print('get all Vouchers '+error.toString());
+      emit(GetAllVouchersErrorStates(error.toString()));
+    });
+  }
 
 
 
 //security
-  int currentSecurityBuildingVal = 0;
+  int currentSecurityBuildingVal = -1;
   void selectSecurityBuilding(int currentNum ,String text) {
     currentSecurityBuildingVal = currentNum;
-    print(text);
     emit(SelectSecurityBuilding());
     getAllAttendance(
         query: {
+          // 'buildingName': 'مبنى الاهلى'
           'buildingName': text
         }
     );
+    currentSecurityBuildingVal = -1;
   }
 
 

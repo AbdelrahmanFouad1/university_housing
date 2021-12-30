@@ -1,16 +1,11 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_dash_security_model.dart';
-import 'package:university_housing/model/security_model.dart';
-import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
-import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class SecurityDetailsScreen extends StatelessWidget {
   SecurityDetailsScreen({Key? key ,
@@ -30,26 +25,9 @@ GetDashSecurityModel item;
             appBar: dashAppBar(
               title: 'إداره الأمن',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit
-                        .get(context)
-                        .darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -58,7 +36,7 @@ GetDashSecurityModel item;
                         img: 'assets/images/security.png',
                         title: 'التفاصيل'
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
@@ -88,7 +66,7 @@ GetDashSecurityModel item;
                       ],
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -96,11 +74,11 @@ GetDashSecurityModel item;
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) =>
@@ -110,7 +88,7 @@ GetDashSecurityModel item;
                             context: context,
                           ),
                       separatorBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
                         width: double.infinity,
                         height: 1.0,
                         color: separator,
@@ -165,7 +143,7 @@ Widget securityItem({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 5.0,
       ),
 
@@ -188,7 +166,7 @@ Widget securityItem({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 5.0,
       ),
 
@@ -212,7 +190,7 @@ Widget securityItem({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 5.0,
       ),
 
@@ -236,7 +214,7 @@ Widget securityItem({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 5.0,
       ),
 
@@ -260,7 +238,7 @@ Widget securityItem({
           ),
         ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 5.0,
       ),
 

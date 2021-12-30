@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -10,8 +9,7 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashQueriesScreen extends StatelessWidget {
-
-
+  const DashQueriesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +23,9 @@ class DashQueriesScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الأستعلامات',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -51,7 +34,7 @@ class DashQueriesScreen extends StatelessWidget {
                         svgImage:'assets/images/research.svg',
                         svg: true,
                         title: 'الاستعلامات'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -63,7 +46,7 @@ class DashQueriesScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ComplaintsItem(
@@ -72,7 +55,7 @@ class DashQueriesScreen extends StatelessWidget {
                             context: context,
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,

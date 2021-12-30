@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -10,6 +9,8 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashHostsScreen extends StatelessWidget {
+  const DashHostsScreen({Key? key}) : super(key: key);
+
 
 
   @override
@@ -25,7 +26,7 @@ class DashHostsScreen extends StatelessWidget {
               title: 'الإستضافة',
               context: context,
               action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 width: 30.0,
                 child: IconButton(
                   icon: Icon(
@@ -41,7 +42,7 @@ class DashHostsScreen extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -50,7 +51,7 @@ class DashHostsScreen extends StatelessWidget {
                         svgImage: 'assets/images/follow.svg',
                         title: 'طلبات الإستضافة',
                         svg: true),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -62,12 +63,12 @@ class DashHostsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => GuestItem(context,item: cubit.allOrders!.guestOrders![index]),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -114,7 +115,7 @@ Widget GuestItem(
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(

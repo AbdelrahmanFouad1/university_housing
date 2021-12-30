@@ -65,6 +65,12 @@ class PutBuildingErrorStates extends DashBoardStates {
   final String error;
   PutBuildingErrorStates(this.error);
 }
+class DeleteRoomLoadingStates extends DashBoardStates {}
+class DeleteRoomSuccess extends DashBoardStates {}
+class DeleteRoomError extends DashBoardStates {
+  final String error;
+  DeleteRoomError(this.error);
+}
 
 
 
@@ -145,8 +151,19 @@ class postFinesErrorStates extends DashBoardStates {
   final String error;
   postFinesErrorStates(this.error);
 }
+class GetAllVouchersLoadingStates extends DashBoardStates {}
+class GetAllVouchersSuccessStates extends DashBoardStates {}
+class GetAllVouchersErrorStates extends DashBoardStates {
+  final String error;
 
-
+  GetAllVouchersErrorStates(this.error);
+}
+class DeleteFinesLoadingStates extends DashBoardStates {}
+class DeleteFinesSuccess extends DashBoardStates {}
+class DeleteFinesError extends DashBoardStates {
+  final String error;
+  DeleteFinesError(this.error);
+}
 
 
 
