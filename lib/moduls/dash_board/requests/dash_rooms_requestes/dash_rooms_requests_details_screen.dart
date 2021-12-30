@@ -1,15 +1,10 @@
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
-import 'package:university_housing/model/get_all_orders_model.dart';
-import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/shard/components/components.dart';
-import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -49,9 +44,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
       builder: (context, state) {
 
         if(type=='book' && bookingItem!.reply != 'empty' || type=='change' && changeItem!.reply!= 'empty' || type=='exit' && leftItem!.reply!= 'empty' ){
-          managerController.text = type == 'book'? '${bookingItem!.reply}': type == 'change'? '${changeItem!.reply}':'${leftItem!.reply}';
+          managerController.text = type == 'book'? bookingItem!.reply: type == 'change'? changeItem!.reply:leftItem!.reply;
         }
-        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(type == 'book'? '${bookingItem!.createdAt}': type == 'change'? '${changeItem!.createdAt}':'${leftItem!.createdAt}',);
+        DateTime tempDate = DateFormat("yyyy-MM-dd").parse(type == 'book'? bookingItem!.createdAt: type == 'change'? changeItem!.createdAt:leftItem!.createdAt,);
         String date = tempDate.toString().substring(0, 10);
 
         managerController.text = type=='book'? bookingItem!.reply : type=='change'? changeItem!.reply :leftItem!.reply ;
@@ -63,24 +58,9 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'طلبات التسكين',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -104,7 +84,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           //code
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -119,7 +99,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                type == 'book'? '${bookingItem!.idDB}': type == 'change'? '${changeItem!.idDB}':'${leftItem!.idDB}',
+                                type == 'book'? bookingItem!.idDB: type == 'change'? changeItem!.idDB:leftItem!.idDB,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
@@ -129,7 +109,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           //Date
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -154,7 +134,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                           ),
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -169,7 +149,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  type == 'book'? '${bookingItem!.user!.username}': type == 'change'? '${changeItem!.user!.username}':'${leftItem!.user!.username}',
+                                  type == 'book'? bookingItem!.user!.username: type == 'change'? changeItem!.user!.username:leftItem!.user!.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
                                 ),
@@ -178,7 +158,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -204,7 +184,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -230,7 +210,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -245,7 +225,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  type == 'book'? '${bookingItem!.buildingName}': type == 'change'? '${changeItem!.user!.buildingName}':'${leftItem!.user!.buildingName}',
+                                  type == 'book'? bookingItem!.buildingName: type == 'change'? changeItem!.user!.buildingName:leftItem!.user!.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -262,14 +242,14 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                           if(type == 'change')
                           Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
                               Text(
                                 'تبديل الي الغرفه التاليه ',
                                 style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Container(
@@ -309,14 +289,14 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           Expanded(
                                             flex: 2,
                                             child: SelectableText(
-                                              '${changeItem!.numofnextroom.toString()}',
+                                              changeItem!.numofnextroom.toString(),
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10.0,
                                       ),
                                       // next floor num
@@ -332,14 +312,14 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           Expanded(
                                             flex: 2,
                                             child: SelectableText(
-                                              '${changeItem!.floornumberofnextroom.toString()}',
+                                              changeItem!.floornumberofnextroom.toString(),
                                               style: Theme.of(context).textTheme.bodyText1,
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10.0,
                                       ),
                                     ],
@@ -357,7 +337,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                             Column(
                             children: [
                               //floor
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -372,7 +352,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: SelectableText(
-                                      '${bookingItem!.floor.toString()}',
+                                      bookingItem!.floor.toString(),
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -382,7 +362,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
 
                               // building type
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -407,7 +387,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
 
                               // section
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -422,7 +402,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: SelectableText(
-                                      '${bookingItem!.Section}',
+                                      bookingItem!.Section,
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -433,7 +413,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                               // term
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -460,7 +440,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                               // gender
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -485,7 +465,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                               // phone
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -500,7 +480,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: SelectableText(
-                                      '${bookingItem!.phone}',
+                                      bookingItem!.phone,
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -511,7 +491,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                               // address
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -526,7 +506,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: SelectableText(
-                                      '${bookingItem!.address}',
+                                      bookingItem!.address,
                                       style: Theme.of(context).textTheme.bodyText1,
                                       textAlign: TextAlign.center,
 
@@ -536,7 +516,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               ),
 
                               // nationalID
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -562,7 +542,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                               // nationalPhoto
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
                               Text(
@@ -572,7 +552,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                     .bodyText1!
                                     .copyWith(fontSize: 20.0),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Stack(
@@ -587,7 +567,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                     child: CachedNetworkImage(
                                       imageUrl: bookingItem!.cardPhoto,
                                       fit: BoxFit.fill,
-                                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>  Container(
                                         alignment: Alignment.center,
                                         height: 80.0,
@@ -618,7 +598,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                             Column(
                               children: [
                                 //reason
-                                SizedBox(
+                                const SizedBox(
                                   height: 10.0,
                                 ),
                                 Row(
@@ -633,7 +613,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                     Expanded(
                                       flex: 2,
                                       child: SelectableText(
-                                        leftItem!.reason.isNotEmpty? '${leftItem!.reason}' : 'لا يوجد سبب',
+                                        leftItem!.reason.isNotEmpty? leftItem!.reason : 'لا يوجد سبب',
                                         style: Theme.of(context).textTheme.bodyText1,
                                         textAlign: TextAlign.center,
                                       ),
@@ -647,7 +627,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
 
 
                           //managerReply
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -656,7 +636,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                               hint: 'الرد ...',
                               context: context,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Row(
@@ -693,7 +673,7 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                     btnColor: Colors.green,
                                 ),
                               ),
-                              SizedBox(width: 10.0,),
+                              const SizedBox(width: 10.0,),
                               Expanded(
                                 child: defaultButton(
                                   function: (){

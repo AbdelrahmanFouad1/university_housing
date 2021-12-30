@@ -1,7 +1,5 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -40,7 +38,7 @@ class DashQueriesDetailsScreen extends StatelessWidget {
         if(enquiryItem!.enquiryAnswer != 'empty' && enquiryItem!.enquiryAnswer.isEmpty != true){
           managerController.text = enquiryItem!.enquiryAnswer;
         }
-        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(enquiryItem!.createdAt);
+        DateTime tempDate = DateFormat("yyyy-MM-dd").parse(enquiryItem!.createdAt);
         String date = tempDate.toString().substring(0, 10);
 
         var cubit = DashBoardCubit.get(context);
@@ -50,21 +48,6 @@ class DashQueriesDetailsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الأستعلامات',
               context: context,
-              action: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

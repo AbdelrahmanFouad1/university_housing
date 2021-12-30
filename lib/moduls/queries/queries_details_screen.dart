@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -151,7 +150,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
@@ -220,19 +219,17 @@ class QueriesDetailsScreen extends StatelessWidget {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: SingleChildScrollView(
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            child: Text(
-                                              commentsModel.enquiryAnswer!,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText1!
-                                                  .copyWith(
-                                                    fontSize: 14.0,
-                                                  ),
-                                            ),
+                                        child: SingleChildScrollView(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          child: Text(
+                                            commentsModel.enquiryAnswer!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .copyWith(
+                                                  fontSize: 14.0,
+                                                ),
                                           ),
                                         ),
                                       ),

@@ -18,22 +18,16 @@ class Reviews{
 
 class User {
   late String image;
-  late bool isEmployee;
-  late bool isStudent;
   late String buildingName;
   late String idDB;
   late String username;
   late int id;
-  late int floor;
   late int roomnumber;
 
   User.fromJson(Map<String, dynamic> json) {
     roomnumber = json['roomnumber'];
-    floor = json['floor'];
     idDB = json['_id'];
     image = json['image'];
-    isEmployee = json['isEmployee'];
-    isStudent = json['isStudent'];
     buildingName = json['buildingName'];
     username = json['username'];
     id = json['id'];

@@ -1,12 +1,7 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
-import 'package:university_housing/model/get_dash_security_model.dart';
-import 'package:university_housing/model/security_model.dart';
-import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -24,7 +19,7 @@ class FinesDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
       listener: (context, state) {
-        if(state is PutFinesLoadingStates ){
+        if(state is PutFinesLoadingStates ||state is DeleteFinesLoadingStates ){
           showDialog<void>(
               context: context,
               builder: (context)=> waitingDialog(context: context)
@@ -44,7 +39,7 @@ class FinesDetailsScreen extends StatelessWidget {
               title: 'الساكنين',
               context: context,
               action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 width: 30.0,
                 child: IconButton(
                   icon: Icon(
@@ -60,7 +55,7 @@ class FinesDetailsScreen extends StatelessWidget {
               ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -69,7 +64,7 @@ class FinesDetailsScreen extends StatelessWidget {
                         svgImage: 'assets/images/wallet.svg',
                         svg: true,
                         title: 'الغرامات'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Row(
@@ -92,7 +87,7 @@ class FinesDetailsScreen extends StatelessWidget {
 
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -100,10 +95,10 @@ class FinesDetailsScreen extends StatelessWidget {
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
-                    if(item.fines.length!=0)
+                    if(item.fines.isNotEmpty)
                       Row(
                       children: [
                         Expanded(
@@ -129,10 +124,10 @@ class FinesDetailsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
-                    if(item.fines.length==0)
+                    if(item.fines.isEmpty)
                       Text('لا يوجد غرامات حاليا',
                         style: Theme.of(context)
                             .textTheme
@@ -141,14 +136,14 @@ class FinesDetailsScreen extends StatelessWidget {
                       ),
 
                     Container(
-                      decoration: item.fines.length!= 0 ? BoxDecoration(
+                      decoration: item.fines.isNotEmpty ? BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0,),
                         border: Border.all(color: Colors.grey, width: 1),
-                      ) : BoxDecoration(),
+                      ) : const BoxDecoration(),
                       child: ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        padding: EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(10.0),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => finesItem(
                           user: item,
@@ -158,7 +153,7 @@ class FinesDetailsScreen extends StatelessWidget {
                           index: index
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -168,7 +163,7 @@ class FinesDetailsScreen extends StatelessWidget {
                     ),
 
                     // fines button
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     defaultButton(
@@ -202,56 +197,76 @@ Widget finesItem({
 
   reasonController.text = item.fineReason;
   costController.text = item.fineValue.toString();
-  return Container(
-    color: cubit.showFinesEdit == false && cubit.fineIndex == index ? ThemeCubit.get(context).darkTheme
-        ? finesColorDark
-        : Colors.white : ThemeCubit.get(context).darkTheme ?backGroundDark :backGround,
-    child: Row(
-      children: [
-        switchedTextFormField(
+  return Dismissible(
+    direction: DismissDirection.startToEnd,
+    resizeDuration: const Duration(milliseconds: 200),
+    onDismissed: (direction) {
+      cubit.deleteFines(fineid:item.idDB ,userid: user.id.toString());
+    },
+    background: Container(
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadiusDirectional.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(5.0),
+      alignment: AlignmentDirectional.centerStart,
+      child: const Icon(
+        Icons.delete_forever,
+        color: Colors.white,
+      ),
+    ),
+    key: UniqueKey(),
+    child: Container(
+      color: cubit.showFinesEdit == false && cubit.fineIndex == index ? ThemeCubit.get(context).darkTheme
+          ? finesColorDark
+          : Colors.white : ThemeCubit.get(context).darkTheme ?backGroundDark :backGround,
+      child: Row(
+        children: [
+          switchedTextFormField(
+              context: context,
+              cubit: cubit,
+              controller: reasonController,
+              center: false,
+              flex: 4
+          ),
+          switchedTextFormField(
             context: context,
             cubit: cubit,
-            controller: reasonController,
+            controller: costController,
+            type: TextInputType.number,
             center: false,
-            flex: 4
-        ),
-        switchedTextFormField(
-          context: context,
-          cubit: cubit,
-          controller: costController,
-          type: TextInputType.number,
-          center: false,
 
-        ),
-        Container(
-          width: 50.0,
-          height: 30.0,
-          child: IconButton(
-            onPressed: () {
-              if (cubit.showFinesEdit == false) {
+          ),
+          SizedBox(
+            width: 50.0,
+            height: 30.0,
+            child: IconButton(
+              onPressed: () {
+                if (cubit.showFinesEdit == false) {
                   cubit.putFines(
-                    studentIdDB: user.idDB,
+                      studentIdDB: user.idDB,
                       idDB: item.idDB,
                       fineReason: reasonController.text,
                       fineValue: num.parse(costController.text),
                       isFine: true
                   );
-              }else{
-                cubit.changeFineIndex(index);
-              }
-              cubit.changeFinesEditIcon(!cubit.showFinesEdit);
-            },
-            icon: Icon(
-              cubit.showFinesEdit == false && cubit.fineIndex == index ?  Icons.done : Icons.edit,
-              size: 20.0,
-              color: ThemeCubit.get(context).darkTheme
-                  ? mainTextColor
-                  : mainColors,
+                }else{
+                  cubit.changeFineIndex(index);
+                }
+                cubit.changeFinesEditIcon(!cubit.showFinesEdit);
+              },
+              icon: Icon(
+                cubit.showFinesEdit == false && cubit.fineIndex == index ?  Icons.done : Icons.edit,
+                size: 20.0,
+                color: ThemeCubit.get(context).darkTheme
+                    ? mainTextColor
+                    : mainColors,
+              ),
+              alignment: AlignmentDirectional.center,
             ),
-            alignment: AlignmentDirectional.center,
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

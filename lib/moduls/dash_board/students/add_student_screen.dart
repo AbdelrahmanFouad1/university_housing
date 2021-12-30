@@ -18,7 +18,7 @@ class AddStudent extends StatelessWidget {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
         listener: (context,state){
           if(state is postStudentSuccessStates ){
-            navigateTo(context, AddingSuccessScreen());
+            navigateTo(context, const AddingSuccessScreen());
           }
           if(state is postStudentLoadingStates ){
             showDialog<void>(
@@ -37,7 +37,7 @@ class AddStudent extends StatelessWidget {
             child: Scaffold(
               appBar: dashAppBar(title: 'الساكنين', context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -48,13 +48,13 @@ class AddStudent extends StatelessWidget {
                         svg: true,
                       ),
 
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
                       Container(
                         width: double.infinity,
                         height:1.0,
                         color: separator,
                       ),
-                      SizedBox(height: 30.0,),
+                      const SizedBox(height: 30.0,),
 
                       dashTextFormField(
                         context: context,
@@ -62,7 +62,7 @@ class AddStudent extends StatelessWidget {
                         controller: idController,
                         hint: 'رقم الطالب',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -71,7 +71,7 @@ class AddStudent extends StatelessWidget {
                         controller: nameController,
                         hint: 'اسم الطالب',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
                       dashTextFormField(
@@ -80,7 +80,7 @@ class AddStudent extends StatelessWidget {
                         controller: passwordController,
                         hint: 'كلمة المرور',
                       ),
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
 
 
 
@@ -131,7 +131,7 @@ class AddStudent extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -171,7 +171,7 @@ class AddStudent extends StatelessWidget {
                       ),
 
                       // type
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -218,7 +218,7 @@ class AddStudent extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 10.0,),
+                                  const SizedBox(width: 10.0,),
                                   SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -259,7 +259,7 @@ class AddStudent extends StatelessWidget {
 
 
                       // button
-                      SizedBox(height: 12.0,),
+                      const SizedBox(height: 12.0,),
                       Container(
                         width: double.infinity,
                         height: 70.0 ,

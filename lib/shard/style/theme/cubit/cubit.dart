@@ -17,7 +17,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
       emit(ThemeSuccessState());
     } else {
       darkTheme = !darkTheme;
-      print('from cubit ${darkTheme}');
+      print('from cubit $darkTheme');
       CacheHelper.saveData(key: 'isDark', value: darkTheme).then(
             (value) {
           emit(ChangeThemeState());

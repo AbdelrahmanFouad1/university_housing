@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/model/my_orders_model.dart';
@@ -194,7 +192,7 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
   }
 
   Widget buildBoxCheckColor() => Builder(builder: (context) {
-        if (model.isreply == true) {
+        if (model.isReplied == true) {
           return Container(
             height: 50.0,
             width: double.infinity,
@@ -229,7 +227,7 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
 
   Widget buildReplay() => Builder(
       builder: (context) {
-        if(model.isreply){
+        if(model.isReplied){
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

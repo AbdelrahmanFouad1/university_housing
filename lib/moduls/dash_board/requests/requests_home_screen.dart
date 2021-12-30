@@ -16,36 +16,35 @@ class RequestsHomeScreen extends StatelessWidget {
     return BlocConsumer<DashBoardCubit,DashBoardStates>(
         listener: (context,state){},
         builder: (context,state){
-          var cubit = DashBoardCubit.get(context);
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
               appBar: dashAppBar(title: 'طلبات الساكنين', context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Builder(
                     builder: (context){
                       if(state is GetAllOrdersLoadingStates){
-                        return Container(
+                        return const SizedBox(
                             width:double.infinity,
                             height: 300.0,
                             child: Center(child: CircularProgressIndicator()));
                       }else{
                         return Column(
                           children: [
-                            SizedBox(height: 12.0,),
+                            const SizedBox(height: 12.0,),
                             InkWell(
                               onTap: (){
-                                navigateTo(context, DashRoomsRequestsScreen());
+                                navigateTo(context, const DashRoomsRequestsScreen());
                               },
                               child: defaultDashBoardTitleBox(
                                   img: 'assets/images/home.png',
                                   title: 'طلبات التسكين'
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            const SizedBox(height: 12.0,),
                             InkWell(
                               onTap: (){
                                 navigateTo(context, DashComplimentsScreen());
@@ -56,10 +55,10 @@ class RequestsHomeScreen extends StatelessWidget {
                                   svgImage: 'assets/images/review.svg'
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            const SizedBox(height: 12.0,),
                             InkWell(
                               onTap: (){
-                                navigateTo(context, DashQueriesScreen());
+                                navigateTo(context, const DashQueriesScreen());
                               },
                               child: defaultDashBoardTitleBox(
                                 svgImage:  'assets/images/research.svg',
@@ -67,7 +66,7 @@ class RequestsHomeScreen extends StatelessWidget {
                                 svg: true,
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            const SizedBox(height: 12.0,),
                             InkWell(
                               onTap: (){
                                 navigateTo(context, DashHostsScreen());
@@ -78,7 +77,7 @@ class RequestsHomeScreen extends StatelessWidget {
                                   svg: true
                               ),
                             ),
-                            SizedBox(height: 12.0,),
+                            const SizedBox(height: 12.0,),
                             InkWell(
                               onTap: (){
                                 navigateTo(context, DashFamilyScreen());

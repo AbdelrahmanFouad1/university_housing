@@ -1,5 +1,3 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,6 +40,7 @@ class LoginScreen extends StatelessWidget {
                 CacheHelper.saveData(key: 'isHousingManager', value: state.loginModel.isHousingManager);
                 CacheHelper.saveData(key: 'isStudentAffairs', value: state.loginModel.isStudentAffairs);
                 CacheHelper.saveData(key: 'isresident', value: state.loginModel.isresident);
+                CacheHelper.saveData(key: 'waiting', value: false);
                 if (state.loginModel.isStudent) {
                     navigateAndFinish(context, HomeScreen(isRegister: state.loginModel.isresident));
                 }
@@ -111,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             const SizedBox(height:33.0,),
-                            Container(
+                            SizedBox(
                               height: 48.0,
                               child: TextFormField(
                                 controller: idController,
@@ -132,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 12.0,),
-                            Container(
+                            SizedBox(
                               height: 48.0,
                               child: TextFormField(
                                 controller: passwordController,
@@ -167,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                               height: 36.0,
                             ),
 
-                            Container(
+                            SizedBox(
                               width:double.infinity,
                               height: 50.0,
                               child: RoundedLoadingButton(

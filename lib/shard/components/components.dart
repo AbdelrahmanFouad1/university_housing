@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -595,8 +593,8 @@ Widget waitingDialog({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 12.0,),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 12.0,),
                 Text(
                   'برجاء الأنتظار ...',
                   style: Theme.of(context).textTheme.subtitle1,
@@ -623,9 +621,8 @@ Widget roomBox({
       ),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
-            height: 140.0,
             child: SvgPicture.asset(
               'assets/images/layer1.svg',
               alignment: AlignmentDirectional.centerEnd,
@@ -633,15 +630,16 @@ Widget roomBox({
           ),
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                width: 180.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 6.0,
                     ),
-                    Text(
+                    const Text(
                       'انت الان مقيم في ',
                       style: TextStyle(
                         fontSize: 16.0,
@@ -650,7 +648,7 @@ Widget roomBox({
                     ),
                     Text(
                       'غرفة:  ${roomNumber ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
@@ -658,7 +656,7 @@ Widget roomBox({
                     ),
                     Text(
                       'الدور:  ${floor ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
@@ -666,10 +664,11 @@ Widget roomBox({
                     ),
                     Text(
                       'المبنى:  ${buildingName ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
+                        overflow: TextOverflow.ellipsis
                       ),
                     ),
                   ],
@@ -716,7 +715,7 @@ AppBar dashAppBar({
       actions: [
         if (action != null) action,
         Container(
-          margin: EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(10.0),
           width: 30.0,
           child: IconButton(
             icon: Icon(
@@ -975,7 +974,7 @@ Widget dashWhiteBoard(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Text(
             text,
             maxLines: maxLine,

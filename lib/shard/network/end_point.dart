@@ -32,7 +32,7 @@ const PUT_PROFILE = 'users/profile';
 
 const UPLOAD = 'upload';
 
-const REVIEWS = 'orders/review';
+const REVIEWS = 'orders/comment';
 
 const ADD_BUILDING = 'buildings/createbuilding';
 
@@ -49,6 +49,8 @@ const ALL_USERS = 'users';
 const ALL_ATTENDANCE = 'users/enterANDexitUsers/security';
 
 const POST_STUDENT = 'users/createUsers';
+
+const VOUCHERS = 'orders/voucher';
 
 
 

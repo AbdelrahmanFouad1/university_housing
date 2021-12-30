@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:link_text/link_text.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -51,7 +50,7 @@ class TechnicalSupportScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'للتواصل مع السكن',
@@ -98,7 +97,7 @@ class TechnicalSupportScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30.0,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'للتواصل مع النقل',
@@ -129,7 +128,7 @@ class TechnicalSupportScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30.0,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'للتواصل مع شئون الطلاب',

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -60,7 +58,7 @@ class AboutAppScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'عن التطبيق :',
@@ -87,7 +85,7 @@ class AboutAppScreen extends StatelessWidget {
                       ),
                     )),
                 const SizedBox(height: 20.0,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'عن خدمات الاسكان الطلابي :',
@@ -165,7 +163,7 @@ class AboutAppScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20.0,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'الخدمات المقدمه للطلاب في الاسكان الطلابي :',

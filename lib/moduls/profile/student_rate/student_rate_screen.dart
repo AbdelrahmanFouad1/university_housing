@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -80,7 +78,7 @@ class StudentRateScreen extends StatelessWidget {
                           'اضف تقييمك',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         RatingBar.builder(
                           textDirection: TextDirection.ltr,
                           allowHalfRating: false,
@@ -146,8 +144,8 @@ class StudentRateScreen extends StatelessWidget {
                     const SizedBox(
                       height: 50.0,
                     ),
-                    if(cubit.reviews.length!=0)
-                    Container(
+                    if(cubit.reviews.isNotEmpty)
+                    SizedBox(
                       height: 180.0,
                       child: ListView.separated(
                         physics: const BouncingScrollPhysics(),
@@ -160,7 +158,7 @@ class StudentRateScreen extends StatelessWidget {
                         itemCount: cubit.reviews.length,
                       ),
                     ),
-                    if(cubit.reviews.length==0)
+                    if(cubit.reviews.isEmpty)
                       Center(
                         child: Text(
                           'لا يوجد تقييمات سابقة حاليا !!',
@@ -250,7 +248,7 @@ Widget buildEvaluationItem(
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RatingBar.builder(
@@ -274,7 +272,7 @@ Widget buildEvaluationItem(
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               width: 280.0,
               child: Text(
                 review.comment,
@@ -286,7 +284,7 @@ Widget buildEvaluationItem(
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             InkWell(
               onTap: () {
                 navigateTo(context, StudentRateDetailsScreen(
@@ -297,7 +295,7 @@ Widget buildEvaluationItem(
                   rate: review.rating.toString(),
                 ));
               },
-              child: Container(
+              child: SizedBox(
                 width: 280.0,
                 child: Text(
                   'المزيد',

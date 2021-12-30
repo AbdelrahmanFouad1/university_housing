@@ -1,8 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -51,21 +49,6 @@ class DashHostsDetailsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الإستضافة',
               context: context,
-              action: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -395,7 +378,7 @@ class DashHostsDetailsScreen extends StatelessWidget {
                                         child: CachedNetworkImage(
                                           imageUrl: guestItem!.guestIsIDCard,
                                           fit: BoxFit.fill,
-                                          placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>  Container(
                                             alignment: Alignment.center,
                                             height: 80.0,

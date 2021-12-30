@@ -1,11 +1,7 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_dash_security_model.dart';
-import 'package:university_housing/model/security_model.dart';
-import 'package:university_housing/moduls/dash_board/rooms/available_now.dart';
 import 'package:university_housing/moduls/dash_board/security/security_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
@@ -31,26 +27,9 @@ class SecurityScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'إداره الأمن',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit
-                        .get(context)
-                        .darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -59,7 +38,7 @@ class SecurityScreen extends StatelessWidget {
                         img: 'assets/images/security.png',
                         title: 'إداره الأمن'
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12.0,
                     ),
                     Row(
@@ -71,12 +50,12 @@ class SecurityScreen extends StatelessWidget {
                               .textTheme
                               .bodyText1,
                         ),
-                        SizedBox(width: 20.0,),
+                        const SizedBox(width: 20.0,),
                         Expanded(
                           child: Container(
                             width: double.infinity,
                             height: 40.0,
-                            padding: EdgeInsetsDirectional.only(top: 12.0),
+                            padding: const EdgeInsetsDirectional.only(top: 12.0),
                             decoration: BoxDecoration(
                               color:
                               ThemeCubit
@@ -90,7 +69,7 @@ class SecurityScreen extends StatelessWidget {
                             child: TextFormField(
                               controller: buildingController,
                               readOnly: true,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'إسكان مميز (أ)',
                                 hintStyle: TextStyle(
@@ -111,7 +90,7 @@ class SecurityScreen extends StatelessWidget {
                                           context: context,
                                           title: 'اختر المبنى',
                                           child: SingleChildScrollView(
-                                            physics: BouncingScrollPhysics(),
+                                            physics: const BouncingScrollPhysics(),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: cubit.buildingsName.map((e) =>
@@ -145,7 +124,7 @@ class SecurityScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -153,19 +132,19 @@ class SecurityScreen extends StatelessWidget {
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Builder(
                         builder:(context){
-                          if(cubit.allAttendance.length == 0){
-                            return Container(
+                          if(state is GetAllAttendanceLoadingStates){
+                            return const SizedBox(
                                 width:double.infinity,
                                 height: 300.0,
                                 child: Center(child: CircularProgressIndicator()));
-                          }else{
+                          }else if(cubit.allAttendance.isNotEmpty){
                             return ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) =>
@@ -176,12 +155,23 @@ class SecurityScreen extends StatelessWidget {
                                     index: index,
                                   ),
                               separatorBuilder: (context, index) => Container(
-                                    margin: EdgeInsets.symmetric(vertical: 10.0),
+                                    margin: const EdgeInsets.symmetric(vertical: 10.0),
                                     width: double.infinity,
                                     height: 1.0,
                                     color: separator,
                                   ),
                               itemCount: cubit.allAttendance.length,
+                            );
+                          }else{
+                            return Container(
+                              margin: const EdgeInsetsDirectional.only(top: 50.0),
+                              child: Text(
+                                'لا يوجد تقارير في هذا المبنى حاليا !!',
+                                style:Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText1,
+                              ),
                             );
                           }
                         }
@@ -246,7 +236,7 @@ Widget securityItem({
             ),
             if (cubit.showSecurity_details == false ||
                 cubit.currentSecurityIndex != index)
-              Container(
+              SizedBox(
                 width: 30.0,
                 height: 30.0,
                 child: IconButton(
@@ -267,7 +257,7 @@ Widget securityItem({
               ),
             if (cubit.showSecurity_details == true &&
                 cubit.currentSecurityIndex == index)
-              Container(
+              SizedBox(
                 width: 30.0,
                 height: 30.0,
                 child: IconButton(
@@ -320,7 +310,7 @@ Widget securityItem({
         ),
         if (cubit.showSecurity_details == true &&
             cubit.currentSecurityIndex == index)
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
         if (cubit.showSecurity_details == true &&
@@ -367,7 +357,7 @@ Widget securityItem({
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 
@@ -390,7 +380,7 @@ Widget securityItem({
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 
@@ -414,7 +404,7 @@ Widget securityItem({
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 
@@ -438,7 +428,7 @@ Widget securityItem({
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 
@@ -468,7 +458,7 @@ Widget securityItem({
                           style: Theme.of(context).textTheme.bodyText1,
                           textAlign: TextAlign.center,
                           onTap: (){
-                            if(item.exitAndEnters.length == 0){
+                            if(item.exitAndEnters.isEmpty){
                               showToast(message: 'لا يوجد تفاصيل حاليا', state: ToastStates.WARNING);
                             }else{
                               navigateTo(context, SecurityDetailsScreen(item: item,));
@@ -478,7 +468,7 @@ Widget securityItem({
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 

@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_complaints/dash_complaints_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_family/dash_family_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_hosts/dash_hosts_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_queries/dash_queries_screen.dart';
-import 'package:university_housing/moduls/dash_board/requests/dash_rooms_requestes/dash_rooms_requests_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/students_screen.dart';
 import 'package:university_housing/moduls/dash_board/students/waiting_students_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -26,20 +21,20 @@ class StudentsHomeScreen extends StatelessWidget {
             child: Scaffold(
               appBar: dashAppBar(title: 'إدارة الساكنين', context: context),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Builder(
                     builder: (context){
                       if(state is GetAllOrdersLoadingStates){
-                        return Container(
+                        return const SizedBox(
                             width:double.infinity,
                             height: 300.0,
                             child: Center(child: CircularProgressIndicator()));
                       }else{
                         return Column(
                           children: [
-                            SizedBox(height: 20.0,),
+                            const SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
                                 cubit.getAllUsers(
@@ -64,7 +59,7 @@ class StudentsHomeScreen extends StatelessWidget {
                                   svgImage: 'assets/images/check.svg'
                               ),
                             ),
-                            SizedBox(height: 20.0,),
+                            const SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
                                 cubit.getAllUsers(
@@ -86,7 +81,7 @@ class StudentsHomeScreen extends StatelessWidget {
                                   svgImage: 'assets/images/warn.svg'
                               ),
                             ),
-                            SizedBox(height: 20.0,),
+                            const SizedBox(height: 20.0,),
                             InkWell(
                               onTap: (){
                                 navigateTo(context, AddStudent());

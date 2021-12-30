@@ -140,7 +140,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: RatingBar.builder(
@@ -165,7 +165,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 height: 400.0,
                                 child: SingleChildScrollView(

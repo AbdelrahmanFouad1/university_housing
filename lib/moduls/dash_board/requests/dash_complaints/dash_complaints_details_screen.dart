@@ -1,7 +1,5 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -45,10 +43,10 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
       builder: (context, state) {
 
         if(type=='missing' && missingItem!.reply != 'empty' || type=='damaged' && damagedItem!.reply!= 'empty' || type=='complaints' && complaintsItem!.reply!= 'empty' ){
-          managerController.text = type == 'missing'? '${missingItem!.reply}': type == 'damaged'? '${damagedItem!.reply}':'${complaintsItem!.reply}';
+          managerController.text = type == 'missing'? missingItem!.reply: type == 'damaged'? damagedItem!.reply:complaintsItem!.reply;
         }
 
-        DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(type == 'missing'? '${missingItem!.createdAt}': type == 'damaged'? '${damagedItem!.createdAt}':'${complaintsItem!.createdAt}',);
+        DateTime tempDate = DateFormat("yyyy-MM-dd").parse(type == 'missing'? missingItem!.createdAt: type == 'damaged'? damagedItem!.createdAt:complaintsItem!.createdAt,);
         String date = tempDate.toString().substring(0, 10);
         var cubit = DashBoardCubit.get(context);
         return Directionality(
@@ -57,24 +55,9 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الشكوى',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -100,7 +83,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           //code
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -115,7 +98,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  type == 'missing'? '${missingItem!.idDB}': type == 'damaged'? '${damagedItem!.idDB}':'${complaintsItem!.idDB}',
+                                  type == 'missing'? missingItem!.idDB: type == 'damaged'? damagedItem!.idDB:complaintsItem!.idDB,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
                                 ),
@@ -124,7 +107,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                           ),
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -139,7 +122,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  type == 'missing'? '${missingItem!.user!.username}': type == 'damaged'? '${damagedItem!.user!.username}':'${complaintsItem!.user!.username}',
+                                  type == 'missing'? missingItem!.user!.username: type == 'damaged'? damagedItem!.user!.username:complaintsItem!.user!.username,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -149,7 +132,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -175,7 +158,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
 
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -201,7 +184,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
 
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -216,7 +199,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: SelectableText(
-                                  type == 'missing'? '${missingItem!.user!.buildingName}': type == 'damaged'? '${damagedItem!.user!.buildingName}':'${complaintsItem!.user!.buildingName}',
+                                  type == 'missing'? missingItem!.user!.buildingName: type == 'damaged'? damagedItem!.user!.buildingName:complaintsItem!.user!.buildingName,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   textAlign: TextAlign.center,
 
@@ -227,7 +210,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
 
 
                           //complaintDate
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -253,24 +236,24 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
 
 
                           //StudentComplaint
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Text(
                             'الشكوى',
                             style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           dashWhiteBoard(
                             context,
-                            text: type == 'missing'? '${missingItem!.missingthing}': type == 'damaged'? '${damagedItem!.damagedthing}':'${complaintsItem!.complaint}',
+                            text: type == 'missing'? missingItem!.missingthing: type == 'damaged'? damagedItem!.damagedthing:complaintsItem!.complaint,
                           ),
 
 
                           //managerReply
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -279,7 +262,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                               hint: 'الرد ...',
                               context: context,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Row(
@@ -314,7 +297,7 @@ class DashComplimentsDetailsScreen extends StatelessWidget {
                                     btnColor: Colors.green,
                                 ),
                               ),
-                              SizedBox(width: 10.0,),
+                              const SizedBox(width: 10.0,),
                               Expanded(
                                 child: defaultButton(
                                   function: (){

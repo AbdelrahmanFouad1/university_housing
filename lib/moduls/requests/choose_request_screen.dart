@@ -8,7 +8,6 @@ import 'package:university_housing/moduls/requests/total_cost_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
-import 'package:university_housing/shard/style/color.dart';
 
 class ChooseRequestScreen extends StatelessWidget {
   const ChooseRequestScreen({Key? key}) : super(key: key);
@@ -158,7 +157,7 @@ class ChooseRequestScreen extends StatelessWidget {
                   fontSize: 18.0,
               ),
               onTap: (){
-                navigateTo(context, TotalCostScreen());
+                navigateTo(context, const TotalCostScreen());
               },
             ),
           ),

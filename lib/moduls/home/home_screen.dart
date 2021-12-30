@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/moduls/booking_room/booking_room1_screen.dart';
 import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
@@ -118,7 +116,7 @@ class HomeScreen extends StatelessWidget {
             navigateTo(context, const ChooseRequestScreen());
             // AppCubit.get(context).getProfileData();
           } else if (index == 1) {
-            navigateTo(context, ChooseComplaintsScreen());
+            navigateTo(context, const ChooseComplaintsScreen());
           } else if (index == 2) {
             navigateTo(context, FamilyReportScreen());
           } else {
@@ -336,7 +334,9 @@ class HomeScreen extends StatelessWidget {
                 } else {
                   return InkWell(
                     onTap: () {
-                      if (CacheHelper.getData(key: 'waiting')) {
+                      if(AppCubit.get(context).profileModel!.isWaiting == false){
+                        navigateTo(context, const ChoosePaymentMethodScreen());
+                      }else if (CacheHelper.getData(key: 'waiting')) {
                         navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());
@@ -530,7 +530,10 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (AppCubit.get(context).profileModel!.isWaiting) {
+                      if(AppCubit.get(context).profileModel!.isWaiting == false){
+                        navigateTo(context, const ChoosePaymentMethodScreen());
+
+                      }else if (CacheHelper.getData(key: 'waiting')) {
                         navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());

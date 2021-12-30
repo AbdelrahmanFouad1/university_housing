@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/moduls/booking_room/booking_done_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -12,14 +12,23 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class ReceiptScreen extends StatelessWidget {
   var nameController = TextEditingController();
   var idController = TextEditingController();
-  var typeController = TextEditingController();
+  var sectionController = TextEditingController();
 
   ReceiptScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is PostVoucherLoadingStates){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }else if(state is PostVoucherErrorStates){
+          Navigator.pop(context);
+        }
+      },
       builder: (context,state){
         var cubit = AppCubit.get(context);
         return Directionality(
@@ -98,6 +107,33 @@ class ReceiptScreen extends StatelessWidget {
 
 
                     const SizedBox(height: 22.0,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex:2,
+                            child: Text(
+                              'إجمالي المبلغ المطلوب :',
+                              style: Theme.of(context).textTheme.bodyText1,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              totalCost,
+                              style: Theme.of(context).textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     Container(
                       width: double.infinity,
                       height: 45.0 ,
@@ -154,7 +190,7 @@ class ReceiptScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: TextFormField(
-                        controller: typeController,
+                        controller: sectionController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'القسم',
@@ -170,7 +206,7 @@ class ReceiptScreen extends StatelessWidget {
                         builder: (context) {
                           if(cubit.receiptImage != null){
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 42.0),
+                              padding: const EdgeInsets.only(bottom: 20.0),
                               child: Stack(
                                 alignment: AlignmentDirectional.topEnd,
                                 children: [
@@ -260,10 +296,14 @@ class ReceiptScreen extends StatelessWidget {
                     const SizedBox(height: 16.0,),
                     defaultButton(
                       function: (){
-                        if(cubit.receiptImage==null || nameController.text.isEmpty || idController.text.isEmpty || typeController.text.isEmpty){
+                        if(cubit.receiptImage==null || nameController.text.isEmpty || idController.text.isEmpty || sectionController.text.isEmpty){
                           showToast(message: 'ادخل باقى البيانات اولا', state: ToastStates.WARNING);
                         }else{
-                          navigateTo(context, const BookingDoneScreen());
+                          cubit.postVoucher(
+                            sector: sectionController.text,
+                            voucherImage: cubit.receiptImage!,
+                            context: context,
+                          );
                         }
                       },
                       text: 'تقديم الطلب',
@@ -273,7 +313,7 @@ class ReceiptScreen extends StatelessWidget {
                       marginSize: const EdgeInsets.symmetric(horizontal: 10.0),
 
                     ),
-
+                    const SizedBox(height: 16.0,),
                   ],
                 ),
               ),

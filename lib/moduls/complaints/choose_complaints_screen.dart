@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/complaints/change_damaged_screen.dart';
 import 'package:university_housing/moduls/complaints/complaints_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
-import 'package:university_housing/shard/style/color.dart';
 
 import 'change_lost_screen.dart';
 
 class ChooseComplaintsScreen extends StatelessWidget {
+  const ChooseComplaintsScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

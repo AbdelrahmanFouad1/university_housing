@@ -17,7 +17,7 @@ class TotalCostScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Container(
+            child: SizedBox(
               width:double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

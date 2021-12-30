@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/comments_model.dart';
@@ -58,7 +56,7 @@ class QueriesScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15.0,
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Text(
                         'اكتب طلب الاستعلام',
@@ -69,7 +67,7 @@ class QueriesScreen extends StatelessWidget {
                     const SizedBox(
                       height: 2,
                     ),
-                    Container(
+                    SizedBox(
                       height: 140.0,
                       child: whiteBoard(context, controller: queriesController),
                     ),
@@ -95,7 +93,7 @@ class QueriesScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12.0,
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Text(
                         'الاستعلامات السابقة',
@@ -109,7 +107,7 @@ class QueriesScreen extends StatelessWidget {
                     ),
 
                     if(state is GetQueriesLoadingStates)
-                      Center(child: CircularProgressIndicator(),),
+                      const Center(child: CircularProgressIndicator(),),
                     if(state is GetQueriesSuccessStates)
                     ListView.separated(
                       shrinkWrap: true,

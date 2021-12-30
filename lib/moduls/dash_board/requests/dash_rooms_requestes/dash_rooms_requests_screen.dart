@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
@@ -10,6 +9,8 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashRoomsRequestsScreen extends StatelessWidget {
+  const DashRoomsRequestsScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +24,9 @@ class DashRoomsRequestsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'طلبات التسكين',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -50,7 +36,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                     smallDashBoardTitleBox(
                         img: 'assets/images/room.png',
                         title: 'حجز الغرف'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -62,7 +48,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => BookingItem(
@@ -71,7 +57,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                             context: context,
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -81,7 +67,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
@@ -89,7 +75,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                     smallDashBoardTitleBox(
                         img: 'assets/images/replace.png',
                         title: 'تبديل الغرف'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -101,7 +87,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => ChangeItem(
@@ -110,7 +96,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                             context: context,
                             ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -120,7 +106,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
 
@@ -130,7 +116,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         svgImage:'assets/images/leave.svg',
                         svg: true,
                         title: 'أخلاء السكن'),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     Container(
@@ -142,7 +128,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                         border: Border.all(color: Colors.grey, width: 1),
                       ),
                       child: ListView.separated(
-                        padding: EdgeInsetsDirectional.all(10.0),
+                        padding: const EdgeInsetsDirectional.all(10.0),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => LeavingItem(
@@ -151,7 +137,7 @@ class DashRoomsRequestsScreen extends StatelessWidget {
                             context: context,
                         ),
                         separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           width: double.infinity,
                           height: 1.0,
                           color: separator,
@@ -200,7 +186,7 @@ Widget BookingItem({
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(
@@ -256,7 +242,7 @@ Widget ChangeItem({
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(
@@ -311,7 +297,7 @@ Widget LeavingItem({
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
+        SizedBox(
           width: 30.0,
           height: 30.0,
           child: IconButton(

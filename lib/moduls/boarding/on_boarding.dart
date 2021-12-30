@@ -171,7 +171,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       Expanded(
         flex: 3,
         child: Image(
-          image: AssetImage('${model.image}'),
+          image: AssetImage(model.image),
         ),
       ),
       Expanded(
@@ -179,9 +179,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               child: Text(
-                '${model.title}',
+                model.title,
                 textDirection: TextDirection.rtl,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: mainColors,
@@ -192,9 +192,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            Container(
+            SizedBox(
               child: Text(
-                '${model.body}',
+                model.body,
                 textDirection: TextDirection.rtl,
                 style: const TextStyle(
                   fontSize: 14.0,

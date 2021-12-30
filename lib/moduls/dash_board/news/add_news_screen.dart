@@ -19,7 +19,7 @@ class AddNewsScreen extends StatelessWidget {
     return BlocConsumer<DashBoardCubit, DashBoardStates>(
       listener: (context, state) {
         if(state is PostNewsSuccessStates ){
-          navigateTo(context, AddingSuccessScreen());
+          navigateTo(context, const AddingSuccessScreen());
         }
         if(state is PostNewsLoadingStates ){
           showDialog<void>(
@@ -41,7 +41,7 @@ class AddNewsScreen extends StatelessWidget {
               context: context,
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -52,13 +52,13 @@ class AddNewsScreen extends StatelessWidget {
                       context: context,
                       type: TextInputType.text,
                     ),
-                    SizedBox(height: 12.0,),
+                    const SizedBox(height: 12.0,),
                     whiteBoard(
                         context,
                         hint: 'الموضوع ...',
                         controller: bodyController,
                     ),
-                    SizedBox(height: 12.0,),
+                    const SizedBox(height: 12.0,),
                     Builder(
                         builder: (context) {
                           if(cubit.newsImage != null){

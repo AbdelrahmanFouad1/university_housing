@@ -14,7 +14,7 @@ import 'add_news_screen.dart';
 import 'news_dash_details_screen.dart';
 
 class NewsScreen extends StatelessWidget {
-  NewsScreen({Key? key}) : super(key: key);
+  const NewsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +42,13 @@ class NewsScreen extends StatelessWidget {
               context: context,
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Builder(
                   builder: (context) {
                     if (state is GetNewsLoadingStates) {
-                      return Container(
+                      return const SizedBox(
                           width: double.infinity,
                           height: 300.0,
                           child: Center(child: CircularProgressIndicator()));
@@ -58,7 +58,7 @@ class NewsScreen extends StatelessWidget {
                           defaultDashBoardTitleBox(
                               img: 'assets/images/newspaper.png',
                               title: 'أخبار المعهد'),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Container(
@@ -66,7 +66,7 @@ class NewsScreen extends StatelessWidget {
                             height: 1.0,
                             color: separator,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           defaultButton(
@@ -77,7 +77,7 @@ class NewsScreen extends StatelessWidget {
                             btnColor: mainColors,
                             width: double.infinity,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           ListView.separated(
@@ -113,12 +113,12 @@ Widget buildNewsItem({
   required DashBoardCubit cubit,
 }) {
   DateTime tempDate =
-      new DateFormat("yyyy-MM-dd").parse(model.updatedAt!);
+      DateFormat("yyyy-MM-dd").parse(model.updatedAt!);
   String date = tempDate.toString().substring(0, 10);
 
   return Dismissible(
     direction: DismissDirection.startToEnd,
-    resizeDuration: Duration(milliseconds: 200),
+    resizeDuration: const Duration(milliseconds: 200),
     onDismissed: (direction) {
       cubit.DeleteNews(id: model.idDB!);
     },
@@ -127,9 +127,9 @@ Widget buildNewsItem({
         color: Colors.red,
         borderRadius: BorderRadiusDirectional.circular(8.0),
       ),
-      padding: EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5.0),
       alignment: AlignmentDirectional.centerStart,
-      child: Icon(
+      child: const Icon(
         Icons.delete_forever,
         color: Colors.white,
       ),
@@ -145,14 +145,14 @@ Widget buildNewsItem({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 120.0,
             height: 100.0,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: CachedNetworkImage(
                 imageUrl: '${model.image}',
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) =>  Container(
                   alignment: Alignment.center,
                     height: 80.0,
@@ -168,7 +168,7 @@ Widget buildNewsItem({
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(6.0),
-              child: Container(
+              child: SizedBox(
                 height: 80.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -194,7 +194,7 @@ Widget buildNewsItem({
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Container(
                           alignment: Alignment.bottomLeft,
                           child: InkWell(

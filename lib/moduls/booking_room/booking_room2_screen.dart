@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,7 +23,7 @@ class BookingRoom2Screen extends StatelessWidget {
     required this.section,
     required this. phone,
     required this. address,
-    required this. NationalID,
+    required this. nationalID,
     required this. cardPhoto,
     required this. firstTerm,
     required this. secondTerm,
@@ -35,7 +34,7 @@ class BookingRoom2Screen extends StatelessWidget {
   String section;
   String phone;
   String address;
-  String NationalID;
+  String nationalID;
   File cardPhoto;
   bool firstTerm;
   bool secondTerm;
@@ -48,6 +47,8 @@ class BookingRoom2Screen extends StatelessWidget {
       listener: (context,state){},
       builder: (context,state){
         var cubit = AppCubit.get(context);
+        String cost = '${buildings!.Buildings[currentIndex].cost + 500}';
+        totalCost = cost;
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
@@ -400,7 +401,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      '${buildings!.Buildings[currentIndex].cost + 500}',
+                                      cost,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: 14.0,
@@ -474,7 +475,7 @@ class BookingRoom2Screen extends StatelessWidget {
                                   Section: section,
                                   phone: phone,
                                   address: address,
-                                  NationalID: NationalID,
+                                  NationalID: nationalID,
                                   cardPhoto: cardPhoto,
                                   buildingName: buildings!.Buildings[currentIndex].buildingName,
                                   roomnumber: int.parse(roomController.text),

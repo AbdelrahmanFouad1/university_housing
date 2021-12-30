@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_buildings_model.dart';
@@ -10,6 +9,8 @@ import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class AvailableNow extends StatelessWidget {
+  AvailableNow({Key? key}) : super(key: key);
+
   final List<AlertDialogModel> _levelList = [
     AlertDialogModel(
       text: "مميز",
@@ -65,24 +66,9 @@ class AvailableNow extends StatelessWidget {
             appBar: dashAppBar(
               title: 'إدارة الغرف',
               context: context,
-              action: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -90,7 +76,7 @@ class AvailableNow extends StatelessWidget {
                     defaultDashBoardTitleBox(
                         img: 'assets/images/verification.png',
                         title: 'الموجود حاليا'),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     Container(
@@ -98,7 +84,7 @@ class AvailableNow extends StatelessWidget {
                       height: 1.0,
                       color: separator,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     Builder(
@@ -118,7 +104,7 @@ class AvailableNow extends StatelessWidget {
                                   genderList: _genderList
                               ),
                               separatorBuilder: (context, index) => Container(
-                                margin: EdgeInsets.symmetric(vertical: 10.0),
+                                margin: const EdgeInsets.symmetric(vertical: 10.0),
                                 width: double.infinity,
                                 height: 1.0,
                                 color: separator,
@@ -126,7 +112,7 @@ class AvailableNow extends StatelessWidget {
                               itemCount: cubit.availableNow!.Buildings.length,
                             );
                       }else{
-                          return Container(
+                          return const SizedBox(
                               width:double.infinity,
                               height: 300.0,
                               child: Center(child: CircularProgressIndicator()));
@@ -187,7 +173,7 @@ Widget buildingItem({
                   ),
                 ),
                 if (cubit.showDetails == false || cubit.currentIndex != index)
-                  Container(
+                  SizedBox(
                     width: 30.0,
                     height: 30.0,
                     child: IconButton(
@@ -204,7 +190,7 @@ Widget buildingItem({
                     ),
                   ),
                 if (cubit.showDetails == true && cubit.currentIndex == index)
-                  Container(
+                  SizedBox(
                     width: 30.0,
                     height: 30.0,
                     child: IconButton(
@@ -222,7 +208,7 @@ Widget buildingItem({
                     ),
                   ),
                 if (cubit.showDetails == true && cubit.currentIndex == index)
-                  Container(
+                  SizedBox(
                     width: 50.0,
                     height: 30.0,
                     child: IconButton(
@@ -273,7 +259,7 @@ Widget buildingItem({
               ],
             ),
             if (cubit.showDetails == true && cubit.currentIndex == index)
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
             if (cubit.showDetails == true && cubit.currentIndex == index)
@@ -314,7 +300,7 @@ Widget buildingItem({
                       ),
 
                       //BuildingName
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -334,7 +320,7 @@ Widget buildingItem({
                       ),
 
                       //address
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -355,7 +341,7 @@ Widget buildingItem({
 
 
                       // gender
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -427,7 +413,7 @@ Widget buildingItem({
                       ),
 
                       //Room Num
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -451,7 +437,7 @@ Widget buildingItem({
                               style: Theme.of(context).textTheme.bodyText1,
                               textAlign: TextAlign.center,
                               onTap: (){
-                                if(item.rooms.length == 0){
+                                if(item.rooms.isEmpty){
                                   showToast(message: 'لا يوجد غرف في هذا المبني حاليا', state: ToastStates.WARNING);
                                 }else{
                                   navigateTo(context, EditRooms(selectedBuilding: item,));
@@ -465,7 +451,7 @@ Widget buildingItem({
 
 
                       //level
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -538,7 +524,7 @@ Widget buildingItem({
                       ),
 
                       //managerName
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -558,7 +544,7 @@ Widget buildingItem({
                       ),
 
                       // managerPhone
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -578,7 +564,7 @@ Widget buildingItem({
                       ),
 
                       // statue
-                      SizedBox(
+                      const SizedBox(
                         height: 5.0,
                       ),
                       Row(
@@ -659,7 +645,7 @@ Widget buildingItem({
     } else {
       return Dismissible(
         direction: DismissDirection.startToEnd,
-        resizeDuration: Duration(milliseconds: 200),
+        resizeDuration: const Duration(milliseconds: 200),
         onDismissed: (direction) {
           cubit.deleteBuilding(item.idDB);
         },
@@ -668,9 +654,9 @@ Widget buildingItem({
             color: Colors.red,
             borderRadius: BorderRadiusDirectional.circular(8.0),
           ),
-          padding: EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
           alignment: AlignmentDirectional.centerStart,
-          child: Icon(
+          child: const Icon(
             Icons.delete_forever,
             color: Colors.white,
           ),
@@ -684,7 +670,7 @@ Widget buildingItem({
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-            Container(
+            SizedBox(
                 width: 30.0,
                 height: 30.0,
                 child: IconButton(

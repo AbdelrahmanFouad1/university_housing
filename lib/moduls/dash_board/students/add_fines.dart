@@ -1,7 +1,5 @@
 import 'dart:ui' as ui;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -44,7 +42,7 @@ class AddFinesScreen extends StatelessWidget {
               context: context,
             ),
             body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -60,7 +58,7 @@ class AddFinesScreen extends StatelessWidget {
                         children: [
 
                           // name
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -85,7 +83,7 @@ class AddFinesScreen extends StatelessWidget {
                           ),
 
                           //ID
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -111,7 +109,7 @@ class AddFinesScreen extends StatelessWidget {
 
 
                           //Building
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -136,7 +134,7 @@ class AddFinesScreen extends StatelessWidget {
                           ),
 
                           //Room
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
@@ -162,7 +160,7 @@ class AddFinesScreen extends StatelessWidget {
 
 
                           //cost
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           dashTextFormField(
@@ -173,7 +171,7 @@ class AddFinesScreen extends StatelessWidget {
                           ),
 
                           // reason
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           whiteBoard(
@@ -183,7 +181,7 @@ class AddFinesScreen extends StatelessWidget {
                             controller: reasonController,
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           defaultButton(
