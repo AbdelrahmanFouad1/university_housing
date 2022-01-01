@@ -81,6 +81,12 @@ class WaitingStudentsScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        //todo el text bytms7 lma bfta7 dialog
+        // if(state is SelectStudentTerm || state is SelectStudentJob ||state is SelectStudentLevel ||state is SelectStudentCredit){
+        //   enterDateController.text = securityDate;
+        //   enterTimeController.text = securityTime;
+        // }
+
         var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
@@ -200,6 +206,12 @@ class WaitingStudentsScreen extends StatelessWidget {
                                 width:double.infinity,
                                 height: 300.0,
                                 child: Center(child: CircularProgressIndicator()));
+                          }else if (cubit.allUsers!.users.isEmpty){
+                            return Text(
+                              'لا يوجد بيانات حاليا !!',
+                              style: Theme.of(context).textTheme.bodyText1,
+                              textAlign: TextAlign.center,
+                            );
                           }else{
                             return ListView.separated(
                               physics: const BouncingScrollPhysics(),
@@ -273,7 +285,7 @@ Widget studentItem({
   termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :item.thirdTerm == true ?'الثالث':'فارغ';
   nationalPhotoController.text = item.cardPhoto;
   phoneController.text = item.phone;
-  levelController.text = 'فارغ';
+  levelController.text = item.buildingType == true ?'مميز':'عادي';
   jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
   creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
   return Builder(
@@ -350,8 +362,6 @@ Widget studentItem({
                           onPressed: () {
                             if (cubit.showStudentEdit == true) {
                               if (phoneController.text.length == 11 && nationalIDController.text.length==14) {
-                                 // todo add phone
-                                  // item.phone = phoneController.text;
                                 cubit.putStudent(
                                   idDB: item.idDB,
                                   id: int.parse(idController.text),
@@ -359,7 +369,7 @@ Widget studentItem({
                                   buildingName: buildingController.text,
                                   address: addressController.text,
                                   username: nameController.text,
-                                  Section: sectionController.text,
+                                  section: sectionController.text,
                                   NationalID: int.parse(nationalIDController.text),
                                   buildingType: levelController.text == 'مميز' ? true :false,
                                   isEmployee: jobController.text == 'طلاب'? false : true,
@@ -370,6 +380,7 @@ Widget studentItem({
                                   secondTerm: termController.text == 'الثاني'? true : false,
                                   thirdTerm: termController.text == 'الثالث'? true : false,
                                   cardPhoto: item.cardPhoto,
+                                  phone: item.phone,
                                 );
                               } else {
                                 if(phoneController.text.length != 11){
@@ -735,7 +746,7 @@ Widget studentItem({
                                                 value: e.index,
                                                 onChanged: (int? val) {
                                                   cubit.selectStudentLevel(val ?? e.index);
-                                                  levelController.text = cubit.currentStudentLevelText;
+                                                  levelController.text = e.text;
                                                   if(val == 0){
                                                     item.buildingType = true;
                                                   }else{

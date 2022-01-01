@@ -502,7 +502,7 @@ Widget studentItem({
                                   buildingName: buildingController.text,
                                   address: addressController.text,
                                   username: nameController.text,
-                                  Section: sectionController.text,
+                                  section: sectionController.text,
                                   NationalID: int.parse(nationalIDController.text),
                                   buildingType: levelController.text == 'مميز' ? true :false,
                                   isEmployee: jobController.text == 'طلاب'? false : true,
@@ -513,6 +513,7 @@ Widget studentItem({
                                   secondTerm: termController.text == 'الثاني'? true : false,
                                   thirdTerm: termController.text == 'الثالث'? true : false,
                                   cardPhoto: item.cardPhoto,
+                                  phone: item.phone,
                                 );
                               } else {
                                 if(phoneController.text.length != 11){
@@ -965,11 +966,13 @@ Widget studentItem({
                                       );
                                     }
                                     else{
-                                      DashBoardCubit.get(context).getAllVoucher(
-                                        query: {
-                                          'id': item.id
-                                        }
-                                      );
+                                      if(item.isPaid){
+                                        DashBoardCubit.get(context).getAllVoucher(
+                                            query: {
+                                              'id': item.id
+                                            }
+                                        );
+                                      }
                                       navigateTo(context, VoucherDetailsScreen(userItem: item,));
                                     }
                                   },

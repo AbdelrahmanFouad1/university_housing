@@ -70,41 +70,60 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(ChangeGenderStatues());
   }
 
-  void postBuilding({
+  // building image
+  File? buildingImage;
+
+  Future<void> pikeBuildingImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery,).then((value){
+      buildingImage = File(value!.path);
+      emit(ImagePickedSuccessState());
+
+    });
+  }
+
+  Future<void> removePikeImage() async {
+    buildingImage = null;
+    emit(ImageRemoveSuccessState());
+  }
+
+  Future<void> postBuilding({
     required String buildingName,
     required String buildingCode,
     required String slug,
     required bool buildingLevels,
-    required String image,
     required bool gender,
     required bool availability,
     required String address,
     required String buildingsupervisorName,
     required String buildingsupervisorPhonenumber,
     required int cost,
-  }) {
+  }) async {
     emit(postBuildingLoadingStates());
     DioHelper.postData(
       url: ADD_BUILDING,
       token: tokeen ?? '',
-      data: {
+      data:  FormData.fromMap({
         'buildingName': buildingName,
         'buildingCode': buildingCode,
         'slug': slug,
         'buildingLevels': buildingLevels,
-        'image': image,
         'gender': gender,
         'availability': availability,
         'address': address,
         'buildingsupervisorName': buildingsupervisorName,
         'buildingsupervisorPhonenumber': buildingsupervisorPhonenumber,
         'cost': cost,
-      },
+        'image': await MultipartFile.fromFile(
+            buildingImage!.path,
+            filename: Uri.file(buildingImage!.path).pathSegments.last),
+
+      }),
     ).then((value) {
       print(value!.statusMessage.toString());
       emit(postBuildingSuccessStates());
     },
     ).catchError((error) {
+      print(error);
       showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
       emit(postBuildingErrorStates(error.toString()));
     });
@@ -406,7 +425,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
 // rooms home screen
-  late GetNumRoomsModel allRooms;
+  GetNumRoomsModel? allRooms;
   void getRoomsNum(){
     emit(GetAllRoomsLoadingStates());
 
@@ -652,8 +671,6 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
-  //todo add phone number
-  //todo file el image
   void putStudent({
     required String idDB,
     required int id,
@@ -668,10 +685,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String buildingName,
     required bool buildingType,
     required int roomnumber,
-    required String Section,
+    required String section,
     required bool isPaid,
     required String paidAt,
     required String cardPhoto,
+    required String phone,
   }) {
     emit(PutStudentLoadingStates());
     DioHelper.patchData(
@@ -687,13 +705,14 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'buildingName': buildingName,
         'buildingType': buildingType,
         'roomnumber': roomnumber,
-        'Section': Section,
+        'section': section,
         'isPaid': isPaid,
         'paidAt': paidAt,
         'cardPhoto': cardPhoto,
         'firstTerm': firstTerm,
         'secondTerm': secondTerm,
         'thirdTerm': thirdTerm,
+        'phone': phone,
       },
     ).then((value) {
       print(value!.statusMessage);
@@ -943,6 +962,63 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       print('get all Vouchers '+error.toString());
       emit(GetAllVouchersErrorStates(error.toString()));
     });
+  }
+
+  //todo post el voucher
+  // void postVoucher({
+  //   required String idDB,
+  //   required String fineReason,
+  //   required int fineValue,
+  //   required bool isFine,
+  // }) {
+  //   emit(postFinesLoadingStates());
+  //
+  //   DioHelper.postData(
+  //     url: 'users/$idDB/addfine',
+  //     token: tokeen ?? '',
+  //     data: {
+  //       'fineReason': fineReason,
+  //       'fineValue': fineValue,
+  //       'isFine': isFine,
+  //     },
+  //   ).then((value) {
+  //     if (value != null) {
+  //       print(value.statusMessage);
+  //       emit(postFinesSuccessStates());
+  //       getAllUsers(query: {
+  //         if(termNum == 1)
+  //           'firstTerm':true,
+  //         if(termNum == 2)
+  //           'secondTerm':true,
+  //         if(termNum == 3)
+  //           'thirdTerm':true,
+  //         if(isStudentKind)
+  //           'isStudent':true,
+  //         if(!isStudentKind)
+  //           'isEmployee':true,
+  //       });
+  //     }
+  //   }).catchError((error) {
+  //     print(error.toString());
+  //     showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+  //     emit(postFinesErrorStates(error.toString()));
+  //   });
+  // }
+
+  // building image
+  File? voucherImage;
+
+  Future<void> pikeVoucherImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery,).then((value){
+      voucherImage = File(value!.path);
+      emit(ImagePickedSuccessState());
+
+    });
+  }
+
+  Future<void> removeVoucherImage() async {
+    voucherImage = null;
+    emit(ImageRemoveSuccessState());
   }
 
 
@@ -1305,53 +1381,14 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       buildingName: bookingItem.buildingName,
       buildingType: bookingItem.buildingType,
       roomnumber: bookingItem.roomnumber,
-      Section: bookingItem.Section,
+        section: bookingItem.Section,
       isPaid: false,
       paidAt: '',
       cardPhoto: bookingItem.cardPhoto,
+      phone: bookingItem.phone
     );
-    //todo henna mo4klt el roooom
-    // putRoom(
-    //     slug: slug,
-    //     idDB: idDB,
-    //     availability: availability,
-    //     type: type,
-    //     roomfor: roomfor,
-    //     floor: floor,
-    //     roomnumber: roomnumber,
-    //     roomcode: roomcode,
-    //     userresidentId: userresidentId,
-    //     userresidentName: userresidentName
-    // );
   }
 
 
-
-
-
-  //change password
-  IconData suffix1 = Icons.visibility_outlined;
-  IconData suffix2 = Icons.visibility_outlined;
-  IconData suffix3 = Icons.visibility_outlined;
-  bool isFirstPassword = true;
-  bool isSecPassword = true;
-  bool isThirdPassword = true;
-
-  void changePasswordVisibility(int index) {
-    if(index == 1){
-      isFirstPassword = !isFirstPassword;
-      suffix1 = isFirstPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    }
-    if(index == 2){
-      isSecPassword = !isSecPassword;
-      suffix2 = isSecPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    }
-    if(index == 3){
-      isThirdPassword = !isThirdPassword;
-      suffix3 = isThirdPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
-    }
-
-    emit(ChangePasswordVisibilityState());
-  }
 
 }

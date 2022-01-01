@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university_housing/moduls/security/main_security_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/style/color.dart';
 import 'package:university_housing/shard/style/iconly_broken.dart';
 import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
@@ -58,7 +59,7 @@ class SuccessExitStudentScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 130.0,
+                height: 100.0,
               ),
               SvgPicture.asset(
                 'assets/images/phone.svg',
@@ -73,6 +74,17 @@ class SuccessExitStudentScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
+
+              defaultButton(
+                 function: (){
+                   SecurityCubit.get(context).getUserInSecurity();
+                   navigateTo(context, MainSecurityScreen());
+                  },
+                 text: 'العودة الي الرئيسية',
+                 btnColor: mainColors,
+                width: double.infinity,
+                marginSize: const EdgeInsets.all(20.0),
+               ),
             ],
           ),
         ],
@@ -105,6 +117,17 @@ class SuccessExitStudentScreen extends StatelessWidget {
             'تم تأكيد موعد الخروج',
             style: Theme.of(context).textTheme.headline6,
           ),
+        ),
+        defaultButton(
+          function: (){
+            SecurityCubit.get(context).getUserInSecurity();
+            navigateTo(context, MainSecurityScreen());
+          },
+          text: 'العودة الي الرئيسية',
+          btnColor: mainColors,
+          width: double.infinity,
+          marginSize: const EdgeInsets.all(50.0),
+
         ),
       ],
     ),

@@ -202,7 +202,6 @@ class ChangeRoom{
   }
 }
 
-// todo isAccepted not exist
 class FamilyOrders{
   late bool isReplied;
   late String reply;
@@ -228,8 +227,6 @@ class FamilyOrders{
   }
 }
 
-// todo missing isReplied
-// todo missing guest id
 class GuestOrders{
   late bool isReplied;
   late bool isAccepted;

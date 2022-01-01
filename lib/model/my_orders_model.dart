@@ -155,7 +155,6 @@ class GuestordersModel{
   late String idDB;
   late String NameofGuest;
   late bool isAccepted;
-  //todo test
   late bool isReplied;
    String? studentId;
    String? guestIsIDCard;
@@ -201,7 +200,6 @@ class LeftRequestsordersModel{
   }
 }
 
-//todo add isreply + reply
 class BookingsordersModel{
   late bool isReplied;
   late String reply;
@@ -215,7 +213,7 @@ class BookingsordersModel{
   late bool isAccepted;
 
   BookingsordersModel.fromJson(Map<String, dynamic> json) {
-    isReplied = json['isreply'] ?? false;
+    isReplied = json['isReplied'] ?? false;
     reply = json['reply'] ?? 'empty';
     idDB = json['_id'];
     firstTerm = json['firstTerm'];

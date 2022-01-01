@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:university_housing/moduls/dash_board/rooms/success_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
@@ -370,6 +371,99 @@ class AddBuilding extends StatelessWidget {
                         ),
                       ),
 
+                      //image
+                      const SizedBox(height: 12.0,),
+                      Builder(
+                          builder: (context) {
+                            if(cubit.buildingImage != null){
+                              return Stack(
+                                alignment: AlignmentDirectional.topEnd,
+                                children: [
+                                  Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 280.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8.0,),
+                                            image: DecorationImage(
+                                              image:FileImage(cubit.buildingImage!),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        height: 288.0,
+                                        margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                          border: Border.all(color: Colors.grey, width: 1),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 3.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        cubit.removePikeImage();
+                                      },
+                                      icon: const CircleAvatar(
+                                        radius: 20.0,
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 16.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }else{
+                              return Container(
+                                width: double.infinity,
+                                height: 45.0,
+                                decoration: BoxDecoration(
+                                  color:
+                                  ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                    8.0,
+                                  ),
+                                  border: Border.all(color: Colors.grey, width: 1),
+                                ),
+                                child: TextFormField(
+                                  onTap: (){
+                                    cubit.pikeBuildingImage();
+                                  },
+                                  decoration:  InputDecoration(
+                                    suffixIcon: IconButton(
+                                      onPressed: (){
+                                        cubit.pikeBuildingImage();
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'assets/images/upload.svg',
+                                        alignment: Alignment.center,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    border: InputBorder.none,
+                                    hintText: 'صورة المبنى',
+                                    hintStyle: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.grey,
+                                    ),
+                                    contentPadding:const EdgeInsets.symmetric(horizontal:14.0),
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                      ),
                       // button
                       const SizedBox(height: 12.0,),
                       Container(
@@ -430,19 +524,22 @@ void validation({
     showToast(message: 'رقم الموبيل غير صحيح', state: ToastStates.ERROR);
   }else if(cost.isEmpty){
     showToast(message: 'أدخل سعر الغرف', state: ToastStates.ERROR);
-  }else{
-    DashBoardCubit.get(context).postBuilding(
-        buildingName: name,
-        buildingCode: code,
-        slug: code,
-        buildingLevels: cubit.isSpecial,
-        image: "/uploads/image-1632876610271.jpg",
-        gender: cubit.isBoy,
-        availability: cubit.isWorking,
-        address: address,
-        buildingsupervisorName: managerName,
-        buildingsupervisorPhonenumber: managerPhone,
-        cost: int.parse(cost),
-    );
   }
-}
+  else if(cubit.buildingImage == null){
+    showToast(message: 'أدخل صورة المبنى', state: ToastStates.ERROR);
+    }else{
+        DashBoardCubit.get(context).postBuilding(
+          buildingName: name,
+          buildingCode: code,
+          slug: code,
+          buildingLevels: cubit.isSpecial,
+          gender: cubit.isBoy,
+          availability: cubit.isWorking,
+          address: address,
+          buildingsupervisorName: managerName,
+          buildingsupervisorPhonenumber: managerPhone,
+          cost: int.parse(cost),
+        );
+      }
+    }
+

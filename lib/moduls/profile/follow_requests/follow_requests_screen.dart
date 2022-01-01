@@ -850,7 +850,9 @@ Widget buildBookingsRoomItem(context, BookingsordersModel model) => Padding(
         context,
         height: 100.0,
         //todo isreplay not exist
-        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT : StatusStates.REJECT :StatusStates.WAITING,
+        state: model.isReplied ? model.isAccepted? StatusStates.ACCEPT
+            : StatusStates.REJECT
+            :StatusStates.WAITING,
         body: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
