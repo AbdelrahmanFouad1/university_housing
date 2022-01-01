@@ -4,6 +4,9 @@ String token ='';
 
 String idDB ='';
 
+late String securityDate;
+late String securityTime;
+
 String totalCost ='1580';
 
 GetBuildingsModel? buildings;

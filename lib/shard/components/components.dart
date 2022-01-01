@@ -780,50 +780,6 @@ Widget dashTextFormField({
     );
 
 
-Widget dashPasswordFormField({
-  required TextEditingController passwordController,
-  required String hint,
-  required context,
-  required DashBoardCubit cubit,
-  required int index,
-}) =>
-    Container(
-      width: double.infinity,
-      height: 45.0,
-      decoration: BoxDecoration(
-        color:
-        ThemeCubit.get(context).darkTheme ? finesColorDark : Colors.white,
-        borderRadius: BorderRadius.circular(
-          8.0,
-        ),
-        border: Border.all(color: Colors.grey, width: 1),
-      ),
-      child: TextFormField(
-        controller: passwordController,
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: index == 1 ? cubit.isFirstPassword : index ==2 ? cubit.isSecPassword : cubit.isThirdPassword ,
-        style: Theme.of(context).textTheme.bodyText1,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            color: ThemeCubit.get(context).darkTheme
-                ? mainTextColor
-                : mainColors,
-            onPressed: () {
-                cubit.changePasswordVisibility(index);
-            },
-            icon: Icon(
-              index == 1 ? cubit.suffix1 :index == 2 ? cubit.suffix2 : cubit.suffix3,
-            ),
-          ),
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: Theme.of(context).textTheme.bodyText1,
-          contentPadding: const EdgeInsetsDirectional.all(10.0),
-        ),
-      ),
-    );
-
-
 
 Widget switchedTextFormField({
   required context,

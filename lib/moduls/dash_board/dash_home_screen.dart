@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:university_housing/moduls/dash_board/change_password/change_password_screen.dart';
 import 'package:university_housing/moduls/dash_board/requests/requests_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/rooms/rooms_home_screen.dart';
 import 'package:university_housing/moduls/dash_board/security/security_screen.dart';
@@ -85,21 +84,6 @@ class DashHomeScreen extends StatelessWidget {
                                 ],
                               ),
                             ],
-                          ),
-                          const SizedBox(
-                            height: 12.0,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              navigateTo(context, ChangePasswordScreen());
-                            },
-                            child: Text(
-                              'تغيير كلمه المرور',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(fontSize: 12.0, color: Colors.grey),
-                            ),
                           ),
                           const SizedBox(
                             height: 12.0,

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/model/profile_model.dart';
+import 'package:university_housing/moduls/security/success/success_enttre_student_screen.dart';
+import 'package:university_housing/moduls/security/success/success_exit_student_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/security/security_states.dart';
@@ -34,20 +36,19 @@ class SecurityCubit extends Cubit<SecurityStates>{
   }
 
   bool showWarning = false;
-  void showStudentWarning (bool isLate){
-    if (isLate == true){
-      showWarning == true;
-      emit(SecurityShowWarningState());
-    }else{
-      emit(SecurityDoNotShowWarningState());
-    }
+  void showStudentWarning ({
+    required bool isLate,
+}){
+    showWarning = isLate;
+    emit(SecurityShowWarningState());
   }
 
 
-  //get Data From model and can search it
   List<MainSecurityModel> mainSecurityModel = [];
 
-  void getUserInSecurity() {
+  void getUserInSecurity({
+    Map<String, dynamic>? query
+}) {
 
     print('-----------user security-----------');
 
@@ -55,6 +56,7 @@ class SecurityCubit extends Cubit<SecurityStates>{
     DioHelper.getData(
       url: GET_USERSECUTIRY,
       token: tokeen ?? '',
+      query: query
     ).then((value) {
       if (value != null) {
 
@@ -72,69 +74,75 @@ class SecurityCubit extends Cubit<SecurityStates>{
     });
   }
 
-  void getUserByNameInSecurity({
-   String? username,
-}) {
 
-    print('-----------user security-----------');
-
-    emit(GetUserSecurityLoadingStates());
-    DioHelper.getData(
-      url: '$GET_USERSECUTIRY?username=$username',
-      token: tokeen ?? '',
-    ).then((value) {
-      if (value != null) {
-
-        // printFullText(value.data.toString());
-        mainSecurityModel = [];
-        value.data.forEach((element) {
-          mainSecurityModel.add(MainSecurityModel.fromJson(element));
-        });
-        print('-----------user security-----------success');
-        emit(GetUserSecuritySuccessStates());
-      }
-    }).catchError((error) {
-      print('-----------user security-----------${error.toString()}');
-      emit(GetUserSecurityErrorStates(error.toString()));
-    });
-  }
-
-  // todo post el enter baaaaaas  3wza ta3del
   void postAttendance({
     required String idDB,
-    String? enterAt,
-    String? enterDate,
-    String? exitAt,
-    String? exitDate,
+    required String enterAt,
+    required String enterDate,
+    required context,
     String? Notes,
   }) {
-    emit(postAttendanceLoadingStates());
+    emit(PostAttendanceLoadingStates());
 
     DioHelper.postData(
       url: 'users/${idDB}/security',
       token: tokeen ?? '',
       data: {
-        if(enterAt!=null)
           'enterAt': enterAt,
-        if(enterDate!=null)
           'enterDate': enterDate,
-        if(exitAt!=null)
-          'exitAt': exitAt,
-        if(exitDate!=null)
-          'exitDate': exitDate,
         if(Notes!=null)
           'Notes': Notes,
       },
     ).then((value) {
       if (value != null) {
         print(value.statusMessage);
-        emit(postAttendanceSuccessStates());
+        emit(PostAttendanceSuccessStates());
+        navigateTo(context, const SuccessEnterStudentScreen());
       }
     }).catchError((error) {
       print(error.toString());
       showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
-      emit(postAttendanceErrorStates());
+      emit(PostAttendanceErrorStates());
     });
   }
+
+
+  void putAttendance({
+    required String idDB,
+    required String enterAt,
+    required String enterDate,
+    required String exitDate,
+    required String exitAt,
+    required String attendanceID,
+    required context,
+    String? Notes,
+  }) {
+    emit(PutAttendanceLoadingStates());
+
+    DioHelper.putData(
+      url: 'users/$idDB/security/exit',
+      token: tokeen ?? '',
+      data: {
+        '_id':attendanceID,
+        'enterAt': enterAt,
+        'enterDate': enterDate,
+        'exitDate': exitDate,
+        'exitAt': exitAt,
+        if(Notes!=null)
+          'Notes': Notes,
+      },
+    ).then((value) {
+      if (value != null) {
+        emit(PutAttendanceSuccessStates());
+        navigateTo(context, const SuccessExitStudentScreen());
+      }
+    }).catchError((error) {
+      print(error.toString());
+      showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
+      emit(PutAttendanceErrorStates());
+    });
+  }
+
+
 
  }

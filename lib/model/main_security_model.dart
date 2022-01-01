@@ -18,7 +18,8 @@ class MainSecurityModel{
   late bool buildingType;
   late String buildingName;
   late String username;
-  late List<ExitandEntersModel> ExitandEnters;
+  late String image;
+  late List<ExitandEntersModel> ExitandEnters = [];
 
 
   MainSecurityModel.fromJson(Map<String, dynamic> json) {
@@ -45,36 +46,30 @@ class MainSecurityModel{
     // print('Parsed => buildingName');
 
     username = json['username']??'empty';
-    print('Parsed => username');
+    // print('Parsed => username');
 
-    if(json['ExitandEnters'] != null /*&& (json['ExitandEnters'] as List).isNotEmpty*/) {
-      int count = 0;
-      ExitandEnters = List.from(json['ExitandEnters'])
-          .map((e) {
-             // count ++;
-             // print('Parsed => ExitandEnters');
-             //  print('Count => $count');
-            return ExitandEntersModel.fromJson(e);
-      }
+    image = json['image']??'empty';
 
-      ).toList();
 
-    }
+    // if(json['ExitandEnters'] != null) {
+    //   ExitandEnters = List.from(json['ExitandEnters'])
+    //       .map((e) {
+    //          // count ++;
+    //          // print('Parsed => ExitandEnters');
+    //          //  print('Count => $count');
+    //         return ExitandEntersModel.fromJson(e);
+    //   }
+    //
+    //   ).toList();
+    //
+    // }
+
+    json['ExitandEnters'].forEach((element) {
+      ExitandEnters.add(ExitandEntersModel.fromJson(element));
+    });
+
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['_id'] = idDB;
-    _data['gender'] = gender;
-    _data['roomnumber'] = roomnumber;
-    _data['buildingType'] = buildingType;
-    _data['buildingName'] = buildingName;
-    _data['username'] = username;
-    _data['ExitandEnters'] = ExitandEnters.map((e) => e.toJson()).toList();
-
-    return _data;
-  }
 }
 
 
@@ -86,8 +81,7 @@ class ExitandEntersModel{
     required this.enterDate,
     required this.exitDate,
     required this.Notes,
-
-
+    required this.idDB,
   });
 
   late final String enterAt;
@@ -95,6 +89,7 @@ class ExitandEntersModel{
   late final String enterDate;
   late final String exitDate;
   late final String Notes;
+  late final String idDB;
 
 
 
@@ -104,19 +99,8 @@ class ExitandEntersModel{
     enterDate = json['enterDate']??'empty';
     exitDate = json['exitDate']??'empty';
     Notes = json['Notes']??'empty';
-
+    idDB = json['_id']??'empty';
 
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['enterAt'] = enterAt;
-    _data['exitAt'] = exitAt;
-    _data['enterDate'] = enterDate;
-    _data['exitDate'] = exitDate;
-    _data['Notes'] = Notes;
-
-
-    return _data;
-  }
 }

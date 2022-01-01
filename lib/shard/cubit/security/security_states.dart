@@ -12,7 +12,6 @@ class GetProfileErrorStates extends SecurityStates {
 }
 
 class SecurityShowWarningState extends SecurityStates {}
-class SecurityDoNotShowWarningState extends SecurityStates {}
 
 
 //get user in security data from API
@@ -25,9 +24,14 @@ class GetUserSecurityErrorStates extends SecurityStates {
 }
 
 //post attendance
-class postAttendanceLoadingStates extends SecurityStates {}
-class postAttendanceSuccessStates extends SecurityStates {}
-class postAttendanceErrorStates extends SecurityStates {}
+class PostAttendanceLoadingStates extends SecurityStates {}
+class PostAttendanceSuccessStates extends SecurityStates {}
+class PostAttendanceErrorStates extends SecurityStates {}
+
+//put attendance
+class PutAttendanceLoadingStates extends SecurityStates {}
+class PutAttendanceSuccessStates extends SecurityStates {}
+class PutAttendanceErrorStates extends SecurityStates {}
 
 
 

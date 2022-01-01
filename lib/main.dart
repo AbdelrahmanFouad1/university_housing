@@ -30,7 +30,6 @@ void main() async {
   bool? isStudent = CacheHelper.getData(key: 'isStudent');
   bool? isSecurity = CacheHelper.getData(key: 'isSecurity');
   bool? isHousingManager = CacheHelper.getData(key: 'isHousingManager');
-  bool? isStudentAffairs = CacheHelper.getData(key: 'isStudentAffairs');
   //TODO: When register user rewrite isresident in CacheHelper
   bool? isresident = CacheHelper.getData(key: 'isresident');
 

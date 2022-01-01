@@ -57,14 +57,14 @@ class RoomsHomeScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  '${cubit.allRooms.available}',
+                                  '${cubit.allRooms!.available}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
                               Expanded(
                                 child: Text(
-                                  '${cubit.allRooms.notAvailable}',
+                                  '${cubit.allRooms!.notAvailable}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
@@ -96,14 +96,14 @@ class RoomsHomeScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  '${cubit.allRooms.numStudent}',
+                                  '${cubit.allRooms!.numStudent}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
                               Expanded(
                                 child: Text(
-                                  '${cubit.allRooms.numEmployee}',
+                                  '${cubit.allRooms!.numEmployee}',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),

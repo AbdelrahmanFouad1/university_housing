@@ -4,9 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/main_security_model.dart';
 import 'package:university_housing/shard/components/components.dart';
+import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/security/security_cubit.dart';
 import 'package:university_housing/shard/cubit/security/security_states.dart';
 import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
+
+import 'success/success_enttre_student_screen.dart';
 
 class EnterStudentDetailsScreen extends StatelessWidget {
   var exitDateController = TextEditingController();
@@ -14,8 +18,6 @@ class EnterStudentDetailsScreen extends StatelessWidget {
   var enterDateController = TextEditingController();
   var enterTimeController = TextEditingController();
   var notesController = TextEditingController();
-  bool showWarning = false ;
-
   EnterStudentDetailsScreen({Key? key, required this.item}) : super(key: key);
   MainSecurityModel item;
 
@@ -25,22 +27,32 @@ class EnterStudentDetailsScreen extends StatelessWidget {
       create: (BuildContext context) => SecurityCubit(),
       child: BlocConsumer<SecurityCubit, SecurityStates>(
         listener: (BuildContext context, state) {
-          if( state is SecurityShowWarningState){
-            showWarning = true;
-          }else{
-            showWarning = false;
-          }
 
-          if (state is postAttendanceSuccessStates || state is postAttendanceErrorStates) {
+          if (state is PostAttendanceErrorStates || state is PutAttendanceErrorStates ) {
             Navigator.pop(context);
           }
-          if (state is postAttendanceLoadingStates) {
+          if (state is PostAttendanceLoadingStates || state is PutAttendanceLoadingStates) {
             showDialog<void>(
                 context: context,
                 builder: (context) => waitingDialog(context: context));
           }
         },
         builder: (BuildContext context, Object? state) {
+          if(item.ExitandEnters.isNotEmpty){
+            if(item.ExitandEnters.last.exitDate.isNotEmpty && item.ExitandEnters.last.enterDate.isNotEmpty){
+              enterDateController.text = '';
+              enterTimeController.text = '';
+            }else if(item.ExitandEnters.isNotEmpty){
+              enterDateController.text = item.ExitandEnters.last.enterDate;
+              enterTimeController.text = item.ExitandEnters.last.enterAt;
+            }
+          }
+
+          if(state is SecurityShowWarningState){
+            enterDateController.text = securityDate;
+            enterTimeController.text = securityTime;
+          }
+
           var cubit = SecurityCubit.get(context);
           return Directionality(
             textDirection: ui.TextDirection.rtl,
@@ -58,7 +70,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                         const SizedBox(height: 20.0,),
 
                         //warning
-                        if(showWarning == true)
+                        if(cubit.showWarning == true)
                         Container(
                           width: double.infinity,
                           height: 40.0,
@@ -84,11 +96,33 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                         // profile
                         Row(
                           children: [
-                            const CircleAvatar(
+                            if(item.image.isNotEmpty)
+                              CircleAvatar(
                               radius: 30.0,
+                              backgroundColor: ThemeCubit.get(context).darkTheme
+                                  ? mainTextColor
+                                  : mainColors,
                               backgroundImage: NetworkImage(
-                                  'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                                item.image
+                              ),
                             ),
+                            if(item.image.isEmpty)
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: ThemeCubit.get(context).darkTheme
+                                    ? mainTextColor
+                                    : mainColors,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 80.0,
+                                  child: Icon(Icons.error,
+                                    color: ThemeCubit.get(context).darkTheme
+                                        ? mainColors
+                                        : mainTextColor,
+                                  ),
+                                ),
+                              ),
+
                             const SizedBox(
                               width: 10.0,
                             ),
@@ -118,114 +152,6 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(
                           height: 12.0,
-                        ),
-
-
-
-                        Text(
-                            'الخروج',
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        const SizedBox(
-                          height: 18.0,
-                        ),
-
-                        //Exit
-                        Row(
-                          children: [
-                            //Date
-                            Expanded(
-                              child: SizedBox(
-                                width: double.infinity,
-                                height: 40.0,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.datetime,
-                                  controller: exitDateController,
-                                  readOnly: true,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'تاريخ الخروج',
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 14.0),
-                                    hintStyle: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime.now(),
-                                            lastDate: DateTime.parse('2030-12-12')
-                                    ).then((value) {
-                                      if(value == null){
-                                        showToast(message: 'برجاء تحديد التاريخ', state: ToastStates.WARNING);
-                                      }else{
-                                        exitDateController.text = DateFormat.yMMMd().format(value);
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-
-                            // time
-                            Expanded(
-                              child: SizedBox(
-                                width: double.infinity,
-                                height: 40.0,
-                                child: TextFormField(
-                                  textDirection: ui.TextDirection.ltr,
-                                  textAlign: TextAlign.end,
-                                  controller: exitTimeController,
-                                  keyboardType: TextInputType.number,
-                                  readOnly: true,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'وقت الخروج',
-                                    hintTextDirection: ui.TextDirection.ltr,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 14.0),
-                                    hintStyle: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.grey,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: (){
-                                    showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.now(),
-                                    ).then((value) {
-                                      if(value == null){
-                                        showToast(message: 'برجاء تحديد الوقت', state: ToastStates.WARNING);
-                                      }else{
-                                        checkTime(value.hour.toString(),cubit);
-                                        exitTimeController.text = value.format(context).toString();
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 18.0,
                         ),
 
                         Text(
@@ -274,6 +200,7 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                                         showToast(message: 'برجاء تحديد التاريخ', state: ToastStates.WARNING);
                                       }else{
                                         enterDateController.text = DateFormat.yMMMd().format(value);
+                                        securityDate = DateFormat.yMMMd().format(value);
                                       }
                                     });
                                   },
@@ -320,10 +247,129 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                                       if(value == null){
                                         showToast(message: 'برجاء تحديد الوقت', state: ToastStates.WARNING);
                                       }else{
-                                        checkTime(value.hour.toString(),cubit);
+                                        checkTime(
+                                          h: value.hour.toString(),
+                                          time: enterTimeController.text,
+                                          date: enterDateController.text,
+                                          cubit: cubit
+                                        );
                                         enterTimeController.text = value.format(context).toString();
+                                        securityTime=value.format(context).toString();
                                       }
                                     });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 18.0,
+                        ),
+
+                        Text(
+                            'الخروج',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        const SizedBox(
+                          height: 18.0,
+                        ),
+
+                        //Exit
+                        Row(
+                          children: [
+                            //Date
+                            Expanded(
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 40.0,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.datetime,
+                                  controller: exitDateController,
+                                  readOnly: true,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'تاريخ الخروج',
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 14.0),
+                                    hintStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    if(enterDateController.text.isNotEmpty && enterTimeController.text.isNotEmpty ){
+                                      showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime.now(),
+                                          lastDate: DateTime.parse('2030-12-12')
+                                      ).then((value) {
+                                        if(value == null){
+                                          showToast(message: 'برجاء تحديد التاريخ', state: ToastStates.WARNING);
+                                        }else{
+                                          exitDateController.text = DateFormat.yMMMd().format(value);
+                                        }
+                                      });
+                                    }else{
+                                      showToast(message: 'يجب إدخال بيانات الدخول أولا ', state: ToastStates.WARNING);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+
+                            // time
+                            Expanded(
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 40.0,
+                                child: TextFormField(
+                                  textDirection: ui.TextDirection.ltr,
+                                  textAlign: TextAlign.end,
+                                  controller: exitTimeController,
+                                  keyboardType: TextInputType.number,
+                                  readOnly: true,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'وقت الخروج',
+                                    hintTextDirection: ui.TextDirection.ltr,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 14.0),
+                                    hintStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: (){
+                                    if(enterDateController.text.isNotEmpty && enterTimeController.text.isNotEmpty ){
+                                     showTimePicker(
+                                       context: context,
+                                       initialTime: TimeOfDay.now(),
+                                     ).then((value) {
+                                       if(value == null){
+                                         showToast(message: 'برجاء تحديد الوقت', state: ToastStates.WARNING);
+                                       }else{
+                                         exitTimeController.text = value.format(context).toString();
+                                       }
+                                     });
+                                   }else{
+                                     showToast(message: 'يجب إدخال بيانات الدخول أولا ', state: ToastStates.WARNING);
+                                   }
                                   },
                                 ),
                               ),
@@ -366,33 +412,31 @@ class EnterStudentDetailsScreen extends StatelessWidget {
                           ),
                         ),
 
-
-
-
                         const SizedBox(
                           height: 54.0,
                         ),
 
                         defaultButton(
                           function: () {
-                            if (exitDateController.text == ''||exitTimeController.text == '') {
-                              showToast(message: 'برجاء أدخال تاريخ و وقت الخروج', state: ToastStates.ERROR);
-                            }else if(enterDateController.text != '' && enterTimeController.text != ''){
-                              cubit.postAttendance(
-                                idDB: item.idDB,
-                                enterDate: enterDateController.text,
-                                enterAt:enterTimeController.text,
-                                Notes: notesController.text,
+                            if(exitDateController.text.isNotEmpty && exitTimeController.text.isNotEmpty && enterDateController.text.isNotEmpty && enterTimeController.text.isNotEmpty){
+                              cubit.putAttendance(
+                                  idDB: item.idDB,
+                                  exitDate: exitDateController.text,
+                                  exitAt: exitTimeController.text,
+                                  enterDate: enterDateController.text,
+                                  enterAt: enterTimeController.text,
+                                  Notes: notesController.text,
+                                  attendanceID: item.ExitandEnters.last.idDB,
+                                  context: context
                               );
-                              // navigateTo(context, const SuccessEnterStudentScreen());
-                            }else{
+                            }else if(enterDateController.text.isNotEmpty && enterTimeController.text.isNotEmpty){
                               cubit.postAttendance(
-                                idDB: item.idDB,
-                                exitDate: exitDateController.text,
-                                exitAt: enterTimeController.text,
-                                Notes: notesController.text,
+                                  idDB: item.idDB,
+                                  enterDate: enterDateController.text,
+                                  enterAt:enterTimeController.text,
+                                  Notes: notesController.text,
+                                  context: context
                               );
-                              // navigateTo(context, const SuccessExitStudentScreen());
                             }
                           },
                           text: 'تأكيد',
@@ -415,15 +459,24 @@ class EnterStudentDetailsScreen extends StatelessWidget {
 }
 
 
-void checkTime (h,cubit){
+void checkTime ({
+  required h,
+  required SecurityCubit cubit,
+  required String date,
+  required String time,
+}){
   for(int i=18;i<25;i++){
     if(h==i.toString()){
-      cubit.showStudentWarning(true);
+      cubit.showStudentWarning(
+        isLate: true,
+      );
     }
   }
   for(int i=1;i<18;i++){
     if(h==i.toString()){
-      cubit.showStudentWarning(false);
+      cubit.showStudentWarning(
+        isLate: false,
+      );
     }
   }
 

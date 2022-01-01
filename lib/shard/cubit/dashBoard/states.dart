@@ -21,6 +21,8 @@ class postBuildingErrorStates extends DashBoardStates {
   final String error;
   postBuildingErrorStates(this.error);
 }
+class ImagePickedSuccessState extends DashBoardStates {}
+
 
 // add room
 class ChangeRoomType extends DashBoardStates {}

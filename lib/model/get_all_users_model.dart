@@ -51,7 +51,7 @@ class Users{
     isFine = json['isFine']?? false ;
     paidAt = json['paidAt'] ?? 'لم يتم الدفع';
     address = json['address'] ?? 'فارغ';
-    section = json['Section'] ?? 'فارغ';
+    section = json['section'] ?? 'فارغ';
     NationalID = json['NationalID'];
     cardPhoto = json['cardPhoto'] ?? 'فارغ';
     gender = json['gender'];
