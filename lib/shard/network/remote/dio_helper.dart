@@ -23,14 +23,14 @@ class DioHelper{
 
   }
 
-  static Future<Response> postData({
+  static Future<Response?> postData({
     required String url,
     required var data,
     String? token,
   })async
   {
 
-
+    try{
       return await dio.post(
         url,
         data: data,
@@ -41,7 +41,10 @@ class DioHelper{
           },
         ),
       );
-
+    }on DioError catch(e){
+      var message =  e.response!.data['message'].toString();
+      showToast(message: message, state: ToastStates.ERROR);
+    }
 
   }
 
