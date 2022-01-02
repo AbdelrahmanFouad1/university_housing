@@ -25,12 +25,12 @@ class LoginCubit extends Cubit<LoginStates>{
 
   var buttonController = RoundedLoadingButtonController();
 
-  // void rotationPeriod() async {
-  //   Timer(const Duration(milliseconds: 2000), () {
-  //     buttonController.stop();
-  //     emit(LoginRotationPeriodState());
-  //   });
-  // }
+  void rotationPeriod() async {
+    Timer(const Duration(milliseconds: 2000), () {
+      buttonController.stop();
+      emit(LoginRotationPeriodState());
+    });
+  }
 
   late LoginModel loginModel;
 
