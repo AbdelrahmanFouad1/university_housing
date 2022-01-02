@@ -119,7 +119,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
       }),
     ).then((value) {
-      print(value!.statusMessage.toString());
+      print(value.statusMessage.toString());
       emit(postBuildingSuccessStates());
     },
     ).catchError((error) {
@@ -174,7 +174,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'roomnumber': roomnumber,
       },
     ).then((value) {
-      if(value!.data == null){
+      if(value.data == null){
         showToast(message: 'كوود المبنى غير صحيح', state: ToastStates.ERROR);
         emit(postRoomErrorStates());
       }else{
@@ -801,7 +801,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'isEmployee': isEmployee,
       },
     ).then((value) {
-      print(value!.statusMessage);
+      print(value.statusMessage);
       emit(postStudentSuccessStates());
     },
     ).catchError((error) {

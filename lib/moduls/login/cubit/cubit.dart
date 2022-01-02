@@ -25,17 +25,17 @@ class LoginCubit extends Cubit<LoginStates>{
 
   var buttonController = RoundedLoadingButtonController();
 
-  void rotationPeriod() async {
-    Timer(const Duration(milliseconds: 2000), () {
-      buttonController.stop();
-      emit(LoginRotationPeriodState());
-    });
-  }
+  // void rotationPeriod() async {
+  //   Timer(const Duration(milliseconds: 2000), () {
+  //     buttonController.stop();
+  //     emit(LoginRotationPeriodState());
+  //   });
+  // }
 
   late LoginModel loginModel;
 
   void userLogin({
-    required String id,
+    required int id,
     required String password,
   }) {
     emit(LoginLoadingStates());
@@ -48,12 +48,12 @@ class LoginCubit extends Cubit<LoginStates>{
       },
     ).then((value) {
       // print(value!.data);
-      loginModel = LoginModel.fromJson(value!.data);
+      loginModel = LoginModel.fromJson(value.data);
       emit(LoginSuccessStates(loginModel));
     },
     ).catchError((error) {
       print(error.toString());
-      emit(LoginErrorStates(error));
+      emit(LoginErrorStates(error.toString()));
     });
   }
 
