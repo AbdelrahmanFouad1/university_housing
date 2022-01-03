@@ -334,7 +334,7 @@ class HomeScreen extends StatelessWidget {
                 } else {
                   return InkWell(
                     onTap: () {
-                      if(AppCubit.get(context).profileModel!.isWaiting == false){
+                      if(AppCubit.get(context).profileModel!.isWaiting == true){
                         navigateTo(context, const ChoosePaymentMethodScreen());
                       }else if (CacheHelper.getData(key: 'waiting')) {
                         navigateTo(context, const ChoosePaymentMethodScreen());
@@ -530,7 +530,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      if(AppCubit.get(context).profileModel!.isWaiting == false){
+                      if(AppCubit.get(context).profileModel!.isWaiting == true){
                         navigateTo(context, const ChoosePaymentMethodScreen());
 
                       }else if (CacheHelper.getData(key: 'waiting')) {

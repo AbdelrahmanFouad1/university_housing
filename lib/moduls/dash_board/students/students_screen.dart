@@ -493,8 +493,6 @@ Widget studentItem({
                           onPressed: () {
                             if (cubit.showStudentEdit == true) {
                               if (phoneController.text.length == 11 && nationalIDController.text.length==14) {
-                                 // todo add phone
-                                  // item.phone = phoneController.text;
                                 cubit.putStudent(
                                   idDB: item.idDB,
                                   id: int.parse(idController.text),
@@ -513,7 +511,8 @@ Widget studentItem({
                                   secondTerm: termController.text == 'الثاني'? true : false,
                                   thirdTerm: termController.text == 'الثالث'? true : false,
                                   cardPhoto: item.cardPhoto,
-                                  phone: item.phone,
+                                  phone: phoneController.text,
+                                  floor: item.floor,
                                 );
                               } else {
                                 if(phoneController.text.length != 11){
@@ -966,14 +965,15 @@ Widget studentItem({
                                       );
                                     }
                                     else{
+                                      // todo تعديل بيانات اليوزر لما يرفع الوصل واخليه is paid + is isresident
                                       if(item.isPaid){
                                         DashBoardCubit.get(context).getAllVoucher(
                                             query: {
                                               'id': item.id
                                             }
                                         );
+                                        navigateTo(context, VoucherDetailsScreen(userItem: item,));
                                       }
-                                      navigateTo(context, VoucherDetailsScreen(userItem: item,));
                                     }
                                   },
                                 ),

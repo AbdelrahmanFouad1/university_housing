@@ -412,7 +412,6 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isHousingManager');
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
-                              //todo ايه الهبل ده ؟ مهو لما اعمل لوجن تاني هيتعامل من الباديه
                               CacheHelper.removeData(key: 'waiting');
                               navigateAndFinish(context, LoginScreen());
                             },

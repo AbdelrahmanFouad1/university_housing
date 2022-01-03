@@ -273,38 +273,54 @@ class FollowGuestRoomScreen extends StatelessWidget {
   }
 
   Widget buildBoxCheckColor() => Builder(builder: (context) {
-        // if (model.isreply == true) {
-        //   return Container(
-        //     height: 50.0,
-        //     width: double.infinity,
-        //     decoration: BoxDecoration(
-        //       color: Colors.green,
-        //       borderRadius: BorderRadiusDirectional.circular(8.0),
-        //     ),
-        //     alignment: AlignmentDirectional.center,
-        //     child: const Text(
-        //       'تمت الموافقه عليه',
-        //       style: TextStyle(fontSize: 18.0, color: Colors.white),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //   );
-        // } else {
+        if (model.isReplied == true) {
+          if(model.isAccepted) {
+            return Container(
+              height: 50.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadiusDirectional.circular(8.0),
+              ),
+              alignment: AlignmentDirectional.center,
+              child: const Text(
+                'تمت الموافقه عليه',
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }else{
+            return Container(
+              height: 50.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadiusDirectional.circular(8.0),
+              ),
+              alignment: AlignmentDirectional.center,
+              child: const Text(
+                'تم الرفض عليه',
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
+        } else {
           return Container(
             height: 50.0,
             width: double.infinity,
             decoration: BoxDecoration(
-              color:model.reply == '' ? Colors.amber :  Colors.green ,
+              color: Colors.amber ,
               borderRadius: BorderRadiusDirectional.circular(8.0),
             ),
             alignment: AlignmentDirectional.center,
-            child:  Text(
-              model.reply == '' ?
-              'أنتظر حني يتم الموافقة علي الطلب' : 'تمت الموافقه عليه',
-              style: const TextStyle(fontSize: 18.0, color: Colors.white),
+            child:  const Text(
+              'أنتظر حني يتم الموافقة علي الطلب',
+              style: TextStyle(fontSize: 18.0, color: Colors.white),
               textAlign: TextAlign.center,
             ),
           );
-        // }
+        }
       });
 
   Widget buildReplay() => Builder(

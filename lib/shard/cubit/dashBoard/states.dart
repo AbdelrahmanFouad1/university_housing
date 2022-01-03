@@ -166,6 +166,9 @@ class DeleteFinesError extends DashBoardStates {
   final String error;
   DeleteFinesError(this.error);
 }
+class InputDataSuccess extends DashBoardStates {}
+
+
 
 
 

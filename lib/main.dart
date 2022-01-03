@@ -29,6 +29,7 @@ void main() async {
   String? tokeen = CacheHelper.getData(key: 'token');
   bool? isStudent = CacheHelper.getData(key: 'isStudent');
   bool? isSecurity = CacheHelper.getData(key: 'isSecurity');
+  bool? isEmployee = CacheHelper.getData(key: 'isEmployee');
   bool? isHousingManager = CacheHelper.getData(key: 'isHousingManager');
   //TODO: When register user rewrite isresident in CacheHelper
   bool? isresident = CacheHelper.getData(key: 'isresident');
@@ -36,7 +37,7 @@ void main() async {
   if (onBoarding != null) {
     if(tokeen != null){
       print(tokeen);
-      if(isStudent == true){
+      if(isStudent == true || isEmployee == true){
         widget =  HomeScreen(isRegister: isresident,);
       }else if(isSecurity == true){
         widget =  MainSecurityScreen();

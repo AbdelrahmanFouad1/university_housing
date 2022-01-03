@@ -13,6 +13,7 @@ import 'package:university_housing/model/news_model.dart';
 import 'package:university_housing/model/profile_model.dart';
 import 'package:university_housing/moduls/booking_room/booking_done_screen.dart';
 import 'package:university_housing/moduls/booking_room/booking_room2_screen.dart';
+import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
@@ -620,19 +621,19 @@ class AppCubit extends Cubit<AppStates> {
      roomsList= [];
     buildings!.Buildings[index].rooms.forEach((element) {
       if(currentFloorVal == 1){
-        if(element.floor == 1 && element.userresidentName.isEmpty && element.availability ==true){
+        if(element.floor == 1 && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
         }
       }else if(currentFloorVal == 2){
-        if(element.floor == 2 && element.userresidentName.isEmpty && element.availability ==true){
+        if(element.floor == 2  && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else if(currentFloorVal == 3){
-        if(element.floor == 3 && element.userresidentName.isEmpty && element.availability ==true){
+        if(element.floor == 3 && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }else{
-        if(element.floor == 4 && element.userresidentName.isEmpty && element.availability ==true){
+        if(element.floor == 4  && element.availability ==true){
           roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
         }
       }
@@ -656,6 +657,7 @@ class AppCubit extends Cubit<AppStates> {
     required String buildingName,
     required int roomnumber,
     required int floor,
+    required var context,
   }) async {
     emit(PostBookingLoadingStates());
 
@@ -687,6 +689,8 @@ class AppCubit extends Cubit<AppStates> {
         emit(PostBookingSuccessStates());
         CacheHelper.saveData(key: 'waiting',value: true);
         showToast(message: 'تم رفع الطلب بنجاح', state: ToastStates.SUCCESS);
+        navigateTo(context, const ChoosePaymentMethodScreen());
+
       },
     ).catchError((error) {
       print(error.toString());

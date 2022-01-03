@@ -79,15 +79,19 @@ Widget ReportItem(
 }) {
   return InkWell(
     onTap: (){
-      navigateTo(context, DashFamilyDetailsScreen(
-        familyItem: item,
-      ));
+      if(item.user != null){
+        navigateTo(context, DashFamilyDetailsScreen(
+          familyItem: item,
+        ));
+      }else{
+        showToast(message: 'لا يوجد تفاصيل حاليا!!', state: ToastStates.WARNING);
+      }
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.user!.username,
+            item.user == null ? 'فارغ' :item.user!.username,
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -95,7 +99,7 @@ Widget ReportItem(
         ),
         Expanded(
           child: Text(
-            '${item.user!.id}',
+            item.user == null ? 'فارغ' :'${item.user!.id}',
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
