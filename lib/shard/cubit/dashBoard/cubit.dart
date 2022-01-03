@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,8 @@ import 'package:university_housing/shard/cubit/dashBoard/states.dart';
 import 'package:university_housing/shard/network/end_point.dart';
 import 'package:university_housing/shard/network/local/cache_helper.dart';
 import 'package:university_housing/shard/network/remote/dio_helper.dart';
+import 'package:university_housing/shard/style/color.dart';
+import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 
 class DashBoardCubit extends Cubit<DashBoardStates>{
   DashBoardCubit() : super(DashBoardInitialState());
@@ -617,11 +620,30 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(ChangeStudentEditIcon());
   }
 
+  double animatedWaitingStudentHeight = 0.0;
+  bool showWaitingStudent_details = false;
+  int currentWaitingStudentIndex = -1;
+  void showWaitingStudentDetails(bool show ,int index) {
+    if(currentWaitingStudentIndex == index){
+      showWaitingStudent_details = show;
+      animatedWaitingStudentHeight == 0.0? animatedWaitingStudentHeight= 1000.0: animatedWaitingStudentHeight= 0.0;
+      emit(ShowStudentDetails());
+    }
+  }
+
+  bool showWaitingStudentEdit = false;
+  void changeWaitingStudentEditIcon(bool edit){
+    showWaitingStudentEdit = edit;
+    emit(ChangeStudentEditIcon());
+  }
+
   int currentStudentTermVal = 0;
   String currentStudentTermText = '';
   void selectStudentTerm(int currentNum) {
     currentStudentTermVal = currentNum;
     emit(SelectStudentTerm());
+    //todo نفس الي عند الطلبه الساكنين
+    // inputData(waitingItem!);
   }
 
   int currentStudentLevelVal = 0;
@@ -685,11 +707,13 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String buildingName,
     required bool buildingType,
     required int roomnumber,
+    required int floor,
     required String section,
     required bool isPaid,
     required String paidAt,
     required String cardPhoto,
     required String phone,
+    bool? iswaiting,
   }) {
     emit(PutStudentLoadingStates());
     DioHelper.patchData(
@@ -708,11 +732,13 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'section': section,
         'isPaid': isPaid,
         'paidAt': paidAt,
+        'floor': floor,
         'cardPhoto': cardPhoto,
         'firstTerm': firstTerm,
         'secondTerm': secondTerm,
         'thirdTerm': thirdTerm,
         'phone': phone,
+        'isWaiting': iswaiting,
       },
     ).then((value) {
       print(value!.statusMessage);
@@ -775,8 +801,8 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
   bool student = true;
-  void changeJob(bool student) {
-    student = student;
+  void changeJob(bool studentJob) {
+    student = studentJob;
     emit(ChangeJob());
   }
 
@@ -964,46 +990,40 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     });
   }
 
-  //todo post el voucher
-  // void postVoucher({
-  //   required String idDB,
-  //   required String fineReason,
-  //   required int fineValue,
-  //   required bool isFine,
-  // }) {
-  //   emit(postFinesLoadingStates());
-  //
-  //   DioHelper.postData(
-  //     url: 'users/$idDB/addfine',
-  //     token: tokeen ?? '',
-  //     data: {
-  //       'fineReason': fineReason,
-  //       'fineValue': fineValue,
-  //       'isFine': isFine,
-  //     },
-  //   ).then((value) {
-  //     if (value != null) {
-  //       print(value.statusMessage);
-  //       emit(postFinesSuccessStates());
-  //       getAllUsers(query: {
-  //         if(termNum == 1)
-  //           'firstTerm':true,
-  //         if(termNum == 2)
-  //           'secondTerm':true,
-  //         if(termNum == 3)
-  //           'thirdTerm':true,
-  //         if(isStudentKind)
-  //           'isStudent':true,
-  //         if(!isStudentKind)
-  //           'isEmployee':true,
-  //       });
-  //     }
-  //   }).catchError((error) {
-  //     print(error.toString());
-  //     showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
-  //     emit(postFinesErrorStates(error.toString()));
-  //   });
-  // }
+
+  Users? waitingItem;
+  var idController = TextEditingController();
+  var nameController = TextEditingController();
+  var addressController = TextEditingController();
+  var sectionController = TextEditingController();
+  var nationalIDController = TextEditingController();
+  var termController = TextEditingController();
+  var nationalPhotoController = TextEditingController();
+  var phoneController = TextEditingController();
+  var levelController = TextEditingController();
+  var jobController = TextEditingController();
+  var roomController = TextEditingController();
+  var creditController = TextEditingController();
+  var paymentDateController = TextEditingController();
+  var buildingController = TextEditingController();
+  void inputData(Users item){
+    idController.text = item.id.toString();
+    nameController.text = item.username;
+    addressController.text = item.address.isEmpty ? 'فارغ':item.address;
+    sectionController.text = item.section;
+    nationalIDController.text = item.NationalID.toString();
+    paymentDateController.text = 'فارغ';
+    roomController.text = item.roomnumber.toString();
+    buildingController.text = item.buildingName.isEmpty ? 'فارغ':item.buildingName;
+    termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :item.thirdTerm == true ?'الثالث':'فارغ';
+    nationalPhotoController.text = item.cardPhoto;
+    phoneController.text = item.phone;
+    levelController.text = item.buildingType == true ?'مميز':'عادي';
+    jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
+    creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
+    emit(InputDataSuccess());
+  }
+
 
   // building image
   File? voucherImage;
@@ -1261,7 +1281,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String idDB,
     required String reply,
     required bool isReplied,
-    // required bool isAccepted,
+    required bool isAccepted,
   }) {
     emit(PutReplayReportLoadingStates());
     DioHelper.putData(
@@ -1270,7 +1290,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       data: {
         'reply': reply,
         'isReplied': isReplied,
-        // required bool isAccepted,
+        'isAccepted': isAccepted,
       },
     ).then((value) {
       emit(PutReplayReportSuccessStates());
@@ -1385,7 +1405,9 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       isPaid: false,
       paidAt: '',
       cardPhoto: bookingItem.cardPhoto,
-      phone: bookingItem.phone
+      phone: bookingItem.phone,
+      iswaiting: true,
+      floor: bookingItem.floor,
     );
   }
 

@@ -193,20 +193,37 @@ class FollowRequestsChangeRoomScreen extends StatelessWidget {
 
   Widget buildBoxCheckColor() => Builder(builder: (context) {
         if (model.isReplied == true) {
-          return Container(
-            height: 50.0,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadiusDirectional.circular(8.0),
-            ),
-            alignment: AlignmentDirectional.center,
-            child: const Text(
-              'تمت الموافقه عليه',
-              style: TextStyle(fontSize: 18.0, color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-          );
+          if(model.isAccepted==true){
+            return Container(
+              height: 50.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadiusDirectional.circular(8.0),
+              ),
+              alignment: AlignmentDirectional.center,
+              child: const Text(
+                'تمت الموافقه عليه',
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }else{
+            return Container(
+              height: 50.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadiusDirectional.circular(8.0),
+              ),
+              alignment: AlignmentDirectional.center,
+              child: const Text(
+                'تم الرفض عليه',
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
         } else {
           return Container(
             height: 50.0,

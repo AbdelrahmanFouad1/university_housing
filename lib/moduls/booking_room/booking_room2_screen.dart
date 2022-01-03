@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -479,11 +478,10 @@ class BookingRoom2Screen extends StatelessWidget {
                                   cardPhoto: cardPhoto,
                                   buildingName: buildings!.Buildings[currentIndex].buildingName,
                                   roomnumber: int.parse(roomController.text),
+                                  context: context,
                                   floor: floorController.text == 'الأول' ? 1 : floorController.text == 'الثاني' ? 2 :floorController.text == 'الثالث' ? 3 : 4 ,
                               );
-                              if(state is PostBookingSuccessStates){
-                                navigateTo(context, const ChoosePaymentMethodScreen());
-                              }
+
                             }else{
                               showToast(message: 'برجاء الموافقه علي الشروط', state: ToastStates.WARNING);
                             }

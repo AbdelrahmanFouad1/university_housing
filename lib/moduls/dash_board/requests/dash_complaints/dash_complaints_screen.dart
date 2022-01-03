@@ -169,16 +169,20 @@ Widget MissingItem({
 }) {
   return InkWell(
     onTap: (){
-      navigateTo(context, DashComplimentsDetailsScreen(
-        type: 'missing',
-        missingItem: item,
-      ));
+      if(item.user != null){
+        navigateTo(context, DashComplimentsDetailsScreen(
+          type: 'missing',
+          missingItem: item,
+        ));
+      }else{
+        showToast(message: 'لا يوجد تفاصيل حاليا!!', state: ToastStates.WARNING);
+      }
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.user!.username,
+            item.user == null ? 'فارغ' :item.user!.username,
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -186,7 +190,7 @@ Widget MissingItem({
         ),
         Expanded(
           child: Text(
-            item.user!.id.toString(),
+            item.user == null ? 'فارغ' :item.user!.id.toString(),
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
 
@@ -226,16 +230,20 @@ Widget DamagedItem({
 }) {
   return InkWell(
     onTap: (){
-      navigateTo(context, DashComplimentsDetailsScreen(
-        type: 'damaged',
-        damagedItem: item,
-      ));
+      if(item.user != null){
+        navigateTo(context, DashComplimentsDetailsScreen(
+          type: 'damaged',
+          damagedItem: item,
+        ));
+      }else{
+        showToast(message: 'لا يوجد تفاصيل حاليا!!', state: ToastStates.WARNING);
+      }
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.user!.username,
+            item.user == null ? 'فارغ' :item.user!.username,
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -243,7 +251,7 @@ Widget DamagedItem({
         ),
         Expanded(
           child: Text(
-            item.user!.id.toString(),
+            item.user == null ? 'فارغ' :item.user!.id.toString(),
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -283,16 +291,20 @@ Widget ComplaintsItem({
 }) {
   return InkWell(
     onTap: (){
-      navigateTo(context, DashComplimentsDetailsScreen(
-        type: 'complaints',
-        complaintsItem: item,
-      ));
+      if(item.user != null){
+        navigateTo(context, DashComplimentsDetailsScreen(
+          type: 'complaints',
+          complaintsItem: item,
+        ));
+      }else{
+        showToast(message: 'لا يوجد تفاصيل حاليا!!', state: ToastStates.WARNING);
+      }
     },
     child: Row(
       children: [
         Expanded(
           child: Text(
-            item.user!.username,
+            item.user == null ? 'فارغ' :item.user!.username,
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -300,7 +312,7 @@ Widget ComplaintsItem({
         ),
         Expanded(
           child: Text(
-            item.user!.id.toString(),
+            item.user == null ? 'فارغ' :item.user!.id.toString(),
             style: item.isReplied ? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.green) : Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
 

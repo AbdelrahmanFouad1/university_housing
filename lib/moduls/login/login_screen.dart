@@ -47,8 +47,11 @@ class LoginScreen extends StatelessWidget {
                   value: state.loginModel.isStudentAffairs);
               CacheHelper.saveData(
                   key: 'isresident', value: state.loginModel.isresident);
+
+              CacheHelper.saveData(key: 'isEmployee', value: state.loginModel.isEmployee);
+
               CacheHelper.saveData(key: 'waiting', value: false);
-              if (state.loginModel.isStudent) {
+              if (state.loginModel.isStudent || state.loginModel.isEmployee) {
                 navigateAndFinish(context,
                     HomeScreen(isRegister: state.loginModel.isresident));
               }
