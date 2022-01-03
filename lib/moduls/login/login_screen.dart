@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (BuildContext context, state) async {
           if (state is LoginSuccessStates) {
-            // LoginCubit.get(context).buttonController.stop();
+            LoginCubit.get(context).buttonController.stop();
             CacheHelper.saveData(key: 'token', value: state.loginModel.token)
                 .then((value) {
               token = state.loginModel.token;
@@ -68,154 +68,178 @@ class LoginScreen extends StatelessWidget {
           var cubit = LoginCubit.get(context);
           return Directionality(
             textDirection: TextDirection.rtl,
-            child: Scaffold(
-              body: WillPopScope(
-                onWillPop: () async {
-                  final difference = DateTime.now().difference(timeBackPressed);
-                  final isExitWarning =
-                      difference >= const Duration(seconds: 2);
-                  timeBackPressed = DateTime.now();
-                  if (isExitWarning) {
-                    showToast(
-                        message: 'اضغط مرة أخرى للخروج من البرنامج',
-                        state: ToastStates.WARNING);
-                    return false;
-                  } else {
-                    return true;
-                  }
-                },
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0, top: 28),
-                        child: Align(
-                          alignment: AlignmentDirectional.topStart,
-                          child: ThemeCubit.get(context).darkTheme
-                              ? Image.asset(
-                                  'assets/images/logo_dark.png',
-                                  width: 71.0,
-                                  height: 71.0,
-                                )
-                              : Image.asset(
-                                  'assets/images/logo.png',
-                                  width: 71.0,
-                                  height: 71.0,
-                                ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional.center,
-                              child: SvgPicture.asset(
-                                'assets/images/login.svg',
-                                height: 227.0,
-                              ),
-                            ),
-                            Text(
-                              'اهلا بك في تطبيق الاسكان الجامعي',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            const SizedBox(
-                              height: 33.0,
-                            ),
-                            SizedBox(
-                              height: 48.0,
-                              child: TextFormField(
-                                controller: idController,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'رقم الطالب',
-                                  hintStyle: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.grey,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
+            child: SafeArea(
+              child: Scaffold(
+                body: WillPopScope(
+                  onWillPop: () async {
+                    final difference = DateTime.now().difference(timeBackPressed);
+                    final isExitWarning =
+                        difference >= const Duration(seconds: 2);
+                    timeBackPressed = DateTime.now();
+                    if (isExitWarning) {
+                      showToast(
+                          message: 'اضغط مرة أخرى للخروج من البرنامج',
+                          state: ToastStates.WARNING);
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Form(
+                      key: fromKey,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                            child: Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: ThemeCubit.get(context).darkTheme
+                                  ? Image.asset(
+                                      'assets/images/logo_dark.png',
+                                      width: 71.0,
+                                      height: 71.0,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/logo.png',
+                                      width: 71.0,
+                                      height: 71.0,
                                     ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional.center,
+                                  child: SvgPicture.asset(
+                                    'assets/images/login.svg',
+                                    height: 227.0,
                                   ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 12.0,
-                            ),
-                            SizedBox(
-                              height: 48.0,
-                              child: TextFormField(
-                                controller: passwordController,
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: cubit.isPassword,
-                                style: Theme.of(context).textTheme.bodyText1,
-                                decoration: InputDecoration(
-                                  suffixIcon: IconButton(
-                                    color: Colors.grey,
-                                    onPressed: () {
-                                      cubit.changePasswordVisibility();
-                                    },
-                                    icon: Icon(
-                                      cubit.suffix,
-                                    ),
-                                  ),
-                                  border: const OutlineInputBorder(),
-                                  hintText: 'كلمه المرور',
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.grey,
-                                  ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
+                                Text(
+                                  'اهلا بك في تطبيق الاسكان الجامعي',
+                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 36.0,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              height: 50.0,
-                              child: defaultButton(
-                                  function: () {
-                                    cubit.userLogin(
-                                      id: int.parse(idController.text),
-                                      password: passwordController.text,
-                                    );
+                                const SizedBox(
+                                  height: 33.0,
+                                ),
+                                TextFormField(
+                                  controller: idController,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                  validator: (String? value) {
+                                    if (value!.isEmpty) {
+                                      return 'رقم الطالب فارغ !';
+                                    } else {
+                                      return null;
+                                    }
                                   },
-                                  text: 'تسجيل دخول',
-                                  btnColor: mainColors),
+                                  decoration: const InputDecoration(
+                                    isDense: true,
+                                      contentPadding: EdgeInsets.all(10.0),
+                                    border: OutlineInputBorder(),
+                                    hintText: 'رقم الطالب',
+                                    hintStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12.0,
+                                ),
+                                TextFormField(
+                                  controller: passwordController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: cubit.isPassword,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                  validator: (String? value) {
+                                    if (value!.isEmpty) {
+                                      return 'كلمة المرور فارغة !';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.all(10.0),
+                                    suffixIcon: IconButton(
+                                      color: Colors.grey,
+                                      onPressed: () {
+                                        cubit.changePasswordVisibility();
+                                      },
+                                      icon: Icon(
+                                        cubit.suffix,
+                                      ),
+                                    ),
+                                    border: const OutlineInputBorder(),
+                                    hintText: 'كلمه المرور',
+                                    hintStyle: const TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 36.0,
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50.0,
+                                  child:
+                                  RoundedLoadingButton(
+                                    color: mainColors,
+                                    controller: cubit.buttonController,
+                                    borderRadius: 5.0,
+                                    onPressed: () {
+                                      if (fromKey.currentState!.validate()) {
+                                        cubit.rotationPeriod();
+                                        cubit.userLogin(
+                                          id: int.parse(idController.text),
+                                          password: passwordController.text,
+                                        );
+                                      } else {
+                                        LoginCubit.get(context).buttonController.stop();
+                                      }
+                                    },
+                                    child: const Text(
+                                      'تسجيل دخول',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
 
-                              // RoundedLoadingButton(
-                              //   color: mainColors,
-                              //   controller: cubit.buttonController,
-                              //   borderRadius: 5.0,
-                              //   onPressed: () {
-                              //     cubit.rotationPeriod();
-                              //     cubit.userLogin(
-                              //       id: idController.text,
-                              //       password: passwordController.text,
-                              //     );
-                              //   },
-                              //   child: const Text(
-                              //     'تسجيل دخول',
-                              //     style: TextStyle(
-                              //       fontSize: 20.0,
-                              //     ),
-                              //   ),
-                              // ),
+
+                                  // defaultButton(
+                                  //     function: () {
+                                  //       cubit.userLogin(
+                                  //         id: int.parse(idController.text),
+                                  //         password: passwordController.text,
+                                  //       );
+                                  //     },
+                                  //     text: 'تسجيل دخول',
+                                  //     btnColor: mainColors),
+
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
