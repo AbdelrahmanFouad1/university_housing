@@ -643,7 +643,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     currentStudentTermVal = currentNum;
     emit(SelectStudentTerm());
     //todo نفس الي عند الطلبه الساكنين
-    // inputData(waitingItem!);
+    inputData(waitingItem!);
   }
 
   int currentStudentLevelVal = 0;
