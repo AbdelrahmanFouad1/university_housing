@@ -627,6 +627,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     if(currentWaitingStudentIndex == index){
       showWaitingStudent_details = show;
       animatedWaitingStudentHeight == 0.0? animatedWaitingStudentHeight= 1000.0: animatedWaitingStudentHeight= 0.0;
+
       emit(ShowStudentDetails());
     }
   }
@@ -642,8 +643,6 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void selectStudentTerm(int currentNum) {
     currentStudentTermVal = currentNum;
     emit(SelectStudentTerm());
-    //todo نفس الي عند الطلبه الساكنين
-    inputData(waitingItem!);
   }
 
   int currentStudentLevelVal = 0;
@@ -991,38 +990,6 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
-  Users? waitingItem;
-  var idController = TextEditingController();
-  var nameController = TextEditingController();
-  var addressController = TextEditingController();
-  var sectionController = TextEditingController();
-  var nationalIDController = TextEditingController();
-  var termController = TextEditingController();
-  var nationalPhotoController = TextEditingController();
-  var phoneController = TextEditingController();
-  var levelController = TextEditingController();
-  var jobController = TextEditingController();
-  var roomController = TextEditingController();
-  var creditController = TextEditingController();
-  var paymentDateController = TextEditingController();
-  var buildingController = TextEditingController();
-  void inputData(Users item){
-    idController.text = item.id.toString();
-    nameController.text = item.username;
-    addressController.text = item.address.isEmpty ? 'فارغ':item.address;
-    sectionController.text = item.section;
-    nationalIDController.text = item.NationalID.toString();
-    paymentDateController.text = 'فارغ';
-    roomController.text = item.roomnumber.toString();
-    buildingController.text = item.buildingName.isEmpty ? 'فارغ':item.buildingName;
-    termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :item.thirdTerm == true ?'الثالث':'فارغ';
-    nationalPhotoController.text = item.cardPhoto;
-    phoneController.text = item.phone;
-    levelController.text = item.buildingType == true ?'مميز':'عادي';
-    jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
-    creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
-    emit(InputDataSuccess());
-  }
 
 
   // building image

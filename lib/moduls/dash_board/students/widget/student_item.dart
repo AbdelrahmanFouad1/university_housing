@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
@@ -17,8 +16,22 @@ class StudentWaitingItem extends StatefulWidget {
   final List<AlertDialogModel> level;
   final List<AlertDialogModel> job;
   final List<AlertDialogModel> credit;
+  var idController = TextEditingController();
+  var nameController = TextEditingController();
+  var addressController = TextEditingController();
+  var sectionController = TextEditingController();
+  var nationalIDController = TextEditingController();
+  var termController = TextEditingController();
+  var nationalPhotoController = TextEditingController();
+  var phoneController = TextEditingController();
+  var levelController = TextEditingController();
+  var jobController = TextEditingController();
+  var roomController = TextEditingController();
+  var creditController = TextEditingController();
+  var paymentDateController = TextEditingController();
+  var buildingController = TextEditingController();
 
-  const StudentWaitingItem({
+  StudentWaitingItem({
     Key? key,
     required this.item,
     required this.index,
@@ -36,12 +49,25 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
   @override
   void initState() {
     // TODO: implement initState
-    DashBoardCubit.get(context).inputData(widget.item);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.idController.text = widget.item.id.toString();
+    widget.nameController.text = widget.item.username;
+    widget.addressController.text = widget.item.address.isEmpty ? 'فارغ':widget.item.address;
+    widget.sectionController.text = widget.item.section;
+    widget.nationalIDController.text = widget.item.NationalID.toString();
+    widget.paymentDateController.text = 'فارغ';
+    widget.roomController.text = widget.item.roomnumber.toString();
+    widget.buildingController.text = widget.item.buildingName.isEmpty ? 'فارغ':widget.item.buildingName;
+    widget.termController.text = widget.item.firstTerm == true ? 'الأول' : widget.item.secondTerm == true ?'الثاني' :widget.item.thirdTerm == true ?'الثالث':'فارغ';
+    widget.nationalPhotoController.text = widget.item.cardPhoto;
+    widget.phoneController.text = widget.item.phone;
+    widget.levelController.text = widget.item.buildingType == true ?'مميز':'عادي';
+    widget.jobController.text = widget.item.isStudent == true ? 'طلاب' : 'عاملين';
+    widget.creditController.text = widget.item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
     return BlocBuilder<DashBoardCubit, DashBoardStates>(
       builder: (context, state) {
         return Builder(builder: (context) {
@@ -121,47 +147,47 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                           child: IconButton(
                             onPressed: () {
                               if (cubit.showWaitingStudentEdit == true) {
-                                if (cubit.phoneController.text.length == 11 &&
-                                    cubit.nationalIDController.text.length ==
+                                if (widget.phoneController.text.length == 11 &&
+                                    widget.nationalIDController.text.length ==
                                         14) {
                                   cubit.putStudent(
                                     idDB:  widget.item.idDB,
-                                    id: int.parse(cubit.idController.text),
+                                    id: int.parse(widget.idController.text),
                                     roomnumber:
-                                        int.parse(cubit.roomController.text),
-                                    buildingName: cubit.buildingController.text,
-                                    address: cubit.addressController.text,
-                                    username: cubit.nameController.text,
-                                    section: cubit.sectionController.text,
+                                        int.parse(widget.roomController.text),
+                                    buildingName: widget.buildingController.text,
+                                    address: widget.addressController.text,
+                                    username: widget.nameController.text,
+                                    section: widget.sectionController.text,
                                     NationalID: int.parse(
-                                        cubit.nationalIDController.text),
+                                        widget.nationalIDController.text),
                                     buildingType:
-                                        cubit.levelController.text == 'مميز'
+                                        widget.levelController.text == 'مميز'
                                             ? true
                                             : false,
                                     isEmployee:
-                                        cubit.jobController.text == 'طلاب'
+                                        widget.jobController.text == 'طلاب'
                                             ? false
                                             : true,
                                     isStudent:
-                                        cubit.jobController.text == 'طلاب'
+                                        widget.jobController.text == 'طلاب'
                                             ? true
                                             : false,
-                                    isPaid: cubit.creditController.text ==
+                                    isPaid: widget.creditController.text ==
                                             'تم الدفع'
                                         ? true
                                         : false,
-                                    paidAt: cubit.paymentDateController.text,
+                                    paidAt: widget.paymentDateController.text,
                                     firstTerm:
-                                        cubit.termController.text == 'الأول'
+                                        widget.termController.text == 'الأول'
                                             ? true
                                             : false,
                                     secondTerm:
-                                        cubit.termController.text == 'الثاني'
+                                        widget.termController.text == 'الثاني'
                                             ? true
                                             : false,
                                     thirdTerm:
-                                        cubit.termController.text == 'الثالث'
+                                        widget.termController.text == 'الثالث'
                                             ? true
                                             : false,
                                     cardPhoto:  widget.item.cardPhoto,
@@ -169,7 +195,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                     floor:  widget.item.floor,
                                   );
                                 } else {
-                                  if (cubit.phoneController.text.length != 11) {
+                                  if (widget.phoneController.text.length != 11) {
                                     showToast(
                                         message: 'رقم الموبيل غير صحيح',
                                         state: ToastStates.ERROR);
@@ -240,7 +266,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.idController,
+                                  controller: widget.idController,
                                 ),
                               ],
                             ),
@@ -261,7 +287,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.nameController,
+                                  controller: widget.nameController,
                                 ),
                               ],
                             ),
@@ -282,7 +308,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.addressController,
+                                  controller: widget.addressController,
                                 ),
                               ],
                             ),
@@ -303,7 +329,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.sectionController,
+                                  controller: widget.sectionController,
                                 ),
                               ],
                             ),
@@ -323,7 +349,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    controller: cubit.termController,
+                                    controller: widget.termController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.zero,
@@ -332,7 +358,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                     ),
                                     readOnly: true,
                                     enableInteractiveSelection:
-                                        cubit.showWaitingStudentEdit == true
+                                    cubit.showWaitingStudentEdit == true
                                             ? true
                                             : false,
                                     style:
@@ -366,9 +392,9 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                                           value: e.index,
                                                           onChanged:
                                                               (int? val) {
-                                                            cubit.selectStudentTerm(
+                                                                cubit.selectStudentTerm(
                                                                 val ?? e.index);
-                                                            cubit.termController
+                                                            widget.termController
                                                                     .text =
                                                                 cubit
                                                                     .currentStudentTermText;
@@ -416,7 +442,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    controller: cubit.jobController,
+                                    controller: widget.jobController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.zero,
@@ -425,7 +451,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                     ),
                                     readOnly: true,
                                     enableInteractiveSelection:
-                                        cubit.showWaitingStudentEdit == true
+                                    cubit.showWaitingStudentEdit == true
                                             ? true
                                             : false,
                                     style:
@@ -459,9 +485,9 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                                           value: e.index,
                                                           onChanged:
                                                               (int? val) {
-                                                            cubit.selectStudentJob(
+                                                                cubit.selectStudentJob(
                                                                 val ?? e.index);
-                                                            cubit.jobController
+                                                            widget.jobController
                                                                     .text =
                                                                 cubit
                                                                     .currentStudentJobText;
@@ -502,7 +528,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.phoneController,
+                                  controller: widget.phoneController,
                                 ),
                               ],
                             ),
@@ -523,7 +549,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.buildingController,
+                                  controller: widget.buildingController,
                                 ),
                               ],
                             ),
@@ -544,7 +570,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.roomController,
+                                  controller: widget.roomController,
                                 ),
                               ],
                             ),
@@ -564,7 +590,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    controller: cubit.levelController,
+                                    controller: widget.levelController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.zero,
@@ -573,7 +599,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                     ),
                                     readOnly: true,
                                     enableInteractiveSelection:
-                                        cubit.showWaitingStudentEdit == true
+                                    cubit.showWaitingStudentEdit == true
                                             ? true
                                             : false,
                                     style:
@@ -607,10 +633,9 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                                           value: e.index,
                                                           onChanged:
                                                               (int? val) {
-                                                            cubit.selectStudentLevel(
+                                                                cubit.selectStudentLevel(
                                                                 val ?? e.index);
-                                                            cubit
-                                                                .levelController
+                                                            widget.levelController
                                                                 .text = e.text;
                                                             if (val == 0) {
                                                               widget.item.buildingType =
@@ -648,7 +673,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    controller: cubit.creditController,
+                                    controller: widget.creditController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.zero,
@@ -657,7 +682,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                     ),
                                     readOnly: true,
                                     enableInteractiveSelection:
-                                        cubit.showWaitingStudentEdit == true
+                                    cubit.showWaitingStudentEdit == true
                                             ? true
                                             : false,
                                     style:
@@ -691,9 +716,9 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                                           value: e.index,
                                                           onChanged:
                                                               (int? val) {
-                                                            cubit.selectStudentCredit(
+                                                                cubit.selectStudentCredit(
                                                                 val ?? e.index);
-                                                            cubit.creditController
+                                                            widget.creditController
                                                                     .text =
                                                                 cubit
                                                                     .currentStudentCreditText;
@@ -734,7 +759,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.paymentDateController,
+                                  controller: widget.paymentDateController,
                                 ),
                               ],
                             ),
@@ -755,7 +780,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                                 switchedTextFormField(
                                   context: context,
                                   cubit: cubit,
-                                  controller: cubit.nationalIDController,
+                                  controller: widget.nationalIDController,
                                 ),
                               ],
                             ),
@@ -827,7 +852,7 @@ class _StudentWaitingItemState extends State<StudentWaitingItem> {
                 cubit.currentWaitingStudentIndex =  widget.index;
                 cubit.showWaitingStudentDetails(
                     !cubit.showWaitingStudent_details,  widget.index);
-                // cubit.inputData(cubit.waitingItem!);
+                // widget.inputData(widget.waitingItem!);
               },
               child: Dismissible(
                 direction: DismissDirection.startToEnd,
