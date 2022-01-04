@@ -47,7 +47,8 @@ class SecurityCubit extends Cubit<SecurityStates>{
   List<MainSecurityModel> mainSecurityModel = [];
 
   void getUserInSecurity({
-    Map<String, dynamic>? query
+    String? id,
+    String? username,
 }) {
 
     print('-----------user security-----------');
@@ -56,7 +57,10 @@ class SecurityCubit extends Cubit<SecurityStates>{
     DioHelper.getData(
       url: GET_USERSECUTIRY,
       token: tokeen ?? '',
-      query: query
+      query: {
+        'id' : id,
+        'username' : username,
+      }
     ).then((value) {
       if (value != null) {
 

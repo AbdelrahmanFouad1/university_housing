@@ -4,6 +4,7 @@ import 'package:university_housing/shard/style/color.dart';
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: backGround,
+  dialogBackgroundColor: backGround,
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: backGround,
@@ -47,12 +48,14 @@ ThemeData darkTheme = ThemeData(
   unselectedWidgetColor: mainTextColor,
   disabledColor: mainTextColor,
   scaffoldBackgroundColor: backGroundDark,
+  dialogBackgroundColor: backGroundDark,
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: backGroundDark,
       statusBarIconBrightness: Brightness.light,
     ),
     backgroundColor: backGroundDark,
+
     elevation: 0.0,
   ),
   textTheme: TextTheme(

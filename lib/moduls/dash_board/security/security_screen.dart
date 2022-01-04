@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:university_housing/model/get_dash_security_model.dart';
 import 'package:university_housing/moduls/dash_board/security/security_details_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
@@ -83,15 +84,13 @@ class SecurityScreen extends StatelessWidget {
                                   .bodyText1,
                               textAlign: TextAlign.center,
                               onTap: () {
-                                //todo el design m4 mazboot
-                                showDialog<void>(
+                                //TODO: issue in design "Finish"
+                                showDialog(
                                   context: context,
                                   builder: (context) =>
                                       buildDialog(
                                           context: context,
                                           title: 'اختر المبنى',
-                                          child: SingleChildScrollView(
-                                            physics: const BouncingScrollPhysics(),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: cubit.buildingsName.map((e) =>
@@ -116,7 +115,7 @@ class SecurityScreen extends StatelessWidget {
                                                     },
                                                   )).toList(),
                                             ),
-                                          )
+
                                       ),
                                 );
                               },
