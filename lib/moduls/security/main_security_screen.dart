@@ -175,16 +175,14 @@ class MainSecurityScreen extends StatelessWidget {
                                 controller: searchController,
                                 type: TextInputType.text,
                                 onSubmit: (String text) {},
-                                hint: 'بحث بإستخدام رقم الطالب ...',
+                                hint: 'بحث ...',
                                 prefix: IconBroken.Search,
                                 context: context,
                                 validate: () {},
                                 onChange: (value) {
                                   SecurityCubit.get(context)
                                       .getUserInSecurity(
-                                    query: {
-                                      'id':value,
-                                    }
+                                    username: value
                                   );
                                 },
                               ),

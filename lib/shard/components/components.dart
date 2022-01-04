@@ -547,7 +547,7 @@ Widget buildDialog({
   required Widget child,
 }) =>
     AlertDialog(
-      backgroundColor: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
+      backgroundColor: ThemeCubit.get(context).darkTheme ? backGroundDark : Colors.white,
       title: Text(
         title,
         textDirection: TextDirection.rtl,
@@ -555,14 +555,14 @@ Widget buildDialog({
       ),
       contentPadding: EdgeInsets.zero,
       content: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Container(
-              color: ThemeCubit.get(context).darkTheme ? mainColors : Colors.white,
-              child: child),
+          physics: const BouncingScrollPhysics(),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+                color: ThemeCubit.get(context).darkTheme ? backGroundDark : Colors.white,
+                child: child),
+          ),
         ),
-      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
@@ -783,7 +783,7 @@ Widget dashTextFormField({
 
 Widget switchedTextFormField({
   required context,
-  required cubit,
+  required DashBoardCubit cubit,
   required controller,
   bool center = true,
   TextInputType type = TextInputType.text,
@@ -798,11 +798,11 @@ Widget switchedTextFormField({
           contentPadding: EdgeInsets.zero,
           hintStyle: Theme.of(context).textTheme.bodyText1,
         ),
-        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
-            ? false
-            : true,
+        readOnly: cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showWaitingStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
+          ? false
+          : true,
         enableInteractiveSelection:
-            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
+            cubit.showEdit == true || cubit.showStudentEdit == true || cubit.showWaitingStudentEdit == true || cubit.showSecurityEdit == true || cubit.showRoomEdit == true || cubit.showFinesEdit == false
                 ? true
                 : false,
         style: Theme.of(context).textTheme.bodyText1,
