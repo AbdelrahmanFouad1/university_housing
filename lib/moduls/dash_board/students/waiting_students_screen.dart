@@ -83,12 +83,6 @@ class WaitingStudentsScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        //todo el text bytms7 lma bfta7 dialog
-        // if(state is SelectStudentTerm || state is SelectStudentJob ||state is SelectStudentLevel ||state is SelectStudentCredit){
-        //   enterDateController.text = securityDate;
-        //   enterTimeController.text = securityTime;
-        // }
-
         var cubit = DashBoardCubit.get(context);
         return Directionality(
           textDirection: ui.TextDirection.rtl,
