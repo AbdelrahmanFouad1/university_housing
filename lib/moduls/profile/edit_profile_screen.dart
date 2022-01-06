@@ -412,7 +412,6 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isHousingManager');
                               CacheHelper.removeData(key: 'isStudentAffairs');
                               CacheHelper.removeData(key: 'isresident');
-                              CacheHelper.removeData(key: 'waiting');
                               navigateAndFinish(context, LoginScreen());
                             },
                             btnColor: Colors.red,

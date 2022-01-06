@@ -59,8 +59,8 @@ class HomeScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (BuildContext context, state) {
         if (state is GetProfileSuccessStates) {
-          // showToast(message: 'تم تسجيل الدخول بنجاح', state: ToastStates.SUCCESS);
           AppCubit.get(context).getNews();
+          AppCubit.get(context).getOrderData();
           AppCubit.get(context).getNotifications();
           if(isRegister == false){
             AppCubit.get(context).getBuildings();
@@ -336,7 +336,7 @@ class HomeScreen extends StatelessWidget {
                     onTap: () {
                       if(AppCubit.get(context).profileModel!.isWaiting == true){
                         navigateTo(context, const ChoosePaymentMethodScreen());
-                      }else if (CacheHelper.getData(key: 'waiting')) {
+                      }else if (AppCubit.get(context).myOrdersModel!.Bookingsorders.isNotEmpty) {
                         navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());
@@ -533,7 +533,7 @@ class HomeScreen extends StatelessWidget {
                       if(AppCubit.get(context).profileModel!.isWaiting == true){
                         navigateTo(context, const ChoosePaymentMethodScreen());
 
-                      }else if (CacheHelper.getData(key: 'waiting')) {
+                      }else if (AppCubit.get(context).myOrdersModel!.Bookingsorders.isNotEmpty) {
                         navigateTo(context, const ChoosePaymentMethodScreen());
                       } else {
                         navigateTo(context, BookingRoom1Screen());

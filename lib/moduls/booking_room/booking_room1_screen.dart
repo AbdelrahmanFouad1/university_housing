@@ -615,7 +615,7 @@ class BookingRoom1Screen extends StatelessWidget {
     }else if(nationalId.length != 14){
       showToast(message: 'رقم البطاقه غير صحيح', state: ToastStates.ERROR);
     }else{
-
+      cubit.getBuildings();
       navigateTo(context, BookingRoom2Screen(
         section: sectionController.text,
         phone: phoneController.text,

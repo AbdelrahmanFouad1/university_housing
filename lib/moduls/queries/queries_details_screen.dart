@@ -88,33 +88,53 @@ class QueriesDetailsScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-                                    if(commentsModel.user!.image != null)
-
-                                      CircleAvatar(
-                                      radius: 30.0,
-                                      backgroundColor: ThemeCubit.get(context).darkTheme
-                                          ? mainTextColor
-                                          : mainColors,
-                                      backgroundImage: NetworkImage(
-                                        commentsModel.user!.image!,
-                                      ),
-                                    ),
-                                    if(commentsModel.user!.image == null)
-                                      CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: ThemeCubit.get(context).darkTheme
-                                            ? mainTextColor
-                                            : mainColors,
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 80.0,
-                                          child: Icon(Icons.error,
-                                            color: ThemeCubit.get(context).darkTheme
-                                                ? mainColors
-                                                : mainTextColor,
+                                    Builder(builder:(context){
+                                      if(commentsModel.user == null){
+                                        return CircleAvatar(
+                                          radius: 30.0,
+                                          backgroundColor: ThemeCubit.get(context).darkTheme
+                                              ? mainTextColor
+                                              : mainColors,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            height: 80.0,
+                                            child: Icon(Icons.error,
+                                              color: ThemeCubit.get(context).darkTheme
+                                                  ? mainColors
+                                                  : mainTextColor,
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                      }else{
+                                        if(commentsModel.user!.image != null){
+                                          return CircleAvatar(
+                                            radius: 30.0,
+                                            backgroundColor: ThemeCubit.get(context).darkTheme
+                                                ? mainTextColor
+                                                : mainColors,
+                                            backgroundImage: NetworkImage(
+                                              commentsModel.user!.image!,
+                                            ),
+                                          );
+                                        }else{
+                                          return CircleAvatar(
+                                            radius: 30.0,
+                                            backgroundColor: ThemeCubit.get(context).darkTheme
+                                                ? mainTextColor
+                                                : mainColors,
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              height: 80.0,
+                                              child: Icon(Icons.error,
+                                                color: ThemeCubit.get(context).darkTheme
+                                                    ? mainColors
+                                                    : mainTextColor,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    }),
 
                                     const SizedBox(
                                       width: 10.0,
@@ -124,7 +144,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          commentsModel.user!.username!,
+                                          commentsModel.user == null ? 'فارغ' : commentsModel.user!.username!,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText1!
@@ -134,7 +154,7 @@ class QueriesDetailsScreen extends StatelessWidget {
                                               ),
                                         ),
                                         Text(
-                                          '${commentsModel.user!.id!}',
+                                          commentsModel.user == null ? 'فارغ' :'${commentsModel.user!.id!}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText1!

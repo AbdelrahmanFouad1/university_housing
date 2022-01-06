@@ -11,6 +11,7 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class AvailableNow extends StatelessWidget {
   AvailableNow({Key? key}) : super(key: key);
 
+  //todo تعديل كل التكستات الي بتتمسح
   final List<AlertDialogModel> _levelList = [
     AlertDialogModel(
       text: "مميز",

@@ -198,32 +198,53 @@ Widget buildEvaluationItem(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if(review.user.image != null)
-                    CircleAvatar(
-                      radius: 25.0,
-                      backgroundColor: ThemeCubit.get(context).darkTheme
-                          ? mainTextColor
-                          : mainColors,
-                      backgroundImage: NetworkImage(
-                        review.user.image,
-                      ),
-                    ),
-                  if(review.user.image == null)
-                    CircleAvatar(
-                      radius: 25.0,
-                      backgroundColor: ThemeCubit.get(context).darkTheme
-                          ? mainTextColor
-                          : mainColors,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 80.0,
-                        child: Icon(Icons.error,
-                          color: ThemeCubit.get(context).darkTheme
-                              ? mainColors
-                              : mainTextColor,
+                  Builder(builder:(context){
+                    if(review.user == null){
+                      return CircleAvatar(
+                        radius: 25.0,
+                        backgroundColor: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 80.0,
+                          child: Icon(Icons.error,
+                            color: ThemeCubit.get(context).darkTheme
+                                ? mainColors
+                                : mainTextColor,
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }else{
+                      if(review.user!.image != null){
+                        return CircleAvatar(
+                          radius: 25.0,
+                          backgroundColor: ThemeCubit.get(context).darkTheme
+                              ? mainTextColor
+                              : mainColors,
+                          backgroundImage: NetworkImage(
+                            review.user!.image,
+                          ),
+                        );
+                      }else{
+                        return CircleAvatar(
+                          radius: 25.0,
+                          backgroundColor: ThemeCubit.get(context).darkTheme
+                              ? mainTextColor
+                              : mainColors,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 80.0,
+                            child: Icon(Icons.error,
+                              color: ThemeCubit.get(context).darkTheme
+                                  ? mainColors
+                                  : mainTextColor,
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  }),
 
                   const SizedBox(
                     width: 10.0,
@@ -232,7 +253,7 @@ Widget buildEvaluationItem(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        review.user.username,
+                        review.user!= null ? review.user!.username : 'فارغ',
                         style: TextStyle(
                           fontSize: 12.0,
                           color: mainColors,
@@ -240,7 +261,7 @@ Widget buildEvaluationItem(
                         ),
                       ),
                       Text(
-                        review.user.id.toString(),
+                        review.user!= null ? review.user!.id.toString(): 'فارغ',
                         style: TextStyle(
                           fontSize: 12.0,
                           color: mainColors,
@@ -288,11 +309,7 @@ Widget buildEvaluationItem(
             InkWell(
               onTap: () {
                 navigateTo(context, StudentRateDetailsScreen(
-                  image: review.user.image,
-                  id: review.user.id.toString(),
-                  comment: review.comment,
-                  name: review.user.username,
-                  rate: review.rating.toString(),
+                review: review,
                 ));
               },
               child: SizedBox(

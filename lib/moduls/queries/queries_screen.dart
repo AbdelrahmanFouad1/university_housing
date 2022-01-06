@@ -81,7 +81,6 @@ class QueriesScreen extends StatelessWidget {
                             AppCubit.get(context).postQueries(
                                 queries: queriesController.text
                             );
-                            AppCubit.get(context).getQueriesData();
                           },
                           text: 'تقديم الطلب',
                           radius: 8.0,
@@ -108,7 +107,7 @@ class QueriesScreen extends StatelessWidget {
 
                     if(state is GetQueriesLoadingStates)
                       const Center(child: CircularProgressIndicator(),),
-                    if(state is GetQueriesSuccessStates)
+                    if(cubit.commentModel!.isNotEmpty)
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
@@ -150,45 +149,66 @@ class QueriesScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                if(model.user!.image != null)
-                  CircleAvatar(
-                  radius: 25.0,
-                    backgroundColor: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                    backgroundImage: NetworkImage(
-                      model.user!.image!,
-                    ),
-                ),
-                if(model.user!.image == null)
-                  CircleAvatar(
-                    radius: 25.0,
-                    backgroundColor: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 80.0,
-                      child: Icon(Icons.error,
-                        color: ThemeCubit.get(context).darkTheme
-                            ? mainColors
-                            : mainTextColor,
+                Builder(builder:(context){
+                  if(model.user == null){
+                    return CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 80.0,
+                        child: Icon(Icons.error,
+                          color: ThemeCubit.get(context).darkTheme
+                              ? mainColors
+                              : mainTextColor,
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  }else{
+                    if(model.user!.image != null){
+                      return CircleAvatar(
+                        radius: 25.0,
+                        backgroundColor: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
+                        backgroundImage: NetworkImage(
+                          model.user!.image!,
+                        ),
+                      );
+                    }else{
+                      return CircleAvatar(
+                        radius: 25.0,
+                        backgroundColor: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 80.0,
+                          child: Icon(Icons.error,
+                            color: ThemeCubit.get(context).darkTheme
+                                ? mainColors
+                                : mainTextColor,
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                }),
 
                 const SizedBox(width: 10.0,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.user!.username!,
+                      model.user == null ? 'فارغ' : model.user!.username!,
                       style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '${model.user!.id!}',
+                      model.user == null ? 'فارغ' :'${model.user!.id!}',
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],
