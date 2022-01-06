@@ -279,6 +279,7 @@ class AppCubit extends Cubit<AppStates> {
       },
     ).then(
       (value) {
+        getQueriesData();
         emit(PostQueriesSuccessStates());
       },
     ).catchError((error) {
@@ -619,25 +620,49 @@ class AppCubit extends Cubit<AppStates> {
 
   void getFloorAndRooms(int index) {
      roomsList= [];
-    buildings!.Buildings[index].rooms.forEach((element) {
-      if(currentFloorVal == 1){
-        if(element.floor == 1 && element.availability ==true){
-          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
-        }
-      }else if(currentFloorVal == 2){
-        if(element.floor == 2  && element.availability ==true){
-          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
-        }
-      }else if(currentFloorVal == 3){
-        if(element.floor == 3 && element.availability ==true){
-          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
-        }
-      }else{
-        if(element.floor == 4  && element.availability ==true){
-          roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
-        }
-      }
-    });
+     if(profileModel!.isStudent){
+       buildings!.Buildings[index].rooms.forEach((element) {
+         if(currentFloorVal == 1){
+           if(element.floor == 1 && element.availability ==true && element.roomfor==true){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
+           }
+         }else if(currentFloorVal == 2){
+           if(element.floor == 2  && element.availability ==true && element.roomfor==true){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }else if(currentFloorVal == 3){
+           if(element.floor == 3 && element.availability ==true && element.roomfor==true){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }else{
+           if(element.floor == 4  && element.availability ==true&& element.roomfor==true){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }
+       });
+     }
+     else if(profileModel!.isEmployee){
+       buildings!.Buildings[index].rooms.forEach((element) {
+         if(currentFloorVal == 1){
+           if(element.floor == 1 && element.availability ==true&& element.roomfor==false){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB,index: element.roomnumber));
+           }
+         }else if(currentFloorVal == 2){
+           if(element.floor == 2  && element.availability ==true && element.roomfor==false){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }else if(currentFloorVal == 3){
+           if(element.floor == 3 && element.availability ==true&& element.roomfor==false){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }else{
+           if(element.floor == 4  && element.availability ==true&& element.roomfor==false){
+             roomsList.add(RoomData(roomNum:element.roomnumber,idDB: element.idDB ,index: element.roomnumber));
+           }
+         }
+       });
+     }
+
 
     emit(GetFloorAndRoomSuccessStates());
   }
@@ -687,9 +712,7 @@ class AppCubit extends Cubit<AppStates> {
     ).then(
       (value) {
         emit(PostBookingSuccessStates());
-        CacheHelper.saveData(key: 'waiting',value: true);
         showToast(message: 'تم رفع الطلب بنجاح', state: ToastStates.SUCCESS);
-        navigateTo(context, const ChoosePaymentMethodScreen());
 
       },
     ).catchError((error) {

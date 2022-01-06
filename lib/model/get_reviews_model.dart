@@ -4,7 +4,7 @@ class Reviews{
   late String createdAt;
   late String updatedAt;
   late int rating;
-  late User user;
+  User? user;
 
   Reviews.fromJson(Map<String, dynamic> json) {
     rating = json['rating'];
@@ -12,7 +12,9 @@ class Reviews{
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     comment = json['comment'];
-    user = User.fromJson(json['user']);
+    if(json['user'] !=null){
+      user = User.fromJson(json['user']);
+    }
   }
 }
 

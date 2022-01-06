@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:university_housing/model/get_reviews_model.dart';
 import 'package:university_housing/shard/cubit/main/cubit.dart';
 import 'package:university_housing/shard/cubit/main/states.dart';
 import 'package:university_housing/shard/style/color.dart';
@@ -10,18 +11,10 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class StudentRateDetailsScreen extends StatelessWidget {
   StudentRateDetailsScreen({
     Key? key,
-    required this.name,
-    required this.id,
-    required this.image,
-    required this.comment,
-    required this.rate,
+    required this.review,
   }) : super(key: key);
 
-  String name;
-  String id;
-  String image;
-  String comment;
-  String rate;
+  Reviews review;
 
   @override
   Widget build(BuildContext context) {
@@ -89,32 +82,53 @@ class StudentRateDetailsScreen extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if(image != null)
-                                    CircleAvatar(
-                                      radius: 30.0,
-                                      backgroundColor: ThemeCubit.get(context).darkTheme
-                                          ? mainTextColor
-                                          : mainColors,
-                                      backgroundImage: NetworkImage(
-                                        image,
-                                      ),
-                                    ),
-                                  if(image == null)
-                                    CircleAvatar(
-                                      radius: 30.0,
-                                      backgroundColor: ThemeCubit.get(context).darkTheme
-                                          ? mainTextColor
-                                          : mainColors,
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        height: 80.0,
-                                        child: Icon(Icons.error,
-                                          color: ThemeCubit.get(context).darkTheme
-                                              ? mainColors
-                                              : mainTextColor,
+                                  Builder(builder:(context){
+                                    if(review.user == null){
+                                      return CircleAvatar(
+                                        radius: 30.0,
+                                        backgroundColor: ThemeCubit.get(context).darkTheme
+                                            ? mainTextColor
+                                            : mainColors,
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 80.0,
+                                          child: Icon(Icons.error,
+                                            color: ThemeCubit.get(context).darkTheme
+                                                ? mainColors
+                                                : mainTextColor,
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    }else{
+                                      if(review.user!.image != null){
+                                        return CircleAvatar(
+                                          radius: 30.0,
+                                          backgroundColor: ThemeCubit.get(context).darkTheme
+                                              ? mainTextColor
+                                              : mainColors,
+                                          backgroundImage: NetworkImage(
+                                            review.user!.image,
+                                          ),
+                                        );
+                                      }else{
+                                        return CircleAvatar(
+                                          radius: 30.0,
+                                          backgroundColor: ThemeCubit.get(context).darkTheme
+                                              ? mainTextColor
+                                              : mainColors,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            height: 80.0,
+                                            child: Icon(Icons.error,
+                                              color: ThemeCubit.get(context).darkTheme
+                                                  ? mainColors
+                                                  : mainTextColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  }),
 
                                   const SizedBox(
                                     width: 10.0,
@@ -124,7 +138,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        name,
+                                        review.user!= null ? review.user!.username : 'فارغ',
                                         style: TextStyle(
                                           fontSize: 14.0,
                                           color: mainColors,
@@ -132,7 +146,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        id,
+                                        review.user!= null ? review.user!.id.toString(): 'فارغ',
                                         style: TextStyle(
                                           fontSize: 14.0,
                                           color: mainColors,
@@ -146,7 +160,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                                     child: RatingBar.builder(
                                       textDirection: TextDirection.ltr,
                                       allowHalfRating: false,
-                                      initialRating: double.parse(rate),
+                                      initialRating: double.parse(review.rating.toString()),
                                       itemSize: 10.0,
                                       direction: Axis.horizontal,
                                       itemCount: 5,
@@ -171,7 +185,7 @@ class StudentRateDetailsScreen extends StatelessWidget {
                                 child: SingleChildScrollView(
                                   physics: const BouncingScrollPhysics(),
                                   child: Text(
-                                    comment,
+                                    review.comment,
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       color: mainColors,

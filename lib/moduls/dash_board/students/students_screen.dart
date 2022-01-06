@@ -383,37 +383,14 @@ Widget studentItem({
   required List<AlertDialogModel> job,
   required List<AlertDialogModel> credit,
 }) {
-  var idController = TextEditingController();
-  var nameController = TextEditingController();
-  var addressController = TextEditingController();
-  var sectionController = TextEditingController();
-  var nationalIDController = TextEditingController();
   var termController = TextEditingController();
-  var nationalPhotoController = TextEditingController();
-  var phoneController = TextEditingController();
   var levelController = TextEditingController();
   var jobController = TextEditingController();
-  var roomController = TextEditingController();
   var creditController = TextEditingController();
-  var paymentDateController = TextEditingController();
-  var buildingController = TextEditingController();
-  var fiensController = TextEditingController();
 
-  DateTime tempDate = DateFormat("yyyy-MM-dd").parse(item.createdAt);
-  String date = tempDate.toString().substring(0, 10);
-
-  idController.text = item.id.toString();
-  nameController.text = item.username;
-  fiensController.text = item.fines.length.toString();
-  addressController.text = item.address;
-  sectionController.text = item.section;
-  nationalIDController.text = item.NationalID.toString();
-  paymentDateController.text = date;
-  roomController.text = item.roomnumber.toString();
-  buildingController.text = item.buildingName;
+  // DateTime tempDate = DateFormat("yyyy-MM-dd").parse(item.createdAt);
+  // String date = tempDate.toString().substring(0, 10);
   termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :'الثالث';
-  nationalPhotoController.text = item.cardPhoto;
-  phoneController.text = item.phone;
   levelController.text = item.buildingType == true ? 'مميز' : 'عادي';
   jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
   creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
@@ -492,30 +469,34 @@ Widget studentItem({
                         child: IconButton(
                           onPressed: () {
                             if (cubit.showStudentEdit == true) {
-                              if (phoneController.text.length == 11 && nationalIDController.text.length==14) {
+                              if (cubit.studentPhoneController.text.length == 11 && cubit.studentNationalIDController.text.length==14) {
+                                // todo fix term always true
                                 cubit.putStudent(
                                   idDB: item.idDB,
-                                  id: int.parse(idController.text),
-                                  roomnumber: int.parse(roomController.text),
-                                  buildingName: buildingController.text,
-                                  address: addressController.text,
-                                  username: nameController.text,
-                                  section: sectionController.text,
-                                  NationalID: int.parse(nationalIDController.text),
+                                  id: int.parse(cubit.studentIdController.text),
+                                    username: cubit.studentNameController.text,
+                                    roomnumber: int.parse(cubit.studentRoomController.text),
+                                  buildingName: cubit.studentBuildingController.text,
+                                  address: cubit.studentAddressController.text,
+                                  section: cubit.studentSectionController.text,
+                                  NationalID: int.parse(cubit.studentNationalIDController.text),
                                   buildingType: levelController.text == 'مميز' ? true :false,
                                   isEmployee: jobController.text == 'طلاب'? false : true,
                                   isStudent: jobController.text == 'طلاب'? true : false,
                                   isPaid: creditController.text == 'تم الدفع' ? true :false,
-                                  paidAt: paymentDateController.text,
+                                  paidAt: cubit.studentPaymentDateController.text,
                                   firstTerm: termController.text == 'الأول'? true : false,
                                   secondTerm: termController.text == 'الثاني'? true : false,
                                   thirdTerm: termController.text == 'الثالث'? true : false,
                                   cardPhoto: item.cardPhoto,
-                                  phone: phoneController.text,
-                                  floor: item.floor,
+                                  phone: cubit.studentPhoneController.text,
+                                  floor: int.parse(cubit.studentFloorController.text),
+                                  fromWaiting: false,
+                                  isresident: true,
+                                  iswaiting: true,
                                 );
                               } else {
-                                if(phoneController.text.length != 11){
+                                if(cubit.studentPhoneController.text.length != 11){
                                   showToast(
                                       message: 'رقم الموبيل غير صحيح',
                                       state: ToastStates.ERROR);
@@ -580,7 +561,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: idController,
+                                controller: cubit.studentIdController,
                               ),
                             ],
                           ),
@@ -600,7 +581,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: nameController,
+                                controller: cubit.studentNameController,
                               ),
                             ],
                           ),
@@ -620,7 +601,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: addressController,
+                                controller: cubit.studentAddressController,
                               ),
                             ],
                           ),
@@ -640,7 +621,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: sectionController,
+                                controller: cubit.studentSectionController,
                               ),
                             ],
                           ),
@@ -691,10 +672,14 @@ Widget studentItem({
                                                   termController.text = cubit.currentStudentTermText;
                                                   if(val == 0){
                                                     item.firstTerm = true;
+                                                    item.secondTerm=false;
+                                                    item.thirdTerm=false;
                                                   }else if(val == 1){
                                                     item.firstTerm = false;
                                                     item.secondTerm = true;
+                                                    item.thirdTerm=false;
                                                   }else{
+                                                    item.firstTerm = false;
                                                     item.secondTerm = false;
                                                     item.thirdTerm = true;
                                                   }
@@ -788,7 +773,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: phoneController,
+                                controller: cubit.studentPhoneController,
                               ),
                             ],
                           ),
@@ -809,7 +794,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: buildingController,
+                                controller: cubit.studentBuildingController,
                               ),
                             ],
                           ),
@@ -830,7 +815,27 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: roomController,
+                                controller: cubit.studentRoomController,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+
+                          // floor
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '- الدور :',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              switchedTextFormField(
+                                context: context,
+                                cubit: cubit,
+                                controller: cubit.studentFloorController,
                               ),
                             ],
                           ),
@@ -965,7 +970,6 @@ Widget studentItem({
                                       );
                                     }
                                     else{
-                                      // todo تعديل بيانات اليوزر لما يرفع الوصل واخليه is paid + is isresident
                                       if(item.isPaid){
                                         DashBoardCubit.get(context).getAllVoucher(
                                             query: {
@@ -996,7 +1000,7 @@ Widget studentItem({
                               switchedTextFormField(
                                 context: context,
                                 cubit: cubit,
-                                controller: nationalIDController,
+                                controller: cubit.studentNationalIDController,
                               ),
                             ],
                           ),
@@ -1015,7 +1019,7 @@ Widget studentItem({
                               ),
                               Expanded(
                                 child: TextFormField(
-                                  controller: fiensController,
+                                  controller: cubit.studentFinesController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
@@ -1095,6 +1099,7 @@ Widget studentItem({
               cubit.currentStudentIndex = index;
               cubit.showStudentDetails(
                   !cubit.showStudent_details, index);
+              cubit.inputStudentData(item);
             },
             child: Dismissible(
               direction: DismissDirection.startToEnd,
@@ -1140,6 +1145,7 @@ Widget studentItem({
                           cubit.currentStudentIndex = index;
                           cubit.showStudentDetails(
                               !cubit.showStudent_details, index);
+                          cubit.inputStudentData(item);
                         },
                         icon: Icon(
                           Icons.keyboard_arrow_down,

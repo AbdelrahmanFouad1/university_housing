@@ -667,6 +667,8 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                             reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
                                             isReplied: true
                                         );
+                                        //todo null error
+                                        cubit.ifAcceptedExit(leftItem: leftItem!);
                                       }
                                     },
                                     text: 'اوافق',

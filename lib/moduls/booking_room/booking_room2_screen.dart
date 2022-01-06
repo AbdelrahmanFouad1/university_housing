@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university_housing/moduls/booking_room/payment/choose_payment_method_screen.dart';
 import 'package:university_housing/moduls/profile/terms_and_conditions_screen.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/components/constants.dart';
@@ -43,7 +44,21 @@ class BookingRoom2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
-      listener: (context,state){},
+      listener: (context,state){
+
+        if(state is PostBookingSuccessStates ){
+          navigateTo(context, const ChoosePaymentMethodScreen());
+        }
+        if(state is PostBookingLoadingStates ){
+          showDialog<void>(
+              context: context,
+              builder: (context)=> waitingDialog(context: context)
+          );
+        }
+        if (state is PostBookingErrorStates ){
+          Navigator.pop(context);
+        }
+      },
       builder: (context,state){
         var cubit = AppCubit.get(context);
         String cost = '${buildings!.Buildings[currentIndex].cost + 500}';

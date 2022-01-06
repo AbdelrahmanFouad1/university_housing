@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_orders_model.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
 import 'package:university_housing/model/get_all_vouchers_model.dart';
@@ -547,37 +548,42 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
 //  Students
+  var studentIdController = TextEditingController();
+  var studentNameController = TextEditingController();
+  var studentAddressController = TextEditingController();
+  var studentSectionController = TextEditingController();
+  var studentNationalIDController = TextEditingController();
+  var studentTermController = TextEditingController();
+  var studentNationalPhotoController = TextEditingController();
+  var studentPhoneController = TextEditingController();
+  var studentLevelController = TextEditingController();
+  var studentJobController = TextEditingController();
+  var studentRoomController = TextEditingController();
+  var studentCreditController = TextEditingController();
+  var studentPaymentDateController = TextEditingController();
+  var studentBuildingController = TextEditingController();
+  var studentFinesController = TextEditingController();
+  var studentFloorController = TextEditingController();
 
-  var idController = TextEditingController();
-  var nameController = TextEditingController();
-  var addressController = TextEditingController();
-  var sectionController = TextEditingController();
-  var nationalIDController = TextEditingController();
-  var termController = TextEditingController();
-  var nationalPhotoController = TextEditingController();
-  var phoneController = TextEditingController();
-  var levelController = TextEditingController();
-  var jobController = TextEditingController();
-  var roomController = TextEditingController();
-  var creditController = TextEditingController();
-  var paymentDateController = TextEditingController();
-  var buildingController = TextEditingController();
-
-  void inputData(Users item){
-    idController.text = item.id.toString();
-    nameController.text = item.username;
-    addressController.text = item.address.isEmpty ? 'فارغ':item.address;
-    sectionController.text = item.section;
-    nationalIDController.text = item.NationalID.toString();
-    paymentDateController.text = 'فارغ';
-    roomController.text = item.roomnumber.toString();
-    buildingController.text = item.buildingName.isEmpty ? 'فارغ':item.buildingName;
-    termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :item.thirdTerm == true ?'الثالث':'فارغ';
-    nationalPhotoController.text = item.cardPhoto;
-    phoneController.text = item.phone;
-    levelController.text = item.buildingType == true ?'مميز':'عادي';
-    jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
-    creditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
+  void inputStudentData(Users item){
+    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(item.createdAt);
+    String date = tempDate.toString().substring(0, 10);
+    studentIdController.text = item.id.toString();
+    studentNameController.text = item.username;
+    studentFinesController.text = item.fines.length.toString();
+    studentAddressController.text = item.address;
+    studentSectionController.text = item.section.isEmpty ?'فارغ':item.section;
+    studentNationalIDController.text = item.NationalID.toString();
+    studentPaymentDateController.text = date;
+    studentFloorController.text=item.floor.toString();
+    studentRoomController.text = item.roomnumber.toString();
+    studentBuildingController.text = item.buildingName;
+    studentTermController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :'الثالث';
+    studentNationalPhotoController.text = item.cardPhoto;
+    studentPhoneController.text = item.phone;
+    studentLevelController.text = item.buildingType == true ? 'مميز' : 'عادي';
+    studentJobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
+    studentCreditController.text = item.isPaid == true ? 'تم الدفع' : 'لم يتم الدفع';
     emit(InputDataSuccess());
   }
 
@@ -620,21 +626,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
-  bool waitingIsStudentKind = true;
-  void changeWaitingPeopleType(bool student) {
-    waitingIsStudentKind = student;
-    getAllUsers(
-        query: {
-            'firstTerm':false,
-            'secondTerm':false,
-            'thirdTerm':false,
-          if(waitingIsStudentKind)
-            'isStudent':true,
-          if(!waitingIsStudentKind)
-            'isEmployee':true,
-        }
-    );
-  }
+
 
   double animatedStudentHeight = 0.0;
   bool showStudent_details = false;
@@ -653,33 +645,15 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(ChangeStudentEditIcon());
   }
 
-  double animatedWaitingStudentHeight = 0.0;
-  bool showWaitingStudent_details = false;
-  int currentWaitingStudentIndex = -1;
-  void showWaitingStudentDetails(bool show ,int index) {
-    if(currentWaitingStudentIndex == index){
-      showWaitingStudent_details = show;
-      animatedWaitingStudentHeight == 0.0? animatedWaitingStudentHeight= 1000.0: animatedWaitingStudentHeight= 0.0;
 
-      emit(ShowStudentDetails());
-    }
-  }
-
-  bool showWaitingStudentEdit = false;
-  void changeWaitingStudentEditIcon(bool edit){
-    showWaitingStudentEdit = edit;
-    emit(ChangeStudentEditIcon());
-  }
-
-  int currentStudentTermVal = 0;
+  int currentStudentTermVal = -1;
   String currentStudentTermText = '';
   void selectStudentTerm(int currentNum) {
     currentStudentTermVal = currentNum;
-    // inputData(waitingItem!);
     emit(SelectStudentTerm());
   }
 
-  int currentStudentLevelVal = 0;
+  int currentStudentLevelVal = -1;
   String currentStudentLevelText = '';
 
   void selectStudentLevel(int currentNum) {
@@ -687,7 +661,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(SelectStudentLevel());
   }
 
-  int currentStudentJobVal = 0;
+  int currentStudentJobVal = -1;
   String currentStudentJobText = '';
 
   void selectStudentJob(int currentNum) {
@@ -695,7 +669,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     emit(SelectStudentJob());
   }
 
-  int currentStudentCreditVal = 0;
+  int currentStudentCreditVal = -1;
   String currentStudentCreditText = '';
 
   void selectStudentCredit(int currentNum) {
@@ -744,9 +718,11 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
     required String section,
     required bool isPaid,
     required String paidAt,
-    required String cardPhoto,
+    String? cardPhoto,
     required String phone,
     bool? iswaiting,
+    bool? isresident,
+    required bool fromWaiting,
   }) {
     emit(PutStudentLoadingStates());
     DioHelper.patchData(
@@ -766,17 +742,42 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         'isPaid': isPaid,
         'paidAt': paidAt,
         'floor': floor,
-        'cardPhoto': cardPhoto,
+        'cardPhoto': cardPhoto ?? '',
         'firstTerm': firstTerm,
         'secondTerm': secondTerm,
         'thirdTerm': thirdTerm,
         'phone': phone,
         'isWaiting': iswaiting,
+        'isresident': isresident,
       },
     ).then((value) {
-      print(value!.statusMessage);
+      print(value!.data.toString());
+      if(fromWaiting){
+        getAllUsers(query: {
+          'firstTerm':false,
+          'secondTerm':false,
+          'thirdTerm':false,
+          if(waitingIsStudentKind)
+            'isStudent':true,
+          if(!waitingIsStudentKind)
+            'isEmployee':true,
+        });
+      }else{
+        getAllUsers(query: {
+          if(termNum == 1)
+            'firstTerm':true,
+          if(termNum == 2)
+            'secondTerm':true,
+          if(termNum == 3)
+            'thirdTerm':true,
+          if(isStudentKind)
+            'isStudent':true,
+          if(!isStudentKind)
+            'isEmployee':true,
+        });
+      }
       emit(PutStudentSuccessStates());
-      // getAllUsers();
+
     },
     ).catchError((error) {
       print(error);
@@ -784,7 +785,6 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(PutStudentErrorStates(error.toString()));
     });
   }
-
 
   void deleteStudent(id , bool isWaiting) {
     emit(DeleteStudentLoadingStates());
@@ -1022,6 +1022,73 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(GetAllVouchersErrorStates(error.toString()));
     });
   }
+
+  //waiting students
+  var idController = TextEditingController();
+  var nameController = TextEditingController();
+  var addressController = TextEditingController();
+  var sectionController = TextEditingController();
+  var nationalIDController = TextEditingController();
+  var nationalPhotoController = TextEditingController();
+  var phoneController = TextEditingController();
+  var roomController = TextEditingController();
+  var paymentDateController = TextEditingController();
+  var buildingController = TextEditingController();
+  var floorController = TextEditingController();
+
+  void inputData(Users item){
+    idController.text = item.id.toString();
+    nameController.text = item.username;
+    addressController.text = item.address.isEmpty ? 'فارغ':item.address;
+    sectionController.text = item.section.isEmpty? 'فارغ':item.section;
+    nationalIDController.text = item.NationalID.toString();
+    paymentDateController.text = 'فارغ';
+    roomController.text = item.roomnumber.toString();
+    buildingController.text = item.buildingName.isEmpty ? 'فارغ':item.buildingName;
+    nationalPhotoController.text = item.cardPhoto;
+    phoneController.text = item.phone;
+    floorController.text = item.floor.toString();
+    emit(InputDataSuccess());
+  }
+
+  bool waitingIsStudentKind = true;
+  void changeWaitingPeopleType(bool student) {
+    waitingIsStudentKind = student;
+    getAllUsers(
+        query: {
+          'firstTerm':false,
+          'secondTerm':false,
+          'thirdTerm':false,
+          if(waitingIsStudentKind)
+            'isStudent':true,
+          if(!waitingIsStudentKind)
+            'isEmployee':true,
+        }
+    );
+  }
+
+
+  double animatedWaitingStudentHeight = 0.0;
+  bool showWaitingStudent_details = false;
+  int currentWaitingStudentIndex = -1;
+  void showWaitingStudentDetails(bool show ,int index) {
+    if(currentWaitingStudentIndex == index){
+      showWaitingStudent_details = show;
+      animatedWaitingStudentHeight == 0.0? animatedWaitingStudentHeight= 1000.0: animatedWaitingStudentHeight= 0.0;
+
+      emit(ShowStudentDetails());
+    }
+  }
+
+  bool showWaitingStudentEdit = false;
+  void changeWaitingStudentEditIcon(bool edit){
+    showWaitingStudentEdit = edit;
+    emit(ChangeStudentEditIcon());
+  }
+
+
+
+
 
 
 
@@ -1405,10 +1472,42 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         section: bookingItem.Section,
       isPaid: false,
       paidAt: '',
-      cardPhoto: bookingItem.cardPhoto,
       phone: bookingItem.phone,
       iswaiting: true,
       floor: bookingItem.floor,
+      isresident: true,
+      cardPhoto: bookingItem.cardPhoto,
+      fromWaiting: false,
+    );
+  }
+
+
+  void ifAcceptedExit({
+    required LeftOrders leftItem,
+  }){
+    putStudent(
+      idDB: leftItem.user!.idDB,
+      id: leftItem.user!.id,
+      username: leftItem.user!.username,
+      isStudent: leftItem.user!.isStudent,
+      isEmployee: leftItem.user!.isEmployee,
+      firstTerm: false,
+      secondTerm: false,
+      thirdTerm: false,
+      NationalID: 0 ,
+      address: 'فارغ',
+      buildingName: 'فارغ',
+      buildingType: false,
+      roomnumber: 0,
+      section: 'فارغ',
+      isPaid: false,
+      paidAt: '',
+      phone: 'فارغ',
+      iswaiting: false,
+      floor: 0,
+      isresident: false,
+      cardPhoto:'',
+      fromWaiting: false,
     );
   }
 
