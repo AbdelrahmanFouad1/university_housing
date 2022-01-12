@@ -70,21 +70,6 @@ class EditRooms extends StatelessWidget {
             appBar: dashAppBar(
               title: 'إدارة الغرف',
               context: context,
-              action: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -147,20 +132,10 @@ Widget roomItem({
   required List<AlertDialogModel> levelList,
   required List<AlertDialogModel> genderList,
 }) {
-  var codeController = TextEditingController();
-  var floorNumController = TextEditingController();
-  var userId = TextEditingController();
   var roomForController = TextEditingController();
-  var roomNumController = TextEditingController();
   var typeController = TextEditingController();
-  var userName = TextEditingController();
   var statueController = TextEditingController();
-  codeController.text = item.roomcode;
-  floorNumController.text = item.floor.toString();
-  userId.text = item.userresidentId.isEmpty ? 'غير موجود حاليا' : item.userresidentId;
-  userName.text = item.userresidentName.isEmpty ?'غير موجود حاليا' : item.userresidentName;
   roomForController.text = item.roomfor == true ? 'طلاب' : 'عاملين';
-  roomNumController.text = item.roomnumber.toString();
   typeController.text = item.type == true ? 'فردي' : 'زوجي';
   statueController.text = item.availability == true ? 'متاح للسكن' : 'معطل';
   return Builder(builder: (context) {
@@ -220,11 +195,11 @@ Widget roomItem({
                     child: IconButton(
                       onPressed: () {
                         if (cubit.showRoomEdit == true) {
-                          item.roomcode = codeController.text;
-                          item.roomnumber = int.parse(roomNumController.text);
-                          item.floor = int.parse(floorNumController.text);
-                          item.userresidentName = userName.text;
-                          item.userresidentId = userId.text;
+                          item.roomcode = cubit.roomCodeController.text;
+                          item.roomnumber = int.parse(cubit.roomRoomNumController.text);
+                          item.floor = int.parse(cubit.roomFloorNumController.text);
+                          item.userresidentName = cubit.roomUserName.text;
+                          item.userresidentId = cubit.roomUserId.text;
                           item.availability = statueController.text == 'معطل' ? false : true;
                           item.type = typeController.text == 'مميز' ? true : false;
                           item.roomfor= roomForController.text == 'طلاب' ? true : false;
@@ -292,7 +267,7 @@ Widget roomItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: codeController,
+                            controller: cubit.roomCodeController,
                           ),
                         ],
                       ),
@@ -312,7 +287,7 @@ Widget roomItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: roomNumController,
+                            controller: cubit.roomRoomNumController,
                           ),
                         ],
                       ),
@@ -332,7 +307,7 @@ Widget roomItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: floorNumController,
+                            controller: cubit.roomFloorNumController,
                           ),
                         ],
                       ),
@@ -578,7 +553,7 @@ Widget roomItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: userName,
+                            controller: cubit.roomUserName,
                           ),
                         ],
                       ),
@@ -598,7 +573,7 @@ Widget roomItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: userId,
+                            controller: cubit.roomUserId,
                           ),
                         ],
                       ),
@@ -611,53 +586,61 @@ Widget roomItem({
         ),
       );
     } else {
-      return Dismissible(
-        direction: DismissDirection.startToEnd,
-        resizeDuration: const Duration(milliseconds: 200),
-        onDismissed: (direction) {
-          cubit.deleteRoom(
-            buildingSlug: buildingItem.slug,
-            roomId: item.idDB,
-          );
+      return InkWell(
+        onTap: (){
+          cubit.currentRoomIndex = index;
+          cubit.showRoomDetails(!cubit.showRoom, index);
+          cubit.inputRoomsData(item);
         },
-        background: Container(
-          decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadiusDirectional.circular(8.0),
-          ),
-          padding: const EdgeInsets.all(5.0),
-          alignment: AlignmentDirectional.centerStart,
-          child: const Icon(
-            Icons.delete_forever,
-            color: Colors.white,
-          ),
-        ),
-        key: UniqueKey(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                item.roomnumber.toString(),
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+        child: Dismissible(
+          direction: DismissDirection.startToEnd,
+          resizeDuration: const Duration(milliseconds: 200),
+          onDismissed: (direction) {
+            cubit.deleteRoom(
+              buildingSlug: buildingItem.slug,
+              roomId: item.idDB,
+            );
+          },
+          background: Container(
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadiusDirectional.circular(8.0),
             ),
-            SizedBox(
-                width: 30.0,
-                height: 30.0,
-                child: IconButton(
-                  onPressed: () {
-                    cubit.currentRoomIndex = index;
-                    cubit.showRoomDetails(!cubit.showRoom, index);
-                  },
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
+            padding: const EdgeInsets.all(5.0),
+            alignment: AlignmentDirectional.centerStart,
+            child: const Icon(
+              Icons.delete_forever,
+              color: Colors.white,
+            ),
+          ),
+          key: UniqueKey(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  item.roomnumber.toString(),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-          ],
+              SizedBox(
+                  width: 30.0,
+                  height: 30.0,
+                  child: IconButton(
+                    onPressed: () {
+                      cubit.currentRoomIndex = index;
+                      cubit.showRoomDetails(!cubit.showRoom, index);
+                      cubit.inputRoomsData(item);
+                    },
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
     }

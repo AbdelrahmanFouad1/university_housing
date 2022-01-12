@@ -12,7 +12,7 @@ class GetAllVouchersModel {
     voucherImage = json['voucherImage'] ?? 'فارغ';
     createdAt = json['createdAt'] ?? 'فارغ';
     updatedAt = json['updatedAt'] ?? 'فارغ';
-    // VoucherUsers.fromJson(json['users']);
+    users = VoucherUsers.fromJson(json['user']);
   }
 }
 
@@ -22,15 +22,12 @@ class VoucherUsers{
   late int id;
   late String idDB;
   late String username;
-  late String phone;
-
 
   VoucherUsers.fromJson(Map<String, dynamic> json) {
     idDB = json['_id'] ?? 'فارغ';
-    isEmployee = json['isEmployee'];
-    isStudent = json['isStudent'];
-    phone = json['phone']?? 'فارغ';
-    id = json['id'];
+    isEmployee = json['isEmployee']?? false;
+    isStudent = json['isStudent']?? false;
+    id = json['id']??0;
     username = json['username'] ?? 'فارغ';
   }
 }

@@ -11,7 +11,6 @@ import 'package:university_housing/shard/style/theme/cubit/cubit.dart';
 class AvailableNow extends StatelessWidget {
   AvailableNow({Key? key}) : super(key: key);
 
-  //todo تعديل كل التكستات الي بتتمسح
   final List<AlertDialogModel> _levelList = [
     AlertDialogModel(
       text: "مميز",
@@ -140,23 +139,12 @@ Widget buildingItem({
   required List<AlertDialogModel> levelList,
   required List<AlertDialogModel> genderList,
 }) {
-  var codeController = TextEditingController();
-  var nameController = TextEditingController();
-  var addressController = TextEditingController();
   var genderController = TextEditingController();
-  var roomNumController = TextEditingController();
   var levelController = TextEditingController();
-  var managerNameController = TextEditingController();
-  var managerPhoneController = TextEditingController();
   var statueController = TextEditingController();
-  codeController.text = item.buildingCode;
-  nameController.text = item.buildingName;
-  addressController.text = item.address;
+
   genderController.text = item.gender == true ?'ذكور':'إناث';
-  roomNumController.text = item.rooms.length.toString();
   levelController.text = item.buildingLevels == true ? 'مميز' : 'عادي';
-  managerNameController.text = item.buildingsupervisorName;
-  managerPhoneController.text = item.buildingsupervisorPhonenumber;
   statueController.text = item.availability == true ? 'متاح للسكن' : 'معطل';
   return Builder(builder: (context) {
     if (cubit.showDetails == true) {
@@ -215,19 +203,18 @@ Widget buildingItem({
                     child: IconButton(
                       onPressed: () {
                         if (cubit.showEdit == true) {
-                          if (managerPhoneController.text.length == 11) {
-                            item.buildingCode = codeController.text;
-                            item.buildingName = nameController.text;
-                            item.buildingsupervisorPhonenumber = managerPhoneController.text;
-                            item.buildingsupervisorName = managerNameController.text;
-                            item.address = addressController.text;
+                          if (cubit.availableManagerPhoneController.text.length == 11) {
+                            item.buildingCode = cubit.availableCodeController.text;
+                            item.buildingName = cubit.availableNameController.text;
+                            item.buildingsupervisorPhonenumber = cubit.availableManagerPhoneController.text;
+                            item.buildingsupervisorName = cubit.availableManagerNameController.text;
+                            item.address = cubit.availableAddressController.text;
                             item.availability = statueController.text == 'معطل' ? false : true;
                             item.buildingLevels = levelController.text == 'مميز' ? true : false;
                             item.gender = genderController.text == 'ذكور' ? true : false;
                             cubit.putBuilding(
-                              availability: item.availability,
                               //todo put building image
-                              image: item.image,
+                              // image: item.image,
                               address: item.address,
                               buildingName: item.buildingName,
                               buildingCode: item.buildingCode,
@@ -235,6 +222,7 @@ Widget buildingItem({
                               buildingsupervisorName: item.buildingsupervisorName,
                               buildingsupervisorPhonenumber: item.buildingsupervisorPhonenumber,
                               numberofrooms: item.rooms.length,
+                              availability: item.availability,
                               gender: item.gender,
                               slug: item.slug,
                             );
@@ -295,7 +283,7 @@ Widget buildingItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: codeController,
+                            controller: cubit.availableCodeController,
                           ),
                         ],
                       ),
@@ -315,7 +303,7 @@ Widget buildingItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: nameController,
+                            controller: cubit.availableNameController,
                           ),
                         ],
                       ),
@@ -335,7 +323,7 @@ Widget buildingItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: addressController,
+                            controller: cubit.availableAddressController,
                           ),
                         ],
                       ),
@@ -427,7 +415,7 @@ Widget buildingItem({
                           ),
                           Expanded(
                             child: TextFormField(
-                              controller: roomNumController,
+                              controller: cubit.availableRoomNumController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.zero,
@@ -539,7 +527,7 @@ Widget buildingItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: managerNameController,
+                            controller: cubit.availableManagerNameController,
                           ),
                         ],
                       ),
@@ -559,7 +547,7 @@ Widget buildingItem({
                           switchedTextFormField(
                             context: context,
                             cubit: cubit,
-                            controller: managerPhoneController,
+                            controller: cubit.availableManagerPhoneController,
                           ),
                         ],
                       ),
@@ -644,50 +632,58 @@ Widget buildingItem({
         ),
       );
     } else {
-      return Dismissible(
-        direction: DismissDirection.startToEnd,
-        resizeDuration: const Duration(milliseconds: 200),
-        onDismissed: (direction) {
-          cubit.deleteBuilding(item.idDB);
+      return InkWell(
+        onTap: (){
+          cubit.currentIndex = index;
+          cubit.showBuildingDetails(!cubit.showDetails, index);
+          cubit.inputAvailableData(item);
         },
-        background: Container(
-          decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadiusDirectional.circular(8.0),
-          ),
-          padding: const EdgeInsets.all(5.0),
-          alignment: AlignmentDirectional.centerStart,
-          child: const Icon(
-            Icons.delete_forever,
-            color: Colors.white,
-          ),
-        ),
-        key: UniqueKey(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                item.buildingName,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+        child: Dismissible(
+          direction: DismissDirection.startToEnd,
+          resizeDuration: const Duration(milliseconds: 200),
+          onDismissed: (direction) {
+            cubit.deleteBuilding(item.idDB);
+          },
+          background: Container(
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadiusDirectional.circular(8.0),
             ),
-            SizedBox(
-                width: 30.0,
-                height: 30.0,
-                child: IconButton(
-                  onPressed: () {
-                    cubit.currentIndex = index;
-                    cubit.showBuildingDetails(!cubit.showDetails, index);
-                  },
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
+            padding: const EdgeInsets.all(5.0),
+            alignment: AlignmentDirectional.centerStart,
+            child: const Icon(
+              Icons.delete_forever,
+              color: Colors.white,
+            ),
+          ),
+          key: UniqueKey(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  item.buildingName,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-          ],
+              SizedBox(
+                  width: 30.0,
+                  height: 30.0,
+                  child: IconButton(
+                    onPressed: () {
+                      cubit.currentIndex = index;
+                      cubit.showBuildingDetails(!cubit.showDetails, index);
+                      cubit.inputAvailableData(item);
+                    },
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
     }
