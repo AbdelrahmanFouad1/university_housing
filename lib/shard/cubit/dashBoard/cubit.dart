@@ -197,8 +197,38 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
   // Available now
-  GetBuildingsModel? availableNow;
+  var availableCodeController = TextEditingController();
+  var availableNameController = TextEditingController();
+  var availableAddressController = TextEditingController();
+  var availableRoomNumController = TextEditingController();
+  var availableManagerNameController = TextEditingController();
+  var availableManagerPhoneController = TextEditingController();
+  void inputAvailableData(BuildingModel item){
+    availableCodeController.text = item.buildingCode;
+    availableNameController.text=item.buildingName;
+    availableAddressController.text=item.address;
+    availableRoomNumController.text = item.rooms.length.toString();
+    availableManagerNameController.text = item.buildingsupervisorName;
+    availableManagerPhoneController.text = item.buildingsupervisorPhonenumber;
+    emit(InputDataSuccess());
+  }
 
+
+  var roomCodeController = TextEditingController();
+  var roomFloorNumController = TextEditingController();
+  var roomUserId = TextEditingController();
+  var roomRoomNumController = TextEditingController();
+  var roomUserName = TextEditingController();
+  void inputRoomsData(Rooms item){
+    roomCodeController.text = item.roomcode;
+    roomFloorNumController.text = item.floor.toString();
+    roomUserId.text = item.userresidentId.isEmpty ? 'غير موجود حاليا' : item.userresidentId;
+    roomUserName.text = item.userresidentName.isEmpty ?'غير موجود حاليا' : item.userresidentName;
+    roomRoomNumController.text = item.roomnumber.toString();
+    emit(InputDataSuccess());
+  }
+
+  GetBuildingsModel? availableNow;
   List<AlertDialogModel> buildingsName = [];
 
   void getAvailableNowData() {
@@ -369,7 +399,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   void putBuilding({
     required String slug,
     required bool buildingLevels,
-    required String image,
+    // required String image,
     required bool availability,
     required int numberofrooms,
     required String buildingName,
@@ -385,7 +415,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       token: tokeen ?? '',
       data: {
         'buildingLevels': buildingLevels,
-        'image': image,
+        // 'image': image,
         'availability': availability,
         'numberofrooms': numberofrooms,
         'buildingName': buildingName,
@@ -401,6 +431,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(PutBuildingSuccessStates());
     },
     ).catchError((error) {
+      print(error.toString());
       showToast(message: 'حدث خطأ ما, برجاء المحاوله في وقت لاحق', state: ToastStates.ERROR);
       emit(PutBuildingErrorStates(error.toString()));
     });
@@ -428,7 +459,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
   }
 
 
-// rooms home screen
+// Rooms home screen
   GetNumRoomsModel? allRooms;
   void getRoomsNum(){
     emit(GetAllRoomsLoadingStates());
@@ -763,7 +794,8 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
             'isEmployee':true,
         });
       }else{
-        getAllUsers(query: {
+        getAllUsers(
+            query: {
           if(termNum == 1)
             'firstTerm':true,
           if(termNum == 2)
@@ -1001,8 +1033,10 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
 
 
   List<GetAllVouchersModel> allVouchers = [];
+  GetAllVouchersModel? oneVoucher ;
   void getAllVoucher({
     required Map<String, dynamic> query,
+    required int id,
   }) {
     print('---------- get all Vouchers ----------');
     emit(GetAllVouchersLoadingStates());
@@ -1015,6 +1049,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
         value.data.forEach((element){
           allVouchers.add(GetAllVouchersModel.fromJson(element)) ;
         });
+        getOneVoucher(id);
         emit(GetAllVouchersSuccessStates());
       }
     }).catchError((error) {
@@ -1022,6 +1057,17 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       emit(GetAllVouchersErrorStates(error.toString()));
     });
   }
+
+  void getOneVoucher(id){
+    if(allVouchers.isNotEmpty){
+      for (var element in allVouchers) {
+        if(element.users.id == id){
+          oneVoucher = element;
+        }
+      }
+    }
+  }
+
 
   //waiting students
   var idController = TextEditingController();
@@ -1502,7 +1548,7 @@ class DashBoardCubit extends Cubit<DashBoardStates>{
       section: 'فارغ',
       isPaid: false,
       paidAt: '',
-      phone: 'فارغ',
+      phone: leftItem.user!.phone,
       iswaiting: false,
       floor: 0,
       isresident: false,

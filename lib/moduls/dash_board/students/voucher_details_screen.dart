@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:university_housing/model/get_all_users_model.dart';
+import 'package:university_housing/model/get_all_vouchers_model.dart';
 import 'package:university_housing/shard/components/components.dart';
 import 'package:university_housing/shard/cubit/dashBoard/cubit.dart';
 import 'package:university_housing/shard/cubit/dashBoard/states.dart';
@@ -24,7 +25,6 @@ class VoucherDetailsScreen extends StatelessWidget {
         var cubit = DashBoardCubit.get(context);
         DateTime tempDate = DateFormat("yyyy-MM-dd").parse(userItem.paidAt);
         String date = tempDate.toString().substring(0, 10);
-
         return Directionality(
           textDirection: ui.TextDirection.rtl,
           child: Scaffold(
@@ -55,7 +55,7 @@ class VoucherDetailsScreen extends StatelessWidget {
                       height: 20.0,
                     ),
 
-                    if(cubit.allVouchers.isNotEmpty)
+                    if(cubit.oneVoucher != null)
                       Column(
                         children: [
                           //name
@@ -165,7 +165,7 @@ class VoucherDetailsScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8.0,),
                                 ),
                                 child: CachedNetworkImage(
-                                  imageUrl: cubit.allVouchers[0].voucherImage,
+                                  imageUrl: cubit.oneVoucher!.voucherImage,
                                   fit: BoxFit.fill,
                                   placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                   errorWidget: (context, url, error) =>  Container(
@@ -193,7 +193,7 @@ class VoucherDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    if(cubit.allVouchers.isEmpty)
+                    if(cubit.oneVoucher==null)
                       const Center(child: CircularProgressIndicator(),),
                   ],
                 ),

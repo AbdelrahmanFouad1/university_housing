@@ -38,21 +38,6 @@ class FinesDetailsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الساكنين',
               context: context,
-              action: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

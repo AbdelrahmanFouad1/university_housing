@@ -92,21 +92,6 @@ class StudentsScreen extends StatelessWidget {
             appBar: dashAppBar(
               title: 'الساكنين',
               context: context,
-              action: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                width: 30.0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: ThemeCubit.get(context).darkTheme
-                        ? mainTextColor
-                        : mainColors,
-                  ),
-                  onPressed: () {
-                    ThemeCubit.get(context).changeTheme();
-                  },
-                ),
-              ),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -388,8 +373,6 @@ Widget studentItem({
   var jobController = TextEditingController();
   var creditController = TextEditingController();
 
-  // DateTime tempDate = DateFormat("yyyy-MM-dd").parse(item.createdAt);
-  // String date = tempDate.toString().substring(0, 10);
   termController.text = item.firstTerm == true ? 'الأول' : item.secondTerm == true ?'الثاني' :'الثالث';
   levelController.text = item.buildingType == true ? 'مميز' : 'عادي';
   jobController.text = item.isStudent == true ? 'طلاب' : 'عاملين';
@@ -485,9 +468,12 @@ Widget studentItem({
                                   isStudent: jobController.text == 'طلاب'? true : false,
                                   isPaid: creditController.text == 'تم الدفع' ? true :false,
                                   paidAt: cubit.studentPaymentDateController.text,
-                                  firstTerm: termController.text == 'الأول'? true : false,
-                                  secondTerm: termController.text == 'الثاني'? true : false,
-                                  thirdTerm: termController.text == 'الثالث'? true : false,
+                                  // firstTerm: termController.text == 'الأول'? true : false,
+                                  // secondTerm: termController.text == 'الثاني'? true : false,
+                                  // thirdTerm: termController.text == 'الثالث'? true : false,
+                                  firstTerm: item.firstTerm,
+                                  secondTerm: item.secondTerm,
+                                  thirdTerm: item.thirdTerm,
                                   cardPhoto: item.cardPhoto,
                                   phone: cubit.studentPhoneController.text,
                                   floor: int.parse(cubit.studentFloorController.text),
@@ -974,7 +960,8 @@ Widget studentItem({
                                         DashBoardCubit.get(context).getAllVoucher(
                                             query: {
                                               'id': item.id
-                                            }
+                                            },
+                                          id: item.id
                                         );
                                         navigateTo(context, VoucherDetailsScreen(userItem: item,));
                                       }

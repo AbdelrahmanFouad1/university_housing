@@ -661,14 +661,16 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           isReplied: true
                                         );
                                       }else{
-                                        cubit.putReplayExit(
-                                            isAccepted: true,
-                                            idDB: leftItem!.idDB,
-                                            reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
-                                            isReplied: true
-                                        );
                                         //todo null error
                                         cubit.ifAcceptedExit(leftItem: leftItem!);
+                                        if(state is PutStudentSuccessStates ){
+                                          cubit.putReplayExit(
+                                              isAccepted: true,
+                                              idDB: leftItem!.idDB,
+                                              reply: managerController.text.isEmpty? 'لا يوجد' : managerController.text,
+                                              isReplied: true
+                                          );
+                                        }
                                       }
                                     },
                                     text: 'اوافق',
