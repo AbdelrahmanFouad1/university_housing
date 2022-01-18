@@ -84,7 +84,6 @@ class SecurityScreen extends StatelessWidget {
                                   .bodyText1,
                               textAlign: TextAlign.center,
                               onTap: () {
-                                //TODO: issue in design "Finish"
                                 showDialog(
                                   context: context,
                                   builder: (context) =>

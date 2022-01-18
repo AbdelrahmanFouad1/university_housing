@@ -115,6 +115,12 @@ class QueriesScreen extends StatelessWidget {
                       separatorBuilder: (context, index) => const SizedBox(height: 10.0,),
                       itemCount: AppCubit.get(context).commentModel!.length,
                     ),
+                    // if(cubit.commentModel!.isEmpty)
+                    //   Text(
+                    //     ' لا يوجد استعلامات سابقه حاليا !!',
+                    //     style: Theme.of(context).textTheme.bodyText1,
+                    //   ),
+
                   ],
                 ),
               ),

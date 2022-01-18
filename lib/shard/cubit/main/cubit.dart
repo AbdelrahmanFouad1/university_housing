@@ -385,7 +385,7 @@ class AppCubit extends Cubit<AppStates> {
     currVal = currentNum;
     currText = currentFloor;
     // todo اجيب ازاي id المبني الي ساكن فيه
-    // getFloorAndRooms();
+    // getFloorAndRooms(5);
     emit(ChangeFloorState());
   }
 
@@ -403,9 +403,6 @@ class AppCubit extends Cubit<AppStates> {
   void postChangeRoom({
     required int room,
     required int floor,
-    //todo محتاجه ازودهم هنا + حجز الغرف
-    // required String roomIdDB,
-    // required String BuildingIdDB,
   }) {
     emit(PostChangeRoomLoadingStates());
 
@@ -662,8 +659,6 @@ class AppCubit extends Cubit<AppStates> {
          }
        });
      }
-
-
     emit(GetFloorAndRoomSuccessStates());
   }
 
