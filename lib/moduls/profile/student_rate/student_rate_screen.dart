@@ -181,25 +181,53 @@ Widget buildEvaluationItem(
   AppCubit cubit,
   context,
   Reviews review,
-) =>
-    Container(
-      width: 300.0,
-      decoration: BoxDecoration(
-        color: evaluation,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Builder(builder:(context){
-                    if(review.user == null){
+) {
+  if(review.user!=null) {
+    return Container(
+    width: 300.0,
+    decoration: BoxDecoration(
+      color: evaluation,
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Builder(builder:(context){
+                  if(review.user == null){
+                    return CircleAvatar(
+                      radius: 25.0,
+                      backgroundColor: ThemeCubit.get(context).darkTheme
+                          ? mainTextColor
+                          : mainColors,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 80.0,
+                        child: Icon(Icons.error,
+                          color: ThemeCubit.get(context).darkTheme
+                              ? mainColors
+                              : mainTextColor,
+                        ),
+                      ),
+                    );
+                  }else{
+                    if(review.user!.image != null){
+                      return CircleAvatar(
+                        radius: 25.0,
+                        backgroundColor: ThemeCubit.get(context).darkTheme
+                            ? mainTextColor
+                            : mainColors,
+                        backgroundImage: NetworkImage(
+                          review.user!.image,
+                        ),
+                      );
+                    }else{
                       return CircleAvatar(
                         radius: 25.0,
                         backgroundColor: ThemeCubit.get(context).darkTheme
@@ -215,117 +243,97 @@ Widget buildEvaluationItem(
                           ),
                         ),
                       );
-                    }else{
-                      if(review.user!.image != null){
-                        return CircleAvatar(
-                          radius: 25.0,
-                          backgroundColor: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                          backgroundImage: NetworkImage(
-                            review.user!.image,
-                          ),
-                        );
-                      }else{
-                        return CircleAvatar(
-                          radius: 25.0,
-                          backgroundColor: ThemeCubit.get(context).darkTheme
-                              ? mainTextColor
-                              : mainColors,
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 80.0,
-                            child: Icon(Icons.error,
-                              color: ThemeCubit.get(context).darkTheme
-                                  ? mainColors
-                                  : mainTextColor,
-                            ),
-                          ),
-                        );
-                      }
                     }
-                  }),
+                  }
+                }),
 
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        review.user!= null ? review.user!.username : 'فارغ',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: mainColors,
-                          fontWeight: FontWeight.bold,
-                        ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      review.user!= null ? review.user!.username : 'فارغ',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: mainColors,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        review.user!= null ? review.user!.id.toString(): 'فارغ',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: mainColors,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RatingBar.builder(
-                      textDirection: TextDirection.ltr,
-                      allowHalfRating: false,
-                      initialRating: double.parse(review.rating.toString()),
-                      itemSize: 10.0,
-                      direction: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      ignoreGestures: true,
-                      onRatingUpdate: (rating) {
-                        // print(rating);
-                      },
                     ),
+                    Text(
+                      review.user!= null ? review.user!.id.toString(): 'فارغ',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: mainColors,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RatingBar.builder(
+                    textDirection: TextDirection.ltr,
+                    allowHalfRating: false,
+                    initialRating: double.parse(review.rating.toString()),
+                    itemSize: 10.0,
+                    direction: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    ignoreGestures: true,
+                    onRatingUpdate: (rating) {
+                      // print(rating);
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            width: 280.0,
+            child: Text(
+              review.comment,
+              style: TextStyle(
+                fontSize: 12.0,
+                color: mainColors,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              navigateTo(context, StudentRateDetailsScreen(
+                review: review,
+              ));
+            },
+            child: SizedBox(
               width: 280.0,
               child: Text(
-                review.comment,
+                'المزيد',
                 style: TextStyle(
-                  fontSize: 12.0,
                   color: mainColors,
+                  fontSize: 14.0,
+                  decoration: TextDecoration.underline,
                 ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
               ),
             ),
-            const Spacer(),
-            InkWell(
-              onTap: () {
-                navigateTo(context, StudentRateDetailsScreen(
-                review: review,
-                ));
-              },
-              child: SizedBox(
-                width: 280.0,
-                child: Text(
-                  'المزيد',
-                  style: TextStyle(
-                    color: mainColors,
-                    fontSize: 14.0,
-                    decoration: TextDecoration.underline,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
+    ),
+  );
+  }else{
+    return Container(
+      width: 0,
     );
+  }
+}
+

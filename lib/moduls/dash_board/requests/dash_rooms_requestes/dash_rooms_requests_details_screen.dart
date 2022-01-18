@@ -661,7 +661,6 @@ class DashRoomsRequestsDetailsScreen extends StatelessWidget {
                                           isReplied: true
                                         );
                                       }else{
-                                        //todo null error
                                         cubit.ifAcceptedExit(leftItem: leftItem!);
                                         if(state is PutStudentSuccessStates ){
                                           cubit.putReplayExit(

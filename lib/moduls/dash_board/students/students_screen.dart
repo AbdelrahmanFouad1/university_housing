@@ -453,7 +453,6 @@ Widget studentItem({
                           onPressed: () {
                             if (cubit.showStudentEdit == true) {
                               if (cubit.studentPhoneController.text.length == 11 && cubit.studentNationalIDController.text.length==14) {
-                                // todo fix term always true
                                 cubit.putStudent(
                                   idDB: item.idDB,
                                   id: int.parse(cubit.studentIdController.text),

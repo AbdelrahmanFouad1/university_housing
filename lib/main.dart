@@ -31,7 +31,6 @@ void main() async {
   bool? isSecurity = CacheHelper.getData(key: 'isSecurity');
   bool? isEmployee = CacheHelper.getData(key: 'isEmployee');
   bool? isHousingManager = CacheHelper.getData(key: 'isHousingManager');
-  //TODO: When register user rewrite isresident in CacheHelper
   bool? isresident = CacheHelper.getData(key: 'isresident');
 
   if (onBoarding != null) {

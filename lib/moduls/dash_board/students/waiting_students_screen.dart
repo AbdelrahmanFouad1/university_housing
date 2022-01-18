@@ -335,7 +335,6 @@ Widget studentItem({
                           onPressed: () {
                             if (cubit.showWaitingStudentEdit == true) {
                               if (cubit.phoneController.text.length == 11 && cubit.nationalIDController.text.length==14) {
-                                //todo null error :(
                                 cubit.putStudent(
                                   idDB: item.idDB,
                                   id: int.parse(cubit.idController.text),

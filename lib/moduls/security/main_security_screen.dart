@@ -39,7 +39,6 @@ class MainSecurityScreen extends StatelessWidget {
                   builder: (context){
                     if(cubit.profileModel!=null){
                       return Container(
-                        height: 600.0,
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
