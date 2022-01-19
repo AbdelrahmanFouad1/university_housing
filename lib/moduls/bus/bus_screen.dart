@@ -66,15 +66,18 @@ class BusScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '8:45',
+                            '8:30 AM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:00',
+                            '8:45 AM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:30',
+                            '9:00 AM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -121,15 +124,18 @@ class BusScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '8:45',
+                            '11:30 AM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:00',
+                            '11:45 AM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:30',
+                            '12:00 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -176,15 +182,18 @@ class BusScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '8:45',
+                            '1:30 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:00',
+                            '1:45 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:30',
+                            '2:00 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -231,15 +240,18 @@ class BusScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '8:45',
+                            '3:00 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:00',
+                            '3:15 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           Text(
-                            '9:30',
+                            '3:30 PM',
+                            textDirection: TextDirection.ltr,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -255,60 +267,6 @@ class BusScreen extends StatelessWidget {
                 color: separator,
               ),
               const SizedBox(height: 16.0,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/bus.svg',
-                    ),
-                    const SizedBox(width: 12.0,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'موعد الخروج',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                        Text(
-                          'موعد الوصول الي مبني S',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                        Text(
-                          'موعد الوصول الي مبني M',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '8:45',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                          Text(
-                            '9:00',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                          Text(
-                            '9:30',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height:16.0),
-              Container(
-                width: double.infinity,
-                height:1.0,
-                color: separator,
-              ),
 
             ],
           ),

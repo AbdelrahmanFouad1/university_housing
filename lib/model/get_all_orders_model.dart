@@ -350,7 +350,7 @@ class BookingOrders{
     floor = json['floor'] ?? 0;
     Section = json['Section']?? 'empty';
     phone = json['phone']?? 'empty';
-    reply = json['reply']?? 'empty';
+    reply = json['reply']?? '';
     idDB = json['_id']?? 'empty';
     createdAt = json['createdAt']?? 'empty';
     updatedAt = json['updatedAt']?? 'empty';
