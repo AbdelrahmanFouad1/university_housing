@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 10.0,),
                 Text(
-                  'تطبيق الأسكان الجامعى',
+                  'تطبيق الاسكان الجامعى',
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ],
