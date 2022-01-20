@@ -110,17 +110,20 @@ class NewsDetailsScreen extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 18.0,),
-      Expanded(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          // scrollDirection: Axis.vertical,
-          // reverse: true,
-          child:  Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              '${model.text}',
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                fontSize: 14.0,
+      Align(
+        alignment: AlignmentDirectional.topStart,
+        child: Expanded(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            // scrollDirection: Axis.vertical,
+            // reverse: true,
+            child:  Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                '${model.text}',
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  fontSize: 14.0,
+                ),
               ),
             ),
           ),
