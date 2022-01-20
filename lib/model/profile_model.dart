@@ -94,14 +94,14 @@ class ExitAndEntersModel {
   //       required this.updatedAt});
 
   ExitAndEntersModel.fromJson(Map<String, dynamic> json) {
-    enterAt = json['enterAt'];
-    exitAt = json['exitAt'];
-    enterDate = json['enterDate'];
-    exitDate = json['exitDate'];
-    idDB = json['_id'];
-    Notes = json['Notes'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    enterAt = json['enterAt']??'';
+    exitAt = json['exitAt']??'';
+    enterDate = json['enterDate']??'';
+    exitDate = json['exitDate']??'';
+    idDB = json['_id']??'';
+    Notes = json['Notes']??'';
+    createdAt = json['createdAt']??'';
+    updatedAt = json['updatedAt']??'';
   }
 
   // Map<String, dynamic> toJson() {
@@ -126,10 +126,10 @@ class AttendancesModel {
   late String updatedAt;
 
   AttendancesModel.fromJson(Map<String, dynamic> json) {
-    idDB = json['_id'];
-    attendancedate = json['attendancedate'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    idDB = json['_id']??'';
+    attendancedate = json['attendancedate']??'';
+    createdAt = json['createdAt']??'';
+    updatedAt = json['updatedAt']??'';
   }
 }
 
@@ -142,9 +142,9 @@ class FinesModel {
 
   FinesModel.fromJson(Map<String, dynamic> json) {
     fineValue = json['fineValue'];
-    idDB = json['_id'];
-    fineReason = json['fineReason'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+    idDB = json['_id']??'';
+    fineReason = json['fineReason']??'';
+    createdAt = json['createdAt']??'';
+    updatedAt = json['updatedAt']??'';
   }
 }

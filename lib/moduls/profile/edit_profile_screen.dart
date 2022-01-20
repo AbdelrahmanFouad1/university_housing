@@ -415,6 +415,7 @@ class EditProfileScreen extends StatelessWidget {
                               CacheHelper.removeData(key: 'isresident');
                               token = '';
                               idDB = '';
+                              // AppCubit.get(context).profileModel = null;
                               navigateAndFinish(context, LoginScreen());
                             },
                             btnColor: Colors.red,
